@@ -6,6 +6,8 @@ Create beautiful Javascript charts with minimal code.
 
 Works with most browsers (including IE 6)
 
+Supports [Google Charts](https://developers.google.com/chart/) and [Highcharts](http://www.highcharts.com/)
+
 :kissing_heart: For Ruby, check out the [chartkick](https://github.com/ankane/chartkick) gem
 
 ## Usage
