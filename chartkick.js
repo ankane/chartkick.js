@@ -96,7 +96,8 @@
       var options = clone(defaultOptions);
 
       // hide legend
-      if (series.length === 1) {
+      // this is *not* an external option!
+      if (opts.hideLegend) {
         hideLegend(options);
       }
 
@@ -469,12 +470,16 @@
     return a[0].getTime() - b[0].getTime();
   }
 
-  function processSeries(series, time) {
+  function processSeries(series, opts, time) {
     var i, j, data, r, key;
 
     // see if one series or multiple
     if (!isArray(series) || typeof series[0] !== "object" || isArray(series[0])) {
       series = [{name: "Value", data: series}];
+      opts.hideLegend = true;
+    }
+    else {
+      opts.hideLegend = false;
     }
 
     // right format
@@ -496,11 +501,11 @@
   }
 
   function processLineData(element, data, opts) {
-    renderLineChart(element, processSeries(data, true), opts);
+    renderLineChart(element, processSeries(data, opts, true), opts);
   }
 
   function processColumnData(element, data, opts) {
-    renderColumnChart(element, processSeries(data, false), opts);
+    renderColumnChart(element, processSeries(data, opts, false), opts);
   }
 
   function processPieData(element, data, opts) {
@@ -515,7 +520,7 @@
     if (typeof element === "string") {
       element = document.getElementById(element);
     }
-    fetchDataSource(element, data, opts || {}, callback);
+    fetchDataSource(element, data, clone(opts || {}), callback);
   }
 
   // define classes
