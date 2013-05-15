@@ -8,6 +8,8 @@ Supports [Google Charts](https://developers.google.com/chart/) and [Highcharts](
 
 :kissing_heart: For Ruby, check out the [chartkick](https://github.com/ankane/chartkick) gem
 
+I would love to see this implemented in other languages too!!
+
 ## Usage
 
 Create a div for the chart
