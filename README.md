@@ -101,7 +101,7 @@ To run the files in the `examples` directory, you'll need a web server.  Run:
 python -m SimpleHTTPServer
 ```
 
-and visit (http://localhost:8000/examples/)[http://localhost:8000/examples/]
+and visit [http://localhost:8000/examples/](http://localhost:8000/examples/)
 
 ## Credits
 
