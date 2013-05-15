@@ -511,17 +511,24 @@
     renderPieChart(element, perfectData, opts);
   }
 
+  function setElement(element, data, opts, callback) {
+    if (typeof element === "string") {
+      element = document.getElementById(element);
+    }
+    fetchDataSource(element, data, opts || {}, callback);
+  }
+
   // define classes
 
   var Chartkick = {
     LineChart: function(element, dataSource, opts) {
-      fetchDataSource(element, dataSource, opts || {}, processLineData);
+      setElement(element, dataSource, opts, processLineData);
     },
     ColumnChart: function(element, dataSource, opts) {
-      fetchDataSource(element, dataSource, opts || {}, processColumnData);
+      setElement(element, dataSource, opts, processColumnData);
     },
     PieChart: function(element, dataSource, opts) {
-      fetchDataSource(element, dataSource, opts || {}, processPieData);
+      setElement(element, dataSource, opts, processPieData);
     }
   };
 
