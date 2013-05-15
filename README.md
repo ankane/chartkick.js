@@ -38,8 +38,8 @@ Multiple series (except pie chart)
 
 ```javascript
 data = [
-  {"name":"Workout", "data": {"2013-02-10 00:00:00 -0800": 3, "2013-02-17 00:00:00 -0800": 4},
-  {"name":"Call parents", "data": {"2013-02-10 00:00:00 -0800": 5, "2013-02-17 00:00:00 -0800": 3}
+  {"name":"Workout", "data": {"2013-02-10 00:00:00 -0800": 3, "2013-02-17 00:00:00 -0800": 4}},
+  {"name":"Call parents", "data": {"2013-02-10 00:00:00 -0800": 5, "2013-02-17 00:00:00 -0800": 3}}
 ];
 new Chartkick.LineChart("chart-1", data);
 ```
@@ -59,7 +59,7 @@ new Chartkick.LineChart("chart-1", "/stocks");
 min and max values (except pie chart)
 
 ```javascript
-new Chartkick.LineChart("chart-1", {"Football": 45, "Soccer": 56, "Basketball": 98}, {"min": 1000, "max": 5000});
+new Chartkick.LineChart("chart-1", {"Football": 45, "Soccer": 56}, {"min": 1000, "max": 5000});
 ```
 
 ### Data
