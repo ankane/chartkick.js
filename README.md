@@ -93,6 +93,16 @@ If you prefer Highcharts, use:
 <script src="chartkick.js"></script>
 ```
 
+## Examples
+
+To run the files in the `examples` directory, you'll need a web server.  Run:
+
+```sh
+python -m SimpleHTTPServer
+```
+
+and visit (http://localhost:8000/examples/)[http://localhost:8000/examples/]
+
 ## Credits
 
 Chartkick uses [iso8601.js](https://github.com/Do/iso8601.js) to parse dates and times.
