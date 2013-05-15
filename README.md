@@ -73,10 +73,10 @@ new Chartkick.PieChart("chart-1", {"Blueberry": 44, "Strawberry": 23});
 new Chartkick.PieChart("chart-1", [["Blueberry", 44],["Strawberry", 23]]);
 ```
 
-Times can be a date, a timestamp, or a string (strings are parsed)
+Times can be a `Date`, a timestamp, or a string (strings are parsed)
 
 ```javascript
-new Chartkick.LineChart("chart-1", [[new Date(), 5],["1368174456", 4],["2013-05-07 00:00:00 UTC", 7]]);
+new Chartkick.LineChart("chart-1", [[new Date(), 5],[1368174456, 4],["2013-05-07 00:00:00 UTC", 7]]);
 ```
 
 ## Installation
