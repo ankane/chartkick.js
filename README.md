@@ -109,6 +109,12 @@ and visit [http://localhost:8000/examples/](http://localhost:8000/examples/)
 
 Chartkick uses [iso8601.js](https://github.com/Do/iso8601.js) to parse dates and times.
 
+## History
+
+View the [changelog](https://github.com/ankane/chartkick.js/blob/master/CHANGELOG.md)
+
+Chartkick.js follows [Semantic Versioning](http://semver.org/)
+
 ## Contributing
 
 1. Fork it
