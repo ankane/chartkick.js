@@ -95,7 +95,7 @@ If you prefer Highcharts, use:
 <script src="chartkick.js"></script>
 ```
 
-Works with Highcharts 2.3+
+Works with Highcharts 2.1+
 
 ## Examples
 
