@@ -95,6 +95,8 @@ If you prefer Highcharts, use:
 <script src="chartkick.js"></script>
 ```
 
+Works with Highcharts 2.3+
+
 ## Examples
 
 To run the files in the `examples` directory, you'll need a web server.  Run:

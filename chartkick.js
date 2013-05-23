@@ -182,7 +182,7 @@
     renderLineChart = function(element, series, opts) {
       var options = jsOptions(series, opts), data, i, j;
       options.xAxis.type = "datetime";
-      options.chart = {type: "spline"};
+      options.chart = {type: "spline", renderTo: element.id};
 
       for (i = 0; i < series.length; i++) {
         data = series[i].data;
@@ -192,22 +192,23 @@
         series[i].marker = {symbol: "circle"};
       }
       options.series = series;
-      $(element).highcharts(options);
+      new Highcharts.Chart(options);
     };
 
     renderPieChart = function(element, series, opts) {
       var options = clone(defaultOptions);
+      options.chart = {renderTo: element.id};
       options.series = [{
         type: "pie",
         name: "Value",
         data: series
       }];
-      $(element).highcharts(options);
+      new Highcharts.Chart(options);
     };
 
     renderColumnChart = function(element, series, opts) {
       var options = jsOptions(series, opts), i, j, s, d, rows = [];
-      options.chart = {type: "column"};
+      options.chart = {type: "column", renderTo: element.id};
 
       for (i = 0; i < series.length; i++) {
         s = series[i];
@@ -243,7 +244,7 @@
       }
       options.series = newSeries;
 
-      $(element).highcharts(options);
+      new Highcharts.Chart(options);
     };
   } else if ("google" in window) { // Google charts
     // load from google
@@ -485,8 +486,7 @@
     if (!isArray(series) || typeof series[0] !== "object" || isArray(series[0])) {
       series = [{name: "Value", data: series}];
       opts.hideLegend = true;
-    }
-    else {
+    } else {
       opts.hideLegend = false;
     }
 
