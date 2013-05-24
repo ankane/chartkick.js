@@ -314,10 +314,6 @@
 
     var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax);
 
-    var sortByNumber = function(a, b) {
-      return a[0] - b[0];
-    };
-
     // cant use object as key
     var createDataTable = function(series, columnType) {
       var data = new google.visualization.DataTable();
@@ -345,7 +341,7 @@
         }
       }
       if (columnType === "datetime") {
-        rows2.sort(sortByNumber);
+        rows2.sort(sortByTime);
       }
       data.addRows(rows2);
 
