@@ -58,10 +58,16 @@ new Chartkick.LineChart("chart-1", "/stocks");
 
 ### Options
 
-min and max values (except pie chart)
+Min and max values (except pie chart)
 
 ```javascript
 new Chartkick.LineChart("chart-1", {"Football": 45, "Soccer": 56}, {"min": 1000, "max": 5000});
+```
+
+You can pass options directly to the charting library with:
+
+```javascript
+new Chartkick.LineChart("chart-1", {"Football": 45, "Soccer": 56}, {"library": {"backgroundColor": "pink"}});
 ```
 
 ### Data
