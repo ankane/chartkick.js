@@ -1,3 +1,7 @@
+## 1.0.2
+
+- Added library option
+
 ## 1.0.1
 
 - Added support for Highcharts 2.1+
