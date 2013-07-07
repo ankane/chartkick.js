@@ -246,6 +246,175 @@
 
       new Highcharts.Chart(options);
     };
+  } else if ("Chart" in window) { // Chart.js
+
+    // FIXME: The selection of colors for the PieChart, didnt find a way to use the rgba values.
+    var getPieColor = function (num) {
+        if (num == 0)
+            return "#F38630";
+        if (num == 1)
+            return "#E0E4CC";
+        if (num == 2)
+            return "#69D2E7";
+        if (num == 3)
+            return "#81B385";
+        if (num == 4)
+            return "#F58990";
+        if (num == 5)
+            return "#969696";
+        if (num == 6)
+            return "#F2B88A";
+        if (num == 7)
+            return "#6384B0";
+        if (num == 8)
+            return "#8AF293";
+        if (num == 9)
+            return "#D1A5A8";
+    };
+    // FIXME: Dont know what to do with with the other options, I only used height, width and datasets.
+    var defaultOptions = {
+      height: 300,
+      width: 800,
+      xAxis: {
+        labels: {
+          style: {
+            fontSize: "12px"
+          }
+        }
+      },
+      yAxis: {
+        title: {
+          text: null
+        },
+        labels: {
+          style: {
+            fontSize: "12px"
+          }
+        }
+      },
+      legend: {
+        borderWidth: 0
+      },
+      datasets: {
+        styles: [
+          {
+            fillColor:   'rgba(220, 220, 220, 0.5)',
+            strokeColor: 'rgba(220, 220, 220, 1  )',
+            pointColor:  'rgba(220, 220, 220, 1  )',
+            pointStrokeColor: '#fff'
+          },
+          {
+            fillColor:   'rgba(151, 187, 205, 0.5)',
+            strokeColor: 'rgba(151, 187, 205, 0.6)',
+            pointColor:  'rgba(151, 187, 205, 0.6)',
+            pointStrokeColor: '#fff'
+          },
+          {
+            fillColor:   'rgba(85, 102, 180, 0.5)',
+            strokeColor: 'rgba(85, 102, 180, 0.5)',
+            pointColor:  'rgba(85, 102, 180, 0.5)',
+            pointStrokeColor: '#fff'
+          },
+          {
+            fillColor:   'rgba(151, 102, 80, 0.5)',
+            strokeColor: 'rgba(151, 102, 80, 0.5)',
+            pointColor:  'rgba(151, 102, 80, 0.5)',
+            pointStrokeColor: '#fff'
+          },
+          {
+            fillColor:   'rgba(101, 40, 60, 0.5)',
+            strokeColor: 'rgba(101, 40, 60, 0.5)',
+            pointColor:  'rgba(101, 40, 60, 0.5)',
+            pointStrokeColor: '#fff'
+          }
+        ]
+      }
+    };
+
+    var hideLegend = function(options) {
+      options.legend.enabled = false;
+    };
+
+    var setMin = function(options, min) {
+      options.yAxis.min = min;
+    };
+
+    var setMax = function(options, max) {
+      options.yAxis.max = max;
+    };
+
+    var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax);
+
+    renderLineChart = function(element, series, opts) {
+      var options = jsOptions(series, opts), data = [], i, j, tmp_data, lbl, labels = [], canvas, datasets = [];
+      for (i = 0; i < series.length; i++) {
+        tmp_data = series[i].data;
+        var data = [];
+        for (j = 0; j < tmp_data.length; j++) {
+          data.push( tmp_data[j][1] );
+          lbl = tmp_data[j][0].toLocaleDateString();
+          if (labels.indexOf(lbl) == -1) {
+            labels.push( lbl );
+          }
+        }
+        datasets.push( merge(options.datasets.styles[i], { data: data }) );
+      }
+      console.log(datasets);
+      var lineChartData = {
+        labels: labels,
+        datasets: datasets
+      };
+      canvas = $('<canvas height='+options.height+' width='+options.width+'/>');
+      $(element).append(canvas);
+      new Chart(canvas[0].getContext('2d')).Line(lineChartData);
+    };
+
+    renderPieChart = function(element, series, opts) {
+      var options = merge(defaultOptions, opts.library || {});
+      var canvas, i, data = [], labels = [], value_hash = {};
+      options.chart = {renderTo: element.id};
+      options.series = [{
+        type: "pie",
+        name: "Value",
+        data: series
+      }];
+      for( i = 0; i < series.length; i++) {
+        value_hash = {
+          value: series[i][1],
+          color: getPieColor(i)
+        };
+        data.push(value_hash);
+        labels.push(series[i][0]);
+      }
+      canvas = $('<canvas height='+options.height+' width='+options.width+'/>');
+      $(element).append(canvas);
+      new Chart(canvas[0].getContext('2d')).Pie(data);
+    };
+
+    renderColumnChart = function(element, series, opts) {
+      var options = jsOptions(series, opts), data = [], i, j, tmp_data, lbl, labels = [], canvas, datasets = [];
+      for (i = 0; i < series.length; i++) {
+        tmp_data = series[i].data;
+        var data = [];
+        for (j = 0; j < tmp_data.length; j++) {
+          data.push( tmp_data[j][1] );
+          lbl = tmp_data[j][0];
+          if (labels.indexOf(lbl) == -1) {
+            labels.push( lbl );
+          }
+        }
+        datasets.push( merge(options.datasets.styles[i], { data: data }) );
+      }
+      var barChartData = {
+        labels: labels,
+        datasets: datasets
+      };
+
+      canvas = $('<canvas height='+options.height+' width='+options.width+'/>');
+      $(element).append(canvas);
+      new Chart(canvas[0].getContext('2d')).Bar(barChartData);
+    };
+
   } else if ("google" in window) { // Google charts
     // load from google
     var loaded = false;
