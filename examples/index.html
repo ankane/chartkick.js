@@ -6,6 +6,7 @@
     <script src="http://www.google.com/jsapi"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
+    <script src="../chart.js/Chart.js"></script>
     <script src="../chartkick.js"></script>
 
     <style>
@@ -17,6 +18,10 @@
 
       h1 {
         text-align: center;
+      }
+      canvas {
+        height: 300px;
+        width: auto;
       }
     </style>
   </head>
@@ -30,7 +35,7 @@
     <h1>Pie Chart</h1>
     <div id="chart-2" style="height: 300px;"></div>
     <script>
-      new Chartkick.PieChart("chart-2", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13]]);
+      new Chartkick.PieChart("chart-2", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13],['Orange',5],['Papaya',9],['Lemon',3],['Peach',4],['Watermelon',11]]);
     </script>
 
     <h1>Column Chart</h1>
