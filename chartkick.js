@@ -352,12 +352,24 @@
       return data;
     };
 
+    var resize = function(callback) {
+      if (window.attachEvent) {
+        window.attachEvent("onresize", callback);
+      }
+      else if (window.addEventListener) {
+        window.addEventListener("resize", callback, true);
+      }
+      callback();
+    };
+
     renderLineChart = function(element, series, opts) {
       waitForLoaded(function() {
         var options = jsOptions(series, opts);
         var data = createDataTable(series, "datetime");
         var chart = new google.visualization.LineChart(element);
-        chart.draw(data, options);
+        resize( function() {
+          chart.draw(data, options);
+        });
       });
     };
 
@@ -377,7 +389,9 @@
         data.addRows(series);
 
         var chart = new google.visualization.PieChart(element);
-        chart.draw(data, options);
+        resize( function() {
+          chart.draw(data, options);
+        });
       });
     };
 
@@ -386,7 +400,9 @@
         var options = jsOptions(series, opts);
         var data = createDataTable(series, "string");
         var chart = new google.visualization.ColumnChart(element);
-        chart.draw(data, options);
+        resize( function() {
+          chart.draw(data, options);
+        });
       });
     };
   } else { // no chart library installed
