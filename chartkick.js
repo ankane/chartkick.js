@@ -97,7 +97,7 @@
   }
 
   function jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax) {
-    return function(series, opts, yAxis, chartOptions) {
+    return function(series, opts) {
       var options = merge({}, defaultOptions);
 
       // hide legend
@@ -108,18 +108,16 @@
 
       // min
       if ("min" in opts) {
-        setMin(options, opts.min, yAxis);
+        setMin(options, opts.min);
       }
       else if (!negativeValues(series)) {
-        setMin(options, 0, yAxis);
+        setMin(options, 0);
       }
 
       // max
       if ("max" in opts) {
         setMax(options, opts.max);
       }
-
-      options = merge(options, chartOptions || {});
 
       // merge library last
       options = merge(options, opts.library || {});
@@ -183,7 +181,7 @@
     var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax);
 
     renderLineChart = function(element, series, opts) {
-      var options = jsOptions(series, opts, true), data, i, j;
+      var options = jsOptions(series, opts), data, i, j;
       options.xAxis.type = "datetime";
       options.chart.type = "spline";
       options.chart.renderTo = element.id;
@@ -212,7 +210,7 @@
 
     renderColumnChart = function(element, series, opts, type) {
       type = type || "column"
-      var options = jsOptions(series, opts, type === "column"), i, j, s, d, rows = [];
+      var options = jsOptions(series, opts), i, j, s, d, rows = [];
       options.chart.type = type;
       options.chart.renderTo = element.id;
 
@@ -316,20 +314,20 @@
       options.legend.position = "none";
     };
 
-    var setMin = function(options, min, yAxis) {
-      if (yAxis) {
-        options.vAxis.viewWindow.min = min;
-      } else {
-        options.hAxis.viewWindow.min = min;
-      }
+    var setMin = function(options, min) {
+      options.vAxis.viewWindow.min = min;
     };
 
-    var setMax = function(options, max, yAxis) {
-      if (yAxis) {
-        options.vAxis.viewWindow.max = max;
-      } else {
-        options.hAxis.viewWindow.max = max;
-      }
+    var setMax = function(options, max) {
+      options.vAxis.viewWindow.max = max;
+    };
+
+    var setBarMin = function(options, min) {
+      options.hAxis.viewWindow.min = min;
+    };
+
+    var setBarMax = function(options, max) {
+      options.hAxis.viewWindow.max = max;
     };
 
     var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax);
@@ -380,7 +378,7 @@
 
     renderLineChart = function(element, series, opts) {
       waitForLoaded(function() {
-        var options = jsOptions(series, opts, true);
+        var options = jsOptions(series, opts);
         var data = createDataTable(series, "datetime");
         var chart = new google.visualization.LineChart(element);
         resize( function() {
@@ -413,7 +411,7 @@
 
     renderColumnChart = function(element, series, opts) {
       waitForLoaded(function() {
-        var options = jsOptions(series, opts, true);
+        var options = jsOptions(series, opts);
         var data = createDataTable(series, "string");
         var chart = new google.visualization.ColumnChart(element);
         resize( function() {
@@ -431,7 +429,7 @@
             }
           }
         };
-        var options = jsOptions(series, opts, false, chartOptions);
+        var options = merge(chartOptions, jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax)(series, opts));
         var data = createDataTable(series, "string");
         var chart = new google.visualization.BarChart(element);
         resize( function() {
