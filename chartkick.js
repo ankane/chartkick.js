@@ -501,13 +501,12 @@
   }
 
   function errorCatcher(element, data, opts, callback) {
-    callback(element, data, opts);
-    // try {
-    //   callback(element, data, opts);
-    // } catch (err) {
-    //   chartError(element, err.message);
-    //   throw err;
-    // }
+    try {
+      callback(element, data, opts);
+    } catch (err) {
+      chartError(element, err.message);
+      throw err;
+    }
   }
 
   function fetchDataSource(element, dataSource, opts, callback) {
