@@ -45,6 +45,12 @@ Bar chart
 new Chartkick.BarChart("chart-1", [["Work", 32],["Play", 1492]]);
 ```
 
+Area chart
+
+```javascript
+new Chartkick.AreaChart("chart-1", {"2013-02-10 00:00:00 -0800": 11, "2013-02-11 00:00:00 -0800": 6});
+```
+
 Multiple series (except pie chart)
 
 ```javascript

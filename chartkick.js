@@ -97,8 +97,9 @@
   }
 
   function jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax) {
-    return function(series, opts) {
+    return function(series, opts, chartOptions) {
       var options = merge({}, defaultOptions);
+      options = merge(options, chartOptions || {});
 
       // hide legend
       // this is *not* an external option!
@@ -127,7 +128,7 @@
   }
 
   // only functions that need defined specific to charting library
-  var renderLineChart, renderPieChart, renderColumnChart, renderBarChart;
+  var renderLineChart, renderPieChart, renderColumnChart, renderBarChart, renderAreaChart;
 
   if ("Highcharts" in window) {
 
@@ -163,6 +164,12 @@
         style: {
           fontSize: "12px"
         }
+      },
+      plotOptions: {
+        areaspline: {},
+        series: {
+          marker: {}
+        }
       }
     };
 
@@ -180,10 +187,15 @@
 
     var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax);
 
-    renderLineChart = function(element, series, opts) {
+    renderLineChart = function(element, series, opts, chartType) {
+      chartType = chartType || "spline";
       var options = jsOptions(series, opts), data, i, j;
+      if (chartType === "areaspline") {
+        options.plotOptions.areaspline.stacking = "normal";
+        options.plotOptions.series.marker.enabled = false;
+      }
       options.xAxis.type = "datetime";
-      options.chart.type = "spline";
+      options.chart.type = chartType;
       options.chart.renderTo = element.id;
 
       for (i = 0; i < series.length; i++) {
@@ -208,10 +220,10 @@
       new Highcharts.Chart(options);
     };
 
-    renderColumnChart = function(element, series, opts, type) {
-      type = type || "column"
+    renderColumnChart = function(element, series, opts, chartType) {
+      chartType = chartType || "column"
       var options = jsOptions(series, opts), i, j, s, d, rows = [];
-      options.chart.type = type;
+      options.chart.type = chartType;
       options.chart.renderTo = element.id;
 
       for (i = 0; i < series.length; i++) {
@@ -253,7 +265,11 @@
 
     renderBarChart = function(element, series, opts) {
       renderColumnChart(element, series, opts, "bar");
-    }
+    };
+
+    renderAreaChart = function(element, series, opts) {
+      renderLineChart(element, series, opts, "areaspline");
+    };
   } else if ("google" in window) { // Google charts
     // load from google
     var loaded = false;
@@ -429,7 +445,7 @@
             }
           }
         };
-        var options = merge(chartOptions, jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax)(series, opts));
+        var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax)(series, opts, chartOptions);
         var data = createDataTable(series, "string");
         var chart = new google.visualization.BarChart(element);
         resize( function() {
@@ -437,8 +453,24 @@
         });
       });
     };
+
+    renderAreaChart = function(element, series, opts) {
+      waitForLoaded(function() {
+        var chartOptions = {
+          isStacked: true,
+          pointSize: 0,
+          areaOpacity: 0.5
+        };
+        var options = jsOptions(series, opts, chartOptions);
+        var data = createDataTable(series, "datetime");
+        var chart = new google.visualization.AreaChart(element);
+        resize( function() {
+          chart.draw(data, options);
+        });
+      });
+    };
   } else { // no chart library installed
-    renderLineChart = renderPieChart = renderColumnChart = renderBarChart = function() {
+    renderLineChart = renderPieChart = renderColumnChart = renderBarChart = renderAreaChart = function() {
       throw new Error("Please install Google Charts or Highcharts");
     };
   }
@@ -469,12 +501,13 @@
   }
 
   function errorCatcher(element, data, opts, callback) {
-    try {
-      callback(element, data, opts);
-    } catch (err) {
-      chartError(element, err.message);
-      throw err;
-    }
+    callback(element, data, opts);
+    // try {
+    //   callback(element, data, opts);
+    // } catch (err) {
+    //   chartError(element, err.message);
+    //   throw err;
+    // }
   }
 
   function fetchDataSource(element, dataSource, opts, callback) {
@@ -579,6 +612,10 @@
     renderBarChart(element, processSeries(data, opts, false), opts);
   }
 
+  function processAreaData(element, data, opts) {
+    renderAreaChart(element, processSeries(data, opts, true), opts);
+  }
+
   function setElement(element, data, opts, callback) {
     if (typeof element === "string") {
       element = document.getElementById(element);
@@ -600,6 +637,9 @@
     },
     BarChart: function(element, dataSource, opts) {
       setElement(element, dataSource, opts, processBarData);
+    },
+    AreaChart: function(element, dataSource, opts) {
+      setElement(element, dataSource, opts, processAreaData);
     }
   };
 
