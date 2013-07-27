@@ -39,6 +39,12 @@ Column chart
 new Chartkick.ColumnChart("chart-1", [["Sun", 32],["Mon", 46],["Tue", 28]]);
 ```
 
+Bar chart
+
+```javascript
+new Chartkick.BarChart("chart-1", [["Work", 32],["Play", 1492]]);
+```
+
 Multiple series (except pie chart)
 
 ```javascript
