@@ -1,3 +1,8 @@
+## 1.1.0
+
+- Added bar chart and area chart
+- Resize charts when window is resized
+
 ## 1.0.2
 
 - Added library option
