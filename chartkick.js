@@ -221,7 +221,7 @@
     };
 
     renderColumnChart = function(element, series, opts, chartType) {
-      chartType = chartType || "column"
+      chartType = chartType || "column";
       var options = jsOptions(series, opts), i, j, s, d, rows = [];
       options.chart.type = chartType;
       options.chart.renderTo = element.id;
