@@ -191,8 +191,18 @@
       chartType = chartType || "spline";
       var chartOptions = {};
       if (chartType === "areaspline") {
-        chartOptions.plotOptions.areaspline.stacking = "normal";
-        chartOptions.plotOptions.series.marker.enabled = false;
+        chartOptions = {
+          plotOptions: {
+            areaspline: {
+              stacking: "normal"
+            },
+            series: {
+              marker: {
+                enabled: false
+              }
+            }
+          }
+        };
       }
       var options = jsOptions(series, opts, chartOptions), data, i, j;
       options.xAxis.type = "datetime";
