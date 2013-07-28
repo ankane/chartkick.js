@@ -189,11 +189,12 @@
 
     renderLineChart = function(element, series, opts, chartType) {
       chartType = chartType || "spline";
-      var options = jsOptions(series, opts), data, i, j;
+      var chartOptions = {};
       if (chartType === "areaspline") {
-        options.plotOptions.areaspline.stacking = "normal";
-        options.plotOptions.series.marker.enabled = false;
+        chartOptions.plotOptions.areaspline.stacking = "normal";
+        chartOptions.plotOptions.series.marker.enabled = false;
       }
+      var options = jsOptions(series, opts, chartOptions), data, i, j;
       options.xAxis.type = "datetime";
       options.chart.type = chartType;
       options.chart.renderTo = element.id;
