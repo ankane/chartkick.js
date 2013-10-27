@@ -13,7 +13,7 @@
   'use strict';
 
   var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, defaultOptions, hideLegend,
-    setMin, setMax, jsOptions, loaded, waitForLoaded, setBarMin, setBarMax, createDataTable, resize;
+    setMin, setMax, jsOptions, loaded, waitForLoaded, setBarMin, setBarMax, createDataTable, resize, formatHighchartsDate;
 
   // only functions that need defined specific to charting library
   var renderLineChart, renderPieChart, renderColumnChart, renderBarChart, renderAreaChart;
@@ -115,7 +115,11 @@
       if (opts.hideLegend) {
         hideLegend(options);
       }
-
+        
+      if(opts.dateFormat) {
+        options.dateFormat = opts.dateFormat;
+      }
+        
       // min
       if ("min" in opts) {
         setMin(options, opts.min);
@@ -274,6 +278,31 @@
     setMax = function (options, max) {
       options.yAxis.max = max;
     };
+      
+    formatHighchartsDate = function(options){    
+      if(options.dateFormat){
+        if(options.xAxis && options.xAxis.type === 'datetime'){
+          options.xAxis.labels.formatter = function(){   
+            return Highcharts.dateFormat(options.dateFormat, this.value);
+          }
+        }        
+        if(options.yAxis && options.yAxis.type === 'datetime'){
+          options.yAxis.labels.formatter = function(){
+            return Highcharts.dateFormat(options.dateFormat, this.value);
+          }
+        }        
+        if(options.dateFormat && options.tooltip){
+          options.tooltip.formatter = function(){
+            var point = this, series = point.series;
+            return [Highcharts.dateFormat(options.dateFormat, this.x),
+                    '<br /><span style="color:' + series.color + '">', (this.name || series.name), '</span>: <b>' 
+                    + this.y + '</b> '].join('');
+            }
+          options.tooltip.useHtml = true;
+        }
+      }
+      return options;
+    }
 
     jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax);
 
@@ -307,7 +336,7 @@
         series[i].marker = {symbol: "circle"};
       }
       options.series = series;
-      new Highcharts.Chart(options);
+      new Highcharts.Chart(formatHighchartsDate(options));
     };
 
     renderPieChart = function (element, series, opts) {
@@ -318,7 +347,7 @@
         name: "Value",
         data: series
       }];
-      new Highcharts.Chart(options);
+      new Highcharts.Chart(formatHighchartsDate(options));
     };
 
     renderColumnChart = function (element, series, opts, chartType) {
@@ -361,7 +390,7 @@
       }
       options.series = newSeries;
 
-      new Highcharts.Chart(options);
+      new Highcharts.Chart(formatHighchartsDate(options));
     };
 
     renderBarChart = function (element, series, opts) {
@@ -448,9 +477,9 @@
     };
 
     jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax);
-
+    
     // cant use object as key
-    createDataTable = function (series, columnType) {
+    createDataTable = function (series, columnType, options) {
       var data = new google.visualization.DataTable();
       data.addColumn(columnType, "");
 
@@ -479,6 +508,14 @@
         rows2.sort(sortByTime);
       }
       data.addRows(rows2);
+        
+        
+      if( typeof options.dateFormat !== 'undefined' ){
+        var formatter = new google.visualization.DateFormat({ 
+             pattern: options.dateFormat 
+        }); 
+        formatter.format(data, 0);
+      }
 
       return data;
     };
@@ -495,7 +532,7 @@
     renderLineChart = function (element, series, opts) {
       waitForLoaded(function () {
         var options = jsOptions(series, opts);
-        var data = createDataTable(series, "datetime");
+        var data = createDataTable(series, "datetime", options);
         var chart = new google.visualization.LineChart(element);
         resize(function () {
           chart.draw(data, options);
@@ -528,7 +565,7 @@
     renderColumnChart = function (element, series, opts) {
       waitForLoaded(function () {
         var options = jsOptions(series, opts);
-        var data = createDataTable(series, "string");
+        var data = createDataTable(series, "string", options);
         var chart = new google.visualization.ColumnChart(element);
         resize(function () {
           chart.draw(data, options);
@@ -546,7 +583,7 @@
           }
         };
         var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax)(series, opts, chartOptions);
-        var data = createDataTable(series, "string");
+        var data = createDataTable(series, "string", options);
         var chart = new google.visualization.BarChart(element);
         resize(function () {
           chart.draw(data, options);
@@ -562,7 +599,7 @@
           areaOpacity: 0.5
         };
         var options = jsOptions(series, opts, chartOptions);
-        var data = createDataTable(series, "datetime");
+        var data = createDataTable(series, "datetime", options);
         var chart = new google.visualization.AreaChart(element);
         resize(function () {
           chart.draw(data, options);
