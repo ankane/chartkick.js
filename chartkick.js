@@ -307,6 +307,11 @@
         series[i].marker = {symbol: "circle"};
       }
       options.series = series;
+      if (opts.dateFormat) {
+        options.xAxis.labels.formatter = function (){
+          return Highcharts.dateFormat(opts.dateFormat, this.value);
+        };
+      }
       new Highcharts.Chart(options);
     };
 
@@ -496,6 +501,12 @@
       waitForLoaded(function () {
         var options = jsOptions(series, opts);
         var data = createDataTable(series, "datetime");
+        if (opts.dateFormat) {
+          var formatter = new google.visualization.DateFormat({
+            pattern: opts.dateFormat
+          });
+          formatter.format(data, 0);
+        }
         var chart = new google.visualization.LineChart(element);
         resize(function () {
           chart.draw(data, options);
