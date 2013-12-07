@@ -16,7 +16,7 @@
     setMin, setMax, jsOptions, loaded, waitForLoaded, setBarMin, setBarMax, createDataTable, resize;
 
   // only functions that need defined specific to charting library
-  var renderLineChart, renderPieChart, renderColumnChart, renderBarChart, renderAreaChart;
+  var renderLineChart, renderPieChart, renderColumnChart, renderBarChart, renderAreaChart, renderGeoChart;
 
   // helpers
 
@@ -371,6 +371,10 @@
     renderAreaChart = function (element, series, opts) {
       renderLineChart(element, series, opts, "areaspline");
     };
+
+    renderGeoChart = function() {
+      throw new Error("Cannot use GeoChart with Highcharts");
+    };
   } else if ("google" in window) { // Google charts
     // load from google
     loaded = false;
@@ -569,8 +573,27 @@
         });
       });
     };
+
+    renderGeoChart = function (element, series, opts) {
+      waitForLoaded(function () {
+        var chartOptions = {
+          legend: "none"
+        };
+        var options = merge(merge(defaultOptions, chartOptions), opts.library || {});
+
+        var data = new google.visualization.DataTable();
+        data.addColumn("string", "");
+        data.addColumn("number", "Value");
+        data.addRows(series);
+
+        var chart = new google.visualization.GeoChart(element);
+        resize(function () {
+          chart.draw(data, options);
+        });
+      });
+    };
   } else { // no chart library installed
-    renderLineChart = renderPieChart = renderColumnChart = renderBarChart = renderAreaChart = function () {
+    renderLineChart = renderPieChart = renderColumnChart = renderBarChart = renderAreaChart = renderGeoChart = function () {
       throw new Error("Please install Google Charts or Highcharts");
     };
   }
@@ -606,6 +629,14 @@
     return series;
   }
 
+  function processSimple(data) {
+    var perfectData = toArr(data), i;
+    for (i = 0; i < perfectData.length; i++) {
+      perfectData[i] = [toStr(perfectData[i][0]), toFloat(perfectData[i][1])];
+    }
+    return perfectData;
+  }
+
   function processLineData(element, data, opts) {
     renderLineChart(element, processSeries(data, opts, true), opts);
   }
@@ -615,11 +646,7 @@
   }
 
   function processPieData(element, data, opts) {
-    var perfectData = toArr(data), i;
-    for (i = 0; i < perfectData.length; i++) {
-      perfectData[i] = [toStr(perfectData[i][0]), toFloat(perfectData[i][1])];
-    }
-    renderPieChart(element, perfectData, opts);
+    renderPieChart(element, processSimple(data), opts);
   }
 
   function processBarData(element, data, opts) {
@@ -628,6 +655,10 @@
 
   function processAreaData(element, data, opts) {
     renderAreaChart(element, processSeries(data, opts, true), opts);
+  }
+
+  function processGeoData(element, data, opts) {
+    renderGeoChart(element, processSimple(data), opts);
   }
 
   function setElement(element, data, opts, callback) {
@@ -654,6 +685,9 @@
     },
     AreaChart: function (element, dataSource, opts) {
       setElement(element, dataSource, opts, processAreaData);
+    },
+    GeoChart: function (element, dataSource, opts) {
+      setElement(element, dataSource, opts, processGeoData);
     }
   };
 
