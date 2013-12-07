@@ -372,6 +372,7 @@
       renderLineChart(element, series, opts, "areaspline");
     };
 
+    // TODO use Google Charts if availabile
     renderGeoChart = function() {
       throw new Error("Cannot use GeoChart with Highcharts");
     };
