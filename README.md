@@ -118,6 +118,18 @@ If you prefer Highcharts, use:
 
 Works with Highcharts 2.1+
 
+### Localization
+
+To specify a language for Google Charts, add:
+
+```html
+<script>
+  var Chartkick = {"language": "de"};
+</script>
+```
+
+**before** the javascript files.
+
 ## Examples
 
 To run the files in the `examples` directory, you'll need a web server.  Run:

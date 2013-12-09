@@ -377,7 +377,12 @@
     google.setOnLoadCallback(function () {
       loaded = true;
     });
-    google.load("visualization", "1.0", {"packages": ["corechart"]});
+    var loadOptions = {"packages": ["corechart"]};
+    var config = window.Chartkick || {};
+    if (config.language) {
+      loadOptions.language = config.language;
+    }
+    google.load("visualization", "1.0", loadOptions);
 
     waitForLoaded = function (callback) {
       google.setOnLoadCallback(callback); // always do this to prevent race conditions (watch out for other issues due to this)
