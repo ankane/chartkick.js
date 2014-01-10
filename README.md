@@ -79,6 +79,12 @@ Min and max values (except pie chart)
 new Chartkick.LineChart("chart-1", {"Football": 45, "Soccer": 56}, {"min": 1000, "max": 5000});
 ```
 
+Stacked columns or bars [master]
+
+```javascript
+new Chartkick.ColumnChart("chart-1", {"Football": 45, "Soccer": 56}, {"stacked": true});
+```
+
 You can pass options directly to the charting library with:
 
 ```javascript
