@@ -76,19 +76,19 @@ new Chartkick.LineChart("chart-1", "/stocks");
 Min and max values (except pie chart)
 
 ```javascript
-new Chartkick.LineChart("chart-1", {"Football": 45, "Soccer": 56}, {"min": 1000, "max": 5000});
+new Chartkick.LineChart("chart-1", data, {"min": 1000, "max": 5000});
 ```
 
 Stacked columns or bars [master]
 
 ```javascript
-new Chartkick.ColumnChart("chart-1", {"Football": 45, "Soccer": 56}, {"stacked": true});
+new Chartkick.ColumnChart("chart-1", data, {"stacked": true});
 ```
 
 You can pass options directly to the charting library with:
 
 ```javascript
-new Chartkick.LineChart("chart-1", {"Football": 45, "Soccer": 56}, {"library": {"backgroundColor": "pink"}});
+new Chartkick.LineChart("chart-1", data, {"library": {"backgroundColor": "pink"}});
 ```
 
 ### Data
