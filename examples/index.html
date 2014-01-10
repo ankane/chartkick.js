@@ -9,6 +9,8 @@
     <script src="http://www.google.com/jsapi"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
+    <!-- <script src="http://code.highcharts.com/2.1.9/highcharts.js"></script> -->
     <script src="../chartkick.js"></script>
 
     <style>
@@ -64,6 +66,18 @@
     <div id="chart-101" style="height: 300px;"></div>
     <script>
       new Chartkick.BarChart("chart-101", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {max: 80});
+    </script>
+
+    <h1>Multiple Series Bar Stacked</h1>
+    <div id="chart-104" style="height: 300px;"></div>
+    <script>
+      new Chartkick.BarChart("chart-104", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {max: 80, stacked: true});
+    </script>
+
+    <h1>Multiple Series Column Stacked</h1>
+    <div id="chart-105" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("chart-105", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {max: 80, stacked: true});
     </script>
 
     <h1>Multiple Series Area</h1>
