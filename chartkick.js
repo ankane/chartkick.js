@@ -7,9 +7,9 @@
  */
 
 /*jslint browser: true, indent: 2, plusplus: true, vars: true */
-/*global google, Highcharts, $*/
+/*global google, Highcharts*/
 
-(function () {
+(function (window) {
   'use strict';
 
   var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, defaultOptions, hideLegend,
@@ -17,6 +17,8 @@
 
   // only functions that need defined specific to charting library
   var renderLineChart, renderPieChart, renderColumnChart, renderBarChart, renderAreaChart;
+
+  var $ = window.jQuery || window.Zepto || window.$;
 
   // helpers
 
@@ -675,4 +677,4 @@
   };
 
   window.Chartkick = Chartkick;
-}());
+}(window));
