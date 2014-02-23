@@ -51,6 +51,12 @@ Area chart
 new Chartkick.AreaChart("chart-1", {"2013-02-10 00:00:00 -0800": 11, "2013-02-11 00:00:00 -0800": 6});
 ```
 
+Geo chart
+
+```javascript
+new Chartkick.GeoChart("chart-1", [["United States",44],["Germany",23],["Brazil",22]]);
+```
+
 Multiple series (except pie chart)
 
 ```javascript

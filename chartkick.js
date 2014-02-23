@@ -621,7 +621,7 @@
         return adapter[fnName](element, series, opts);
       }
     }
-    throw new Error("Please install Google Charts or Highcharts");
+    throw new Error("No adapter found");
   }
 
   // process data
