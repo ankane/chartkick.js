@@ -1,5 +1,6 @@
-## 1.1.2 [unreleased]
+## 1.2.0
 
+- Added geo chart
 - Added `stacked` option
 
 ## 1.1.1
