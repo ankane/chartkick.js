@@ -7,16 +7,11 @@
  */
 
 /*jslint browser: true, indent: 2, plusplus: true, vars: true */
-/*global google, Highcharts, $*/
 
 (function () {
   'use strict';
 
-  var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, defaultOptions, hideLegend,
-    setMin, setMax, jsOptions, loaded, waitForLoaded, setBarMin, setBarMax, createDataTable, resize;
-
-  // only functions that need defined specific to charting library
-  var renderLineChart, renderPieChart, renderColumnChart, renderBarChart, renderAreaChart, renderGeoChart;
+  var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, adapters = [];
 
   // helpers
 
@@ -221,382 +216,398 @@
   }
 
   if ("Highcharts" in window) {
+    var HighchartsAdapter = function () {
+      var Highcharts = window.Highcharts;
 
-    defaultOptions = {
-      chart: {},
-      xAxis: {
-        labels: {
-          style: {
-            fontSize: "12px"
+      var defaultOptions = {
+        chart: {},
+        xAxis: {
+          labels: {
+            style: {
+              fontSize: "12px"
+            }
           }
-        }
-      },
-      yAxis: {
+        },
+        yAxis: {
+          title: {
+            text: null
+          },
+          labels: {
+            style: {
+              fontSize: "12px"
+            }
+          }
+        },
         title: {
           text: null
         },
-        labels: {
+        credits: {
+          enabled: false
+        },
+        legend: {
+          borderWidth: 0
+        },
+        tooltip: {
           style: {
             fontSize: "12px"
           }
+        },
+        plotOptions: {
+          areaspline: {},
+          series: {
+            marker: {}
+          }
         }
-      },
-      title: {
-        text: null
-      },
-      credits: {
-        enabled: false
-      },
-      legend: {
-        borderWidth: 0
-      },
-      tooltip: {
-        style: {
-          fontSize: "12px"
-        }
-      },
-      plotOptions: {
-        areaspline: {},
-        series: {
-          marker: {}
-        }
-      }
-    };
+      };
 
-    hideLegend = function (options) {
-      options.legend.enabled = false;
-    };
+      var hideLegend = function (options) {
+        options.legend.enabled = false;
+      };
 
-    setMin = function (options, min) {
-      options.yAxis.min = min;
-    };
+      var setMin = function (options, min) {
+        options.yAxis.min = min;
+      };
 
-    setMax = function (options, max) {
-      options.yAxis.max = max;
-    };
+      var setMax = function (options, max) {
+        options.yAxis.max = max;
+      };
 
-    jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax);
+      var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax);
 
-    renderLineChart = function (element, series, opts, chartType) {
-      chartType = chartType || "spline";
-      var chartOptions = {};
-      if (chartType === "areaspline") {
-        chartOptions = {
-          plotOptions: {
-            areaspline: {
-              stacking: "normal"
-            },
-            series: {
-              marker: {
-                enabled: false
+      this.renderLineChart = function (element, series, opts, chartType) {
+        chartType = chartType || "spline";
+        var chartOptions = {};
+        if (chartType === "areaspline") {
+          chartOptions = {
+            plotOptions: {
+              areaspline: {
+                stacking: "normal"
+              },
+              series: {
+                marker: {
+                  enabled: false
+                }
               }
             }
+          };
+        }
+        var options = jsOptions(series, opts, chartOptions), data, i, j;
+        options.xAxis.type = "datetime";
+        options.chart.type = chartType;
+        options.chart.renderTo = element.id;
+
+        for (i = 0; i < series.length; i++) {
+          data = series[i].data;
+          for (j = 0; j < data.length; j++) {
+            data[j][0] = data[j][0].getTime();
           }
-        };
-      }
-      var options = jsOptions(series, opts, chartOptions), data, i, j;
-      options.xAxis.type = "datetime";
-      options.chart.type = chartType;
-      options.chart.renderTo = element.id;
-
-      for (i = 0; i < series.length; i++) {
-        data = series[i].data;
-        for (j = 0; j < data.length; j++) {
-          data[j][0] = data[j][0].getTime();
+          series[i].marker = {symbol: "circle"};
         }
-        series[i].marker = {symbol: "circle"};
-      }
-      options.series = series;
-      new Highcharts.Chart(options);
-    };
+        options.series = series;
+        new Highcharts.Chart(options);
+      };
 
-    renderPieChart = function (element, series, opts) {
-      var options = merge(defaultOptions, opts.library || {});
-      options.chart.renderTo = element.id;
-      options.series = [{
-        type: "pie",
-        name: "Value",
-        data: series
-      }];
-      new Highcharts.Chart(options);
-    };
+      this.renderPieChart = function (element, series, opts) {
+        var options = merge(defaultOptions, opts.library || {});
+        options.chart.renderTo = element.id;
+        options.series = [{
+          type: "pie",
+          name: "Value",
+          data: series
+        }];
+        new Highcharts.Chart(options);
+      };
 
-    renderColumnChart = function (element, series, opts, chartType) {
-      chartType = chartType || "column";
-      var options = jsOptions(series, opts), i, j, s, d, rows = [];
-      options.chart.type = chartType;
-      options.chart.renderTo = element.id;
+      this.renderColumnChart = function (element, series, opts, chartType) {
+        chartType = chartType || "column";
+        var options = jsOptions(series, opts), i, j, s, d, rows = [];
+        options.chart.type = chartType;
+        options.chart.renderTo = element.id;
 
-      for (i = 0; i < series.length; i++) {
-        s = series[i];
+        for (i = 0; i < series.length; i++) {
+          s = series[i];
 
-        for (j = 0; j < s.data.length; j++) {
-          d = s.data[j];
-          if (!rows[d[0]]) {
-            rows[d[0]] = new Array(series.length);
-          }
-          rows[d[0]][i] = d[1];
-        }
-      }
-
-      var categories = [];
-      for (i in rows) {
-        if (rows.hasOwnProperty(i)) {
-          categories.push(i);
-        }
-      }
-      options.xAxis.categories = categories;
-
-      var newSeries = [];
-      for (i = 0; i < series.length; i++) {
-        d = [];
-        for (j = 0; j < categories.length; j++) {
-          d.push(rows[categories[j]][i] || 0);
-        }
-
-        newSeries.push({
-          name: series[i].name,
-          data: d
-        });
-      }
-      options.series = newSeries;
-
-      new Highcharts.Chart(options);
-    };
-
-    renderBarChart = function (element, series, opts) {
-      renderColumnChart(element, series, opts, "bar");
-    };
-
-    renderAreaChart = function (element, series, opts) {
-      renderLineChart(element, series, opts, "areaspline");
-    };
-
-    // TODO use Google Charts if availabile
-    renderGeoChart = function() {
-      throw new Error("Cannot use GeoChart with Highcharts");
-    };
-  } else if ("google" in window) { // Google charts
-    // load from google
-    loaded = false;
-    google.setOnLoadCallback(function () {
-      loaded = true;
-    });
-    google.load("visualization", "1.0", {"packages": ["corechart"]});
-
-    waitForLoaded = function (callback) {
-      google.setOnLoadCallback(callback); // always do this to prevent race conditions (watch out for other issues due to this)
-      if (loaded) {
-        callback();
-      }
-    };
-
-    // Set chart options
-    defaultOptions = {
-      chartArea: {},
-      fontName: "'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, Helvetica, sans-serif",
-      pointSize: 6,
-      legend: {
-        textStyle: {
-          fontSize: 12,
-          color: "#444"
-        },
-        alignment: "center",
-        position: "right"
-      },
-      curveType: "function",
-      hAxis: {
-        textStyle: {
-          color: "#666",
-          fontSize: 12
-        },
-        gridlines: {
-          color: "transparent"
-        },
-        baselineColor: "#ccc",
-        viewWindow: {}
-      },
-      vAxis: {
-        textStyle: {
-          color: "#666",
-          fontSize: 12
-        },
-        baselineColor: "#ccc",
-        viewWindow: {}
-      },
-      tooltip: {
-        textStyle: {
-          color: "#666",
-          fontSize: 12
-        }
-      }
-    };
-
-    hideLegend = function (options) {
-      options.legend.position = "none";
-    };
-
-    setMin = function (options, min) {
-      options.vAxis.viewWindow.min = min;
-    };
-
-    setMax = function (options, max) {
-      options.vAxis.viewWindow.max = max;
-    };
-
-    setBarMin = function (options, min) {
-      options.hAxis.viewWindow.min = min;
-    };
-
-    setBarMax = function (options, max) {
-      options.hAxis.viewWindow.max = max;
-    };
-
-    jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax);
-
-    // cant use object as key
-    createDataTable = function (series, columnType) {
-      var data = new google.visualization.DataTable();
-      data.addColumn(columnType, "");
-
-      var i, j, s, d, key, rows = [];
-      for (i = 0; i < series.length; i++) {
-        s = series[i];
-        data.addColumn("number", s.name);
-
-        for (j = 0; j < s.data.length; j++) {
-          d = s.data[j];
-          key = (columnType === "datetime") ? d[0].getTime() : d[0];
-          if (!rows[key]) {
-            rows[key] = new Array(series.length);
-          }
-          rows[key][i] = toFloat(d[1]);
-        }
-      }
-
-      var rows2 = [];
-      for (i in rows) {
-        if (rows.hasOwnProperty(i)) {
-          rows2.push([(columnType === "datetime") ? new Date(toFloat(i)) : i].concat(rows[i]));
-        }
-      }
-      if (columnType === "datetime") {
-        rows2.sort(sortByTime);
-      }
-      data.addRows(rows2);
-
-      return data;
-    };
-
-    resize = function (callback) {
-      if (window.attachEvent) {
-        window.attachEvent("onresize", callback);
-      } else if (window.addEventListener) {
-        window.addEventListener("resize", callback, true);
-      }
-      callback();
-    };
-
-    renderLineChart = function (element, series, opts) {
-      waitForLoaded(function () {
-        var options = jsOptions(series, opts);
-        var data = createDataTable(series, "datetime");
-        var chart = new google.visualization.LineChart(element);
-        resize(function () {
-          chart.draw(data, options);
-        });
-      });
-    };
-
-    renderPieChart = function (element, series, opts) {
-      waitForLoaded(function () {
-        var chartOptions = {
-          chartArea: {
-            top: "10%",
-            height: "80%"
-          }
-        };
-        var options = merge(merge(defaultOptions, chartOptions), opts.library || {});
-
-        var data = new google.visualization.DataTable();
-        data.addColumn("string", "");
-        data.addColumn("number", "Value");
-        data.addRows(series);
-
-        var chart = new google.visualization.PieChart(element);
-        resize(function () {
-          chart.draw(data, options);
-        });
-      });
-    };
-
-    renderColumnChart = function (element, series, opts) {
-      waitForLoaded(function () {
-        var options = jsOptions(series, opts);
-        var data = createDataTable(series, "string");
-        var chart = new google.visualization.ColumnChart(element);
-        resize(function () {
-          chart.draw(data, options);
-        });
-      });
-    };
-
-    renderBarChart = function (element, series, opts) {
-      waitForLoaded(function () {
-        var chartOptions = {
-          hAxis: {
-            gridlines: {
-              color: "#ccc"
+          for (j = 0; j < s.data.length; j++) {
+            d = s.data[j];
+            if (!rows[d[0]]) {
+              rows[d[0]] = new Array(series.length);
             }
+            rows[d[0]][i] = d[1];
           }
-        };
-        var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax)(series, opts, chartOptions);
-        var data = createDataTable(series, "string");
-        var chart = new google.visualization.BarChart(element);
-        resize(function () {
-          chart.draw(data, options);
-        });
-      });
+        }
+
+        var categories = [];
+        for (i in rows) {
+          if (rows.hasOwnProperty(i)) {
+            categories.push(i);
+          }
+        }
+        options.xAxis.categories = categories;
+
+        var newSeries = [];
+        for (i = 0; i < series.length; i++) {
+          d = [];
+          for (j = 0; j < categories.length; j++) {
+            d.push(rows[categories[j]][i] || 0);
+          }
+
+          newSeries.push({
+            name: series[i].name,
+            data: d
+          });
+        }
+        options.series = newSeries;
+
+        new Highcharts.Chart(options);
+      };
+
+      var self = this;
+
+      this.renderBarChart = function (element, series, opts) {
+        self.renderColumnChart(element, series, opts, "bar");
+      };
+
+      this.renderAreaChart = function (element, series, opts) {
+        self.renderLineChart(element, series, opts, "areaspline");
+      };
     };
+    adapters.push(new HighchartsAdapter());
+  }
+  if ("google" in window) {
+    var GoogleChartsAdapter = function () {
+      var google = window.google;
 
-    renderAreaChart = function (element, series, opts) {
-      waitForLoaded(function () {
-        var chartOptions = {
-          isStacked: true,
-          pointSize: 0,
-          areaOpacity: 0.5
-        };
-        var options = jsOptions(series, opts, chartOptions);
-        var data = createDataTable(series, "datetime");
-        var chart = new google.visualization.AreaChart(element);
-        resize(function () {
-          chart.draw(data, options);
-        });
+      // load from google
+      var loaded = false;
+      google.setOnLoadCallback(function () {
+        loaded = true;
       });
-    };
+      google.load("visualization", "1.0", {"packages": ["corechart"]});
 
-    renderGeoChart = function (element, series, opts) {
-      waitForLoaded(function () {
-        var chartOptions = {
-          legend: "none"
-        };
-        var options = merge(merge(defaultOptions, chartOptions), opts.library || {});
+      var waitForLoaded = function (callback) {
+        google.setOnLoadCallback(callback); // always do this to prevent race conditions (watch out for other issues due to this)
+        if (loaded) {
+          callback();
+        }
+      };
 
+      // Set chart options
+      var defaultOptions = {
+        chartArea: {},
+        fontName: "'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, Helvetica, sans-serif",
+        pointSize: 6,
+        legend: {
+          textStyle: {
+            fontSize: 12,
+            color: "#444"
+          },
+          alignment: "center",
+          position: "right"
+        },
+        curveType: "function",
+        hAxis: {
+          textStyle: {
+            color: "#666",
+            fontSize: 12
+          },
+          gridlines: {
+            color: "transparent"
+          },
+          baselineColor: "#ccc",
+          viewWindow: {}
+        },
+        vAxis: {
+          textStyle: {
+            color: "#666",
+            fontSize: 12
+          },
+          baselineColor: "#ccc",
+          viewWindow: {}
+        },
+        tooltip: {
+          textStyle: {
+            color: "#666",
+            fontSize: 12
+          }
+        }
+      };
+
+      var hideLegend = function (options) {
+        options.legend.position = "none";
+      };
+
+      var setMin = function (options, min) {
+        options.vAxis.viewWindow.min = min;
+      };
+
+      var setMax = function (options, max) {
+        options.vAxis.viewWindow.max = max;
+      };
+
+      var setBarMin = function (options, min) {
+        options.hAxis.viewWindow.min = min;
+      };
+
+      var setBarMax = function (options, max) {
+        options.hAxis.viewWindow.max = max;
+      };
+
+      var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax);
+
+      // cant use object as key
+      var createDataTable = function (series, columnType) {
         var data = new google.visualization.DataTable();
-        data.addColumn("string", "");
-        data.addColumn("number", "Value");
-        data.addRows(series);
+        data.addColumn(columnType, "");
 
-        var chart = new google.visualization.GeoChart(element);
-        resize(function () {
-          chart.draw(data, options);
+        var i, j, s, d, key, rows = [];
+        for (i = 0; i < series.length; i++) {
+          s = series[i];
+          data.addColumn("number", s.name);
+
+          for (j = 0; j < s.data.length; j++) {
+            d = s.data[j];
+            key = (columnType === "datetime") ? d[0].getTime() : d[0];
+            if (!rows[key]) {
+              rows[key] = new Array(series.length);
+            }
+            rows[key][i] = toFloat(d[1]);
+          }
+        }
+
+        var rows2 = [];
+        for (i in rows) {
+          if (rows.hasOwnProperty(i)) {
+            rows2.push([(columnType === "datetime") ? new Date(toFloat(i)) : i].concat(rows[i]));
+          }
+        }
+        if (columnType === "datetime") {
+          rows2.sort(sortByTime);
+        }
+        data.addRows(rows2);
+
+        return data;
+      };
+
+      var resize = function (callback) {
+        if (window.attachEvent) {
+          window.attachEvent("onresize", callback);
+        } else if (window.addEventListener) {
+          window.addEventListener("resize", callback, true);
+        }
+        callback();
+      };
+
+      this.renderLineChart = function (element, series, opts) {
+        waitForLoaded(function () {
+          var options = jsOptions(series, opts);
+          var data = createDataTable(series, "datetime");
+          var chart = new google.visualization.LineChart(element);
+          resize(function () {
+            chart.draw(data, options);
+          });
         });
-      });
+      };
+
+      this.renderPieChart = function (element, series, opts) {
+        waitForLoaded(function () {
+          var chartOptions = {
+            chartArea: {
+              top: "10%",
+              height: "80%"
+            }
+          };
+          var options = merge(merge(defaultOptions, chartOptions), opts.library || {});
+
+          var data = new google.visualization.DataTable();
+          data.addColumn("string", "");
+          data.addColumn("number", "Value");
+          data.addRows(series);
+
+          var chart = new google.visualization.PieChart(element);
+          resize(function () {
+            chart.draw(data, options);
+          });
+        });
+      };
+
+      this.renderColumnChart = function (element, series, opts) {
+        waitForLoaded(function () {
+          var options = jsOptions(series, opts);
+          var data = createDataTable(series, "string");
+          var chart = new google.visualization.ColumnChart(element);
+          resize(function () {
+            chart.draw(data, options);
+          });
+        });
+      };
+
+      this.renderBarChart = function (element, series, opts) {
+        waitForLoaded(function () {
+          var chartOptions = {
+            hAxis: {
+              gridlines: {
+                color: "#ccc"
+              }
+            }
+          };
+          var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax)(series, opts, chartOptions);
+          var data = createDataTable(series, "string");
+          var chart = new google.visualization.BarChart(element);
+          resize(function () {
+            chart.draw(data, options);
+          });
+        });
+      };
+
+      this.renderAreaChart = function (element, series, opts) {
+        waitForLoaded(function () {
+          var chartOptions = {
+            isStacked: true,
+            pointSize: 0,
+            areaOpacity: 0.5
+          };
+          var options = jsOptions(series, opts, chartOptions);
+          var data = createDataTable(series, "datetime");
+          var chart = new google.visualization.AreaChart(element);
+          resize(function () {
+            chart.draw(data, options);
+          });
+        });
+      };
+
+      this.renderGeoChart = function (element, series, opts) {
+        waitForLoaded(function () {
+          var chartOptions = {
+            legend: "none"
+          };
+          var options = merge(merge(defaultOptions, chartOptions), opts.library || {});
+
+          var data = new google.visualization.DataTable();
+          data.addColumn("string", "");
+          data.addColumn("number", "Value");
+          data.addRows(series);
+
+          var chart = new google.visualization.GeoChart(element);
+          resize(function () {
+            chart.draw(data, options);
+          });
+        });
+      };
     };
-  } else { // no chart library installed
-    renderLineChart = renderPieChart = renderColumnChart = renderBarChart = renderAreaChart = renderGeoChart = function () {
-      throw new Error("Please install Google Charts or Highcharts");
-    };
+    adapters.push(new GoogleChartsAdapter());
+  }
+
+  // TODO add adapter option
+  function renderChart(chartType, element, series, opts) {
+    var i, adapter, fnName;
+    fnName = "render" + chartType + "Chart";
+    for (i = 0; i < adapters.length; i++) {
+      adapter = adapters[i];
+      if (isFunction(adapter[fnName])) {
+        return adapter[fnName](element, series, opts);
+      }
+    }
+    throw new Error("Please install Google Charts or Highcharts");
   }
 
   // process data
@@ -639,27 +650,27 @@
   }
 
   function processLineData(element, data, opts) {
-    renderLineChart(element, processSeries(data, opts, true), opts);
+    renderChart("Line", element, processSeries(data, opts, true), opts);
   }
 
   function processColumnData(element, data, opts) {
-    renderColumnChart(element, processSeries(data, opts, false), opts);
+    renderChart("Column", element, processSeries(data, opts, false), opts);
   }
 
   function processPieData(element, data, opts) {
-    renderPieChart(element, processSimple(data), opts);
+    renderChart("Pie", element, processSimple(data), opts);
   }
 
   function processBarData(element, data, opts) {
-    renderBarChart(element, processSeries(data, opts, false), opts);
+    renderChart("Bar", element, processSeries(data, opts, false), opts);
   }
 
   function processAreaData(element, data, opts) {
-    renderAreaChart(element, processSeries(data, opts, true), opts);
+    renderChart("Area", element, processSeries(data, opts, true), opts);
   }
 
   function processGeoData(element, data, opts) {
-    renderGeoChart(element, processSimple(data), opts);
+    renderChart("Geo", element, processSimple(data), opts);
   }
 
   function setElement(element, data, opts, callback) {
