@@ -1,3 +1,12 @@
+## 1.1.2 [unreleased]
+
+- Added `stacked` option
+
+## 1.1.1
+
+- Made sure options can be overridden
+- Added support for Google Charts localization
+
 ## 1.1.0
 
 - Added bar chart and area chart

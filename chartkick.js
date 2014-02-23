@@ -2,16 +2,18 @@
  * Chartkick.js
  * Create beautiful Javascript charts with minimal code
  * https://github.com/ankane/chartkick.js
- * v1.1.0
+ * v1.1.1
  * MIT License
  */
 
 /*jslint browser: true, indent: 2, plusplus: true, vars: true */
 
-(function () {
+(function (window) {
   'use strict';
 
   var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, adapters = [];
+
+  var $ = window.jQuery || window.Zepto || window.$;
 
   // helpers
 
@@ -100,7 +102,7 @@
     return false;
   }
 
-  function jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax) {
+  function jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked) {
     return function (series, opts, chartOptions) {
       var options = merge({}, defaultOptions);
       options = merge(options, chartOptions || {});
@@ -121,6 +123,10 @@
       // max
       if ("max" in opts) {
         setMax(options, opts.max);
+      }
+
+      if (opts.stacked) {
+        setStacked(options);
       }
 
       // merge library last
@@ -272,7 +278,11 @@
         options.yAxis.max = max;
       };
 
-      var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax);
+      var setStacked = function (options) {
+        options.plotOptions.series.stacking = "normal";
+      };
+
+      var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked);
 
       this.renderLineChart = function (element, series, opts, chartType) {
         chartType = chartType || "spline";
@@ -452,7 +462,11 @@
         options.hAxis.viewWindow.max = max;
       };
 
-      var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax);
+      var setStacked = function (options) {
+        options.isStacked = true;
+      };
+
+      var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked);
 
       // cant use object as key
       var createDataTable = function (series, columnType) {
@@ -550,7 +564,7 @@
               }
             }
           };
-          var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax)(series, opts, chartOptions);
+          var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked)(series, opts, chartOptions);
           var data = createDataTable(series, "string");
           var chart = new google.visualization.BarChart(element);
           resize(function () {
@@ -704,4 +718,4 @@
   };
 
   window.Chartkick = Chartkick;
-}());
+}(window));

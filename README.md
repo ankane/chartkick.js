@@ -76,13 +76,19 @@ new Chartkick.LineChart("chart-1", "/stocks");
 Min and max values (except pie chart)
 
 ```javascript
-new Chartkick.LineChart("chart-1", {"Football": 45, "Soccer": 56}, {"min": 1000, "max": 5000});
+new Chartkick.LineChart("chart-1", data, {"min": 1000, "max": 5000});
+```
+
+Stacked columns or bars [master]
+
+```javascript
+new Chartkick.ColumnChart("chart-1", data, {"stacked": true});
 ```
 
 You can pass options directly to the charting library with:
 
 ```javascript
-new Chartkick.LineChart("chart-1", {"Football": 45, "Soccer": 56}, {"library": {"backgroundColor": "pink"}});
+new Chartkick.LineChart("chart-1", data, {"library": {"backgroundColor": "pink"}});
 ```
 
 ### Data
@@ -117,6 +123,18 @@ If you prefer Highcharts, use:
 ```
 
 Works with Highcharts 2.1+
+
+### Localization
+
+To specify a language for Google Charts, add:
+
+```html
+<script>
+  var Chartkick = {"language": "de"};
+</script>
+```
+
+**before** the javascript files.
 
 ## Examples
 
