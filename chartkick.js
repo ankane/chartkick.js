@@ -161,22 +161,24 @@
     });
   }
 
-  function errorCatcher(element, data, opts, callback) {
+  function errorCatcher(chart, callback) {
     try {
-      callback(element, data, opts);
+      callback(chart);
     } catch (err) {
-      chartError(element, err.message);
+      chartError(chart.element, err.message);
       throw err;
     }
   }
 
-  function fetchDataSource(element, dataSource, opts, callback) {
-    if (typeof dataSource === "string") {
-      getJSON(element, dataSource, function (data, textStatus, jqXHR) {
-        errorCatcher(element, data, opts, callback);
+  function fetchDataSource(chart, callback) {
+    if (typeof chart.dataSource === "string") {
+      getJSON(chart.element, chart.dataSource, function (data, textStatus, jqXHR) {
+        chart.data = data;
+        errorCatcher(chart, callback);
       });
     } else {
-      errorCatcher(element, dataSource, opts, callback);
+      chart.data = chart.dataSource;
+      errorCatcher(chart, callback);
     }
   }
 
@@ -284,7 +286,7 @@
 
       var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked);
 
-      this.renderLineChart = function (element, series, opts, chartType) {
+      this.renderLineChart = function (chart, chartType) {
         chartType = chartType || "spline";
         var chartOptions = {};
         if (chartType === "areaspline") {
@@ -301,11 +303,12 @@
             }
           };
         }
-        var options = jsOptions(series, opts, chartOptions), data, i, j;
+        var options = jsOptions(chart.data, chart.options, chartOptions), data, i, j;
         options.xAxis.type = "datetime";
         options.chart.type = chartType;
-        options.chart.renderTo = element.id;
+        options.chart.renderTo = chart.element.id;
 
+        var series = chart.data;
         for (i = 0; i < series.length; i++) {
           data = series[i].data;
           for (j = 0; j < data.length; j++) {
@@ -317,22 +320,23 @@
         new Highcharts.Chart(options);
       };
 
-      this.renderPieChart = function (element, series, opts) {
-        var options = merge(defaultOptions, opts.library || {});
-        options.chart.renderTo = element.id;
+      this.renderPieChart = function (chart) {
+        var options = merge(defaultOptions, chart.options.library || {});
+        options.chart.renderTo = chart.element.id;
         options.series = [{
           type: "pie",
           name: "Value",
-          data: series
+          data: chart.data
         }];
         new Highcharts.Chart(options);
       };
 
-      this.renderColumnChart = function (element, series, opts, chartType) {
-        chartType = chartType || "column";
-        var options = jsOptions(series, opts), i, j, s, d, rows = [];
+      this.renderColumnChart = function (chart, chartType) {
+        var chartType = chartType || "column";
+        var series = chart.data;
+        var options = jsOptions(series, chart.options), i, j, s, d, rows = [];
         options.chart.type = chartType;
-        options.chart.renderTo = element.id;
+        options.chart.renderTo = chart.element.id;
 
         for (i = 0; i < series.length; i++) {
           s = series[i];
@@ -373,12 +377,12 @@
 
       var self = this;
 
-      this.renderBarChart = function (element, series, opts) {
-        self.renderColumnChart(element, series, opts, "bar");
+      this.renderBarChart = function (chart) {
+        self.renderColumnChart(chart, "bar");
       };
 
-      this.renderAreaChart = function (element, series, opts) {
-        self.renderLineChart(element, series, opts, "areaspline");
+      this.renderAreaChart = function (chart) {
+        self.renderLineChart(chart, "areaspline");
       };
     };
     adapters.push(new HighchartsAdapter());
@@ -511,18 +515,18 @@
         callback();
       };
 
-      this.renderLineChart = function (element, series, opts) {
+      this.renderLineChart = function (chart) {
         waitForLoaded(function () {
-          var options = jsOptions(series, opts);
-          var data = createDataTable(series, "datetime");
-          var chart = new google.visualization.LineChart(element);
+          var options = jsOptions(chart.data, chart.options);
+          var data = createDataTable(chart.data, "datetime");
+          chart.chart = new google.visualization.LineChart(chart.element);
           resize(function () {
-            chart.draw(data, options);
+            chart.chart.draw(data, options);
           });
         });
       };
 
-      this.renderPieChart = function (element, series, opts) {
+      this.renderPieChart = function (chart) {
         waitForLoaded(function () {
           var chartOptions = {
             chartArea: {
@@ -530,32 +534,32 @@
               height: "80%"
             }
           };
-          var options = merge(merge(defaultOptions, chartOptions), opts.library || {});
+          var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
           var data = new google.visualization.DataTable();
           data.addColumn("string", "");
           data.addColumn("number", "Value");
-          data.addRows(series);
+          data.addRows(chart.data);
 
-          var chart = new google.visualization.PieChart(element);
+          chart.chart = new google.visualization.PieChart(chart.element);
           resize(function () {
-            chart.draw(data, options);
+            chart.chart.draw(data, options);
           });
         });
       };
 
-      this.renderColumnChart = function (element, series, opts) {
+      this.renderColumnChart = function (chart) {
         waitForLoaded(function () {
-          var options = jsOptions(series, opts);
-          var data = createDataTable(series, "string");
-          var chart = new google.visualization.ColumnChart(element);
+          var options = jsOptions(chart.data, chart.options);
+          var data = createDataTable(chart.data, "string");
+          chart.chart = new google.visualization.ColumnChart(chart.element);
           resize(function () {
-            chart.draw(data, options);
+            chart.chart.draw(data, options);
           });
         });
       };
 
-      this.renderBarChart = function (element, series, opts) {
+      this.renderBarChart = function (chart) {
         waitForLoaded(function () {
           var chartOptions = {
             hAxis: {
@@ -564,46 +568,46 @@
               }
             }
           };
-          var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked)(series, opts, chartOptions);
-          var data = createDataTable(series, "string");
-          var chart = new google.visualization.BarChart(element);
+          var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked)(chart.data, chart.options, chartOptions);
+          var data = createDataTable(chart.data, "string");
+          chart.chart = new google.visualization.BarChart(chart.element);
           resize(function () {
-            chart.draw(data, options);
+            chart.chart.draw(data, options);
           });
         });
       };
 
-      this.renderAreaChart = function (element, series, opts) {
+      this.renderAreaChart = function (chart) {
         waitForLoaded(function () {
           var chartOptions = {
             isStacked: true,
             pointSize: 0,
             areaOpacity: 0.5
           };
-          var options = jsOptions(series, opts, chartOptions);
-          var data = createDataTable(series, "datetime");
-          var chart = new google.visualization.AreaChart(element);
+          var options = jsOptions(chart.data, chart.options, chartOptions);
+          var data = createDataTable(chart.data, "datetime");
+          chart.chart = new google.visualization.AreaChart(chart.element);
           resize(function () {
-            chart.draw(data, options);
+            chart.chart.draw(data, options);
           });
         });
       };
 
-      this.renderGeoChart = function (element, series, opts) {
+      this.renderGeoChart = function (chart) {
         waitForLoaded(function () {
           var chartOptions = {
             legend: "none"
           };
-          var options = merge(merge(defaultOptions, chartOptions), opts.library || {});
+          var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
           var data = new google.visualization.DataTable();
           data.addColumn("string", "");
           data.addColumn("number", "Value");
-          data.addRows(series);
+          data.addRows(chart.data);
 
-          var chart = new google.visualization.GeoChart(element);
+          chart.chart = new google.visualization.GeoChart(chart.element);
           resize(function () {
-            chart.draw(data, options);
+            chart.chart.draw(data, options);
           });
         });
       };
@@ -612,13 +616,16 @@
   }
 
   // TODO add adapter option
-  function renderChart(chartType, element, series, opts) {
+  // TODO remove chartType if cross-browser way
+  // to get the name of the chart class
+  function renderChart(chartType, chart) {
     var i, adapter, fnName;
     fnName = "render" + chartType + "Chart";
+
     for (i = 0; i < adapters.length; i++) {
       adapter = adapters[i];
       if (isFunction(adapter[fnName])) {
-        return adapter[fnName](element, series, opts);
+        return adapter[fnName](chart);
       }
     }
     throw new Error("No adapter found");
@@ -663,58 +670,69 @@
     return perfectData;
   }
 
-  function processLineData(element, data, opts) {
-    renderChart("Line", element, processSeries(data, opts, true), opts);
+  function processLineData(chart) {
+    chart.data = processSeries(chart.data, chart.options, true);
+    renderChart("Line", chart);
   }
 
-  function processColumnData(element, data, opts) {
-    renderChart("Column", element, processSeries(data, opts, false), opts);
+  function processColumnData(chart) {
+    chart.data = processSeries(chart.data, chart.options, false);
+    renderChart("Column", chart);
   }
 
-  function processPieData(element, data, opts) {
-    renderChart("Pie", element, processSimple(data), opts);
+  function processPieData(chart) {
+    chart.data = processSimple(chart.data);
+    renderChart("Pie", chart);
   }
 
-  function processBarData(element, data, opts) {
-    renderChart("Bar", element, processSeries(data, opts, false), opts);
+  function processBarData(chart) {
+    chart.data = processSeries(chart.data, chart.options, false);
+    renderChart("Bar", chart);
   }
 
-  function processAreaData(element, data, opts) {
-    renderChart("Area", element, processSeries(data, opts, true), opts);
+  function processAreaData(chart) {
+    chart.data = processSeries(chart.data, chart.options, true);
+    renderChart("Area", chart);
   }
 
-  function processGeoData(element, data, opts) {
-    renderChart("Geo", element, processSimple(data), opts);
+  function processGeoData(chart) {
+    chart.data = processSimple(chart.data);
+    renderChart("Geo", chart);
   }
 
-  function setElement(element, data, opts, callback) {
+  function setElement(chart, element, dataSource, opts, callback) {
     if (typeof element === "string") {
       element = document.getElementById(element);
     }
-    fetchDataSource(element, data, opts || {}, callback);
+    chart.element = element;
+    chart.options = opts || {};
+    chart.dataSource = dataSource;
+    Chartkick.charts[element.id] = chart;
+    fetchDataSource(chart, callback);
   }
 
   // define classes
 
   Chartkick = {
     LineChart: function (element, dataSource, opts) {
-      setElement(element, dataSource, opts, processLineData);
+      setElement(this, element, dataSource, opts, processLineData);
     },
     PieChart: function (element, dataSource, opts) {
-      setElement(element, dataSource, opts, processPieData);
+      setElement(this, element, dataSource, opts, processPieData);
     },
     ColumnChart: function (element, dataSource, opts) {
-      setElement(element, dataSource, opts, processColumnData);
+      setElement(this, element, dataSource, opts, processColumnData);
     },
     BarChart: function (element, dataSource, opts) {
-      setElement(element, dataSource, opts, processBarData);
+      setElement(this, element, dataSource, opts, processBarData);
     },
     AreaChart: function (element, dataSource, opts) {
-      setElement(element, dataSource, opts, processAreaData);
+      setElement(this, element, dataSource, opts, processAreaData);
     },
     GeoChart: function (element, dataSource, opts) {
-      setElement(element, dataSource, opts, processGeoData);
-    }
+      setElement(this, element, dataSource, opts, processGeoData);
+    },
+    charts: {}
   };
 
   window.Chartkick = Chartkick;
