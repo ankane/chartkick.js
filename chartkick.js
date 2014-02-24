@@ -224,7 +224,7 @@
   }
 
   if ("Highcharts" in window) {
-    var HighchartsAdapter = function () {
+    var HighchartsAdapter = new function () {
       var Highcharts = window.Highcharts;
 
       var defaultOptions = {
@@ -385,10 +385,10 @@
         self.renderLineChart(chart, "areaspline");
       };
     };
-    adapters.push(new HighchartsAdapter());
+    adapters.push(HighchartsAdapter);
   }
   if ("google" in window) {
-    var GoogleChartsAdapter = function () {
+    var GoogleChartsAdapter = new function () {
       var google = window.google;
 
       // load from google
@@ -612,7 +612,7 @@
         });
       };
     };
-    adapters.push(new GoogleChartsAdapter());
+    adapters.push(GoogleChartsAdapter);
   }
 
   // TODO add adapter option
