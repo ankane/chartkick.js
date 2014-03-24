@@ -598,7 +598,10 @@
       this.renderGeoChart = function (chart) {
         waitForLoaded(function () {
           var chartOptions = {
-            legend: "none"
+            legend: "none",
+            colorAxis: {
+              colors: ["#f6c7b6", "#e0440e"]
+            }
           };
           var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
