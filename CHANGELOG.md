@@ -1,3 +1,7 @@
+## 1.2.1
+
+- Added `discrete` option
+
 ## 1.2.0
 
 - Added geo chart

@@ -85,13 +85,13 @@ Min and max values (except pie chart)
 new Chartkick.LineChart("chart-1", data, {"min": 1000, "max": 5000});
 ```
 
-Stacked columns or bars [master]
+Stacked columns or bars
 
 ```javascript
 new Chartkick.ColumnChart("chart-1", data, {"stacked": true});
 ```
 
-Discrete axis [master]
+Discrete axis
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {"discrete": true});
