@@ -304,15 +304,17 @@
           };
         }
         var options = jsOptions(chart.data, chart.options, chartOptions), data, i, j;
-        options.xAxis.type = "datetime";
+        options.xAxis.type = chart.options.discrete ? "category" : "datetime";
         options.chart.type = chartType;
         options.chart.renderTo = chart.element.id;
 
         var series = chart.data;
         for (i = 0; i < series.length; i++) {
           data = series[i].data;
-          for (j = 0; j < data.length; j++) {
-            data[j][0] = data[j][0].getTime();
+          if (!chart.options.discrete) {
+            for (j = 0; j < data.length; j++) {
+              data[j][0] = data[j][0].getTime();
+            }
           }
           series[i].marker = {symbol: "circle"};
         }
@@ -518,7 +520,7 @@
       this.renderLineChart = function (chart) {
         waitForLoaded(function () {
           var options = jsOptions(chart.data, chart.options);
-          var data = createDataTable(chart.data, "datetime");
+          var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
           chart.chart = new google.visualization.LineChart(chart.element);
           resize(function () {
             chart.chart.draw(data, options);
@@ -585,7 +587,7 @@
             areaOpacity: 0.5
           };
           var options = jsOptions(chart.data, chart.options, chartOptions);
-          var data = createDataTable(chart.data, "datetime");
+          var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
           chart.chart = new google.visualization.AreaChart(chart.element);
           resize(function () {
             chart.chart.draw(data, options);
@@ -642,6 +644,9 @@
       opts.hideLegend = true;
     } else {
       opts.hideLegend = false;
+    }
+    if (opts.discrete) {
+      time = false;
     }
 
     // right format
