@@ -1,3 +1,7 @@
+## 1.2.2 [unreleased]
+
+- Added `colors` option
+
 ## 1.2.1
 
 - Added `discrete` option

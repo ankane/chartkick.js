@@ -85,6 +85,12 @@ Min and max values (except pie chart)
 new Chartkick.LineChart("chart-1", data, {"min": 1000, "max": 5000});
 ```
 
+Colors [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {"colors": ["pink", "#999"]});
+```
+
 Stacked columns or bars
 
 ```javascript
