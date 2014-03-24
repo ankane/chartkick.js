@@ -91,6 +91,12 @@ Stacked columns or bars [master]
 new Chartkick.ColumnChart("chart-1", data, {"stacked": true});
 ```
 
+Discrete axis [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {"discrete": true});
+```
+
 You can pass options directly to the charting library with:
 
 ```javascript
