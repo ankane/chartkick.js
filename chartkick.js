@@ -600,7 +600,7 @@
           var chartOptions = {
             legend: "none",
             colorAxis: {
-              colors: ["#f6c7b6", "#e0440e"]
+              colors: ["#f6c7b6", "#ce502d"]
             }
           };
           var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
