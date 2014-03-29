@@ -57,7 +57,7 @@ Geo chart
 new Chartkick.GeoChart("chart-1", [["United States",44],["Germany",23],["Brazil",22]]);
 ```
 
-Multiple series (except pie chart)
+Multiple series
 
 ```javascript
 data = [
@@ -79,7 +79,7 @@ new Chartkick.LineChart("chart-1", "/stocks");
 
 ### Options
 
-Min and max values (except pie chart)
+Min and max values
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {"min": 1000, "max": 5000});
@@ -87,7 +87,7 @@ new Chartkick.LineChart("chart-1", data, {"min": 1000, "max": 5000});
 
 `min` defaults to 0 for charts with non-negative values. Use `null` to let the charting library decide.
 
-Colors [master]
+Colors
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {"colors": ["pink", "#999"]});

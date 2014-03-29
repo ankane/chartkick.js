@@ -1,4 +1,4 @@
-## 1.2.2 [unreleased]
+## 1.2.2
 
 - Added `colors` option
 
