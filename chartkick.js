@@ -406,7 +406,8 @@
       google.setOnLoadCallback(function () {
         loaded = true;
       });
-      google.load("visualization", "1.0", {"packages": ["corechart"]});
+      google.load("visualization", "1.1", {"packages": ["corechart"]});
+      google.load('visualization', '1.1', {'packages':['annotationchart']}); //how to do this only when needed?
 
       var waitForLoaded = function (callback) {
         google.setOnLoadCallback(callback); // always do this to prevent race conditions (watch out for other issues due to this)
@@ -530,6 +531,17 @@
           var options = jsOptions(chart.data, chart.options);
           var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
           chart.chart = new google.visualization.LineChart(chart.element);
+          resize(function () {
+            chart.chart.draw(data, options);
+          });
+        });
+      };
+
+      this.renderAnnotationChart = function (chart) {
+        waitForLoaded(function () {
+          var options = jsOptions(chart.data, chart.options);
+          var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
+          chart.chart = new google.visualization.AnnotationChart(chart.element);
           resize(function () {
             chart.chart.draw(data, options);
           });
@@ -694,6 +706,11 @@
     renderChart("Line", chart);
   }
 
+  function processAnnotationData(chart){
+    chart.data = processSeries(chart.data, chart.options, true);
+    renderChart("Annotation", chart);
+  }
+
   function processColumnData(chart) {
     chart.data = processSeries(chart.data, chart.options, false);
     renderChart("Column", chart);
@@ -750,6 +767,9 @@
     },
     GeoChart: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processGeoData);
+    },
+    AnnotationChart: function (element, dataSource, opts){
+      setElement(this, element, dataSource, opts, processAnnotationData);
     },
     charts: {}
   };
