@@ -497,10 +497,22 @@
             d = s.data[j];
             key = (columnType === "datetime") ? d[0].getTime() : d[0];
             if (!rows[key]) {
-              rows[key] = new Array(series.length);
+              rows[key] = new Array(2*series.length);
             }
-            rows[key][i] = toFloat(d[1]);
+            rows[key][2*i] = toFloat(d[1]);
           }
+
+	  // add annotations
+	  data.addColumn({type: 'string', role: 'annotation'})
+	  for (j=0; j< s.annotations.length; j++){
+	    d = s.annotations[j];
+ 	    key = (columnType === "datetime") ? d[0].getTime() : d[0];
+            if (!rows[key]) {
+	      rows[key] = new Array(2*series.length);
+	    }		                 
+	    rows[key][2*i+1] = d[1];
+	  }
+
         }
 
         var rows2 = [];
@@ -688,6 +700,20 @@
         r.sort(sortByTime);
       }
       series[i].data = r;
+    }
+    // right format for annotations
+    for (i = 0; i < series.length; i++) {
+      data = toArr(series[i].annotations);
+      r = [];
+      for (j = 0; j < data.length; j++) {
+        key = data[j][0];
+        key = time ? toDate(key) : toStr(key);
+        r.push([key, data[j][1]]);
+      }
+      if (time) {
+        r.sort(sortByTime);
+      }
+      series[i].annotations = r;
     }
 
     return series;
