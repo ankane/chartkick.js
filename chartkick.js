@@ -572,6 +572,30 @@
         });
       };
 
+      this.renderComboChart = function (chart) {
+        waitForLoaded(function () {
+          var i, type, seriesOptions = [];
+          var types = chart.options.types;
+
+          for (i = 0; i < types.length; i++) {
+            type = types[i];
+            if(type == "column"){
+              type = "bars";
+            }
+            seriesOptions.push({type: type})
+          }
+          var chartOptions = {
+            series: seriesOptions
+          };
+          var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked)(chart.data, chart.options, chartOptions);
+          var data = createDataTable(chart.data, "string");
+          chart.chart = new google.visualization.ComboChart(chart.element);
+          resize(function () {
+            chart.chart.draw(data, options);
+          });
+        });
+      };
+
       this.renderBarChart = function (chart) {
         waitForLoaded(function () {
           var chartOptions = {
@@ -699,6 +723,11 @@
     renderChart("Column", chart);
   }
 
+  function processComboData(chart) {
+    chart.data = processSeries(chart.data, chart.options, false);
+    renderChart("Combo", chart);
+  }
+
   function processPieData(chart) {
     chart.data = processSimple(chart.data);
     renderChart("Pie", chart);
@@ -741,6 +770,9 @@
     },
     ColumnChart: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processColumnData);
+    },
+    ComboChart: function (element, dataSource, opts) {
+      setElement(this, element, dataSource, opts, processComboData);
     },
     BarChart: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processBarData);
