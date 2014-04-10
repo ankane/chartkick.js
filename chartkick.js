@@ -385,6 +385,52 @@
         new Highcharts.Chart(options);
       };
 
+      this.renderComboChart = function (chart, chartType) {
+        var chartType = chartType || "column";
+        var series = chart.data;
+        var types = chart.options.types;
+        var options = jsOptions(series, chart.options), i, j, s, d, rows = [];
+        // options.chart.type = chartType;
+        options.chart.renderTo = chart.element.id;
+
+        for (i = 0; i < series.length; i++) {
+          s = series[i];
+
+          for (j = 0; j < s.data.length; j++) {
+            d = s.data[j];
+            if (!rows[d[0]]) {
+              rows[d[0]] = new Array(series.length);
+            }
+            rows[d[0]][i] = d[1];
+          }
+        }
+
+        var categories = [];
+        for (i in rows) {
+          if (rows.hasOwnProperty(i)) {
+            categories.push(i);
+          }
+        }
+        options.xAxis.categories = categories;
+
+        var newSeries = [];
+        for (i = 0; i < series.length; i++) {
+          d = [];
+          for (j = 0; j < categories.length; j++) {
+            d.push(rows[categories[j]][i] || 0);
+          }
+
+          newSeries.push({
+            name: series[i].name,
+            data: d,
+            type: types[i]
+          });
+        }
+        options.series = newSeries;
+
+        new Highcharts.Chart(options);
+      }
+
       var self = this;
 
       this.renderBarChart = function (chart) {
