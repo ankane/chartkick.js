@@ -45,6 +45,12 @@ Bar chart
 new Chartkick.BarChart("chart-1", [["Work", 32],["Play", 1492]]);
 ```
 
+Combo chart
+
+```javascript
+new Chartkick.ComboChart("chart-1", [["Work", 32],["Play", 1492]], types: ["line", "column"]);
+```
+
 Area chart
 
 ```javascript
