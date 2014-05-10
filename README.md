@@ -2,7 +2,7 @@
 
 Create beautiful Javascript charts with minimal code.
 
-[See it in action](http://ankane.github.io/chartkick/)
+[See it in action](http://ankane.github.io/chartkick.js/examples/)
 
 Supports [Google Charts](https://developers.google.com/chart/) and [Highcharts](http://www.highcharts.com/) and works with most browsers (including IE 6)
 
