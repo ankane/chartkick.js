@@ -518,7 +518,12 @@
 
       var resize = function (callback) {
         if (window.attachEvent) {
-          window.attachEvent("onresize", callback);
+          var handleResize = function(){
+            $(window).one("resize", function() {
+              callback();
+              setTimeout("handleResize()",100);
+            });
+          }
         } else if (window.addEventListener) {
           window.addEventListener("resize", callback, true);
         }
