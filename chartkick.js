@@ -13,8 +13,6 @@
 
   var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, adapters = [];
 
-  var $ = window.jQuery || window.Zepto || window.$;
-
   // helpers
 
   function isArray(variable) {
@@ -154,6 +152,7 @@
   }
 
   function getJSON(element, url, success) {
+    var $ = window.jQuery || window.Zepto || window.$;
     $.ajax({
       dataType: "json",
       url: url,
