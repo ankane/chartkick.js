@@ -1,3 +1,7 @@
+## 1.3.0 [unreleased]
+
+- Added timelines
+
 ## 1.2.2
 
 - Added `colors` option

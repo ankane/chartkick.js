@@ -57,6 +57,12 @@ Geo chart
 new Chartkick.GeoChart("chart-1", [["United States",44],["Germany",23],["Brazil",22]]);
 ```
 
+Timeline
+
+```javascript
+new Chartkick.Timeline("chart-1", [["Washington", "1789-04-29", "1797-03-03"],["Adams", "1797-03-03", "1801-03-03"]]);
+```
+
 Multiple series
 
 ```javascript
