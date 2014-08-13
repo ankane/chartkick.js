@@ -12,9 +12,12 @@
   'use strict';
 
   var config = window.Chartkick || {};
-  var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, adapters = [];
+  var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, ADAPTER_NAMES = {}, adapters = [];
 
   // helpers
+
+  ADAPTER_NAMES['GOOGLE_ADAPTER'] = 'google';
+  ADAPTER_NAMES['HIGHCHARTS_ADAPTER'] = 'highcharts';
 
   function isArray(variable) {
     return Object.prototype.toString.call(variable) === "[object Array]";
@@ -231,6 +234,8 @@
     var HighchartsAdapter = new function () {
       var Highcharts = window.Highcharts;
 
+      this.name = ADAPTER_NAMES.HIGHCHARTS_ADAPTER
+
       var defaultOptions = {
         chart: {},
         xAxis: {
@@ -400,6 +405,8 @@
   if (window.google && window.google.setOnLoadCallback) {
     var GoogleChartsAdapter = new function () {
       var google = window.google;
+
+      this.name = ADAPTER_NAMES.GOOGLE_ADAPTER
 
       var loaded = {};
       var callbacks = [];
@@ -684,20 +691,31 @@
     adapters.push(GoogleChartsAdapter);
   }
 
-  // TODO add adapter option
   // TODO remove chartType if cross-browser way
   // to get the name of the chart class
   function renderChart(chartType, chart) {
-    var i, adapter, fnName;
+    var i, adapter, fnName, preferredAdapter;
     fnName = "render" + chartType;
+    preferredAdapter = chart.options.adapter
 
+    // Attempt to use preferred adapter
+    if (preferredAdapter) {
+      for (i = 0; i < adapters.length; i++) {
+        adapter = adapters[i];
+        if (isFunction(adapter[fnName]) && preferredAdapter === adapter.name) {
+          return adapter[fnName](chart);
+        }
+      }
+    }
+
+    // Use any adapter
     for (i = 0; i < adapters.length; i++) {
       adapter = adapters[i];
       if (isFunction(adapter[fnName])) {
         return adapter[fnName](chart);
       }
     }
-    throw new Error("No adapter found");
+    throw new Error("No adapter found: Please include Google Charts or Highcharts");
   }
 
   // process data
