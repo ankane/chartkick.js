@@ -694,7 +694,7 @@
   // TODO remove chartType if cross-browser way
   // to get the name of the chart class
   function renderChart(chartType, chart) {
-    var i, adapter, fnName, preferredAdapter;
+    var i, adapter, fnName, preferredAdapter, availableAdapters;
     fnName = "render" + chartType;
     preferredAdapter = chart.options.adapter
 
@@ -706,16 +706,22 @@
           return adapter[fnName](chart);
         }
       }
-    }
-
-    // Use any adapter
-    for (i = 0; i < adapters.length; i++) {
-      adapter = adapters[i];
-      if (isFunction(adapter[fnName])) {
-        return adapter[fnName](chart);
+      availableAdapters = []
+      for (var key in ADAPTER_NAMES) {
+        availableAdapters.push(ADAPTER_NAMES[key]);
       }
+
+      throw new Error("Preferred adapter '" + preferredAdapter + "' was not found. Available adapers are: " + availableAdapters.join(', '));
+    } else {
+      // Use any adapter
+      for (i = 0; i < adapters.length; i++) {
+        adapter = adapters[i];
+        if (isFunction(adapter[fnName])) {
+          return adapter[fnName](chart);
+        }
+      }
+      throw new Error("No adapter found: Please include Google Charts or Highcharts");
     }
-    throw new Error("No adapter found: Please include Google Charts or Highcharts");
   }
 
   // process data
