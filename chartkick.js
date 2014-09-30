@@ -12,12 +12,9 @@
   'use strict';
 
   var config = window.Chartkick || {};
-  var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, ADAPTER_NAMES = {}, adapters = [];
+  var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, adapters = [];
 
   // helpers
-
-  ADAPTER_NAMES['GOOGLE_ADAPTER'] = 'google';
-  ADAPTER_NAMES['HIGHCHARTS_ADAPTER'] = 'highcharts';
 
   function isArray(variable) {
     return Object.prototype.toString.call(variable) === "[object Array]";
@@ -234,7 +231,7 @@
     var HighchartsAdapter = new function () {
       var Highcharts = window.Highcharts;
 
-      this.name = ADAPTER_NAMES.HIGHCHARTS_ADAPTER
+      this.name = "highcharts";
 
       var defaultOptions = {
         chart: {},
@@ -406,7 +403,7 @@
     var GoogleChartsAdapter = new function () {
       var google = window.google;
 
-      this.name = ADAPTER_NAMES.GOOGLE_ADAPTER
+      this.name = "google";
 
       var loaded = {};
       var callbacks = [];
@@ -694,34 +691,17 @@
   // TODO remove chartType if cross-browser way
   // to get the name of the chart class
   function renderChart(chartType, chart) {
-    var i, adapter, fnName, preferredAdapter, availableAdapters;
+    var i, adapter, fnName, adapterName;
     fnName = "render" + chartType;
-    preferredAdapter = chart.options.adapter
+    adapterName = chart.options.adapter;
 
-    // Attempt to use preferred adapter
-    if (preferredAdapter) {
-      for (i = 0; i < adapters.length; i++) {
-        adapter = adapters[i];
-        if (isFunction(adapter[fnName]) && preferredAdapter === adapter.name) {
-          return adapter[fnName](chart);
-        }
+    for (i = 0; i < adapters.length; i++) {
+      adapter = adapters[i];
+      if ((!adapterName || adapterName == adapter.name) && isFunction(adapter[fnName])) {
+        return adapter[fnName](chart);
       }
-      availableAdapters = []
-      for (var key in ADAPTER_NAMES) {
-        availableAdapters.push(ADAPTER_NAMES[key]);
-      }
-
-      throw new Error("Preferred adapter '" + preferredAdapter + "' was not found. Available adapers are: " + availableAdapters.join(', '));
-    } else {
-      // Use any adapter
-      for (i = 0; i < adapters.length; i++) {
-        adapter = adapters[i];
-        if (isFunction(adapter[fnName])) {
-          return adapter[fnName](chart);
-        }
-      }
-      throw new Error("No adapter found: Please include Google Charts or Highcharts");
     }
+    throw new Error("No adapter found");
   }
 
   // process data

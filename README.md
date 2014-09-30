@@ -111,13 +111,6 @@ Discrete axis
 new Chartkick.LineChart("chart-1", data, {"discrete": true});
 ```
 
-Preferred adapter
-```javascript
-new Chartkick.LineChart("chart-1", data, {"adapter": "google"});
-```
-
-`adapter` defaults to what you have loaded in the page. If both Highcharts and Google Charts are loaded, use this parameter to choose between either 'google' or 'highcharts' adapater.
-
 You can pass options directly to the charting library with:
 
 ```javascript
@@ -168,6 +161,14 @@ To specify a language for Google Charts, add:
 ```
 
 **before** the javascript files.
+
+### Adapter
+
+If both Google Charts and Highcharts are loaded, choose between them with:
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {"adapter": "google"}); // or highcharts
+```
 
 ## Examples
 
