@@ -231,6 +231,8 @@
     var HighchartsAdapter = new function () {
       var Highcharts = window.Highcharts;
 
+      this.name = "highcharts";
+
       var defaultOptions = {
         chart: {},
         xAxis: {
@@ -400,6 +402,8 @@
   if (window.google && window.google.setOnLoadCallback) {
     var GoogleChartsAdapter = new function () {
       var google = window.google;
+
+      this.name = "google";
 
       var loaded = {};
       var callbacks = [];
@@ -684,16 +688,16 @@
     adapters.push(GoogleChartsAdapter);
   }
 
-  // TODO add adapter option
   // TODO remove chartType if cross-browser way
   // to get the name of the chart class
   function renderChart(chartType, chart) {
-    var i, adapter, fnName;
+    var i, adapter, fnName, adapterName;
     fnName = "render" + chartType;
+    adapterName = chart.options.adapter;
 
     for (i = 0; i < adapters.length; i++) {
       adapter = adapters[i];
-      if (isFunction(adapter[fnName])) {
+      if ((!adapterName || adapterName == adapter.name) && isFunction(adapter[fnName])) {
         return adapter[fnName](chart);
       }
     }

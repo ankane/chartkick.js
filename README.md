@@ -162,6 +162,14 @@ To specify a language for Google Charts, add:
 
 **before** the javascript files.
 
+### Adapter
+
+If both Google Charts and Highcharts are loaded, choose between them with:
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {"adapter": "google"}); // or highcharts
+```
+
 ## Examples
 
 To run the files in the `examples` directory, you'll need a web server.  Run:
