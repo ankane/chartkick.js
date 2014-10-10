@@ -1,6 +1,7 @@
-## 1.3.0 [unreleased]
+## 1.3.0
 
 - Added timelines
+- Added `adapter` option
 
 ## 1.2.2
 
