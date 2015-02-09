@@ -227,6 +227,306 @@
     return a[0].getTime() - b[0].getTime();
   }
 
+  if ("c3" in window) {
+    var C3Adapter = new function () {
+      this.name = "C3";
+
+      var defaultOptions = {
+        chart: {},
+        xAxis: {
+          labels: {
+            style: {
+              fontSize: "12px"
+            }
+          }
+        },
+        yAxis: {
+          title: {
+            text: null
+          },
+          labels: {
+            style: {
+              fontSize: "12px"
+            }
+          }
+        },
+        title: {
+          text: null
+        },
+        credits: {
+          enabled: false
+        },
+        legend: {
+          borderWidth: 0
+        },
+        tooltip: {
+          style: {
+            fontSize: "12px"
+          }
+        },
+        plotOptions: {
+          areaspline: {},
+          series: {
+            marker: {}
+          }
+        }
+      };
+
+      var hideLegend = function (options) {
+        options.legend.enabled = false;
+      };
+
+      var setMin = function (options, min) {
+        options.yAxis.min = min;
+      };
+
+      var setMax = function (options, max) {
+        options.yAxis.max = max;
+      };
+
+      var setStacked = function (options) {
+        options.plotOptions.series.stacking = "normal";
+      };
+
+      var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked);
+
+      this.renderLineChart = function (chart, chartType) {
+        var columns = [];
+        var types = {};
+        var groups = [];
+        var x = ["x"];
+        for (var j in chart.data[0].data) {
+          x.push(chart.data[0].data[j][0]);
+        }
+        columns.push(x);
+
+        for (var i in chart.data) {
+          series = chart.data[i];
+          var data1 = [series.name];
+          for (var j in series.data) {
+            data1.push(series.data[j][1]);
+          }
+          columns.push(data1);
+          if (chartType == "area") {
+            types[data1[0]] = chartType;
+          }
+          if (chart.options.stacked) {
+            groups.push(data1[0]);
+          }
+        }
+
+        c3.generate({
+          bindto: chart.element,
+          data: {
+            x: "x",
+            xFormat: '%Y-%m-%d %H:%M:%S %Z',
+            columns: columns,
+            types: types,
+            groups: [groups],
+            colors: {
+              'Value': "#3366cc"
+            }
+          },
+          axis: {
+            y: {
+              tick: {
+                // count: 5
+              },
+              // min: 0,
+              padding: {
+                top: 0,
+                bottom: 0
+              }
+            },
+            x: {
+              type: (chart.options.discrete ? "category" : "timeseries"),
+              padding: {
+                left: 0,
+                right: 0
+              }
+            }
+          },
+          legend: {
+            show: false
+          },
+          grid: {
+            y: {
+              show: true
+            }
+          }
+        });
+
+        return;
+
+
+        chartType = chartType || "spline";
+        var chartOptions = {};
+        if (chartType === "areaspline") {
+          chartOptions = {
+            plotOptions: {
+              areaspline: {
+                stacking: "normal"
+              },
+              series: {
+                marker: {
+                  enabled: false
+                }
+              }
+            }
+          };
+        }
+        var options = jsOptions(chart.data, chart.options, chartOptions), data, i, j;
+        options.xAxis.type = chart.options.discrete ? "category" : "datetime";
+        options.chart.type = chartType;
+        options.chart.renderTo = chart.element.id;
+
+        var series = chart.data;
+        for (i = 0; i < series.length; i++) {
+          data = series[i].data;
+          if (!chart.options.discrete) {
+            for (j = 0; j < data.length; j++) {
+              data[j][0] = data[j][0].getTime();
+            }
+          }
+          series[i].marker = {symbol: "circle"};
+        }
+        options.series = series;
+        new Highcharts.Chart(options);
+      };
+
+      this.renderPieChart = function (chart) {
+        var chartOptions = {};
+        if (chart.options.colors) {
+          chartOptions.colors = chart.options.colors;
+        }
+        var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
+        // options.chart.renderTo = chart.element.id;
+        // options.series = [{
+        //   type: "pie",
+        //   name: "Value",
+        //   data: chart.data
+        // }];
+        // new Highcharts.Chart(options);
+
+        c3.generate({
+          bindto: chart.element,
+          data: {
+            columns: chart.data,
+            type : 'pie'
+          },
+          legend: {
+            position: 'right'
+          }
+        });
+      };
+
+      this.renderColumnChart = function (chart, chartType) {
+        var chartType = chartType || "column";
+        var series = chart.data;
+        var options = jsOptions(series, chart.options), i, j, s, d, rows = [];
+        options.chart.type = chartType;
+        options.chart.renderTo = chart.element.id;
+        var groups = [];
+
+        var columns = [];
+        for (var i in chart.data) {
+          series = chart.data[i];
+          var data1 = [series.name];
+          for (var j in series.data) {
+            data1.push(series.data[j][1]);
+          }
+          columns.push(data1);
+          if (chart.options.stacked) {
+            groups.push(data1[0]);
+          }
+        }
+
+        c3.generate({
+          bindto: chart.element,
+            data: {
+                columns: columns,
+                type: 'bar',
+                groups: [groups],
+            colors: {
+              'Value': "#3366cc"
+            }
+            },
+            bar: {
+                width: {
+                    ratio: 0.5 // this makes bar width 50% of length between ticks
+                }
+                // or
+                //width: 100 // this makes bar width 100px
+            },
+            axis: {
+              y: {
+                tick: {
+                  // count: 5
+                },
+                min: 0,
+                padding: {
+                  top: 0,
+                  bottom: 0
+                }
+              }
+            },
+                      legend: {
+            show: false
+          },
+            grid: {
+              y: {
+                show: true
+              }
+            }
+        });
+
+        return;
+
+        for (i = 0; i < series.length; i++) {
+          s = series[i];
+
+          for (j = 0; j < s.data.length; j++) {
+            d = s.data[j];
+            if (!rows[d[0]]) {
+              rows[d[0]] = new Array(series.length);
+            }
+            rows[d[0]][i] = d[1];
+          }
+        }
+
+        var categories = [];
+        for (i in rows) {
+          if (rows.hasOwnProperty(i)) {
+            categories.push(i);
+          }
+        }
+        options.xAxis.categories = categories;
+
+        var newSeries = [];
+        for (i = 0; i < series.length; i++) {
+          d = [];
+          for (j = 0; j < categories.length; j++) {
+            d.push(rows[categories[j]][i] || 0);
+          }
+
+          newSeries.push({
+            name: series[i].name,
+            data: d
+          });
+        }
+        options.series = newSeries;
+
+        new Highcharts.Chart(options);
+      };
+
+      var self = this;
+
+      this.renderAreaChart = function (chart) {
+        self.renderLineChart(chart, "area");
+      };
+    };
+    adapters.push(C3Adapter);
+  }
   if ("Highcharts" in window) {
     var HighchartsAdapter = new function () {
       var Highcharts = window.Highcharts;

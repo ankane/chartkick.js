@@ -6,13 +6,18 @@
     <script>
       // var Chartkick = {language: "de"};
     </script>
-    <script src="http://www.google.com/jsapi"></script>
+    <!-- <script src="http://www.google.com/jsapi"></script> -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.2/zepto.min.js"></script> -->
     <!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
     <!-- <script src="http://code.highcharts.com/2.1.9/highcharts.js"></script> -->
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.9/c3.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.9/c3.min.js"></script>
+
     <script src="../chartkick.js"></script>
 
     <style>
@@ -28,6 +33,67 @@
     </style>
   </head>
   <body>
+    <style>
+    .c3 text {
+      font-size: 12px;
+    }
+
+    .c3-line {
+      stroke-width: 2px;
+    }
+
+    .c3 .c3-axis path, .c3 .c3-axis line {
+      stroke: #666;
+    }
+
+    .c3 .c3-axis text {
+      fill: #666;
+    }
+    </style>
+    <!--
+    <h1>Line Chart</h1>
+    <div id="chart"></div>
+    <script>
+    var chart = c3.generate({
+        bindto: '#chart',
+        data: {
+          x: "x",
+          xFormat: '%Y-%m-%d %H:%M:%S %Z',
+          columns: [
+            ['x', '2013-02-10 00:00:00 -0800', '2013-02-11 00:20:00 -0800', '2013-02-12 00:00:00 -0800', '2013-02-13 00:00:00 -0800', '2013-02-14 00:00:00 -0800', '2013-02-15 00:00:00 -0800'],
+            ['Value', 30, 200, 100, 400, 150, 250]
+          ],
+          colors: {
+            'Value': "#3366cc"
+          }
+        },
+        axis: {
+          y: {
+            tick: {
+              count: 5
+            },
+            min: 0
+            // padding: {
+            //   top: 0,
+            //   bottom: 0
+            // }
+          },
+          x: {
+            type: 'timeseries'
+          }
+        },
+        legend: {
+          show: false
+        },
+        grid: {
+          y: {
+            show: true
+          }
+        }
+    });
+    </script>
+    -->
+
     <h1>Line Chart</h1>
     <div id="chart-1" style="height: 300px;"></div>
     <script>
