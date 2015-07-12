@@ -325,6 +325,11 @@
           series[i].marker = {symbol: "circle"};
         }
         options.series = series;
+        if (options.dateFormat) {
+          options.xAxis.labels.formatter = function (){
+            return Highcharts.dateFormat(options.dateFormat, this.value);
+          };
+        }
         new Highcharts.Chart(options);
       };
 
@@ -560,6 +565,12 @@
         waitForLoaded(function () {
           var options = jsOptions(chart.data, chart.options);
           var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
+          if (options.dateFormat) {
+            var formatter = new google.visualization.DateFormat({
+              pattern: options.dateFormat
+            });
+            formatter.format(data, 0);
+          }
           chart.chart = new google.visualization.LineChart(chart.element);
           resize(function () {
             chart.chart.draw(data, options);
