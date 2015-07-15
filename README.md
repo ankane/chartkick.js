@@ -150,6 +150,16 @@ If you prefer Highcharts, use:
 <script src="chartkick/adapters/highcharts.js"></script>
 ```
 
+For c3 charts use:
+```html
+<link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css" rel="stylesheet" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
+
+<script src="chartkick/chartkick.js"></script>
+<script src="chartkick/adapters/c3.js"></script>
+```
+
 Works with Highcharts 2.1+
 
 ### Localization
