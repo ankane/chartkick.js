@@ -1,5 +1,5 @@
 {
   "name": "chartkick",
   "version": "1.3.0",
-  "main": "chartkick.js"
+  "main": "lib/chartkick.js"
 }
