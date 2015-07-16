@@ -387,6 +387,52 @@
         new Highcharts.Chart(options);
       };
 
+      this.renderComboChart = function (chart, chartType) {
+        var chartType = chartType || "column";
+        var series = chart.data;
+        var types = chart.options.types;
+        var options = jsOptions(series, chart.options), i, j, s, d, rows = [];
+        // options.chart.type = chartType;
+        options.chart.renderTo = chart.element.id;
+
+        for (i = 0; i < series.length; i++) {
+          s = series[i];
+
+          for (j = 0; j < s.data.length; j++) {
+            d = s.data[j];
+            if (!rows[d[0]]) {
+              rows[d[0]] = new Array(series.length);
+            }
+            rows[d[0]][i] = d[1];
+          }
+        }
+
+        var categories = [];
+        for (i in rows) {
+          if (rows.hasOwnProperty(i)) {
+            categories.push(i);
+          }
+        }
+        options.xAxis.categories = categories;
+
+        var newSeries = [];
+        for (i = 0; i < series.length; i++) {
+          d = [];
+          for (j = 0; j < categories.length; j++) {
+            d.push(rows[categories[j]][i] || 0);
+          }
+
+          newSeries.push({
+            name: series[i].name,
+            data: d,
+            type: types[i]
+          });
+        }
+        options.series = newSeries;
+
+        new Highcharts.Chart(options);
+      }
+
       var self = this;
 
       this.renderBarChart = function (chart) {
@@ -603,6 +649,30 @@
         });
       };
 
+      this.renderComboChart = function (chart) {
+        waitForLoaded(function () {
+          var i, type, seriesOptions = [];
+          var types = chart.options.types;
+
+          for (i = 0; i < types.length; i++) {
+            type = types[i];
+            if(type == "column"){
+              type = "bars";
+            }
+            seriesOptions.push({type: type})
+          }
+          var chartOptions = {
+            series: seriesOptions
+          };
+          var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked)(chart.data, chart.options, chartOptions);
+          var data = createDataTable(chart.data, "string");
+          chart.chart = new google.visualization.ComboChart(chart.element);
+          resize(function () {
+            chart.chart.draw(data, options);
+          });
+        });
+      };
+
       this.renderBarChart = function (chart) {
         waitForLoaded(function () {
           var chartOptions = {
@@ -766,6 +836,11 @@
     renderChart("ColumnChart", chart);
   }
 
+  function processComboData(chart) {
+    chart.data = processSeries(chart.data, chart.options, false);
+    renderChart("ComboChart", chart);
+  }
+
   function processPieData(chart) {
     chart.data = processSimple(chart.data);
     renderChart("PieChart", chart);
@@ -816,6 +891,9 @@
     },
     BarChart: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processBarData);
+    },
+    ComboChart: function (element, dataSource, opts) {
+      setElement(this, element, dataSource, opts, processComboData);
     },
     AreaChart: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processAreaData);
