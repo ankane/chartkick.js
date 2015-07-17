@@ -138,14 +138,26 @@ For Google Charts, use:
 
 ```html
 <script src="//www.google.com/jsapi"></script>
-<script src="chartkick.js"></script>
+<script src="chartkick/chartkick.js"></script>
+<script src="chartkick/adapters/google.js"></script>
 ```
 
 If you prefer Highcharts, use:
 
 ```html
 <script src="/path/to/highcharts.js"></script>
-<script src="chartkick.js"></script>
+<script src="chartkick/chartkick.js"></script>
+<script src="chartkick/adapters/highcharts.js"></script>
+```
+
+For c3 charts use:
+```html
+<link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css" rel="stylesheet" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
+
+<script src="chartkick/chartkick.js"></script>
+<script src="chartkick/adapters/c3.js"></script>
 ```
 
 Works with Highcharts 2.1+
@@ -161,6 +173,11 @@ To specify a language for Google Charts, add:
 ```
 
 **before** the javascript files.
+
+### Multiple adapters
+
+Some adapters may not support some chart types. You can load multiple adapters
+and next adapter will be used if first one does not support chart type.
 
 ### Adapter
 
