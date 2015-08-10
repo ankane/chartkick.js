@@ -28,6 +28,10 @@
     return !isFunction(variable) && variable instanceof Object;
   }
 
+  function isRemoteUrl(dataSource) {
+    return typeof dataSource === "string";
+  }
+
   // https://github.com/madrobby/zepto/blob/master/src/zepto.js
   function extend(target, source) {
     var key;
@@ -175,7 +179,7 @@
   }
 
   function fetchDataSource(chart, callback) {
-    if (typeof chart.dataSource === "string") {
+    if (isRemoteUrl(chart.dataSource)) {
       getJSON(chart.element, chart.dataSource, function (data, textStatus, jqXHR) {
         chart.data = data;
         errorCatcher(chart, callback);
@@ -826,7 +830,32 @@
     Timeline: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processTimelineData);
     },
-    charts: {}
+    charts: {},
+    updateChart: function(chartId, dataSource) {
+      var chart = Chartkick.charts[chartId];
+      if (dataSource === undefined && isRemoteUrl(chart.dataSource)) {
+        dataSource = chart.dataSource;
+      }
+
+      if (dataSource !== undefined) {
+        new chart.__proto__.constructor(chart.element.id, dataSource);
+      }
+    },
+    updateAllCharts: function(dataSourceCallback) {
+      var charts = Chartkick.charts,
+          chart = null,
+          isRemote = null;
+
+      for (var chartId in charts) {
+        chart = charts[chartId];
+        isRemote = isRemoteUrl(chart.dataSource);
+        if (isFunction(dataSourceCallback)) {
+          Chartkick.updateChart(chartId, dataSourceCallback(chart, isRemote));
+        } else if (isRemote) {
+          Chartkick.updateChart(chartId, chart.dataSource);
+        }
+      }
+    }
   };
 
   window.Chartkick = Chartkick;

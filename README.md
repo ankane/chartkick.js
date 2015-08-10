@@ -132,6 +132,24 @@ Times can be a `Date`, a timestamp, or a string (strings are parsed)
 new Chartkick.LineChart("chart-1", [[new Date(), 5],[1368174456, 4],["2013-05-07 00:00:00 UTC", 7]]);
 ```
 
+### Update charts
+
+Single chart:
+```javascript
+Chartkick.updateChart('chart-1'); // Update chart-1 (assumes that chart-1 has a remote URL)
+Chartkick.updateChart('chart-1', data); // Update chart-1 with data
+```
+
+All charts:
+```javascript
+Chartkick.updateAllCharts(); // Updates all charts with remote URLs
+Chartkick.updateAllCharts(function(chart, isRemote) {
+  if (isRemote) {
+    return chart.dataSource + '?some_param=abc';
+  }
+});
+```
+
 ## Installation
 
 For Google Charts, use:
