@@ -138,6 +138,7 @@ Single chart:
 ```javascript
 Chartkick.updateChart('chart-1'); // Update chart-1 (assumes that chart-1 has a remote URL)
 Chartkick.updateChart('chart-1', data); // Update chart-1 with data
+Chartkick.updateChart('chart-1', null, {colors: ['red', 'green']}); // Update chart-1, from current dataSource but with new options
 ```
 
 All charts:
@@ -145,8 +146,14 @@ All charts:
 Chartkick.updateAllCharts(); // Updates all charts with remote URLs
 Chartkick.updateAllCharts(function(chart, isRemote) {
   if (isRemote) {
-    return chart.dataSource + '?some_param=abc';
+    return {data: chart.dataSource + '?some_param=abc'};
   }
+});
+// Update all charts with new options (charts with remote URL with re-fetch their data)
+Chartkick.updateAllCharts(function(chart, isRemote) {
+  return {
+    options: {colors: ['red', 'green']}
+  };
 });
 ```
 
