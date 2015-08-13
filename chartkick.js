@@ -666,7 +666,7 @@
           };
 
           if (chart.options.colors) {
-            chartOptions.colorAxis.colors = chart.options.colors;
+            chartOptions.colors = chart.options.colors;
           }
           var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
