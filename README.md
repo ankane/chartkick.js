@@ -162,6 +162,23 @@ To specify a language for Google Charts, add:
 
 **before** the javascript files.
 
+### Configuration
+
+To specify defaults, add:
+
+```html
+<script>
+  var Chartkick = {
+    "language": "de", // Google Charts language
+    lineChart: {
+      marker: { maxPoints: 10 } // Don't display markers if there are more than 10 data points
+    }
+  };
+</script>
+```
+
+**before** the javascript files.
+
 ### Adapter
 
 If both Google Charts and Highcharts are loaded, choose between them with:

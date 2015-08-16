@@ -11,7 +11,15 @@
 (function (window) {
   'use strict';
 
-  var config = window.Chartkick || {};
+  var DEFAULT_OPTIONS = {
+    lineChart: {
+      marker: {
+        maxPoints: Infinity
+      }
+    }
+  };
+
+  var config = merge(DEFAULT_OPTIONS, window.Chartkick || {});
   var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, adapters = [];
 
   // helpers
@@ -315,6 +323,7 @@
         options.chart.renderTo = chart.element.id;
 
         var series = chart.data;
+        var maxMarkerPoints;
         for (i = 0; i < series.length; i++) {
           data = series[i].data;
           if (!chart.options.discrete) {
@@ -322,7 +331,11 @@
               data[j][0] = data[j][0].getTime();
             }
           }
-          series[i].marker = {symbol: "circle"};
+          maxMarkerPoints = series[i].maxMarkerPoints || chart.options.maxMarkerPoints || config.lineChart.marker.maxPoints;
+          series[i].marker = {
+            symbol: series[i].marker || "circle",
+            enabled: maxMarkerPoints >= data.length // Don't display markers if there are too many data points
+          };
         }
         options.series = series;
         new Highcharts.Chart(options);
@@ -560,6 +573,13 @@
         waitForLoaded(function () {
           var options = jsOptions(chart.data, chart.options);
           var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
+          var maxMarkerPoints = chart.options.maxMarkerPoints || config.lineChart.marker.maxPoints;
+          // Don't display markers if there are too many data points
+          var enabled = maxMarkerPoints >= data.getNumberOfRows();
+          if (!enabled) {
+            options.pointSize = 0;
+          }
+
           chart.chart = new google.visualization.LineChart(chart.element);
           resize(function () {
             chart.chart.draw(data, options);
