@@ -134,6 +134,18 @@ new Chartkick.LineChart("chart-1", [[new Date(), 5],[1368174456, 4],["2013-05-07
 
 ## Installation
 
+Download [directly](https://raw.githubusercontent.com/ankane/chartkick.js/master/chartkick.js), or with npm:
+
+```sh
+npm install chartkick
+```
+
+or Bower:
+
+```
+bower install chartkick
+```
+
 For Google Charts, use:
 
 ```html
