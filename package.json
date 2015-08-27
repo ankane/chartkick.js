@@ -1,0 +1,25 @@
+{
+  "name": "chartkick",
+  "version": "1.3.0",
+  "homepage": "https://github.com/ankane/chartkick.js",
+  "description": "Create beautiful Javascript charts with minimal code",
+  "main": "chartkick.js",
+  "dependencies": {
+  },
+  "keywords": [
+    "charts",
+  ],
+  "authors": [
+    "ankane"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ankane/chartkick.js"
+  },
+  "ignore": [
+    "**/.*",
+    "test",
+    "tests"
+  ]
+}
