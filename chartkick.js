@@ -421,7 +421,7 @@
         var cb, call;
         for (var i = 0; i < callbacks.length; i++) {
           cb = callbacks[i];
-          call = google.visualization && ((cb.pack == "corechart" && google.visualization.LineChart) || (cb.pack == "timeline" && google.visualization.Timeline))
+          call = google.visualization && ((cb.pack === "corechart" && google.visualization.LineChart) || (cb.pack === "timeline" && google.visualization.Timeline))
           if (call) {
             cb.callback();
             callbacks.splice(i, 1);
@@ -548,7 +548,7 @@
           if (rows.hasOwnProperty(i)) {
             if (columnType === "datetime") {
               value = new Date(toFloat(i));
-            } else if (columnType == "number") {
+            } else if (columnType === "number") {
               value = toFloat(i);
             } else {
               value = i;
@@ -727,7 +727,7 @@
 
     for (i = 0; i < adapters.length; i++) {
       adapter = adapters[i];
-      if ((!adapterName || adapterName == adapter.name) && isFunction(adapter[fnName])) {
+      if ((!adapterName || adapterName === adapter.name) && isFunction(adapter[fnName])) {
         return adapter[fnName](chart);
       }
     }
