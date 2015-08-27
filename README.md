@@ -51,6 +51,12 @@ Area chart
 new Chartkick.AreaChart("chart-1", {"2013-02-10 00:00:00 -0800": 11, "2013-02-11 00:00:00 -0800": 6});
 ```
 
+Scatter chart
+
+```javascript
+new Chartkick.ScatterChart("chart-1", [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]]);
+```
+
 Geo chart
 
 ```javascript
@@ -61,12 +67,6 @@ Timeline
 
 ```javascript
 new Chartkick.Timeline("chart-1", [["Washington", "1789-04-29", "1797-03-03"],["Adams", "1797-03-03", "1801-03-03"]]);
-```
-
-Scatter chart
-
-```javascript
-new Chartkick.ScatterChart("chart-1", [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]]);
 ```
 
 Multiple series
