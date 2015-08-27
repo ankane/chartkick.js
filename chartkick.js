@@ -328,6 +328,15 @@
         new Highcharts.Chart(options);
       };
 
+      this.renderScatterChart = function (chart) {
+        var chartOptions = {};
+        var options = jsOptions(chart.data, chart.options, chartOptions);
+        options.chart.type = 'scatter';
+        options.chart.renderTo = chart.element.id;
+        options.series = chart.data;
+        new Highcharts.Chart(options);
+      };
+
       this.renderPieChart = function (chart) {
         var chartOptions = {};
         if (chart.options.colors) {
@@ -534,9 +543,17 @@
         }
 
         var rows2 = [];
+        var value;
         for (i in rows) {
           if (rows.hasOwnProperty(i)) {
-            rows2.push([(columnType === "datetime") ? new Date(toFloat(i)) : i].concat(rows[i]));
+            if (columnType === "datetime") {
+              value = new Date(toFloat(i));
+            } else if (columnType == "number") {
+              value = toFloat(i);
+            } else {
+              value = i;
+            }
+            rows2.push([value].concat(rows[i]));
           }
         }
         if (columnType === "datetime") {
@@ -659,6 +676,19 @@
         });
       };
 
+      this.renderScatterChart = function (chart) {
+        waitForLoaded(function () {
+          var chartOptions = {};
+          var options = jsOptions(chart.data, chart.options, chartOptions);
+          var data = createDataTable(chart.data, "number");
+
+          chart.chart = new google.visualization.ScatterChart(chart.element);
+          resize(function () {
+            chart.chart.draw(data, options);
+          });
+        });
+      };
+
       this.renderTimeline = function (chart) {
         waitForLoaded("timeline", function () {
           var chartOptions = {
@@ -706,8 +736,31 @@
 
   // process data
 
-  function processSeries(series, opts, time) {
-    var i, j, data, r, key;
+  var toFormattedKey = function (key, keyType) {
+    if (keyType === "number") {
+      key = toFloat(key);
+    } else if (keyType === "datetime") {
+      key = toDate(key);
+    } else {
+      key = toStr(key);
+    }
+    return key;
+  };
+
+  var formatSeriesData = function (data, keyType) {
+    var r = [], key, j;
+    for (j = 0; j < data.length; j++) {
+      key = toFormattedKey(data[j][0], keyType);
+      r.push([key, toFloat(data[j][1])]);
+    }
+    if (keyType === "datetime") {
+      r.sort(sortByTime);
+    }
+    return r;
+  };
+
+  function processSeries(series, opts, keyType) {
+    var i;
 
     // see if one series or multiple
     if (!isArray(series) || typeof series[0] !== "object" || isArray(series[0])) {
@@ -717,22 +770,12 @@
       opts.hideLegend = false;
     }
     if (opts.discrete) {
-      time = false;
+      keyType = "string";
     }
 
     // right format
     for (i = 0; i < series.length; i++) {
-      data = toArr(series[i].data);
-      r = [];
-      for (j = 0; j < data.length; j++) {
-        key = data[j][0];
-        key = time ? toDate(key) : toStr(key);
-        r.push([key, toFloat(data[j][1])]);
-      }
-      if (time) {
-        r.sort(sortByTime);
-      }
-      series[i].data = r;
+      series[i].data = formatSeriesData(toArr(series[i].data), keyType);
     }
 
     return series;
@@ -757,12 +800,12 @@
   }
 
   function processLineData(chart) {
-    chart.data = processSeries(chart.data, chart.options, true);
+    chart.data = processSeries(chart.data, chart.options, "datetime");
     renderChart("LineChart", chart);
   }
 
   function processColumnData(chart) {
-    chart.data = processSeries(chart.data, chart.options, false);
+    chart.data = processSeries(chart.data, chart.options, "string");
     renderChart("ColumnChart", chart);
   }
 
@@ -772,18 +815,23 @@
   }
 
   function processBarData(chart) {
-    chart.data = processSeries(chart.data, chart.options, false);
+    chart.data = processSeries(chart.data, chart.options, "string");
     renderChart("BarChart", chart);
   }
 
   function processAreaData(chart) {
-    chart.data = processSeries(chart.data, chart.options, true);
+    chart.data = processSeries(chart.data, chart.options, "datetime");
     renderChart("AreaChart", chart);
   }
 
   function processGeoData(chart) {
     chart.data = processSimple(chart.data);
     renderChart("GeoChart", chart);
+  }
+
+  function processScatterData(chart) {
+    chart.data = processSeries(chart.data, chart.options, "number");
+    renderChart("ScatterChart", chart);
   }
 
   function processTimelineData(chart) {
@@ -822,6 +870,9 @@
     },
     GeoChart: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processGeoData);
+    },
+    ScatterChart: function (element, dataSource, opts) {
+      setElement(this, element, dataSource, opts, processScatterData);
     },
     Timeline: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processTimelineData);
