@@ -99,12 +99,6 @@ new Chartkick.LineChart("chart-1", data, {"min": 1000, "max": 5000});
 
 `min` defaults to 0 for charts with non-negative values. Use `null` to let the charting library decide.
 
-Axis titles
-
-```javascript
-new Chartkick.LineChart("chart-1", data, {"xtitle": "Horizontal", "ytitle": "Vertical"});
-```
-
 Colors
 
 ```javascript
@@ -121,6 +115,12 @@ Discrete axis
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {"discrete": true});
+```
+
+Axis titles
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {"xtitle": "Horizontal", "ytitle": "Vertical"});
 ```
 
 You can pass options directly to the charting library with:
