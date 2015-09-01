@@ -120,7 +120,7 @@ new Chartkick.LineChart("chart-1", data, {"discrete": true});
 Axis titles
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {"xtitle": "Horizontal", "ytitle": "Vertical"});
+new Chartkick.LineChart("chart-1", data, {"xtitle": "Time", "ytitle": "Population"});
 ```
 
 You can pass options directly to the charting library with:
