@@ -108,7 +108,7 @@
 
       // hide legend
       // this is *not* an external option!
-      if (hideLegend) {
+      if (opts.hideLegend) {
         hideLegend(options);
       }
 
@@ -244,6 +244,9 @@
       var defaultOptions = {
         chart: {},
         xAxis: {
+          title: {
+            text: null
+          },
           labels: {
             style: {
               fontSize: "12px"
@@ -299,11 +302,11 @@
       };
 
       var setXtitle = function (options, title) {
-        options.xAxis = {title: {text: title}};
+        options.xAxis.title.text = title;
       };
 
       var setYtitle = function (options, title) {
-        options.yAxis = {title: {text: title}};
+        options.yAxis.title.text = title;
       };
 
       var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle);
@@ -490,6 +493,7 @@
             color: "#666",
             fontSize: 12
           },
+          titleTextStyle: {},
           gridlines: {
             color: "transparent"
           },
@@ -501,6 +505,7 @@
             color: "#666",
             fontSize: 12
           },
+          titleTextStyle: {},
           baselineColor: "#ccc",
           viewWindow: {}
         },
@@ -537,11 +542,13 @@
       };
 
       var setXtitle = function (options, title) {
-        options.hAxis = {title: title};
+        options.hAxis.title = title;
+        options.hAxis.titleTextStyle.italic = false;
       }
 
       var setYtitle = function (options, title) {
-        options.vAxis = {title: title};
+        options.vAxis.title = title;
+        options.vAxis.titleTextStyle.italic = false;
       };
 
       var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle);
