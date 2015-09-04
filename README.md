@@ -79,6 +79,12 @@ data = [
 new Chartkick.LineChart("chart-1", data);
 ```
 
+Gauge
+
+```javascript
+new Chartkick.Gauge("chart-gauge", [['Memory', 80], ['CPU', 55], ['Network', 68]]);
+```
+
 ### Say Goodbye To Timeouts
 
 Make your pages load super fast and stop worrying about timeouts.  Give each chart its own endpoint.
