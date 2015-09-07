@@ -10,7 +10,8 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.2/zepto.min.js"></script> -->
-    <!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/heatmap.js"></script>
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
     <!-- <script src="http://code.highcharts.com/2.1.9/highcharts.js"></script> -->
     <script src="../chartkick.js"></script>
@@ -68,6 +69,31 @@
     <div id="chart-timeline" style="height: 300px;"></div>
     <script>
       new Chartkick.Timeline("chart-timeline", [["Washington", "1789-04-29", "1797-03-03"],["Adams", "1797-03-03", "1801-03-03"],["Jefferson", "1801-03-03", "1809-03-03"]]);
+    </script>
+
+    <h1>Heatmap - Single</h1>
+    <div id="chart-heatmap-single" style="height: 300px;"></div>
+    <script>
+      new Chartkick.Heatmap("chart-heatmap-single", [[0, 0, 10], [0, 1, 20]]);
+    </script>
+
+    <h1>Heatmap - Multi</h1>
+    <div id="chart-heatmap-multi" style="height: 300px;"></div>
+    <script>
+      new Chartkick.Heatmap("chart-heatmap-multi", [{name: "First", data: [[0, 0, 10], [0, 1, 20]]}, {name: "Second", data: [[1, 0, 6], [1, 1, 12]]}]);
+    </script>
+
+    <h1>Heatmap - Date group</h1>
+    <div id="chart-heatmap-calendar" style="height: 300px;"></div>
+    <script>
+      var heatData = [{
+        name: "Marie",
+        data: [["2015-01-01", 10], ["2015-01-02", 20], ["2015-02-03", 7]]
+      }, {
+        name: "Lucas",
+        data: [["2015-01-01", 8], ["2015-01-02", 12], ["2015-02-07", 46]]
+      }];
+      new Chartkick.Heatmap("chart-heatmap-calendar", heatData, {groupBy: "weekdays"});
     </script>
 
     <h1>Multiple Series Line</h1>

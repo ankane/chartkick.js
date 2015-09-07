@@ -79,6 +79,35 @@ data = [
 new Chartkick.LineChart("chart-1", data);
 ```
 
+Heatmap (Highcharts)
+
+_Note_: Heat maps require the [modules/heatmap.js](http://code.highcharts.com/modules/heatmap.js) file to be loaded.
+
+```javascript
+new Chartkick.Heatmap("chart-1", [["2015-01-01", 8], ["2015-01-02", 12], ["2015-02-07", 46]]);
+```
+
+x/y format
+
+```javascript
+new Chartkick.Heatmap("chart-1", [[0, 0, 10], [0, 1, 20]]);
+```
+
+Multiple series
+
+```javascript
+var data = [{
+  name: "Marie",
+  data: [["2015-01-01", 10], ["2015-01-02", 20], ["2015-02-03", 7]]
+}, {
+  name: "Lucas",
+  data: [["2015-01-01", 8], ["2015-01-02", 12], ["2015-02-07", 46]]
+}];
+new Chartkick.Heatmap("chart-1", data, {groupBy: "weekdays"});
+```
+
+_Required_: Specify what to group dates on: `months/weekdays/days`.
+
 ### Say Goodbye To Timeouts
 
 Make your pages load super fast and stop worrying about timeouts.  Give each chart its own endpoint.
