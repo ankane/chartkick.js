@@ -113,7 +113,7 @@
       }
 
       // min
-      if (opts.min) {
+      if ("min" in opts) {
         setMin(options, opts.min);
       } else if (!negativeValues(series)) {
         setMin(options, 0);
