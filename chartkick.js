@@ -440,7 +440,7 @@
         var cb, call;
         for (var i = 0; i < callbacks.length; i++) {
           cb = callbacks[i];
-          call = google.visualization && ((cb.pack === "corechart" && google.visualization.LineChart) || (cb.pack === "timeline" && google.visualization.Timeline))
+          call = google.visualization && ((cb.pack === "corechart" && google.visualization.LineChart) || (cb.pack === "timeline" && google.visualization.Timeline) || (cb.pack === "gauge" && google.visualization.Gauge))
           if (call) {
             cb.callback();
             callbacks.splice(i, 1);
@@ -685,6 +685,31 @@
         });
       };
 
+      this.renderGauge = function (chart) {
+        waitForLoaded("gauge", function () {
+          var chartOptions = {
+            legend: "none",
+            colorAxis: {
+              colors: chart.options.colors || ["#f6c7b6", "#ce502d"]
+            }
+          };
+          var options = merge(merge(defaultOptions, chartOptions), merge(chart.options.library || {},chart.options || {}));
+          var data = google.visualization.arrayToDataTable(chart.data);
+          if (chart.options.money) {
+            var formatter = new google.visualization.NumberFormat({pattern: '$###,###'});
+            formatter.format(data, 1);
+          }else if (chart.options.percentage){
+            var formatter = new google.visualization.NumberFormat({pattern: '###%'});
+            formatter.format(data, 1);
+          }
+
+          chart.chart = new google.visualization.Gauge(chart.element);
+          resize(function () {
+            chart.chart.draw(data, options);
+          });
+        });
+      };
+
       this.renderGeoChart = function (chart) {
         waitForLoaded(function () {
           var chartOptions = {
@@ -812,10 +837,14 @@
     return series;
   }
 
-  function processSimple(data) {
+  function processSimple(data, header) {
     var perfectData = toArr(data), i;
+
     for (i = 0; i < perfectData.length; i++) {
       perfectData[i] = [toStr(perfectData[i][0]), toFloat(perfectData[i][1])];
+    }
+    if (header) {
+      perfectData = [["Label", "Value"]].concat(perfectData);
     }
     return perfectData;
   }
@@ -853,6 +882,11 @@
   function processAreaData(chart) {
     chart.data = processSeries(chart.data, chart.options, "datetime");
     renderChart("AreaChart", chart);
+  }
+
+  function processGaugeData(chart) {
+   chart.data = processSimple(chart.data, true);
+   renderChart("Gauge", chart);
   }
 
   function processGeoData(chart) {
@@ -904,6 +938,9 @@
     },
     ScatterChart: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processScatterData);
+    },
+    Gauge: function (element, dataSource, opts) {
+      setElement(this, element, dataSource, opts, processGaugeData);
     },
     Timeline: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processTimelineData);
