@@ -1,3 +1,7 @@
+## 1.4.1
+
+- Fixed regression with `min: null`
+
 ## 1.4.0
 
 - Added scatter chart
