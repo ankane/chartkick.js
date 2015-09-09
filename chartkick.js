@@ -440,7 +440,7 @@
         var cb, call;
         for (var i = 0; i < callbacks.length; i++) {
           cb = callbacks[i];
-          call = google.visualization && ((cb.pack === "corechart" && google.visualization.LineChart) || (cb.pack === "timeline" && google.visualization.Timeline))
+          call = google.visualization && ((cb.pack === "corechart" && google.visualization.LineChart) || (cb.pack === "timeline" && google.visualization.Timeline) || (cb.pack === "calendar" && google.visualization.Calendar))
           if (call) {
             cb.callback();
             callbacks.splice(i, 1);
@@ -744,6 +744,23 @@
           });
         });
       };
+
+      this.renderCalendar = function (chart) {
+        waitForLoaded("calendar", function () {
+          var chartOptions = {};
+          var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
+
+          var data = new google.visualization.DataTable();
+          data.addColumn({ type: "date", id: "Date" });
+          data.addColumn({ type: "number", id: "Value" });
+          data.addRows(chart.data);
+
+          chart.chart = new google.visualization.Calendar(chart.element);
+          resize(function () {
+            chart.chart.draw(data, options);
+          });
+        });
+      };
     };
 
     adapters.push(GoogleChartsAdapter);
@@ -830,6 +847,14 @@
     return data;
   }
 
+  function processCalendar(data) {
+    var i;
+    for (i = 0; i < data.length; i++) {
+      data[i][0] = toDate(data[i][0]);
+    }
+    return data;
+  }
+
   function processLineData(chart) {
     chart.data = processSeries(chart.data, chart.options, "datetime");
     renderChart("LineChart", chart);
@@ -863,6 +888,11 @@
   function processScatterData(chart) {
     chart.data = processSeries(chart.data, chart.options, "number");
     renderChart("ScatterChart", chart);
+  }
+
+  function processCalendarData(chart) {
+    chart.data = processCalendar(chart.data);
+    renderChart("Calendar", chart);
   }
 
   function processTimelineData(chart) {
@@ -907,6 +937,9 @@
     },
     Timeline: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processTimelineData);
+    },
+    Calendar: function (element, dataSource, opts) {
+      setElement(this, element, dataSource, opts, processCalendarData);
     },
     charts: {}
   };

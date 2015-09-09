@@ -79,6 +79,12 @@ data = [
 new Chartkick.LineChart("chart-1", data);
 ```
 
+Calendar
+
+```javascript
+new Chartkick.Calendar("chart-1", [["2015-02-01", 10], ["2015-01-02", 20], ["2015-03-03", 7]]);
+```
+
 ### Say Goodbye To Timeouts
 
 Make your pages load super fast and stop worrying about timeouts.  Give each chart its own endpoint.
