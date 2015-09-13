@@ -341,7 +341,7 @@
               data[j][0] = data[j][0].getTime();
             }
           }
-          series[i].marker = {symbol: "circle"};
+          series[i].marker = series[i].marker || {symbol: "circle"};
         }
         options.series = series;
         new Highcharts.Chart(options);
