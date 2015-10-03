@@ -10,6 +10,7 @@ Supports [Google Charts](https://developers.google.com/chart/) and [Highcharts](
 
 - [Ruby](https://github.com/ankane/chartkick)
 - [Python](https://github.com/mher/chartkick.py)
+- [Elixir](https://github.com/buren/chartkick-ex)
 
 I would love to see this implemented in other languages too!!
 
