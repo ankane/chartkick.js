@@ -1,6 +1,6 @@
 # Chartkick.js
 
-Create beautiful Javascript charts with minimal code.
+Create beautiful JavaScript charts with minimal code.
 
 [See it in action](http://ankane.github.io/chartkick.js/examples/)
 
@@ -180,7 +180,7 @@ To specify a language for Google Charts, add:
 </script>
 ```
 
-**before** the javascript files.
+**before** the JavaScript files.
 
 ### Adapter
 
