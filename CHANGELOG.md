@@ -1,4 +1,4 @@
-## 1.4.2 [unreleased]
+## 1.4.2
 
 - Added `label` option
 - Better tooltip for dates for Google Charts
