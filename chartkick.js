@@ -556,8 +556,10 @@
         var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle);
 
         // cant use object as key
-        var createDataTable = function (series, columnType) {
-          var i, j, s, d, key, rows = [];
+        var createDataTable = function (series, columnType, role) {
+          var i, j, s, d, r, key, rows = [];
+          var role = role || false;
+
           for (i = 0; i < series.length; i++) {
             s = series[i];
 
@@ -567,7 +569,18 @@
               if (!rows[key]) {
                 rows[key] = new Array(series.length);
               }
-              rows[key][i] = toFloat(d[1]);
+              r = [toFloat(d[1])];
+
+              if (role) {
+                for(var itm in d) {
+                  if (itm != 0 && itm != 1) {
+                    r.push(d[itm]);
+                  }
+                }
+                rows[key][i] = r;              
+              } else {
+                rows[key][i] = r[0];
+              }
             }
           }
 
@@ -584,7 +597,11 @@
               } else {
                 value = i;
               }
-              rows2.push([value].concat(rows[i]));
+              if (role) {
+                rows2.push([value].concat.apply([value],rows[i]));
+              } else {
+                rows2.push([value].concat(rows[i]));
+              }
             }
           }
           if (columnType === "datetime") {
@@ -598,6 +615,11 @@
           for (i = 0; i < series.length; i++) {
             data.addColumn("number", series[i].name);
           }
+
+          for (var type in role) {
+            data.addColumn({type: role[type] , role: type});
+          }
+
           data.addRows(rows2);
 
           return data;
@@ -615,7 +637,8 @@
         this.renderLineChart = function (chart) {
           waitForLoaded(function () {
             var options = jsOptions(chart.data, chart.options);
-            var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
+            var role = options.role || false;
+            var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime", role);
             chart.chart = new google.visualization.LineChart(chart.element);
             resize(function () {
               chart.chart.draw(data, options);
@@ -651,7 +674,8 @@
         this.renderColumnChart = function (chart) {
           waitForLoaded(function () {
             var options = jsOptions(chart.data, chart.options);
-            var data = createDataTable(chart.data, "string");
+            var role = options.role || false;
+            var data = createDataTable(chart.data, "string", role);
             chart.chart = new google.visualization.ColumnChart(chart.element);
             resize(function () {
               chart.chart.draw(data, options);
@@ -669,7 +693,8 @@
               }
             };
             var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked)(chart.data, chart.options, chartOptions);
-            var data = createDataTable(chart.data, "string");
+            var role = options.role || false;
+            var data = createDataTable(chart.data, "string", role);
             chart.chart = new google.visualization.BarChart(chart.element);
             resize(function () {
               chart.chart.draw(data, options);
@@ -685,7 +710,8 @@
               areaOpacity: 0.5
             };
             var options = jsOptions(chart.data, chart.options, chartOptions);
-            var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
+            var role = options.role || false;
+            var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime", role);
             chart.chart = new google.visualization.AreaChart(chart.element);
             resize(function () {
               chart.chart.draw(data, options);
@@ -719,7 +745,8 @@
           waitForLoaded(function () {
             var chartOptions = {};
             var options = jsOptions(chart.data, chart.options, chartOptions);
-            var data = createDataTable(chart.data, "number");
+            var role = options.role || false;
+            var data = createDataTable(chart.data, "number", role);
 
             chart.chart = new google.visualization.ScatterChart(chart.element);
             resize(function () {
@@ -793,10 +820,19 @@
   };
 
   var formatSeriesData = function (data, keyType) {
-    var r = [], key, j;
-    for (j = 0; j < data.length; j++) {
-      key = toFormattedKey(data[j][0], keyType);
-      r.push([key, toFloat(data[j][1])]);
+    var r = [], key, i, j, datum;
+    for (i = 0; i < data.length; i++) {
+      key = toFormattedKey(data[i][0], keyType);
+      datum = [key];
+      for(j in data[i]) {
+        if (j == 0) continue;
+        if (j == 1) {
+          datum.push(toFloat(data[i][j]));
+        } else {
+          datum.push(data[i][j]);
+        }
+      }
+      r.push(datum);
     }
     if (keyType === "datetime") {
       r.sort(sortByTime);
