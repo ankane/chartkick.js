@@ -555,6 +555,21 @@
 
         var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle);
 
+        var getRoleDataType = function (name) {
+          var r = {
+            "annotation"     : "string",
+            "annotationText" : "string",
+            "certainty"      : "boolean",
+            "emphasis"       : "boolean",
+            "interval"       : "number",
+            "scope"          : "boolean",
+            "style"          : "string",
+            "tooltip"        : "string"
+          };
+
+          return r[name] || false;
+        };
+
         // cant use object as key
         var createDataTable = function (series, columnType, role) {
           var i, j, s, d, r, itm, key, rows = [];
@@ -615,11 +630,9 @@
           for (i = 0; i < series.length; i++) {
             data.addColumn("number", series[i].name);
           }
-
-          for (var type in role) {
-            if(role.hasOwnProperty(type)) {
-              data.addColumn({type: role[type] , role: type});
-            }
+          // add column roles
+          for (i = 0; i < role.length;  i++) {
+            data.addColumn({type: getRoleDataType(role[i]) , role: role[i]});
           }
 
           data.addRows(rows2);
@@ -827,8 +840,8 @@
       key = toFormattedKey(data[i][0], keyType);
       datum = [key];
       for(j = 0; j < data[i].length; j++) {
-        if (j == 0) continue;
-        if (j == 1) {
+        if (j === 0) continue;
+        if (j === 1) {
           datum.push(toFloat(data[i][j]));
         } else {
           datum.push(data[i][j]);
