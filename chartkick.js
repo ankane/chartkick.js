@@ -519,6 +519,17 @@
           }
         };
 
+        var defaultColumnRoles = {
+          "annotation"     : "string",
+          "annotationText" : "string",
+          "certainty"      : "boolean",
+          "emphasis"       : "boolean",
+          "interval"       : "number",
+          "scope"          : "boolean",
+          "style"          : "string",
+          "tooltip"        : "string"
+        };
+
         var hideLegend = function (options) {
           options.legend.position = "none";
         };
@@ -556,18 +567,7 @@
         var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle);
 
         var getRoleDataType = function (name) {
-          var r = {
-            "annotation"     : "string",
-            "annotationText" : "string",
-            "certainty"      : "boolean",
-            "emphasis"       : "boolean",
-            "interval"       : "number",
-            "scope"          : "boolean",
-            "style"          : "string",
-            "tooltip"        : "string"
-          };
-
-          return r[name] || false;
+          return defaultColumnRoles[name] || false;
         };
 
         // cant use object as key
