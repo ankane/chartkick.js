@@ -573,7 +573,6 @@
         // cant use object as key
         var createDataTable = function (series, columnType, role) {
           var i, j, s, d, r, itm, key, rows = [];
-          var role = role || false;
 
           for (i = 0; i < series.length; i++) {
             s = series[i];
@@ -587,10 +586,10 @@
               r = [toFloat(d[1])];
 
               if (role) {
-                for(itm = 0; itm < d.length; itm++) {
-                  if (itm != 0 && itm != 1) {
-                    r.push(d[itm]);
-                  }
+                // start the loop at 2; skip over the
+                // implicit domain and data columns
+                for(itm = 2; itm < d.length; itm++) {
+                  r.push(d[itm]);
                 }
                 rows[key][i] = r;              
               } else {
@@ -839,8 +838,7 @@
     for (i = 0; i < data.length; i++) {
       key = toFormattedKey(data[i][0], keyType);
       datum = [key];
-      for(j = 0; j < data[i].length; j++) {
-        if (j === 0) continue;
+      for(j = 1; j < data[i].length; j++) {
         if (j === 1) {
           datum.push(toFloat(data[i][j]));
         } else {
