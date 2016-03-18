@@ -429,52 +429,54 @@
       };
       adapters.push(HighchartsAdapter);
     }
-    if (!GoogleChartsAdapter && window.google && window.google.setOnLoadCallback) {
+    if (!GoogleChartsAdapter && window.google && window.google.charts) {
       var GoogleChartsAdapter = new function () {
         var google = window.google;
 
         this.name = "google";
+        var packages = config.packages || ['corechart'], loaded = false;
 
-        var loaded = {};
+        var loadLibrairies = function () {
+          var loadOptions = {
+            packages: packages
+          };
+
+          if (config.language) {
+            loadOptions.language = config.language;
+          }
+
+          google.charts.load('current', loadOptions);
+          google.charts.setOnLoadCallback(function () {
+            loaded = true;
+            runCallbacks();
+          });
+        }
+
         var callbacks = [];
 
         var runCallbacks = function () {
           var cb, call;
           for (var i = 0; i < callbacks.length; i++) {
             cb = callbacks[i];
-            call = google.visualization && ((cb.pack === "corechart" && google.visualization.LineChart) || (cb.pack === "timeline" && google.visualization.Timeline))
+            call = google.visualization && google.charts
             if (call) {
-              cb.callback();
+              cb();
               callbacks.splice(i, 1);
               i--;
             }
           }
         };
 
-        var waitForLoaded = function (pack, callback) {
-          if (!callback) {
-            callback = pack;
-            pack = "corechart";
-          }
+        var waitForLoaded = function (callback) {
+          callbacks.push(callback);
 
-          callbacks.push({pack: pack, callback: callback});
-
-          if (loaded[pack]) {
+          if (loaded) {
             runCallbacks();
-          } else {
-            loaded[pack] = true;
-
-            // https://groups.google.com/forum/#!topic/google-visualization-api/fMKJcyA2yyI
-            var loadOptions = {
-              packages: [pack],
-              callback: runCallbacks
-            };
-            if (config.language) {
-              loadOptions.language = config.language;
-            }
-            google.load("visualization", "1", loadOptions);
           }
         };
+
+        // Load libraries
+        loadLibrairies();
 
         // Set chart options
         var defaultOptions = {
@@ -616,7 +618,13 @@
           waitForLoaded(function () {
             var options = jsOptions(chart.data, chart.options);
             var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
-            chart.chart = new google.visualization.LineChart(chart.element);
+
+            if (chart.options.theme === "material") {
+              chart.chart = new google.charts.Line(chart.element);
+            } else {
+              chart.chart = new google.visualization.LineChart(chart.element);
+            }
+
             resize(function () {
               chart.chart.draw(data, options);
             });
@@ -651,8 +659,14 @@
         this.renderColumnChart = function (chart) {
           waitForLoaded(function () {
             var options = jsOptions(chart.data, chart.options);
+            options.bars = "vertical";
             var data = createDataTable(chart.data, "string");
-            chart.chart = new google.visualization.ColumnChart(chart.element);
+
+            if (chart.options.theme === "material") {
+              chart.chart = new google.charts.Bar(chart.element);
+            } else {
+              chart.chart = new google.visualization.ColumnChart(chart.element);
+            }
             resize(function () {
               chart.chart.draw(data, options);
             });
@@ -670,7 +684,12 @@
             };
             var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked)(chart.data, chart.options, chartOptions);
             var data = createDataTable(chart.data, "string");
-            chart.chart = new google.visualization.BarChart(chart.element);
+
+            if (chart.options.theme === "material") {
+              chart.chart = new google.charts.Bar(chart.element);
+            } else {
+              chart.chart = new google.visualization.BarChart(chart.element);
+            }
             resize(function () {
               chart.chart.draw(data, options);
             });
@@ -721,7 +740,11 @@
             var options = jsOptions(chart.data, chart.options, chartOptions);
             var data = createDataTable(chart.data, "number");
 
-            chart.chart = new google.visualization.ScatterChart(chart.element);
+            if (chart.options.theme === "material") {
+              chart.chart = new google.charts.Scatter(chart.element);
+            } else {
+              chart.chart = new google.visualization.ScatterChart(chart.element);
+            }
             resize(function () {
               chart.chart.draw(data, options);
             });
@@ -729,7 +752,7 @@
         };
 
         this.renderTimeline = function (chart) {
-          waitForLoaded("timeline", function () {
+          waitForLoaded(function () {
             var chartOptions = {
               legend: "none"
             };
