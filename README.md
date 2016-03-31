@@ -1,6 +1,6 @@
 # Chartkick.js
 
-Create beautiful Javascript charts with minimal code.
+Create beautiful JavaScript charts with minimal code.
 
 [See it in action](http://ankane.github.io/chartkick.js/examples/)
 
@@ -10,6 +10,7 @@ Supports [Google Charts](https://developers.google.com/chart/) and [Highcharts](
 
 - [Ruby](https://github.com/ankane/chartkick)
 - [Python](https://github.com/mher/chartkick.py)
+- [Elixir](https://github.com/buren/chartkick-ex)
 
 I would love to see this implemented in other languages too!!
 
@@ -49,6 +50,12 @@ Area chart
 
 ```javascript
 new Chartkick.AreaChart("chart-1", {"2013-02-10 00:00:00 -0800": 11, "2013-02-11 00:00:00 -0800": 6});
+```
+
+Scatter chart
+
+```javascript
+new Chartkick.ScatterChart("chart-1", [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]]);
 ```
 
 Geo chart
@@ -111,6 +118,12 @@ Discrete axis
 new Chartkick.LineChart("chart-1", data, {"discrete": true});
 ```
 
+Axis titles
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {"xtitle": "Time", "ytitle": "Population"});
+```
+
 You can pass options directly to the charting library with:
 
 ```javascript
@@ -159,6 +172,14 @@ Chartkick.updateAllCharts(function(chart, isRemote) {
 
 ## Installation
 
+Download [directly](https://raw.githubusercontent.com/ankane/chartkick.js/master/chartkick.js), or with npm or Bower:
+
+```sh
+npm install chartkick
+# or
+bower install chartkick
+```
+
 For Google Charts, use:
 
 ```html
@@ -185,7 +206,7 @@ To specify a language for Google Charts, add:
 </script>
 ```
 
-**before** the javascript files.
+**before** the JavaScript files.
 
 ### Adapter
 

@@ -1,3 +1,21 @@
+## 1.4.3 [unreleased]
+
+- Fixed line height on timeline charts
+
+## 1.4.2
+
+- Added `label` option
+- Better tooltip for dates for Google Charts
+
+## 1.4.1
+
+- Fixed regression with `min: null`
+
+## 1.4.0
+
+- Added scatter chart
+- Added axis titles
+
 ## 1.3.0
 
 - Added timelines
