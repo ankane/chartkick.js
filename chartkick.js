@@ -772,8 +772,10 @@
 
     for (i = 0; i < adapters.length; i++) {
       adapter = adapters[i];
-      if ((!adapterName || adapterName === adapter.name) && isFunction(adapter[fnName])) {
-        return adapter[fnName](chart);
+      if (!adapterName || adapterName === adapter.name) {
+        if (isFunction(adapter[fnName]))
+          return adapter[fnName](chart);
+        else throw new Error(fnName + " is not available for " + adapterName);
       }
     }
     throw new Error("No adapter found");
