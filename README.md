@@ -4,7 +4,7 @@ Create beautiful JavaScript charts with minimal code.
 
 [See it in action](http://ankane.github.io/chartkick.js/examples/)
 
-Supports [Google Charts](https://developers.google.com/chart/) and [Highcharts](http://www.highcharts.com/) and works with most browsers (including IE 6)
+Supports [Google Charts](https://developers.google.com/chart/), [Highcharts](http://www.highcharts.com/), and [Chart.js](http://www.chartjs.org/) (in beta) and works with most browsers (including IE 6)
 
 #### Server-side Integration
 
@@ -162,14 +162,19 @@ For Google Charts, use:
 <script src="chartkick.js"></script>
 ```
 
-If you prefer Highcharts, use:
+If you prefer Highcharts (works with 2.1+), use:
 
 ```html
 <script src="/path/to/highcharts.js"></script>
 <script src="chartkick.js"></script>
 ```
 
-Works with Highcharts 2.1+
+If you prefer Chart.js (works with 2.0+, in beta), use:
+
+```html
+<script src="/path/to/Chart.bundle.js"></script>
+<script src="chartkick.js"></script>
+```
 
 ### Localization
 
@@ -185,7 +190,7 @@ To specify a language for Google Charts, add:
 
 ### Adapter
 
-If both Google Charts and Highcharts are loaded, choose between them with:
+If more than one charting library is loaded, choose between them with:
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {"adapter": "google"}); // or highcharts
