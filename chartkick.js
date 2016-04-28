@@ -922,7 +922,7 @@
           for (var i = 0; i < series.length; i++) {
             var s = series[i];
 
-            var backgroundColor = chartType === "area" ? addOpacity(colors[i], 0.5) : colors[i];
+            var backgroundColor = chartType !== "line" ? addOpacity(colors[i], 0.5) : colors[i];
 
             var dataset = {
               label: s.name,
@@ -930,7 +930,8 @@
               fill: chartType === "area",
               borderColor: colors[i],
               backgroundColor: backgroundColor,
-              pointBackgroundColor: colors[i]
+              pointBackgroundColor: colors[i],
+              borderWidth: 2
             };
 
             datasets.push(dataset);
@@ -1001,7 +1002,7 @@
 
         this.renderColumnChart = function (chart) {
           var options = jsOptions(chart.data, chart.options);
-          var data = createDataTable(chart);
+          var data = createDataTable(chart, {}, "column");
           drawChart(chart, "bar", data, options);
         }
 
