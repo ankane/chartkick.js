@@ -869,6 +869,7 @@
 
           var day = true;
           var week = true;
+          var dayOfWeek;
           var month = true;
           var year = true;
           var detectType = (chartType === "line" || chartType === "area") && !chart.options.discrete;
@@ -901,10 +902,13 @@
               if (detectType) {
                 value = new Date(toFloat(i));
                 // TODO make this efficient
-                day = day && isDay(toDate(value));
-                week = week && isWeek(toDate(value));
-                month = month && isMonth(toDate(value));
-                year = year && isYear(toDate(value));
+                day = day && isDay(value);
+                if (!dayOfWeek) {
+                  dayOfWeek = value.getDay();
+                }
+                week = week && isWeek(value, dayOfWeek);
+                month = month && isMonth(value);
+                year = year && isYear(value);
               } else {
                 value = i;
               }
@@ -1061,9 +1065,8 @@
     return d.getMilliseconds() + d.getSeconds() + d.getMinutes() + d.getHours() === 0;
   }
 
-  // TODO support for other days of week
-  function isWeek(d) {
-    return isDay(d) && d.getDay() === 0;
+  function isWeek(d, dayOfWeek) {
+    return isDay(d) && d.getDay() === dayOfWeek;
   }
 
   function isMonth(d) {
