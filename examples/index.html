@@ -6,13 +6,16 @@
     <script>
       // var Chartkick = {language: "de"};
     </script>
-    <script src="http://www.google.com/jsapi"></script>
+    <!-- <script src="http://www.google.com/jsapi"></script> -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.2/zepto.min.js"></script> -->
     <!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
     <!-- <script src="http://code.highcharts.com/2.1.9/highcharts.js"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.0.1/Chart.bundle.js"></script>
+
     <script src="../chartkick.js"></script>
 
     <style>
@@ -159,6 +162,24 @@
     <div id="chart-203" style="height: 300px;"></div>
     <script>
       new Chartkick.LineChart("chart-203", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",22],["1",36],["2",38],["3",31],["4",30],["5",3],["6",17]]}], {"discrete": true});
+    </script>
+
+    <h1>Different Data</h1>
+    <div id="chart-3203" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("chart-3203", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["7",22],["1",36],["2",38],["3",31],["4",30],["5",3],["6",17]]}], {"discrete": true});
+    </script>
+
+    <h1>Min</h1>
+    <div id="chart-1202" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("chart-1202", {"2013-02-10 00:00:00 -0800":200,"2013-02-11 00:00:00 -0800":206,"2013-02-12 00:00:00 -0800":203,"2013-02-13 00:00:00 -0800":202,"2013-02-14 00:00:00 -0800":205,"2013-02-15 00:00:00 -0800":203}, {"min": -100});
+    </script>
+
+    <h1>Max</h1>
+    <div id="chart-2202" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("chart-2202", {"2013-02-10 00:00:00 -0800":200,"2013-02-11 00:00:00 -0800":206,"2013-02-12 00:00:00 -0800":203,"2013-02-13 00:00:00 -0800":202,"2013-02-14 00:00:00 -0800":205,"2013-02-15 00:00:00 -0800":203}, {"max": 400});
     </script>
 
     <h1>Min Null</h1>
