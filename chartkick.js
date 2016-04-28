@@ -13,6 +13,7 @@
 
   var config = window.Chartkick || {};
   var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, adapters = [];
+  var DATE_PATTERN = /^(\d\d\d\d)(\-)?(\d\d)(\-)?(\d\d)$/i;
   var adapters = [];
 
   // helpers
@@ -206,9 +207,15 @@
   }
 
   function toDate(n) {
+    var matches, year, month, day;
     if (typeof n !== "object") {
       if (typeof n === "number") {
         n = new Date(n * 1000); // ms
+      } else if (config.smarterDates && (matches = n.match(DATE_PATTERN))) {
+        year = parseInt(matches[1], 10);
+        month = parseInt(matches[3], 10) - 1;
+        day = parseInt(matches[5], 10);
+        return new Date(year, month, day);
       } else { // str
         // try our best to get the str into iso8601
         // TODO be smarter about this

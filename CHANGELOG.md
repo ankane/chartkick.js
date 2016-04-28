@@ -1,6 +1,7 @@
 ## 1.5.0 [unreleased]
 
 - Added Chart.js adapter **beta**
+- Added `smarterDates` option (temporary until 2.0)
 - Fixed line height on timeline charts
 
 ## 1.4.2
