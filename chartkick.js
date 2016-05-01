@@ -1078,6 +1078,23 @@
     return isMonth(d) && d.getMonth() === 0;
   }
 
+  function isDate(obj) {
+    return !isNaN(toDate(obj)) && toStr(obj).length >= 6;
+  }
+
+  function detectDiscrete(series) {
+    var i, j, data;
+    for (i = 0; i < series.length; i++) {
+      data = toArr(series[i].data);
+      for (j = 0; j < data.length; j++) {
+        if (!isDate(data[j][0])) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   function processSeries(series, opts, keyType) {
     var i;
 
@@ -1087,6 +1104,9 @@
       opts.hideLegend = true;
     } else {
       opts.hideLegend = false;
+    }
+    if (config.smarterDiscrete && (opts.discrete === null || opts.discrete === undefined)) {
+      opts.discrete = detectDiscrete(series);
     }
     if (opts.discrete) {
       keyType = "string";
