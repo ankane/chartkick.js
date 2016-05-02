@@ -934,7 +934,7 @@
               borderWidth: 2
             };
 
-            datasets.push(dataset);
+            datasets.push(merge(dataset, s.library || {}));
           }
 
           if (detectType) {
