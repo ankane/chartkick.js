@@ -1004,7 +1004,7 @@
 
         this.renderColumnChart = function (chart) {
           var options = jsOptions(chart.data, chart.options);
-          var data = createDataTable(chart, {}, "column");
+          var data = createDataTable(chart, options, "column");
           drawChart(chart, "bar", data, options);
         }
 
