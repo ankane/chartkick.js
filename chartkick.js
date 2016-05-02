@@ -953,6 +953,8 @@
             }
           }
 
+          options.scales.xAxes[0].time.unitStepSize = Math.ceil(labels.length / (chart.element.offsetWidth / 40.0));
+
           var data = {
             labels: labels,
             datasets: datasets
