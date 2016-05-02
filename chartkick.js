@@ -951,22 +951,41 @@
           }
 
           if (detectType) {
+            var step;
             if (year) {
               options.scales.xAxes[0].time.unit = "year";
               options.scales.xAxes[0].time.tooltipFormat = "ll";
+              step = 86400 * 365;
             } else if (month) {
               options.scales.xAxes[0].time.unit = "month";
               options.scales.xAxes[0].time.tooltipFormat = "ll";
+              step = 86400 * 30;
             } else if (week) {
               options.scales.xAxes[0].time.unit = "week";
               options.scales.xAxes[0].time.tooltipFormat = "ll";
+              step = 86400 * 7;
             } else if (day) {
               options.scales.xAxes[0].time.unit = "day";
               options.scales.xAxes[0].time.tooltipFormat = "ll";
+              step = 86400;
             }
-          }
 
-          options.scales.xAxes[0].time.unitStepSize = Math.ceil(labels.length / (chart.element.offsetWidth / 40.0));
+            var minTime = labels[0].getTime();
+            var maxTime = labels[0].getTime();
+            for (i = 1; i < labels.length; i++) {
+              value = labels[i].getTime();
+              if (value < minTime) {
+                minTime = value;
+              }
+              if (value > maxTime) {
+                maxTime = value;
+              }
+            }
+
+            var timeDiff = (maxTime - minTime) / (1000.0 * step);
+
+            options.scales.xAxes[0].time.unitStepSize = Math.ceil(timeDiff / (chart.element.offsetWidth / 40.0));
+          }
 
           var data = {
             labels: labels,
