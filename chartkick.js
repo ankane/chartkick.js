@@ -951,6 +951,18 @@
           }
 
           if (detectType) {
+            var minTime = labels[0].getTime();
+            var maxTime = labels[0].getTime();
+            for (i = 1; i < labels.length; i++) {
+              value = labels[i].getTime();
+              if (value < minTime) {
+                minTime = value;
+              }
+              if (value > maxTime) {
+                maxTime = value;
+              }
+            }
+
             var step;
             if (year) {
               options.scales.xAxes[0].time.unit = "year";
@@ -970,21 +982,12 @@
               step = 86400;
             }
 
-            var minTime = labels[0].getTime();
-            var maxTime = labels[0].getTime();
-            for (i = 1; i < labels.length; i++) {
-              value = labels[i].getTime();
-              if (value < minTime) {
-                minTime = value;
-              }
-              if (value > maxTime) {
-                maxTime = value;
+            if (step) {
+              var timeDiff = (maxTime - minTime) / (1000.0 * step);
+              if (timeDiff > 0) {
+                options.scales.xAxes[0].time.unitStepSize = Math.ceil(timeDiff / (chart.element.offsetWidth / 40.0));
               }
             }
-
-            var timeDiff = (maxTime - minTime) / (1000.0 * step);
-
-            options.scales.xAxes[0].time.unitStepSize = Math.ceil(timeDiff / (chart.element.offsetWidth / 40.0));
           }
 
           var data = {
