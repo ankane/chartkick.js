@@ -162,14 +162,14 @@ For Google Charts, use:
 <script src="chartkick.js"></script>
 ```
 
-If you prefer Highcharts (works with 2.1+), (download it)[http://www.highcharts.com/download] and use:
+If you prefer Highcharts (works with 2.1+), [download it](http://www.highcharts.com/download) and use:
 
 ```html
 <script src="/path/to/highcharts.js"></script>
 <script src="chartkick.js"></script>
 ```
 
-If you prefer Chart.js (works with 2.0+, in beta), (download the bundle)[http://www.chartjs.org/docs/#getting-started-download-chart-js] and use:
+If you prefer Chart.js (works with 2.0+, in beta), [download the bundle](http://www.chartjs.org/docs/#getting-started-download-chart-js) and use:
 
 ```html
 <script src="/path/to/Chart.bundle.js"></script>
