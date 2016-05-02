@@ -1,3 +1,8 @@
+## 1.5.1 [unreleased]
+
+- Added `library` option for series
+- Better tick selection for time scales
+
 ## 1.5.0
 
 - Added Chart.js adapter **beta**
