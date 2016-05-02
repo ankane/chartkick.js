@@ -799,7 +799,8 @@
                   // fontStyle: "bold",
                   fontColor: "#333"
                 },
-                time: {}
+                time: {},
+                ticks: {}
               }
             ]
           },
@@ -857,6 +858,18 @@
         var addOpacity = function(hex, opacity) {
           var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
           return result ? "rgba(" + parseInt(result[1], 16) + ", " + parseInt(result[2], 16) + ", " + parseInt(result[3], 16) + ", " + opacity + ")" : hex;
+        };
+
+        var setLabelSize = function (chart, data, options) {
+          var maxLabelSize = Math.ceil(chart.element.offsetWidth / 4.0 / data.labels.length);
+          options.scales.xAxes[0].ticks.callback = function (value) {
+            value = toStr(value);
+            if (value.length > maxLabelSize) {
+              return value.substring(0, maxLabelSize - 2) + "...";
+            } else {
+              return value;
+            }
+          };
         };
 
         var jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle);
@@ -1005,6 +1018,7 @@
         this.renderColumnChart = function (chart) {
           var options = jsOptions(chart.data, chart.options);
           var data = createDataTable(chart, options, "column");
+          setLabelSize(chart, data, options);
           drawChart(chart, "bar", data, options);
         }
 
