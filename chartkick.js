@@ -965,27 +965,29 @@
 
             var timeDiff = (maxTime - minTime) / 1000.0;
 
-            var step;
-            if (timeDiff > 86400 * 365 * 10) {
-              options.scales.xAxes[0].time.unit = "year";
-              options.scales.xAxes[0].time.tooltipFormat = "ll";
-              step = 86400 * 365;
-            } else if (timeDiff > 86400 * 30 * 10) {
-              options.scales.xAxes[0].time.unit = "month";
-              options.scales.xAxes[0].time.tooltipFormat = "ll";
-              step = 86400 * 30;
-            } else if (timeDiff > 86400 * 7 * 10) {
-              options.scales.xAxes[0].time.unit = "week";
-              options.scales.xAxes[0].time.tooltipFormat = "ll";
-              step = 86400 * 7;
-            } else if (day) {
-              options.scales.xAxes[0].time.unit = "day";
-              options.scales.xAxes[0].time.tooltipFormat = "ll";
-              step = 86400;
-            }
+            if (day) {
+              var step;
+              if (timeDiff > 86400 * 365 * 10) {
+                options.scales.xAxes[0].time.unit = "year";
+                options.scales.xAxes[0].time.tooltipFormat = "ll";
+                step = 86400 * 365;
+              } else if (timeDiff > 86400 * 30 * 10) {
+                options.scales.xAxes[0].time.unit = "month";
+                options.scales.xAxes[0].time.tooltipFormat = "ll";
+                step = 86400 * 30;
+              } else if (timeDiff > 86400 * 7 * 10) {
+                options.scales.xAxes[0].time.unit = "week";
+                options.scales.xAxes[0].time.tooltipFormat = "ll";
+                step = 86400 * 7;
+              } else {
+                options.scales.xAxes[0].time.unit = "day";
+                options.scales.xAxes[0].time.tooltipFormat = "ll";
+                step = 86400;
+              }
 
-            if (step && timeDiff > 0) {
-              options.scales.xAxes[0].time.unitStepSize = Math.ceil(timeDiff / step / (chart.element.offsetWidth / 40.0));
+              if (step && timeDiff > 0) {
+                options.scales.xAxes[0].time.unitStepSize = Math.ceil(timeDiff / step / (chart.element.offsetWidth / 40.0));
+              }
             }
           }
 
