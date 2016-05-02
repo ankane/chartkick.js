@@ -967,10 +967,10 @@
 
             if (!options.scales.xAxes[0].time.unit) {
               var step;
-              if (timeDiff > 365 * 10) {
+              if (year || timeDiff > 365 * 10) {
                 options.scales.xAxes[0].time.unit = "year";
                 step = 365;
-              } else if (timeDiff > 30 * 10) {
+              } else if (month || timeDiff > 30 * 10) {
                 options.scales.xAxes[0].time.unit = "month";
                 step = 30;
               } else if (day || timeDiff > 10) {
