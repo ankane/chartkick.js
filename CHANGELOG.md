@@ -1,7 +1,7 @@
 ## 1.5.1 [unreleased]
 
 - Added `library` option for series
-- Better tick selection for time scales
+- Better tick selection for time and discrete scales
 
 ## 1.5.0
 
