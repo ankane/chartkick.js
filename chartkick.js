@@ -950,7 +950,7 @@
             datasets.push(merge(dataset, s.library || {}));
           }
 
-          if (detectType) {
+          if (detectType && labels.length > 0) {
             var minTime = labels[0].getTime();
             var maxTime = labels[0].getTime();
             for (i = 1; i < labels.length; i++) {
