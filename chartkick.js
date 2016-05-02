@@ -963,16 +963,18 @@
               }
             }
 
+            var timeDiff = (maxTime - minTime) / 1000.0;
+
             var step;
-            if (year) {
+            if (timeDiff > 86400 * 365 * 10) {
               options.scales.xAxes[0].time.unit = "year";
               options.scales.xAxes[0].time.tooltipFormat = "ll";
               step = 86400 * 365;
-            } else if (month) {
+            } else if (timeDiff > 86400 * 30 * 10) {
               options.scales.xAxes[0].time.unit = "month";
               options.scales.xAxes[0].time.tooltipFormat = "ll";
               step = 86400 * 30;
-            } else if (week) {
+            } else if (timeDiff > 86400 * 7 * 10) {
               options.scales.xAxes[0].time.unit = "week";
               options.scales.xAxes[0].time.tooltipFormat = "ll";
               step = 86400 * 7;
@@ -982,11 +984,8 @@
               step = 86400;
             }
 
-            if (step) {
-              var timeDiff = (maxTime - minTime) / (1000.0 * step);
-              if (timeDiff > 0) {
-                options.scales.xAxes[0].time.unitStepSize = Math.ceil(timeDiff / (chart.element.offsetWidth / 40.0));
-              }
+            if (step && timeDiff > 0) {
+              options.scales.xAxes[0].time.unitStepSize = Math.ceil(timeDiff / step / (chart.element.offsetWidth / 40.0));
             }
           }
 
