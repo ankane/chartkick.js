@@ -1,4 +1,4 @@
-## 1.5.0 [unreleased]
+## 1.5.0
 
 - Added Chart.js adapter **beta**
 - Added `smarterDates` option (temporary until 2.0)
