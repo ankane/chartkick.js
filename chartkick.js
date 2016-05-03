@@ -906,7 +906,9 @@
                 rows[key] = new Array(series.length);
               }
               rows[key][i] = toFloat(d[1]);
-              sortedLabels.push(key);
+              if (sortedLabels.indexOf(key) === -1) {
+                sortedLabels.push(key);
+              }
             }
           }
 
@@ -992,7 +994,7 @@
               if (step && timeDiff > 0) {
                 var unitStepSize = Math.ceil(timeDiff / step / (chart.element.offsetWidth / 100.0));
                 if (week) {
-                  unitStepSize = Math.round(unitStepSize / 7.0) * 7;
+                  unitStepSize = Math.ceil(unitStepSize / 7.0) * 7;
                 }
                 options.scales.xAxes[0].time.unitStepSize = unitStepSize;
               }
