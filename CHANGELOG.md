@@ -1,5 +1,6 @@
 ## 1.5.1 [unreleased]
 
+- Added bar chart for Chart.js
 - Added `library` option for series
 - Better tick selection for time and discrete scales
 
