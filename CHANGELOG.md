@@ -1,4 +1,4 @@
-## 1.5.1 [unreleased]
+## 1.5.1
 
 - Added bar chart for Chart.js
 - Added `library` option for series

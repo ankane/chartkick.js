@@ -169,7 +169,7 @@ If you prefer Highcharts (works with 2.1+), [download it](http://www.highcharts.
 <script src="chartkick.js"></script>
 ```
 
-If you prefer Chart.js (works with 2.0+, in beta), [download the bundle](http://www.chartjs.org/docs/#getting-started-download-chart-js) and use:
+If you prefer Chart.js (works with 2.1+, in beta), [download the bundle](http://www.chartjs.org/docs/#getting-started-download-chart-js) and use:
 
 ```html
 <script src="/path/to/Chart.bundle.js"></script>
