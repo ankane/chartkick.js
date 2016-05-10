@@ -1,3 +1,7 @@
+## 1.5.2 [unreleased]
+
+- Added official methods
+
 ## 1.5.1
 
 - Added bar chart for Chart.js

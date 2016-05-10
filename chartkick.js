@@ -1240,6 +1240,18 @@
     chart.element = element;
     chart.options = opts || {};
     chart.dataSource = dataSource;
+    chart.getElement = function () {
+      return element;
+    };
+    chart.getData = function () {
+      return chart.data;
+    };
+    chart.getOptions = function () {
+      return opts || {};
+    };
+    chart.getChartObject = function () {
+      return chart.chart;
+    };
     Chartkick.charts[element.id] = chart;
     fetchDataSource(chart, callback);
   }

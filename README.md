@@ -196,6 +196,28 @@ If more than one charting library is loaded, choose between them with:
 new Chartkick.LineChart("chart-1", data, {"adapter": "google"}); // or highcharts
 ```
 
+### Methods [master]
+
+Access a chart with:
+
+```javascript
+var chart = Chartkick.charts["chart-id"];
+```
+
+Get the underlying chart object with:
+
+```javascript
+chart.getChartObject();
+```
+
+Other methods include:
+
+```javascript
+chart.getElement();
+chart.getData();
+chart.getOptions();
+```
+
 ## Examples
 
 To run the files in the `examples` directory, you'll need a web server.  Run:

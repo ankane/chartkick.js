@@ -272,5 +272,13 @@
     <script>
       new Chartkick.LineChart("chart-c123", [{"name":"boom","data":[["2016-04-24","21.0"]],"library":null},{"name":"bam","data":[["2016-04-24","75.0"]],"library":null},{"name":"hello","data":[["2016-04-24","4.0"]]}], {"min":null});
     </script>
+
+    <script>
+      var chart = Chartkick.charts["chart-5"];
+      console.log(chart.getElement());
+      console.log(chart.getData());
+      console.log(chart.getOptions());
+      console.log(chart.getChartObject());
+    </script>
   </body>
 </html>
