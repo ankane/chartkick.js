@@ -890,6 +890,8 @@
           var dayOfWeek;
           var month = true;
           var year = true;
+          var hour = true;
+          var minute = true;
           var detectType = (chartType === "line" || chartType === "area") && !chart.options.discrete;
 
           var series = chart.data;
@@ -936,6 +938,8 @@
               week = week && isWeek(value, dayOfWeek);
               month = month && isMonth(value);
               year = year && isYear(value);
+              hour = hour && isHour(value);
+              minute = minute && isMinute(value);
             } else {
               value = i;
             }
@@ -989,6 +993,12 @@
               } else if (day || timeDiff > 10) {
                 options.scales.xAxes[0].time.unit = "day";
                 step = 1;
+              } else if (hour) {
+                options.scales.xAxes[0].time.unit = "hour";
+                step = 1 / 24.0;
+              } else if (minute) {
+                options.scales.xAxes[0].time.unit = "minute";
+                step = 1 / 24.0 / 60.0;
               }
 
               if (step && timeDiff > 0) {
@@ -1000,8 +1010,14 @@
               }
             }
 
-            if (!options.scales.xAxes[0].time.tooltipFormat && day) {
-              options.scales.xAxes[0].time.tooltipFormat = "ll";
+            if (!options.scales.xAxes[0].time.tooltipFormat) {
+              if (day) {
+                options.scales.xAxes[0].time.tooltipFormat = "ll";
+              } else if (hour) {
+                options.scales.xAxes[0].time.tooltipFormat = "MMM D, h a";
+              } else if (minute) {
+                options.scales.xAxes[0].time.tooltipFormat = "h:mm a";
+              }
             }
           }
 
@@ -1117,8 +1133,16 @@
     return r;
   };
 
+  function isMinute(d) {
+    return d.getMilliseconds() === 0 && d.getSeconds() === 0;
+  }
+
+  function isHour(d) {
+    return isMinute(d) && d.getMinutes() === 0;
+  }
+
   function isDay(d) {
-    return d.getMilliseconds() + d.getSeconds() + d.getMinutes() + d.getHours() === 0;
+    return isHour(d) && d.getHours() === 0;
   }
 
   function isWeek(d, dayOfWeek) {
