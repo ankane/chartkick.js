@@ -1316,4 +1316,4 @@
   } else {
     window.Chartkick = Chartkick;
   }
-}(this));
+}(window));
