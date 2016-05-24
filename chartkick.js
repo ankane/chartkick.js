@@ -1311,5 +1311,9 @@
     charts: {}
   };
 
-  window.Chartkick = (window.module || {}).exports = Chartkick;
+  if (typeof module === "object" && typeof module.exports === "object") {
+    module.exports = Chartkick;
+  } else {
+    window.Chartkick = Chartkick;
+  }
 }(this));
