@@ -1311,5 +1311,5 @@
     charts: {}
   };
 
-  window.Chartkick = Chartkick;
-}(window));
+  window.Chartkick = (window.module || {}).exports = Chartkick;
+}(this));
