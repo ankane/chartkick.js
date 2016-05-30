@@ -833,6 +833,16 @@
           options.scales.yAxes[0].ticks.max = max;
         };
 
+        var setBarMin = function (options, min) {
+          if (min !== null) {
+            options.scales.xAxes[0].ticks.min = min;
+          }
+        };
+
+        var setBarMax = function (options, max) {
+          options.scales.xAxes[0].ticks.max = max;
+        };
+
         var setStacked = function (options, stacked) {
           options.scales.xAxes[0].stacked = !!stacked;
           options.scales.yAxes[0].stacked = !!stacked;
@@ -1070,7 +1080,12 @@
         };
 
         this.renderColumnChart = function (chart, chartType) {
-          var options = jsOptions(chart.data, chart.options);
+          var options;
+          if (chartType === "bar") {
+            options = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setBarMin, setBarMax, setStacked)(chart.data, chart.options);
+          } else {
+            options = jsOptions(chart.data, chart.options);
+          }
           var data = createDataTable(chart, options, "column");
           setLabelSize(chart, data, options);
           drawChart(chart, (chartType === "bar" ? "horizontalBar" : "bar"), data, options);
