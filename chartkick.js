@@ -1183,9 +1183,10 @@
   }
 
   function allZeros(data) {
-    for (var i = 0; i < data.length; i++) {
-      var d = data[i].data;
-      for (var j = 0; j < d.length; j++) {
+    var i, j, d;
+    for (i = 0; i < data.length; i++) {
+      d = data[i].data;
+      for (j = 0; j < d.length; j++) {
         if (d[j][1] != 0) {
           return false;
         }
