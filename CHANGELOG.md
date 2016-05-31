@@ -1,6 +1,10 @@
-## 1.5.2 [unreleased]
+## 2.0.0 [unreleased]
 
-- Added official methods
+- Chart.js is now the default adapter - yay open source!
+- Axis types are automatically detected - no need for `discrete: true`
+- Better date support
+- New official API
+- Fixed min and max for Chart.js bar charts
 
 ## 1.5.1
 

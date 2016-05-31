@@ -4,15 +4,15 @@ Create beautiful JavaScript charts with minimal code.
 
 [See it in action](http://ankane.github.io/chartkick.js/examples/)
 
-Supports [Google Charts](https://developers.google.com/chart/), [Highcharts](http://www.highcharts.com/), and [Chart.js](http://www.chartjs.org/) (in beta) and works with most browsers (including IE 6)
+Supports [Chart.js](http://www.chartjs.org/), [Google Charts](https://developers.google.com/chart/), and [Highcharts](http://www.highcharts.com/).
+
+**Chartkick.js 2.0 was just released!** See [instructions for upgrading](#20)
 
 #### Server-side Integration
 
 - [Ruby](https://github.com/ankane/chartkick)
 - [Python](https://github.com/mher/chartkick.py)
 - [Elixir](https://github.com/buren/chartkick-ex)
-
-I would love to see this implemented in other languages too!!
 
 ## Usage
 
@@ -52,19 +52,19 @@ Area chart
 new Chartkick.AreaChart("chart-1", {"2013-02-10 00:00:00 -0800": 11, "2013-02-11 00:00:00 -0800": 6});
 ```
 
-Scatter chart
+Scatter chart - *Google Charts and Highcharts*
 
 ```javascript
 new Chartkick.ScatterChart("chart-1", [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]]);
 ```
 
-Geo chart
+Geo chart - *Google Charts*
 
 ```javascript
 new Chartkick.GeoChart("chart-1", [["United States",44],["Germany",23],["Brazil",22]]);
 ```
 
-Timeline
+Timeline - *Google Charts*
 
 ```javascript
 new Chartkick.Timeline("chart-1", [["Washington", "1789-04-29", "1797-03-03"],["Adams", "1797-03-03", "1801-03-03"]]);
@@ -118,6 +118,12 @@ Discrete axis
 new Chartkick.LineChart("chart-1", data, {"discrete": true});
 ```
 
+Label (for single series)
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {"label": "Value"});
+```
+
 Axis titles
 
 ```javascript
@@ -155,6 +161,13 @@ npm install chartkick
 bower install chartkick
 ```
 
+For Chart.js (works with 2.1+), [download the bundle](http://www.chartjs.org/docs/#getting-started-download-chart-js) and use:
+
+```html
+<script src="/path/to/Chart.bundle.js"></script>
+<script src="chartkick.js"></script>
+```
+
 For Google Charts, use:
 
 ```html
@@ -162,17 +175,10 @@ For Google Charts, use:
 <script src="chartkick.js"></script>
 ```
 
-If you prefer Highcharts (works with 2.1+), [download it](http://www.highcharts.com/download) and use:
+For Highcharts (works with 2.1+), [download it](http://www.highcharts.com/download) and use:
 
 ```html
 <script src="/path/to/highcharts.js"></script>
-<script src="chartkick.js"></script>
-```
-
-If you prefer Chart.js (works with 2.1+, in beta), [download the bundle](http://www.chartjs.org/docs/#getting-started-download-chart-js) and use:
-
-```html
-<script src="/path/to/Chart.bundle.js"></script>
 <script src="chartkick.js"></script>
 ```
 
@@ -196,7 +202,7 @@ If more than one charting library is loaded, choose between them with:
 new Chartkick.LineChart("chart-1", data, {"adapter": "google"}); // or highcharts
 ```
 
-### Methods [master]
+### API
 
 Access a chart with:
 
@@ -210,7 +216,7 @@ Get the underlying chart object with:
 chart.getChartObject();
 ```
 
-Other methods include:
+You can also use:
 
 ```javascript
 chart.getElement();
@@ -227,6 +233,16 @@ python -m SimpleHTTPServer
 ```
 
 and visit [http://localhost:8000/examples/](http://localhost:8000/examples/)
+
+## Upgrading
+
+### 2.0
+
+Breaking changes
+
+- Chart.js is now the default adapter if multiple are loaded - yay open source!
+- Axis types are automatically detected - no need for `discrete: true`
+- Better date support - dates are no longer treated as UTC
 
 ## Credits
 

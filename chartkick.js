@@ -212,7 +212,7 @@
     if (typeof n !== "object") {
       if (typeof n === "number") {
         n = new Date(n * 1000); // ms
-      } else if (config.smarterDates && (matches = n.match(DATE_PATTERN))) {
+      } else if ((matches = n.match(DATE_PATTERN))) {
         year = parseInt(matches[1], 10);
         month = parseInt(matches[3], 10) - 1;
         day = parseInt(matches[5], 10);
@@ -1102,7 +1102,7 @@
         };
       };
 
-      adapters.push(ChartjsAdapter);
+      adapters.unshift(ChartjsAdapter);
     }
   }
 
@@ -1200,7 +1200,7 @@
     } else {
       opts.hideLegend = false;
     }
-    if (config.smarterDiscrete && (opts.discrete === null || opts.discrete === undefined)) {
+    if ((opts.discrete === null || opts.discrete === undefined)) {
       opts.discrete = detectDiscrete(series);
     }
     if (opts.discrete) {
