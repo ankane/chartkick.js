@@ -1,3 +1,7 @@
+## 2.0.1 [unreleased]
+
+- Fix for all zeros with Chart.js
+
 ## 2.0.0
 
 - Chart.js is now the default adapter - yay open source!
