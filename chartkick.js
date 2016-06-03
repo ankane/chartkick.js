@@ -1292,8 +1292,13 @@
   }
 
   function setElement(chart, element, dataSource, opts, callback) {
+    var elementId;
     if (typeof element === "string") {
+      elementId = element;
       element = document.getElementById(element);
+      if (!element) {
+        throw new Error("No element with id " + elementId);
+      }
     }
     chart.element = element;
     chart.options = opts || {};
