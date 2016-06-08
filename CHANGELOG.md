@@ -1,6 +1,7 @@
 ## 2.0.1 [unreleased]
 
 - Fix for all zeros with Chart.js
+- Fix for odd tick spacing with Chart.js
 
 ## 2.0.0
 
