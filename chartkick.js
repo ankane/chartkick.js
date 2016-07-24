@@ -680,7 +680,7 @@
                 }
               }
             };
-            var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked)(chart.data, chart.options, chartOptions);
+            var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart.data, chart.options, chartOptions);
             var data = createDataTable(chart.data, "string");
             chart.chart = new google.visualization.BarChart(chart.element);
             resize(function () {
@@ -1091,7 +1091,7 @@
         this.renderColumnChart = function (chart, chartType) {
           var options;
           if (chartType === "bar") {
-            options = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setBarMin, setBarMax, setStacked)(chart.data, chart.options);
+            options = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart.data, chart.options);
           } else {
             options = jsOptions(chart.data, chart.options);
           }
