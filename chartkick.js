@@ -1131,6 +1131,8 @@
               label: s.name,
               showLine: false,
               data: d,
+              borderColor: colors[i],
+              backgroundColor: colors[i],
               pointBackgroundColor: colors[i]
             })
           }

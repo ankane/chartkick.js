@@ -1,3 +1,7 @@
+## 2.0.2 [unreleased]
+
+- Fixed legend colors on scatter chart for Chart.js
+
 ## 2.0.1
 
 - Added scatter chart for Chart.js
