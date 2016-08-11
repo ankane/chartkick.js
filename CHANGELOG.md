@@ -1,4 +1,4 @@
-## 2.0.1 [unreleased]
+## 2.0.1
 
 - Added scatter chart for Chart.js
 - Fixed error with `xtitle` and `ytitle` on column and bar charts
