@@ -1,5 +1,6 @@
 ## 2.0.1 [unreleased]
 
+- Added scatter chart for Chart.js
 - Fixed error with `xtitle` and `ytitle` on column and bar charts
 - Fixed all zeros with Chart.js
 - Fixed odd tick spacing with Chart.js
