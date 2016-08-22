@@ -2,5 +2,16 @@
   "name": "chartkick",
   "version": "2.0.1",
   "main": "chartkick.js",
-  "ignore": []
+  "ignore": [
+    "**/.*"
+  ],
+  "homepage": "https://github.com/ankane/chartkick.js",
+  "authors": [
+    "Andrew Kane <andrew@chartkick.com>"
+  ],
+  "description": "Create beautiful Javascript charts with minimal code",
+  "keywords": [
+    "charts"
+  ],
+  "license": "MIT"
 }
