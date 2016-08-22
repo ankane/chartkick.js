@@ -8,11 +8,12 @@ Supports [Chart.js](http://www.chartjs.org/), [Google Charts](https://developers
 
 **Chartkick.js 2.0 was just released!** See [instructions for upgrading](#20)
 
-#### Server-side Integration
+#### Other Integrations
 
 - [Ruby](https://github.com/ankane/chartkick)
 - [Python](https://github.com/mher/chartkick.py)
 - [Elixir](https://github.com/buren/chartkick-ex)
+- [React](https://github.com/ankane/react-chartkick)
 
 ## Usage
 
