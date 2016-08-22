@@ -1,10 +1,10 @@
 # Chartkick.js
 
-Create beautiful JavaScript charts with minimal code.
+Create beautiful JavaScript charts with minimal code
 
 [See it in action](http://ankane.github.io/chartkick.js/examples/)
 
-Supports [Chart.js](http://www.chartjs.org/), [Google Charts](https://developers.google.com/chart/), and [Highcharts](http://www.highcharts.com/).
+Supports [Chart.js](http://www.chartjs.org/), [Google Charts](https://developers.google.com/chart/), and [Highcharts](http://www.highcharts.com/)
 
 **Chartkick.js 2.0 was just released!** See [instructions for upgrading](#20)
 
@@ -138,7 +138,7 @@ new Chartkick.LineChart("chart-1", data, {"library": {"backgroundColor": "pink"}
 
 ### Data
 
-Pass data as a Hash or Array
+Pass data as an array or object
 
 ```javascript
 new Chartkick.PieChart("chart-1", {"Blueberry": 44, "Strawberry": 23});
