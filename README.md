@@ -6,14 +6,7 @@ Create beautiful JavaScript charts with minimal code
 
 Supports [Chart.js](http://www.chartjs.org/), [Google Charts](https://developers.google.com/chart/), and [Highcharts](http://www.highcharts.com/)
 
-**Chartkick.js 2.0 was just released!** See [instructions for upgrading](#20)
-
-#### Other Integrations
-
-- [Ruby](https://github.com/ankane/chartkick)
-- [Python](https://github.com/mher/chartkick.py)
-- [Elixir](https://github.com/buren/chartkick-ex)
-- [React](https://github.com/ankane/react-chartkick)
+Also available for [React](https://github.com/ankane/react-chartkick), [Ruby](https://github.com/ankane/chartkick), [Python](https://github.com/mher/chartkick.py), and [Elixir](https://github.com/buren/chartkick-ex)
 
 ## Usage
 
