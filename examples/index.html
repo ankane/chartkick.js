@@ -123,6 +123,12 @@
       new Chartkick.LineChart("chart-5", "remote.json");
     </script>
 
+    <h1>Remote with refresh every 10s</h1>
+    <div id="chart-remote-refresh" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("chart-remote-refresh", "remote.json", {"refresh": 10000});
+    </script>
+
     <h1>One Series</h1>
     <div id="chart-6" style="height: 300px;"></div>
     <script>

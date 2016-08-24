@@ -1362,28 +1362,44 @@
 
   Chartkick = {
     LineChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processLineData);
+      var callback = function (chart) { setElement(chart, element, dataSource, opts, processLineData) };
+      if (opts && opts.refresh) { setInterval( function() { callback(this) } , opts.refresh); }
+      else { callback(this); }
     },
     PieChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processPieData);
+      var callback = function (chart) { setElement(chart, element, dataSource, opts, processPieData) };
+      if (opts && opts.refresh) { setInterval( function() { callback(this) } , opts.refresh); }
+      else { callback(this); }
     },
     ColumnChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processColumnData);
+      var callback = function (chart) { setElement(chart, element, dataSource, opts, processColumnData) };
+      if (opts && opts.refresh) { setInterval( function() { callback(this) } , opts.refresh); }
+      else { callback(this); }
     },
     BarChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processBarData);
+      var callback = function (chart) { setElement(chart, element, dataSource, opts, processBarData) };
+      if (opts && opts.refresh) { setInterval( function() { callback(this) } , opts.refresh); }
+      else { callback(this); }
     },
     AreaChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processAreaData);
+      var callback = function (chart) { setElement(chart, element, dataSource, opts, processAreaData) };
+      if (opts && opts.refresh) { setInterval( function() { callback(this) } , opts.refresh); }
+      else { callback(this); }
     },
     GeoChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processGeoData);
+      var callback = function (chart) { setElement(chart, element, dataSource, opts, processGeoData) };
+      if (opts && opts.refresh) { setInterval( function() { callback(this) } , opts.refresh); }
+      else { callback(this); }
     },
     ScatterChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processScatterData);
+      var callback = function (chart) { setElement(chart, element, dataSource, opts, processScatterData) };
+      if (opts && opts.refresh) { setInterval( function() { callback(this) } , opts.refresh); }
+      else { callback(this); }
     },
     Timeline: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processTimelineData);
+      var callback = function (chart) { setElement(chart, element, dataSource, opts, processTimelineData) };
+      if (opts && opts.refresh) { setInterval( function() { callback(this) } , opts.refresh); }
+      else { callback(this); }
     },
     charts: {}
   };
