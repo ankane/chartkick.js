@@ -62,10 +62,10 @@
   function parseISO8601(input) {
     var day, hour, matches, milliseconds, minutes, month, offset, result, seconds, type, year;
     type = Object.prototype.toString.call(input);
-    if (type === '[object Date]') {
+    if (type === "[object Date]") {
       return input;
     }
-    if (type !== '[object String]') {
+    if (type !== "[object String]") {
       return;
     }
     matches = input.match(ISO8601_PATTERN);
@@ -83,7 +83,7 @@
         if (matches[17]) {
           offset += parseInt(matches[17], 10);
         }
-        offset *= matches[14] === '-' ? -1 : 1;
+        offset *= matches[14] === "-" ? -1 : 1;
         result -= offset * 60 * 1000;
       }
       return new Date(result);
@@ -164,14 +164,14 @@
   }
 
   function getJSON(element, url, success) {
-    ajaxCall(url, success, function(jqXHR, textStatus, errorThrown) {
+    ajaxCall(url, success, function (jqXHR, textStatus, errorThrown) {
       var message = (typeof errorThrown === "string") ? errorThrown : errorThrown.message;
       chartError(element, message);
-    })
+    });
   }
 
   function ajaxCall(url, success, error) {
-    var $ = window.jQuery || window.Zepto || window.$
+    var $ = window.jQuery || window.Zepto || window.$;
 
     if ($) {
       $.ajax({
@@ -182,16 +182,16 @@
       });
     } else {
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', url, true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onload = function() {
+      xhr.open("GET", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onload = function () {
         if (xhr.status === 200) {
-          success(JSON.parse(xhr.responseText), xhr.statusText, xhr)
+          success(JSON.parse(xhr.responseText), xhr.statusText, xhr);
         } else {
-          error(xhr, 'error', xhr.statusText)
+          error(xhr, "error", xhr.statusText);
         }
       };
-      xhr.send()
+      xhr.send();
     }
   }
 
@@ -383,7 +383,7 @@
         this.renderScatterChart = function (chart) {
           var chartOptions = {};
           var options = jsOptions(chart.data, chart.options, chartOptions);
-          options.chart.type = 'scatter';
+          options.chart.type = "scatter";
           options.chart.renderTo = chart.element.id;
           options.series = chart.data;
           new Highcharts.Chart(options);
