@@ -82,8 +82,6 @@ Make your pages load super fast and stop worrying about timeouts.  Give each cha
 new Chartkick.LineChart("chart-1", "/stocks");
 ```
 
-**Note:** This feature requires [jQuery](http://jquery.com/) or [Zepto](http://zeptojs.com/) at the moment.
-
 ### Options
 
 Min and max values
