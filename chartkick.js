@@ -164,16 +164,35 @@
   }
 
   function getJSON(element, url, success) {
-    var $ = window.jQuery || window.Zepto || window.$;
-    $.ajax({
-      dataType: "json",
-      url: url,
-      success: success,
-      error: function (jqXHR, textStatus, errorThrown) {
-        var message = (typeof errorThrown === "string") ? errorThrown : errorThrown.message;
-        chartError(element, message);
-      }
-    });
+    ajaxCall(url, success, function(jqXHR, textStatus, errorThrown) {
+      var message = (typeof errorThrown === "string") ? errorThrown : errorThrown.message;
+      chartError(element, message);
+    })
+  }
+
+  function ajaxCall(url, success, error) {
+    var $ = window.jQuery || window.Zepto || window.$
+
+    if ($) {
+      $.ajax({
+        dataType: "json",
+        url: url,
+        success: success,
+        error: error
+      });
+    } else {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          success(JSON.parse(xhr.responseText), xhr.statusText, xhr)
+        } else {
+          error(xhr, 'error', xhr.statusText)
+        }
+      };
+      xhr.send()
+    }
   }
 
   function errorCatcher(chart, callback) {

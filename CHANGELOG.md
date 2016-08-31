@@ -1,6 +1,7 @@
 ## 2.0.2 [unreleased]
 
 - Fixed legend colors on scatter chart for Chart.js
+- Dropped jQuery and Zepto dependencies
 
 ## 2.0.1
 
