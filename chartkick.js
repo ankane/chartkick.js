@@ -30,6 +30,10 @@
     return !isFunction(variable) && variable instanceof Object;
   }
 
+  function isRemoteUrl(dataSource) {
+    return typeof dataSource === "string";
+  }
+
   // https://github.com/madrobby/zepto/blob/master/src/zepto.js
   function extend(target, source) {
     var key;
@@ -205,7 +209,7 @@
   }
 
   function fetchDataSource(chart, callback) {
-    if (typeof chart.dataSource === "string") {
+    if (isRemoteUrl(chart.dataSource)) {
       getJSON(chart.element, chart.dataSource, function (data, textStatus, jqXHR) {
         chart.data = data;
         errorCatcher(chart, callback);
@@ -1404,7 +1408,52 @@
     Timeline: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processTimelineData);
     },
-    charts: {}
+    charts: {},
+    updateChart: function(chartId, dataSource, opts) {
+      var chart = Chartkick.charts[chartId];
+      var options;
+      var source;
+      if (chart === undefined) {
+        throw new Error("No chart found with id: " + chartId);
+      }
+
+      source = dataSource || chart.dataSource;
+      options = opts ? merge(chart.options, opts) : chart.options;
+
+      new chart.__proto__.constructor(chart.element.id, source, options);
+    },
+    updateAllCharts: function(callback) {
+      var charts = Chartkick.charts;
+      var chart;
+      var isRemote;
+      var chartProps;
+
+      var setChartProps = function(obj) {
+        var data = obj.data;
+        var opts = obj.options || {};
+
+        // If there is no data and options properties assume that obj is the data
+        if (!data && !opts) {
+          data = obj;
+        }
+
+        return {
+          options: opts,
+          data: data
+        };
+      }
+
+      for (var chartId in charts) {
+        chart = charts[chartId];
+        isRemote = isRemoteUrl(chart.dataSource);
+        if (isFunction(callback)) {
+          chartProps = setChartProps(callback(chart, isRemote));
+          Chartkick.updateChart(chartId, chartProps.data, chartProps.options);
+        } else if (isRemote) {
+          Chartkick.updateChart(chartId, chart.dataSource);
+        }
+      }
+    }
   };
 
   if (typeof module === "object" && typeof module.exports === "object") {
