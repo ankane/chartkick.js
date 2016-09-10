@@ -1,7 +1,8 @@
 ## 2.1.0 [unreleased]
 
+- Added basic support for new Google Charts loader
+- Dropped jQuery and Zepto dependencies for AJAX
 - Fixed legend colors on scatter chart for Chart.js
-- Dropped jQuery and Zepto dependencies
 
 ## 2.0.1
 
