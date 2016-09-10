@@ -178,10 +178,8 @@ For Highcharts (works with 2.1+), [download it](http://www.highcharts.com/downlo
 
 To specify a language for Google Charts, add:
 
-```html
-<script>
-  Chartkick.configure({"language": "de"});
-</script>
+```javascript
+Chartkick.configure({"language": "de"});
 ```
 
 after the JavaScript files and before your charts.
