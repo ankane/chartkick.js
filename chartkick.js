@@ -504,10 +504,10 @@
               loadOptions.language = config.language;
             }
 
-            if (google.charts) {
-              google.charts.load("current", loadOptions);
-            } else {
+            if (window.google.setOnLoadCallback) {
               google.load("visualization", "1", loadOptions);
+            } else {
+              google.charts.load("current", loadOptions);
             }
           }
         };
