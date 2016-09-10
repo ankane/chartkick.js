@@ -460,7 +460,7 @@
       };
       adapters.push(HighchartsAdapter);
     }
-    if (!GoogleChartsAdapter && window.google && window.google.setOnLoadCallback) {
+    if (!GoogleChartsAdapter && window.google && (window.google.setOnLoadCallback || window.google.charts)) {
       GoogleChartsAdapter = new function () {
         var google = window.google;
 
@@ -503,7 +503,12 @@
             if (config.language) {
               loadOptions.language = config.language;
             }
-            google.load("visualization", "1", loadOptions);
+
+            if (google.charts) {
+              google.charts.load("current", loadOptions);
+            } else {
+              google.load("visualization", "1", loadOptions);
+            }
           }
         };
 
