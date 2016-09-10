@@ -1,4 +1,4 @@
-## 2.1.0 [unreleased]
+## 2.1.0
 
 - Added basic support for new Google Charts loader
 - Added `configure` function

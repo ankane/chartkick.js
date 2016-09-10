@@ -180,11 +180,11 @@ To specify a language for Google Charts, add:
 
 ```html
 <script>
-  var Chartkick = {"language": "de"};
+  Chartkick.configure({"language": "de"});
 </script>
 ```
 
-**before** the JavaScript files.
+after the JavaScript files and before your charts.
 
 ### Adapter
 
