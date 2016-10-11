@@ -984,7 +984,8 @@
             }
             labels.push(value);
             for (j = 0; j < series.length; j++) {
-              rows2[j].push(rows[i][j]);
+              // Chart.js doesn't like undefined
+              rows2[j].push(rows[i][j] || null);
             }
           }
 
