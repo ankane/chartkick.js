@@ -1,3 +1,7 @@
+## 2.1.1 [unreleased]
+
+- Fix for missing values for multiple series column chart with sparse data
+
 ## 2.1.0
 
 - Added basic support for new Google Charts loader
