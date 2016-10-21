@@ -189,7 +189,7 @@ after the JavaScript files and before your charts.
 If more than one charting library is loaded, choose between them with:
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {"adapter": "google"}); // or highcharts or chartjs
+new Chartkick.LineChart("chart-1", data, {"adapter": "google"}); // or highcharts
 ```
 
 ### API
