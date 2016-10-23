@@ -25,13 +25,13 @@ new Chartkick.LineChart("chart-1", {"2013-02-10 00:00:00 -0800": 11, "2013-02-11
 Pie chart
 
 ```javascript
-new Chartkick.PieChart("chart-1", [["Blueberry", 44],["Strawberry", 23]]);
+new Chartkick.PieChart("chart-1", [["Blueberry", 44], ["Strawberry", 23]]);
 ```
 
 Column chart
 
 ```javascript
-new Chartkick.ColumnChart("chart-1", [["Sun", 32],["Mon", 46],["Tue", 28]]);
+new Chartkick.ColumnChart("chart-1", [["Sun", 32], ["Mon", 46], ["Tue", 28]]);
 ```
 
 Bar chart
@@ -55,21 +55,21 @@ new Chartkick.ScatterChart("chart-1", [[174.0, 80.0], [176.5, 82.3], [180.3, 73.
 Geo chart - *Google Charts*
 
 ```javascript
-new Chartkick.GeoChart("chart-1", [["United States",44],["Germany",23],["Brazil",22]]);
+new Chartkick.GeoChart("chart-1", [["United States", 44], ["Germany", 23], ["Brazil", 22]]);
 ```
 
 Timeline - *Google Charts*
 
 ```javascript
-new Chartkick.Timeline("chart-1", [["Washington", "1789-04-29", "1797-03-03"],["Adams", "1797-03-03", "1801-03-03"]]);
+new Chartkick.Timeline("chart-1", [["Washington", "1789-04-29", "1797-03-03"], ["Adams", "1797-03-03", "1801-03-03"]]);
 ```
 
 Multiple series
 
 ```javascript
 data = [
-  {"name":"Workout", "data": {"2013-02-10 00:00:00 -0800": 3, "2013-02-17 00:00:00 -0800": 4}},
-  {"name":"Call parents", "data": {"2013-02-10 00:00:00 -0800": 5, "2013-02-17 00:00:00 -0800": 3}}
+  {name: "Workout", data: {"2013-02-10 00:00:00 -0800": 3, "2013-02-17 00:00:00 -0800": 4}},
+  {name: "Call parents", data: {"2013-02-10 00:00:00 -0800": 5, "2013-02-17 00:00:00 -0800": 3}}
 ];
 new Chartkick.LineChart("chart-1", data);
 ```
@@ -87,7 +87,7 @@ new Chartkick.LineChart("chart-1", "/stocks");
 Min and max values
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {"min": 1000, "max": 5000});
+new Chartkick.LineChart("chart-1", data, {min: 1000, max: 5000});
 ```
 
 `min` defaults to 0 for charts with non-negative values. Use `null` to let the charting library decide.
@@ -95,37 +95,37 @@ new Chartkick.LineChart("chart-1", data, {"min": 1000, "max": 5000});
 Colors
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {"colors": ["pink", "#999"]});
+new Chartkick.LineChart("chart-1", data, {colors: ["pink", "#999"]});
 ```
 
 Stacked columns or bars
 
 ```javascript
-new Chartkick.ColumnChart("chart-1", data, {"stacked": true});
+new Chartkick.ColumnChart("chart-1", data, {stacked: true});
 ```
 
 Discrete axis
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {"discrete": true});
+new Chartkick.LineChart("chart-1", data, {discrete: true});
 ```
 
 Label (for single series)
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {"label": "Value"});
+new Chartkick.LineChart("chart-1", data, {label: "Value"});
 ```
 
 Axis titles
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {"xtitle": "Time", "ytitle": "Population"});
+new Chartkick.LineChart("chart-1", data, {xtitle: "Time", ytitle: "Population"});
 ```
 
 You can pass options directly to the charting library with:
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {"library": {"backgroundColor": "pink"}});
+new Chartkick.LineChart("chart-1", data, {library: {backgroundColor: "pink"}});
 ```
 
 ### Data
@@ -134,13 +134,13 @@ Pass data as an array or object
 
 ```javascript
 new Chartkick.PieChart("chart-1", {"Blueberry": 44, "Strawberry": 23});
-new Chartkick.PieChart("chart-1", [["Blueberry", 44],["Strawberry", 23]]);
+new Chartkick.PieChart("chart-1", [["Blueberry", 44], ["Strawberry", 23]]);
 ```
 
 Times can be a `Date`, a timestamp, or a string (strings are parsed)
 
 ```javascript
-new Chartkick.LineChart("chart-1", [[new Date(), 5],[1368174456, 4],["2013-05-07 00:00:00 UTC", 7]]);
+new Chartkick.LineChart("chart-1", [[new Date(), 5], [1368174456, 4], ["2013-05-07 00:00:00 UTC", 7]]);
 ```
 
 ## Installation
@@ -179,7 +179,7 @@ For Highcharts (works with 2.1+), [download it](http://www.highcharts.com/downlo
 To specify a language for Google Charts, add:
 
 ```javascript
-Chartkick.configure({"language": "de"});
+Chartkick.configure({language: "de"});
 ```
 
 after the JavaScript files and before your charts.
@@ -189,7 +189,7 @@ after the JavaScript files and before your charts.
 If more than one charting library is loaded, choose between them with:
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {"adapter": "google"}); // or highcharts
+new Chartkick.LineChart("chart-1", data, {adapter: "google"}); // or highcharts
 ```
 
 ### API
