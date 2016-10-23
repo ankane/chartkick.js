@@ -37,7 +37,7 @@ new Chartkick.ColumnChart("chart-1", [["Sun", 32], ["Mon", 46], ["Tue", 28]]);
 Bar chart
 
 ```javascript
-new Chartkick.BarChart("chart-1", [["Work", 32],["Play", 1492]]);
+new Chartkick.BarChart("chart-1", [["Work", 32], ["Play", 1492]]);
 ```
 
 Area chart
@@ -49,7 +49,7 @@ new Chartkick.AreaChart("chart-1", {"2013-02-10 00:00:00 -0800": 11, "2013-02-11
 Scatter chart
 
 ```javascript
-new Chartkick.ScatterChart("chart-1", [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]]);
+new Chartkick.ScatterChart("chart-1", [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6]]);
 ```
 
 Geo chart - *Google Charts*
