@@ -1,5 +1,40 @@
-## 1.4.3 [unreleased]
+## 2.1.1 [unreleased]
 
+- Fix for missing values for multiple series column chart with sparse data
+
+## 2.1.0
+
+- Added basic support for new Google Charts loader
+- Added `configure` function
+- Dropped jQuery and Zepto dependencies for AJAX
+- Fixed legend colors on scatter chart for Chart.js
+
+## 2.0.1
+
+- Added scatter chart for Chart.js
+- Fixed error with `xtitle` and `ytitle` on column and bar charts
+- Fixed all zeros with Chart.js
+- Fixed odd tick spacing with Chart.js
+
+## 2.0.0
+
+- Chart.js is now the default adapter - yay open source!
+- Axis types are automatically detected - no need for `discrete: true`
+- Better date support
+- New official API
+- Fixed min and max for Chart.js bar charts
+
+## 1.5.1
+
+- Added bar chart for Chart.js
+- Added `library` option for series
+- Better tick selection for time and discrete scales
+
+## 1.5.0
+
+- Added Chart.js adapter **beta**
+- Added `smarterDates` option (temporary until 2.0)
+- Added `smarterDiscrete` option (temporary until 2.0)
 - Fixed line height on timeline charts
 
 ## 1.4.2
