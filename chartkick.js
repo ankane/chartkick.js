@@ -835,7 +835,10 @@
               }
             ]
           },
-          legend: {}
+          legend: {},
+          tooltips: {
+            displayColors: false
+          }
         };
 
         // http://there4.io/2012/05/02/google-chart-color-list/
