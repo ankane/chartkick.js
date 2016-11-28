@@ -163,7 +163,7 @@ For Chart.js (works with 2.1+), [download the bundle](http://www.chartjs.org/doc
 For Google Charts, use:
 
 ```html
-<script src="https://www.google.com/jsapi"></script>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="chartkick.js"></script>
 ```
 
