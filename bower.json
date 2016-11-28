@@ -1,6 +1,6 @@
 {
   "name": "chartkick",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "chartkick.js",
   "ignore": [
     "**/.*"
@@ -9,7 +9,7 @@
   "authors": [
     "Andrew Kane <andrew@chartkick.com>"
   ],
-  "description": "Create beautiful Javascript charts with minimal code",
+  "description": "Create beautiful charts with one line of JavaScript",
   "keywords": [
     "charts"
   ],

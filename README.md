@@ -1,6 +1,6 @@
 # Chartkick.js
 
-Create beautiful JavaScript charts with minimal code
+Create beautiful charts with one line of JavaScript
 
 [See it in action](http://ankane.github.io/chartkick.js/examples/)
 

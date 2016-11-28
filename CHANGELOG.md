@@ -1,4 +1,4 @@
-## 2.1.1 [unreleased]
+## 2.1.1
 
 - Fix for missing values for multiple series column chart with sparse data
 - Remove colors from tooltips for Chart.js
