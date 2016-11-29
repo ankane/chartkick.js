@@ -1,3 +1,7 @@
+## 2.1.2 [unreleased]
+
+- Fix for missing zero values for Chart.js
+
 ## 2.1.1
 
 - Fix for missing values for multiple series column chart with sparse data
