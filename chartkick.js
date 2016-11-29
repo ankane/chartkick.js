@@ -803,7 +803,10 @@
 
         var baseOptions = {
           maintainAspectRatio: false,
-          animation: false
+          animation: false,
+          tooltips: {
+            displayColors: false
+          }
         };
 
         var defaultOptions = {
@@ -835,10 +838,7 @@
               }
             ]
           },
-          legend: {},
-          tooltips: {
-            displayColors: false
-          }
+          legend: {}
         };
 
         // http://there4.io/2012/05/02/google-chart-color-list/

@@ -1,3 +1,7 @@
+## 2.1.3 [unreleased]
+
+- Remove colors from tooltips for Chart.js pie chart
+
 ## 2.1.2
 
 - Fix for missing zero values for Chart.js
