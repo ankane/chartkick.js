@@ -988,7 +988,9 @@
             labels.push(value);
             for (j = 0; j < series.length; j++) {
               // Chart.js doesn't like undefined
-              rows2[j].push(rows[i][j] || null);
+              // -- Fix: Before 0 values were considered undefined and setting
+              // the value to null. So 0 values were not plotted in the chart.
+              rows2[j].push((rows[i][j] === "undefined") ? null : rows[i][j]);
             }
           }
 
