@@ -1,5 +1,6 @@
 ## 2.1.3 [unreleased]
 
+- Added `updateData` function
 - Remove colors from tooltips for Chart.js pie chart
 
 ## 2.1.2

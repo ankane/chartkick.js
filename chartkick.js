@@ -1384,6 +1384,10 @@
     chart.getChartObject = function () {
       return chart.chart;
     };
+    chart.updateData = function (dataSource) {
+      chart.dataSource = dataSource;
+      fetchDataSource(chart, callback);
+    };
     Chartkick.charts[element.id] = chart;
     fetchDataSource(chart, callback);
   }

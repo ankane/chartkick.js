@@ -214,6 +214,12 @@ chart.getData();
 chart.getOptions();
 ```
 
+Update the data with: [master]
+
+```javascript
+chart.updateData(newData);
+```
+
 ## Examples
 
 To run the files in the `examples` directory, you'll need a web server.  Run:
