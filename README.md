@@ -234,6 +234,12 @@ Update the data with: [master]
 chart.updateData(newData);
 ```
 
+You can also specify new options: [master]
+
+```javascript
+chart.updateData(newData, newOptions);
+```
+
 Refresh the data from a remote source: [master]
 
 ```javascript
