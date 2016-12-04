@@ -156,6 +156,8 @@ Chartkick.options = {
 
 *Chart.js only*
 
+Give users the ability to download charts. It all happens in the browser - no server-side code needed.
+
 ```javascript
 new Chartkick.PieChart("chart-1", data, {download: true})
 ```
