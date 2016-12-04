@@ -362,7 +362,7 @@
             };
           }
           var options = jsOptions(chart.data, chart.options, chartOptions), data, i, j;
-          options.xAxis.type = chart.options.discrete ? "category" : "datetime";
+          options.xAxis.type = chart.discrete ? "category" : "datetime";
           if (!options.chart.type) {
             options.chart.type = chartType;
           }
@@ -371,7 +371,7 @@
           var series = chart.data;
           for (i = 0; i < series.length; i++) {
             data = series[i].data;
-            if (!chart.options.discrete) {
+            if (!chart.discrete) {
               for (j = 0; j < data.length; j++) {
                 data[j][0] = data[j][0].getTime();
               }
@@ -653,7 +653,7 @@
         this.renderLineChart = function (chart) {
           waitForLoaded(function () {
             var options = jsOptions(chart.data, chart.options);
-            var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
+            var data = createDataTable(chart.data, chart.discrete ? "string" : "datetime");
             chart.chart = new google.visualization.LineChart(chart.element);
             resize(function () {
               chart.chart.draw(data, options);
@@ -723,7 +723,7 @@
               areaOpacity: 0.5
             };
             var options = jsOptions(chart.data, chart.options, chartOptions);
-            var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
+            var data = createDataTable(chart.data, chart.discrete ? "string" : "datetime");
             chart.chart = new google.visualization.AreaChart(chart.element);
             resize(function () {
               chart.chart.draw(data, options);
@@ -934,7 +934,7 @@
           var year = true;
           var hour = true;
           var minute = true;
-          var detectType = (chartType === "line" || chartType === "area") && !chart.options.discrete;
+          var detectType = (chartType === "line" || chartType === "area") && !chart.discrete;
 
           var series = chart.data;
 
@@ -1089,7 +1089,7 @@
 
           var data = createDataTable(chart, options, chartType || "line");
 
-          options.scales.xAxes[0].type = chart.options.discrete ? "category" : "time";
+          options.scales.xAxes[0].type = chart.discrete ? "category" : "time";
 
           drawChart(chart, "line", data, options);
         };
@@ -1277,8 +1277,11 @@
     return false;
   }
 
-  function processSeries(series, opts, keyType) {
+  function processSeries(chart, keyType) {
     var i;
+
+    var opts = chart.options;
+    var series = chart.data;
 
     // see if one series or multiple
     if (!isArray(series) || typeof series[0] !== "object" || isArray(series[0])) {
@@ -1288,9 +1291,11 @@
       opts.hideLegend = false;
     }
     if ((opts.discrete === null || opts.discrete === undefined)) {
-      opts.discrete = detectDiscrete(series);
+      chart.discrete = detectDiscrete(series);
+    } else {
+      chart.discrete = opts.discrete;
     }
-    if (opts.discrete) {
+    if (chart.discrete) {
       keyType = "string";
     }
 
@@ -1321,12 +1326,12 @@
   }
 
   function processLineData(chart) {
-    chart.data = processSeries(chart.data, chart.options, "datetime");
+    chart.data = processSeries(chart, "datetime");
     renderChart("LineChart", chart);
   }
 
   function processColumnData(chart) {
-    chart.data = processSeries(chart.data, chart.options, "string");
+    chart.data = processSeries(chart, "string");
     renderChart("ColumnChart", chart);
   }
 
@@ -1336,12 +1341,12 @@
   }
 
   function processBarData(chart) {
-    chart.data = processSeries(chart.data, chart.options, "string");
+    chart.data = processSeries(chart, "string");
     renderChart("BarChart", chart);
   }
 
   function processAreaData(chart) {
-    chart.data = processSeries(chart.data, chart.options, "datetime");
+    chart.data = processSeries(chart, "datetime");
     renderChart("AreaChart", chart);
   }
 
@@ -1351,7 +1356,7 @@
   }
 
   function processScatterData(chart) {
-    chart.data = processSeries(chart.data, chart.options, "number");
+    chart.data = processSeries(chart, "number");
     renderChart("ScatterChart", chart);
   }
 
