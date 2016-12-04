@@ -223,8 +223,10 @@
     link.style.top = "20px";
     link.style.right = "20px";
     link.style.zIndex = 1000;
+    link.style.lineHeight = "20px";
     link.target = "_blank"; // for safari
     var image = document.createElement("img");
+    image.alt = "Download";
     image.style.border = "none";
     // icon from font-awesome
     // http://fa2png.io/
