@@ -1407,8 +1407,11 @@
     };
 
     // functions
-    chart.updateData = function (dataSource) {
+    chart.updateData = function (dataSource, options) {
       chart.dataSource = dataSource;
+      if (options) {
+        chart.options = options;
+      }
       fetchDataSource(chart, callback, dataSource);
     };
     chart.refreshData = function () {
