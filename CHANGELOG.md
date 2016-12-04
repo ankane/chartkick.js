@@ -1,5 +1,6 @@
 ## 2.2.0 [unreleased]
 
+- Added global options
 - Added `updateData` function
 - Added `refreshData` function
 - Added `refresh` option

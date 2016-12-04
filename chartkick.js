@@ -1385,7 +1385,7 @@
     }
 
     chart.element = element;
-    opts = opts || {};
+    opts = merge(Chartkick.options, opts || {});
     chart.options = opts;
     chart.dataSource = dataSource;
 
@@ -1410,7 +1410,7 @@
     chart.updateData = function (dataSource, options) {
       chart.dataSource = dataSource;
       if (options) {
-        chart.options = options;
+        chart.options = merge(Chartkick.options, options);
       }
       fetchDataSource(chart, callback, dataSource);
     };
@@ -1478,7 +1478,8 @@
           callback(Chartkick.charts[chartId]);
         }
       }
-    }
+    },
+    options: {}
   };
 
   if (typeof module === "object" && typeof module.exports === "object") {

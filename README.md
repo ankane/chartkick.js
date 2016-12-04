@@ -142,6 +142,16 @@ new Chartkick.LineChart("chart-1", data, {library: {backgroundColor: "pink"}});
 
 See the documentation for [Chart.js](http://www.chartjs.org/docs/), [Google Charts](https://developers.google.com/chart/interactive/docs/gallery), and [Highcharts](http://api.highcharts.com/highcharts) for more info.
 
+### Global Options [master]
+
+To set options for all of your charts, use:
+
+```javascript
+Chartkick.options = {
+  colors: ["pink", "#999"]
+}
+```
+
 ### Data
 
 Pass data as an array or object
