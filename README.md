@@ -13,55 +13,55 @@ Also available for [React](https://github.com/ankane/react-chartkick), [Vue.js](
 Create a div for the chart
 
 ```html
-<div id="chart-1" style="height: 300px;"></div>
+<div id="chart-1" style="height: 300px"></div>
 ```
 
 Line chart
 
 ```javascript
-new Chartkick.LineChart("chart-1", {"2013-02-10 00:00:00 -0800": 11, "2013-02-11 00:00:00 -0800": 6});
+new Chartkick.LineChart("chart-1", {"2013-02-10 00:00:00 -0800": 11, "2013-02-11 00:00:00 -0800": 6})
 ```
 
 Pie chart
 
 ```javascript
-new Chartkick.PieChart("chart-1", [["Blueberry", 44], ["Strawberry", 23]]);
+new Chartkick.PieChart("chart-1", [["Blueberry", 44], ["Strawberry", 23]])
 ```
 
 Column chart
 
 ```javascript
-new Chartkick.ColumnChart("chart-1", [["Sun", 32], ["Mon", 46], ["Tue", 28]]);
+new Chartkick.ColumnChart("chart-1", [["Sun", 32], ["Mon", 46], ["Tue", 28]])
 ```
 
 Bar chart
 
 ```javascript
-new Chartkick.BarChart("chart-1", [["Work", 32], ["Play", 1492]]);
+new Chartkick.BarChart("chart-1", [["Work", 32], ["Play", 1492]])
 ```
 
 Area chart
 
 ```javascript
-new Chartkick.AreaChart("chart-1", {"2013-02-10 00:00:00 -0800": 11, "2013-02-11 00:00:00 -0800": 6});
+new Chartkick.AreaChart("chart-1", {"2013-02-10 00:00:00 -0800": 11, "2013-02-11 00:00:00 -0800": 6})
 ```
 
 Scatter chart
 
 ```javascript
-new Chartkick.ScatterChart("chart-1", [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6]]);
+new Chartkick.ScatterChart("chart-1", [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6]])
 ```
 
 Geo chart - *Google Charts*
 
 ```javascript
-new Chartkick.GeoChart("chart-1", [["United States", 44], ["Germany", 23], ["Brazil", 22]]);
+new Chartkick.GeoChart("chart-1", [["United States", 44], ["Germany", 23], ["Brazil", 22]])
 ```
 
 Timeline - *Google Charts*
 
 ```javascript
-new Chartkick.Timeline("chart-1", [["Washington", "1789-04-29", "1797-03-03"], ["Adams", "1797-03-03", "1801-03-03"]]);
+new Chartkick.Timeline("chart-1", [["Washington", "1789-04-29", "1797-03-03"], ["Adams", "1797-03-03", "1801-03-03"]])
 ```
 
 Multiple series
@@ -70,8 +70,8 @@ Multiple series
 data = [
   {name: "Workout", data: {"2013-02-10 00:00:00 -0800": 3, "2013-02-17 00:00:00 -0800": 4}},
   {name: "Call parents", data: {"2013-02-10 00:00:00 -0800": 5, "2013-02-17 00:00:00 -0800": 3}}
-];
-new Chartkick.LineChart("chart-1", data);
+]
+new Chartkick.LineChart("chart-1", data)
 ```
 
 ### Say Goodbye To Timeouts
@@ -79,7 +79,7 @@ new Chartkick.LineChart("chart-1", data);
 Make your pages load super fast and stop worrying about timeouts. Give each chart its own endpoint.
 
 ```javascript
-new Chartkick.LineChart("chart-1", "/stocks");
+new Chartkick.LineChart("chart-1", "/stocks")
 ```
 
 ### Options
@@ -87,7 +87,7 @@ new Chartkick.LineChart("chart-1", "/stocks");
 Min and max values
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {min: 1000, max: 5000});
+new Chartkick.LineChart("chart-1", data, {min: 1000, max: 5000})
 ```
 
 `min` defaults to 0 for charts with non-negative values. Use `null` to let the charting library decide.
@@ -95,49 +95,49 @@ new Chartkick.LineChart("chart-1", data, {min: 1000, max: 5000});
 Colors
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {colors: ["pink", "#999"]});
+new Chartkick.LineChart("chart-1", data, {colors: ["pink", "#999"]})
 ```
 
 Stacked columns or bars
 
 ```javascript
-new Chartkick.ColumnChart("chart-1", data, {stacked: true});
+new Chartkick.ColumnChart("chart-1", data, {stacked: true})
 ```
 
 Discrete axis
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {discrete: true});
+new Chartkick.LineChart("chart-1", data, {discrete: true})
 ```
 
 Label (for single series)
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {label: "Value"});
+new Chartkick.LineChart("chart-1", data, {label: "Value"})
 ```
 
 Axis titles
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {xtitle: "Time", ytitle: "Population"});
+new Chartkick.LineChart("chart-1", data, {xtitle: "Time", ytitle: "Population"})
 ```
 
 Donut chart [master]
 
 ```javascript
-new Chartkick.PieChart("chart-1", data, {donut: true});
+new Chartkick.PieChart("chart-1", data, {donut: true})
 ```
 
 Refresh data from a remote source every `n` seconds [master]
 
 ```javascript
-new Chartkick.LineChart("chart-1", url, {refresh: 3600}); // 1 hour
+new Chartkick.LineChart("chart-1", url, {refresh: 3600}) // 1 hour
 ```
 
 You can pass options directly to the charting library with:
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {library: {backgroundColor: "pink"}});
+new Chartkick.LineChart("chart-1", data, {library: {backgroundColor: "pink"}})
 ```
 
 See the documentation for [Chart.js](http://www.chartjs.org/docs/), [Google Charts](https://developers.google.com/chart/interactive/docs/gallery), and [Highcharts](http://api.highcharts.com/highcharts) for more info.
@@ -157,14 +157,14 @@ Chartkick.options = {
 Pass data as an array or object
 
 ```javascript
-new Chartkick.PieChart("chart-1", {"Blueberry": 44, "Strawberry": 23});
-new Chartkick.PieChart("chart-1", [["Blueberry", 44], ["Strawberry", 23]]);
+new Chartkick.PieChart("chart-1", {"Blueberry": 44, "Strawberry": 23})
+new Chartkick.PieChart("chart-1", [["Blueberry", 44], ["Strawberry", 23]])
 ```
 
 Times can be a `Date`, a timestamp, or a string (strings are parsed)
 
 ```javascript
-new Chartkick.LineChart("chart-1", [[new Date(), 5], [1368174456, 4], ["2013-05-07 00:00:00 UTC", 7]]);
+new Chartkick.LineChart("chart-1", [[new Date(), 5], [1368174456, 4], ["2013-05-07 00:00:00 UTC", 7]])
 ```
 
 ## Installation
@@ -203,7 +203,7 @@ For Highcharts (works with 2.1+), [download it](http://www.highcharts.com/downlo
 To specify a language for Google Charts, add:
 
 ```javascript
-Chartkick.configure({language: "de"});
+Chartkick.configure({language: "de"})
 ```
 
 after the JavaScript files and before your charts.
@@ -213,7 +213,7 @@ after the JavaScript files and before your charts.
 If more than one charting library is loaded, choose between them with:
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {adapter: "google"}); // or highcharts
+new Chartkick.LineChart("chart-1", data, {adapter: "google"}) // or highcharts
 ```
 
 ### API
@@ -221,39 +221,39 @@ new Chartkick.LineChart("chart-1", data, {adapter: "google"}); // or highcharts
 Access a chart with:
 
 ```javascript
-var chart = Chartkick.charts["chart-id"];
+var chart = Chartkick.charts["chart-id"]
 ```
 
 Get the underlying chart object with:
 
 ```javascript
-chart.getChartObject();
+chart.getChartObject()
 ```
 
 You can also use:
 
 ```javascript
-chart.getElement();
-chart.getData();
-chart.getOptions();
+chart.getElement()
+chart.getData()
+chart.getOptions()
 ```
 
 Update the data with: [master]
 
 ```javascript
-chart.updateData(newData);
+chart.updateData(newData)
 ```
 
 You can also specify new options: [master]
 
 ```javascript
-chart.updateData(newData, newOptions);
+chart.updateData(newData, newOptions)
 ```
 
 Refresh the data from a remote source: [master]
 
 ```javascript
-chart.refreshData();
+chart.refreshData()
 ```
 
 Loop over charts with: [master]
@@ -261,7 +261,7 @@ Loop over charts with: [master]
 ```javascript
 Chartkick.eachChart( function(chart) {
   // do something
-});
+})
 ```
 
 ## Examples
