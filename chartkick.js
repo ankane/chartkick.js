@@ -1479,10 +1479,12 @@
       fetchDataSource(chart, callback, dataSource);
     };
     chart.refreshData = function () {
-      // prevent browser from caching
-      var sep = dataSource.indexOf("?") === -1 ? "?" : "&";
-      var url = dataSource + sep + "_=" + (new Date()).getTime();
-      fetchDataSource(chart, callback, url);
+      if (typeof dataSource === "string") {
+        // prevent browser from caching
+        var sep = dataSource.indexOf("?") === -1 ? "?" : "&";
+        var url = dataSource + sep + "_=" + (new Date()).getTime();
+        fetchDataSource(chart, callback, url);
+      }
     };
     chart.stopRefresh = function () {
       if (chart.intervalId) {
