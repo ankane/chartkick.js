@@ -131,7 +131,7 @@ new Chartkick.PieChart("chart-1", data, {donut: true})
 Refresh data from a remote source every `n` seconds
 
 ```javascript
-new Chartkick.LineChart("chart-1", url, {refresh: 60}) // 1 minute
+new Chartkick.LineChart("chart-1", url, {refresh: 60})
 ```
 
 You can pass options directly to the charting library with:
@@ -159,13 +159,13 @@ Chartkick.options = {
 Give users the ability to download charts. It all happens in the browser - no server-side code needed.
 
 ```javascript
-new Chartkick.PieChart("chart-1", data, {download: true})
+new Chartkick.LineChart("chart-1", data, {download: true})
 ```
 
 Set the filename
 
 ```javascript
-new Chartkick.PieChart("chart-1", data, {download: "boom"})
+new Chartkick.LineChart("chart-1", data, {download: "boom"})
 ```
 
 **Note:** Safari will open the image in a new window instead of downloading.
