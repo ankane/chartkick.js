@@ -1369,9 +1369,13 @@
         throw new Error("No element with id " + elementId);
       }
     }
+    opts = opts || {};
+
     chart.element = element;
-    chart.options = opts || {};
+    chart.options = opts;
     chart.dataSource = dataSource;
+
+    // getters
     chart.getElement = function () {
       return element;
     };
@@ -1379,11 +1383,13 @@
       return chart.data;
     };
     chart.getOptions = function () {
-      return opts || {};
+      return opts;
     };
     chart.getChartObject = function () {
       return chart.chart;
     };
+
+    // functions
     chart.updateData = function (dataSource) {
       chart.dataSource = dataSource;
       fetchDataSource(chart, callback, dataSource);
@@ -1394,8 +1400,21 @@
       var url = dataSource + sep + "_=" + (new Date()).getTime();
       fetchDataSource(chart, callback, url);
     };
+    chart.stopRefresh = function () {
+      if (chart.intervalId) {
+        clearInterval(chart.intervalId);
+      }
+    };
+
     Chartkick.charts[element.id] = chart;
+
     fetchDataSource(chart, callback, dataSource);
+
+    if (opts.refresh) {
+      chart.intervalId = setInterval( function () {
+        chart.refreshData();
+      }, opts.refresh * 1000);
+    }
   }
 
   // define classes

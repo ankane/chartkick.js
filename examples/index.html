@@ -329,11 +329,11 @@
     <h1>Refresh Data</h1>
     <div id="chart-refresh-data" style="height: 300px;"></div>
     <script>
-      var chart2 = new Chartkick.LineChart("chart-refresh-data", "remote.json");
+      var chart2 = new Chartkick.LineChart("chart-refresh-data", "remote.json", {refresh: 3});
 
       setTimeout( function () {
-        chart2.refreshData();
-      }, 3000);
+        chart2.stopRefresh();
+      }, 10000);
     </script>
 
     <script>
