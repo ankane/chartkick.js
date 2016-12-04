@@ -1,6 +1,7 @@
 ## 2.2.0 [unreleased]
 
 - Added global options
+- Added `download` option - *Chart.js only*
 - Added `updateData` function
 - Added `refreshData` function
 - Added `refresh` option

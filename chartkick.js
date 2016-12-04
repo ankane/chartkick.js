@@ -215,6 +215,60 @@
     }
   }
 
+  function addDownloadButton(chart) {
+    var element = chart.element;
+    var link = document.createElement("a");
+    link.download = chart.options.download === true ? "chart.png" : chart.options.download; // http://caniuse.com/download
+    link.style.position = "absolute";
+    link.style.top = "20px";
+    link.style.right = "20px";
+    link.style.zIndex = 1000;
+    link.target = "_blank"; // for safari
+    var image = document.createElement("img");
+    image.style.border = "none";
+    // icon from font-awesome
+    // http://fa2png.io/
+    image.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAABCFBMVEUAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMywEsqxAAAAV3RSTlMAAQIDBggJCgsMDQ4PERQaHB0eISIjJCouLzE0OTo/QUJHSUpLTU5PUllhYmltcHh5foWLjI+SlaCio6atr7S1t7m6vsHHyM7R2tze5Obo7fHz9ff5+/1hlxK2AAAA30lEQVQYGUXBhVYCQQBA0TdYWAt2d3d3YWAHyur7/z9xgD16Lw0DW+XKx+1GgX+FRzM3HWQWrHl5N/oapW5RPe0PkBu+UYeICvozTWZVK23Ao04B79oJrOsJDOoxkZoQPWgX29pHpCZEk7rEvQYiNSFq1UMqvlCjJkRBS1R8hb00Vb/TajtBL7nTHE1X1vyMQF732dQhyF2o6SAwrzP06iUQzvwsArlnzcOdrgBhJyHa1QOgO9U1GsKuvjUTjavliZYQ8nNPapG6sap/3nrIdJ6bOWzmX/fy0XVpfzZP3S8OJT3g9EEiJwAAAABJRU5ErkJggg==";
+    link.appendChild(image);
+    element.style.position = "relative";
+
+    // mouseenter
+    addEvent(element, "mouseover", function(e) {
+      var related = e.relatedTarget;
+      if (!related || (related !== this && !childOf(this, related))) {
+        link.href = chart.toImage();
+        element.appendChild(link);
+      }
+    });
+
+    // mouseleave
+    addEvent(element, "mouseout", function(e) {
+      var related = e.relatedTarget;
+      if (!related || (related !== this && !childOf(this, related))) {
+        link.parentNode.removeChild(link);
+      }
+    });
+  }
+
+  // http://stackoverflow.com/questions/10149963/adding-event-listener-cross-browser
+  function addEvent(elem, event, fn) {
+    if (elem.addEventListener) {
+      elem.addEventListener(event, fn, false);
+    } else {
+      elem.attachEvent("on" + event, function() {
+        // set the this pointer same as addEventListener when fn is called
+        return(fn.call(elem, window.event));
+      });
+    }
+  }
+
+  // https://gist.github.com/shawnbot/4166283
+  function childOf(p, c) {
+    if (p === c) return false;
+    while (c && c !== p) c = c.parentNode;
+    return c === p;
+  }
+
   // type conversions
 
   function toStr(n) {
@@ -378,7 +432,7 @@
             series[i].marker = {symbol: "circle"};
           }
           options.series = series;
-          new Highcharts.Chart(options);
+          chart.chart = new Highcharts.Chart(options);
         };
 
         this.renderScatterChart = function (chart) {
@@ -387,7 +441,7 @@
           options.chart.type = "scatter";
           options.chart.renderTo = chart.element.id;
           options.series = chart.data;
-          new Highcharts.Chart(options);
+          chart.chart = new Highcharts.Chart(options);
         };
 
         this.renderPieChart = function (chart) {
@@ -405,7 +459,7 @@
             name: chart.options.label || "Value",
             data: chart.data
           }];
-          new Highcharts.Chart(options);
+          chart.chart = new Highcharts.Chart(options);
         };
 
         this.renderColumnChart = function (chart, chartType) {
@@ -449,7 +503,7 @@
           }
           options.series = newSeries;
 
-          new Highcharts.Chart(options);
+          chart.chart = new Highcharts.Chart(options);
         };
 
         var self = this;
@@ -1189,9 +1243,16 @@
     }
   }
 
+  function renderChart(chartType, chart) {
+    callAdapter(chartType, chart);
+    if (chart.options.download && chart.adapter === "chartjs") {
+      addDownloadButton(chart);
+    }
+  }
+
   // TODO remove chartType if cross-browser way
   // to get the name of the chart class
-  function renderChart(chartType, chart) {
+  function callAdapter(chartType, chart) {
     var i, adapter, fnName, adapterName;
     fnName = "render" + chartType;
     adapterName = chart.options.adapter;
@@ -1201,6 +1262,7 @@
     for (i = 0; i < adapters.length; i++) {
       adapter = adapters[i];
       if ((!adapterName || adapterName === adapter.name) && isFunction(adapter[fnName])) {
+        chart.adapter = adapter.name;
         return adapter[fnName](chart);
       }
     }
@@ -1425,6 +1487,13 @@
         clearInterval(chart.intervalId);
       }
     };
+    chart.toImage = function () {
+      if (chart.adapter === "chartjs") {
+        return chart.chart.toBase64Image();
+      } else {
+        return null;
+      }
+    }
 
     Chartkick.charts[element.id] = chart;
 

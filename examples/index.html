@@ -9,6 +9,8 @@
 
     <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.2/zepto.min.js"></script> -->
     <!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
+    <!-- <script src="http://code.highcharts.com/modules/exporting.js"></script> -->
+    <!-- <script src="http://code.highcharts.com/modules/offline-exporting.js"></script> -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
     <!-- <script src="http://code.highcharts.com/2.1.9/highcharts.js"></script> -->
 
@@ -37,13 +39,13 @@
     <h1>Line Chart</h1>
     <div id="chart-1" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("chart-1", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8});
+      new Chartkick.LineChart("chart-1", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {download: true});
     </script>
 
     <h1>Pie Chart</h1>
     <div id="chart-2" style="height: 300px;"></div>
     <script>
-      new Chartkick.PieChart("chart-2", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13]]);
+      new Chartkick.PieChart("chart-2", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13]], {download: "pie"});
     </script>
 
     <h1>Donut Chart</h1>

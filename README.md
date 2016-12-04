@@ -152,6 +152,22 @@ Chartkick.options = {
 }
 ```
 
+### Download Charts [master]
+
+*Chart.js only*
+
+```javascript
+new Chartkick.PieChart("chart-1", data, {download: true})
+```
+
+Set the filename
+
+```javascript
+new Chartkick.PieChart("chart-1", data, {download: "boom"})
+```
+
+**Note:** Safari will open the image in a new window instead of downloading.
+
 ### Data
 
 Pass data as an array or object
