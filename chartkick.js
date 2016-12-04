@@ -105,13 +105,12 @@
   }
 
   function jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle) {
-    return function (series, opts, chartOptions) {
+    return function (chart, opts, chartOptions) {
+      var series = chart.data;
       var options = merge({}, defaultOptions);
       options = merge(options, chartOptions || {});
 
-      // hide legend
-      // this is *not* an external option!
-      if (opts.hideLegend) {
+      if (chart.hideLegend) {
         hideLegend(options);
       }
 
@@ -361,7 +360,7 @@
               }
             };
           }
-          var options = jsOptions(chart.data, chart.options, chartOptions), data, i, j;
+          var options = jsOptions(chart, chart.options, chartOptions), data, i, j;
           options.xAxis.type = chart.discrete ? "category" : "datetime";
           if (!options.chart.type) {
             options.chart.type = chartType;
@@ -384,7 +383,7 @@
 
         this.renderScatterChart = function (chart) {
           var chartOptions = {};
-          var options = jsOptions(chart.data, chart.options, chartOptions);
+          var options = jsOptions(chart, chart.options, chartOptions);
           options.chart.type = "scatter";
           options.chart.renderTo = chart.element.id;
           options.series = chart.data;
@@ -409,7 +408,7 @@
         this.renderColumnChart = function (chart, chartType) {
           chartType = chartType || "column";
           var series = chart.data;
-          var options = jsOptions(series, chart.options), i, j, s, d, rows = [];
+          var options = jsOptions(chart, chart.options), i, j, s, d, rows = [];
           options.chart.type = chartType;
           options.chart.renderTo = chart.element.id;
 
@@ -652,7 +651,7 @@
 
         this.renderLineChart = function (chart) {
           waitForLoaded(function () {
-            var options = jsOptions(chart.data, chart.options);
+            var options = jsOptions(chart, chart.options);
             var data = createDataTable(chart.data, chart.discrete ? "string" : "datetime");
             chart.chart = new google.visualization.LineChart(chart.element);
             resize(function () {
@@ -688,7 +687,7 @@
 
         this.renderColumnChart = function (chart) {
           waitForLoaded(function () {
-            var options = jsOptions(chart.data, chart.options);
+            var options = jsOptions(chart, chart.options);
             var data = createDataTable(chart.data, "string");
             chart.chart = new google.visualization.ColumnChart(chart.element);
             resize(function () {
@@ -706,7 +705,7 @@
                 }
               }
             };
-            var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart.data, chart.options, chartOptions);
+            var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
             var data = createDataTable(chart.data, "string");
             chart.chart = new google.visualization.BarChart(chart.element);
             resize(function () {
@@ -722,7 +721,7 @@
               pointSize: 0,
               areaOpacity: 0.5
             };
-            var options = jsOptions(chart.data, chart.options, chartOptions);
+            var options = jsOptions(chart, chart.options, chartOptions);
             var data = createDataTable(chart.data, chart.discrete ? "string" : "datetime");
             chart.chart = new google.visualization.AreaChart(chart.element);
             resize(function () {
@@ -756,7 +755,7 @@
         this.renderScatterChart = function (chart) {
           waitForLoaded(function () {
             var chartOptions = {};
-            var options = jsOptions(chart.data, chart.options, chartOptions);
+            var options = jsOptions(chart, chart.options, chartOptions);
             var data = createDataTable(chart.data, "number");
 
             chart.chart = new google.visualization.ScatterChart(chart.element);
@@ -1085,7 +1084,7 @@
             chart.options.max = 1;
           }
 
-          var options = jsOptions(chart.data, merge(areaOptions, chart.options));
+          var options = jsOptions(chart, merge(areaOptions, chart.options));
 
           var data = createDataTable(chart, options, chartType || "line");
 
@@ -1121,9 +1120,9 @@
         this.renderColumnChart = function (chart, chartType) {
           var options;
           if (chartType === "bar") {
-            options = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart.data, chart.options);
+            options = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options);
           } else {
-            options = jsOptions(chart.data, chart.options);
+            options = jsOptions(chart, chart.options);
           }
           var data = createDataTable(chart, options, "column");
           setLabelSize(chart, data, options);
@@ -1141,7 +1140,7 @@
         };
 
         this.renderScatterChart = function (chart) {
-          var options = jsOptions(chart.data, chart.options);
+          var options = jsOptions(chart, chart.options);
 
           var colors = chart.options.colors || defaultColors;
 
@@ -1286,9 +1285,9 @@
     // see if one series or multiple
     if (!isArray(series) || typeof series[0] !== "object" || isArray(series[0])) {
       series = [{name: opts.label || "Value", data: series}];
-      opts.hideLegend = true;
+      chart.hideLegend = true;
     } else {
-      opts.hideLegend = false;
+      chart.hideLegend = false;
     }
     if ((opts.discrete === null || opts.discrete === undefined)) {
       chart.discrete = detectDiscrete(series);
