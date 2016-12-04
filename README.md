@@ -122,6 +122,12 @@ Axis titles
 new Chartkick.LineChart("chart-1", data, {xtitle: "Time", ytitle: "Population"});
 ```
 
+Donut chart [master]
+
+```javascript
+new Chartkick.PieChart("chart-1", data, {donut: true});
+```
+
 You can pass options directly to the charting library with:
 
 ```javascript

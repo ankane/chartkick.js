@@ -5,6 +5,7 @@
 - Added `refresh` option
 - Added `stopRefresh` function
 - Added `getDataSource` function
+- Added `donut` option to pie chart
 - Remove colors from tooltips for Chart.js pie chart
 
 ## 2.1.2

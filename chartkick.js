@@ -395,6 +395,9 @@
           if (chart.options.colors) {
             chartOptions.colors = chart.options.colors;
           }
+          if (chart.options.donut) {
+            chartOptions.plotOptions = {pie: {innerSize: "50%"}};
+          }
           var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
           options.chart.renderTo = chart.element.id;
           options.series = [{
@@ -670,6 +673,9 @@
             };
             if (chart.options.colors) {
               chartOptions.colors = chart.options.colors;
+            }
+            if (chart.options.donut) {
+              chartOptions.pieHole = 0.5;
             }
             var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
@@ -1094,7 +1100,11 @@
         };
 
         this.renderPieChart = function (chart) {
-          var options = merge(baseOptions, chart.options.library || {});
+          var options = merge({}, baseOptions);
+          if (chart.options.donut) {
+            options.cutoutPercentage = 50;
+          }
+          options = merge(options, chart.options.library || {});
 
           var labels = [];
           var values = [];
