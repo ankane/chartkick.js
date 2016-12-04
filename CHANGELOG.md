@@ -1,4 +1,4 @@
-## 2.2.0 [unreleased]
+## 2.2.0
 
 - Added global options
 - Added `download` option - *Chart.js only*

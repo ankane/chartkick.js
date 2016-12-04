@@ -122,13 +122,13 @@ Axis titles
 new Chartkick.LineChart("chart-1", data, {xtitle: "Time", ytitle: "Population"})
 ```
 
-Donut chart [master]
+Donut chart
 
 ```javascript
 new Chartkick.PieChart("chart-1", data, {donut: true})
 ```
 
-Refresh data from a remote source every `n` seconds [master]
+Refresh data from a remote source every `n` seconds
 
 ```javascript
 new Chartkick.LineChart("chart-1", url, {refresh: 60}) // 1 minute
@@ -142,7 +142,7 @@ new Chartkick.LineChart("chart-1", data, {library: {backgroundColor: "pink"}})
 
 See the documentation for [Chart.js](http://www.chartjs.org/docs/), [Google Charts](https://developers.google.com/chart/interactive/docs/gallery), and [Highcharts](http://api.highcharts.com/highcharts) for more info.
 
-### Global Options [master]
+### Global Options
 
 To set options for all of your charts, use:
 
@@ -152,7 +152,7 @@ Chartkick.options = {
 }
 ```
 
-### Download Charts [master]
+### Download Charts
 
 *Chart.js only*
 
@@ -256,25 +256,25 @@ chart.getData()
 chart.getOptions()
 ```
 
-Update the data with: [master]
+Update the data with:
 
 ```javascript
 chart.updateData(newData)
 ```
 
-You can also specify new options: [master]
+You can also specify new options:
 
 ```javascript
 chart.updateData(newData, newOptions)
 ```
 
-Refresh the data from a remote source: [master]
+Refresh the data from a remote source:
 
 ```javascript
 chart.refreshData()
 ```
 
-Loop over charts with: [master]
+Loop over charts with:
 
 ```javascript
 Chartkick.eachChart( function(chart) {
