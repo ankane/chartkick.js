@@ -246,6 +246,14 @@ Refresh the data from a remote source: [master]
 chart.refreshData();
 ```
 
+Loop over charts with: [master]
+
+```javascript
+Chartkick.eachChart( function(chart) {
+  // do something
+});
+```
+
 ## Examples
 
 To run the files in the `examples` directory, you'll need a web server.  Run:
