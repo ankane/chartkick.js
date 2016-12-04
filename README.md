@@ -76,7 +76,7 @@ new Chartkick.LineChart("chart-1", data);
 
 ### Say Goodbye To Timeouts
 
-Make your pages load super fast and stop worrying about timeouts.  Give each chart its own endpoint.
+Make your pages load super fast and stop worrying about timeouts. Give each chart its own endpoint.
 
 ```javascript
 new Chartkick.LineChart("chart-1", "/stocks");
@@ -218,6 +218,12 @@ Update the data with: [master]
 
 ```javascript
 chart.updateData(newData);
+```
+
+Refresh the data from a remote source: [master]
+
+```javascript
+chart.refreshData();
 ```
 
 ## Examples

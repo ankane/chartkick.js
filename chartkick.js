@@ -204,14 +204,14 @@
     }
   }
 
-  function fetchDataSource(chart, callback) {
-    if (typeof chart.dataSource === "string") {
-      getJSON(chart.element, chart.dataSource, function (data, textStatus, jqXHR) {
+  function fetchDataSource(chart, callback, dataSource) {
+    if (typeof dataSource === "string") {
+      getJSON(chart.element, dataSource, function (data, textStatus, jqXHR) {
         chart.data = data;
         errorCatcher(chart, callback);
       });
     } else {
-      chart.data = chart.dataSource;
+      chart.data = dataSource;
       errorCatcher(chart, callback);
     }
   }
@@ -1386,10 +1386,16 @@
     };
     chart.updateData = function (dataSource) {
       chart.dataSource = dataSource;
-      fetchDataSource(chart, callback);
+      fetchDataSource(chart, callback, dataSource);
+    };
+    chart.refreshData = function () {
+      // prevent browser from caching
+      var sep = dataSource.indexOf("?") === -1 ? "?" : "&";
+      var url = dataSource + sep + "_=" + (new Date()).getTime();
+      fetchDataSource(chart, callback, url);
     };
     Chartkick.charts[element.id] = chart;
-    fetchDataSource(chart, callback);
+    fetchDataSource(chart, callback, dataSource);
   }
 
   // define classes
