@@ -1471,6 +1471,13 @@
           config[key] = options[key];
         }
       }
+    },
+    eachChart: function (callback) {
+      for (var chartId in Chartkick.charts) {
+        if (Chartkick.charts.hasOwnProperty(chartId)) {
+          callback(Chartkick.charts[chartId]);
+        }
+      }
     }
   };
 
