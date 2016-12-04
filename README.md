@@ -128,6 +128,12 @@ Donut chart [master]
 new Chartkick.PieChart("chart-1", data, {donut: true});
 ```
 
+Refresh data from a remote source every `n` seconds [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", url, {refresh: 3600}); // 1 hour
+```
+
 You can pass options directly to the charting library with:
 
 ```javascript
