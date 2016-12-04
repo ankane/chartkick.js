@@ -234,10 +234,13 @@
     link.appendChild(image);
     element.style.position = "relative";
 
+    chart.downloadAttached = true;
+
     // mouseenter
     addEvent(element, "mouseover", function(e) {
       var related = e.relatedTarget;
-      if (!related || (related !== this && !childOf(this, related))) {
+      // check download option again to ensure it wasn't changed
+      if (!related || (related !== this && !childOf(this, related)) && chart.options.download) {
         link.href = chart.toImage();
         element.appendChild(link);
       }
@@ -247,7 +250,9 @@
     addEvent(element, "mouseout", function(e) {
       var related = e.relatedTarget;
       if (!related || (related !== this && !childOf(this, related))) {
-        link.parentNode.removeChild(link);
+        if (link.parentNode) {
+          link.parentNode.removeChild(link);
+        }
       }
     });
   }
@@ -949,9 +954,13 @@
         };
 
         var drawChart = function(chart, type, data, options) {
-          chart.element.innerHTML = "<canvas></canvas>";
-          var ctx = chart.element.getElementsByTagName("CANVAS")[0];
+          if (chart.chart) {
+            chart.chart.destroy();
+          } else {
+            chart.element.innerHTML = "<canvas></canvas>";
+          }
 
+          var ctx = chart.element.getElementsByTagName("CANVAS")[0];
           chart.chart = new Chart(ctx, {
             type: type,
             data: data,
@@ -1247,7 +1256,7 @@
 
   function renderChart(chartType, chart) {
     callAdapter(chartType, chart);
-    if (chart.options.download && chart.adapter === "chartjs") {
+    if (chart.options.download && !chart.downloadAttached && chart.adapter === "chartjs") {
       addDownloadButton(chart);
     }
   }
