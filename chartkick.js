@@ -1373,9 +1373,9 @@
         throw new Error("No element with id " + elementId);
       }
     }
-    opts = opts || {};
 
     chart.element = element;
+    opts = opts || {};
     chart.options = opts;
     chart.dataSource = dataSource;
 
@@ -1383,11 +1383,14 @@
     chart.getElement = function () {
       return element;
     };
+    chart.getDataSource = function () {
+      return chart.dataSource;
+    };
     chart.getData = function () {
       return chart.data;
     };
     chart.getOptions = function () {
-      return opts;
+      return chart.options;
     };
     chart.getChartObject = function () {
       return chart.chart;
