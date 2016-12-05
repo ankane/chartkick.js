@@ -122,6 +122,12 @@ Axis titles
 new Chartkick.LineChart("chart-1", data, {xtitle: "Time", ytitle: "Population"})
 ```
 
+Straight lines between points instead of a curve [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {curve: false})
+```
+
 Donut chart
 
 ```javascript
