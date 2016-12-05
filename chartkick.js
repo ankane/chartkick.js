@@ -1500,6 +1500,9 @@
     chart.getChartObject = function () {
       return chart.chart;
     };
+    chart.getAdapter = function () {
+      return chart.adapter;
+    };
 
     // functions
     chart.updateData = function (dataSource, options) {

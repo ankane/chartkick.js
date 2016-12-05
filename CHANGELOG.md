@@ -1,6 +1,7 @@
 ## 2.2.1 [unreleased]
 
 - Added `curve` option
+- Added `getAdapter` function
 
 ## 2.2.0
 
