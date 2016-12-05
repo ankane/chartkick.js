@@ -122,19 +122,19 @@ Axis titles
 new Chartkick.LineChart("chart-1", data, {xtitle: "Time", ytitle: "Population"})
 ```
 
-Straight lines between points instead of a curve [master]
+Straight lines between points instead of a curve
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {curve: false})
 ```
 
-Show or hide legend [master]
+Show or hide legend
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {legend: true})
 ```
 
-Specify legend position [master]
+Specify legend position
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {legend: "bottom"})
@@ -272,6 +272,7 @@ You can also use:
 chart.getElement()
 chart.getData()
 chart.getOptions()
+chart.getAdapter()
 ```
 
 Update the data with:
@@ -283,6 +284,8 @@ chart.updateData(newData)
 You can also specify new options:
 
 ```javascript
+chart.setOptions(newOptions)
+// or
 chart.updateData(newData, newOptions)
 ```
 
@@ -290,6 +293,12 @@ Refresh the data from a remote source:
 
 ```javascript
 chart.refreshData()
+```
+
+Redraw the chart with:
+
+```javascript
+chart.redraw()
 ```
 
 Loop over charts with:
