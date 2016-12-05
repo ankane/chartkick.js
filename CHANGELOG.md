@@ -2,6 +2,7 @@
 
 - Added `curve` option
 - Added `legend` option
+- Added `title` option
 - Added `getAdapter` function
 - Added `setOptions` function
 - Fixed column order for Google Charts and Highcharts

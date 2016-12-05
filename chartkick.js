@@ -104,7 +104,7 @@
     return false;
   }
 
-  function jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle) {
+  function jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle) {
     return function (chart, opts, chartOptions) {
       var series = chart.data;
       var options = merge({}, defaultOptions);
@@ -112,6 +112,10 @@
 
       if (chart.hideLegend || "legend" in opts) {
         hideLegend(options, opts.legend, chart.hideLegend);
+      }
+
+      if (opts.title) {
+        setTitle(options, opts.title);
       }
 
       // min
@@ -395,6 +399,10 @@
           }
         };
 
+        var setTitle = function (options, title) {
+          options.title.text = title;
+        };
+
         var setMin = function (options, min) {
           options.yAxis.min = min;
         };
@@ -415,7 +423,7 @@
           options.yAxis.title.text = title;
         };
 
-        var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle);
+        var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
         this.renderLineChart = function (chart, chartType) {
           chartType = chartType || "spline";
@@ -488,6 +496,10 @@
 
           if ("legend" in chart.options) {
             hideLegend(chartOptions, chart.options.legend);
+          }
+
+          if (chart.options.title) {
+            setTitle(chartOptions, chart.options.title);
           }
 
           var options = merge(chartOptions, chart.options.library || {});
@@ -662,6 +674,11 @@
           }
         };
 
+        var setTitle = function (options, title) {
+          options.title = title;
+          options.titleTextStyle = {color: "#333", fontSize: "20px"};
+        };
+
         var setMin = function (options, min) {
           options.vAxis.viewWindow.min = min;
         };
@@ -692,7 +709,7 @@
           options.vAxis.titleTextStyle.italic = false;
         };
 
-        var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle);
+        var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
         // cant use object as key
         var createDataTable = function (series, columnType) {
@@ -786,6 +803,9 @@
             if ("legend" in chart.options) {
               hideLegend(chartOptions, chart.options.legend);
             }
+            if (chart.options.title) {
+              setTitle(chartOptions, chart.options.title);
+            }
             var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
             var data = new google.visualization.DataTable();
@@ -820,7 +840,7 @@
                 }
               }
             };
-            var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
+            var options = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
             var data = createDataTable(chart.data, "string");
             chart.chart = new google.visualization.BarChart(chart.element);
             resize(function () {
@@ -921,7 +941,8 @@
           tooltips: {
             displayColors: false
           },
-          legend: {}
+          legend: {},
+          title: {fontSize: 20, fontColor: "#333"}
         };
 
         var defaultOptions = {
@@ -971,6 +992,11 @@
           } else if (hideLegend) {
             options.legend.display = false;
           }
+        };
+
+        var setTitle = function (options, title) {
+          options.title.display = true;
+          options.title.text = title;
         };
 
         var setMin = function (options, min) {
@@ -1044,7 +1070,7 @@
           };
         };
 
-        var jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle);
+        var jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
         var createDataTable = function (chart, options, chartType) {
           var datasets = [];
@@ -1233,6 +1259,10 @@
             hideLegend(options, chart.options.legend);
           }
 
+          if (chart.options.title) {
+            setTitle(options, chart.options.title);
+          }
+
           options = merge(options, chart.options.library || {});
 
           var labels = [];
@@ -1259,7 +1289,7 @@
         this.renderColumnChart = function (chart, chartType) {
           var options;
           if (chartType === "bar") {
-            options = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options);
+            options = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options);
           } else {
             options = jsOptions(chart, chart.options);
           }
