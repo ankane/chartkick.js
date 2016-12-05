@@ -210,11 +210,11 @@
   function fetchDataSource(chart, callback, dataSource) {
     if (typeof dataSource === "string") {
       getJSON(chart.element, dataSource, function (data, textStatus, jqXHR) {
-        chart.data = data;
+        chart.rawData = data;
         errorCatcher(chart, callback);
       });
     } else {
-      chart.data = dataSource;
+      chart.rawData = dataSource;
       errorCatcher(chart, callback);
     }
   }
@@ -1457,7 +1457,7 @@
     var i;
 
     var opts = chart.options;
-    var series = chart.data;
+    var series = chart.rawData;
 
     // see if one series or multiple
     if (!isArray(series) || typeof series[0] !== "object" || isArray(series[0])) {
@@ -1483,17 +1483,17 @@
     return series;
   }
 
-  function processSimple(data) {
-    var perfectData = toArr(data), i;
+  function processSimple(chart) {
+    var perfectData = toArr(chart.rawData), i;
     for (i = 0; i < perfectData.length; i++) {
       perfectData[i] = [toStr(perfectData[i][0]), toFloat(perfectData[i][1])];
     }
     return perfectData;
   }
 
-  function processTime(data)
+  function processTime(chart)
   {
-    var i;
+    var i, data = chart.rawData;
     for (i = 0; i < data.length; i++) {
       data[i][1] = toDate(data[i][1]);
       data[i][2] = toDate(data[i][2]);
@@ -1512,7 +1512,7 @@
   }
 
   function processPieData(chart) {
-    chart.data = processSimple(chart.data);
+    chart.data = processSimple(chart);
     renderChart("PieChart", chart);
   }
 
@@ -1527,7 +1527,7 @@
   }
 
   function processGeoData(chart) {
-    chart.data = processSimple(chart.data);
+    chart.data = processSimple(chart);
     renderChart("GeoChart", chart);
   }
 
@@ -1537,7 +1537,7 @@
   }
 
   function processTimelineData(chart) {
-    chart.data = processTime(chart.data);
+    chart.data = processTime(chart);
     renderChart("Timeline", chart);
   }
 
@@ -1586,8 +1586,11 @@
     };
     chart.setOptions = function (options) {
       chart.options = merge(Chartkick.options, options);
-      errorCatcher(chart, callback);
-    }
+      chart.redraw();
+    };
+    chart.redraw = function() {
+      fetchDataSource(chart, callback, chart.rawData);
+    };
     chart.refreshData = function () {
       if (typeof dataSource === "string") {
         // prevent browser from caching

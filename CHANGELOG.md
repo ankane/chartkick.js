@@ -5,6 +5,7 @@
 - Added `title` option
 - Added `getAdapter` function
 - Added `setOptions` function
+- Added `redraw` function
 - Fixed column order for Google Charts and Highcharts
 
 ## 2.2.0
