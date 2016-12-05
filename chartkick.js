@@ -1,8 +1,8 @@
 /*
  * Chartkick.js
- * Create beautiful JavaScript charts with minimal code
+ * Create beautiful charts with one line of JavaScript
  * https://github.com/ankane/chartkick.js
- * v1.5.1
+ * v2.2.0
  * MIT License
  */
 
@@ -62,10 +62,10 @@
   function parseISO8601(input) {
     var day, hour, matches, milliseconds, minutes, month, offset, result, seconds, type, year;
     type = Object.prototype.toString.call(input);
-    if (type === '[object Date]') {
+    if (type === "[object Date]") {
       return input;
     }
-    if (type !== '[object String]') {
+    if (type !== "[object String]") {
       return;
     }
     matches = input.match(ISO8601_PATTERN);
@@ -83,7 +83,7 @@
         if (matches[17]) {
           offset += parseInt(matches[17], 10);
         }
-        offset *= matches[14] === '-' ? -1 : 1;
+        offset *= matches[14] === "-" ? -1 : 1;
         result -= offset * 60 * 1000;
       }
       return new Date(result);
@@ -105,14 +105,13 @@
   }
 
   function jsOptionsFunc(defaultOptions, hideLegend, setMin, setMax, setStacked, setXtitle, setYtitle) {
-    return function (series, opts, chartOptions) {
+    return function (chart, opts, chartOptions) {
+      var series = chart.data;
       var options = merge({}, defaultOptions);
       options = merge(options, chartOptions || {});
 
-      // hide legend
-      // this is *not* an external option!
-      if (opts.hideLegend) {
-        hideLegend(options);
+      if (chart.hideLegend || "legend" in opts) {
+        hideLegend(options, opts.legend, chart.hideLegend);
       }
 
       // min
@@ -164,16 +163,35 @@
   }
 
   function getJSON(element, url, success) {
-    var $ = window.jQuery || window.Zepto || window.$;
-    $.ajax({
-      dataType: "json",
-      url: url,
-      success: success,
-      error: function (jqXHR, textStatus, errorThrown) {
-        var message = (typeof errorThrown === "string") ? errorThrown : errorThrown.message;
-        chartError(element, message);
-      }
+    ajaxCall(url, success, function (jqXHR, textStatus, errorThrown) {
+      var message = (typeof errorThrown === "string") ? errorThrown : errorThrown.message;
+      chartError(element, message);
     });
+  }
+
+  function ajaxCall(url, success, error) {
+    var $ = window.jQuery || window.Zepto || window.$;
+
+    if ($) {
+      $.ajax({
+        dataType: "json",
+        url: url,
+        success: success,
+        error: error
+      });
+    } else {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          success(JSON.parse(xhr.responseText), xhr.statusText, xhr);
+        } else {
+          error(xhr, "error", xhr.statusText);
+        }
+      };
+      xhr.send();
+    }
   }
 
   function errorCatcher(chart, callback) {
@@ -185,16 +203,77 @@
     }
   }
 
-  function fetchDataSource(chart, callback) {
-    if (typeof chart.dataSource === "string") {
-      getJSON(chart.element, chart.dataSource, function (data, textStatus, jqXHR) {
+  function fetchDataSource(chart, callback, dataSource) {
+    if (typeof dataSource === "string") {
+      getJSON(chart.element, dataSource, function (data, textStatus, jqXHR) {
         chart.data = data;
         errorCatcher(chart, callback);
       });
     } else {
-      chart.data = chart.dataSource;
+      chart.data = dataSource;
       errorCatcher(chart, callback);
     }
+  }
+
+  function addDownloadButton(chart) {
+    var element = chart.element;
+    var link = document.createElement("a");
+    link.download = chart.options.download === true ? "chart.png" : chart.options.download; // http://caniuse.com/download
+    link.style.position = "absolute";
+    link.style.top = "20px";
+    link.style.right = "20px";
+    link.style.zIndex = 1000;
+    link.style.lineHeight = "20px";
+    link.target = "_blank"; // for safari
+    var image = document.createElement("img");
+    image.alt = "Download";
+    image.style.border = "none";
+    // icon from font-awesome
+    // http://fa2png.io/
+    image.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAABCFBMVEUAAADMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMywEsqxAAAAV3RSTlMAAQIDBggJCgsMDQ4PERQaHB0eISIjJCouLzE0OTo/QUJHSUpLTU5PUllhYmltcHh5foWLjI+SlaCio6atr7S1t7m6vsHHyM7R2tze5Obo7fHz9ff5+/1hlxK2AAAA30lEQVQYGUXBhVYCQQBA0TdYWAt2d3d3YWAHyur7/z9xgD16Lw0DW+XKx+1GgX+FRzM3HWQWrHl5N/oapW5RPe0PkBu+UYeICvozTWZVK23Ao04B79oJrOsJDOoxkZoQPWgX29pHpCZEk7rEvQYiNSFq1UMqvlCjJkRBS1R8hb00Vb/TajtBL7nTHE1X1vyMQF732dQhyF2o6SAwrzP06iUQzvwsArlnzcOdrgBhJyHa1QOgO9U1GsKuvjUTjavliZYQ8nNPapG6sap/3nrIdJ6bOWzmX/fy0XVpfzZP3S8OJT3g9EEiJwAAAABJRU5ErkJggg==";
+    link.appendChild(image);
+    element.style.position = "relative";
+
+    chart.downloadAttached = true;
+
+    // mouseenter
+    addEvent(element, "mouseover", function(e) {
+      var related = e.relatedTarget;
+      // check download option again to ensure it wasn't changed
+      if (!related || (related !== this && !childOf(this, related)) && chart.options.download) {
+        link.href = chart.toImage();
+        element.appendChild(link);
+      }
+    });
+
+    // mouseleave
+    addEvent(element, "mouseout", function(e) {
+      var related = e.relatedTarget;
+      if (!related || (related !== this && !childOf(this, related))) {
+        if (link.parentNode) {
+          link.parentNode.removeChild(link);
+        }
+      }
+    });
+  }
+
+  // http://stackoverflow.com/questions/10149963/adding-event-listener-cross-browser
+  function addEvent(elem, event, fn) {
+    if (elem.addEventListener) {
+      elem.addEventListener(event, fn, false);
+    } else {
+      elem.attachEvent("on" + event, function() {
+        // set the this pointer same as addEventListener when fn is called
+        return(fn.call(elem, window.event));
+      });
+    }
+  }
+
+  // https://gist.github.com/shawnbot/4166283
+  function childOf(p, c) {
+    if (p === c) return false;
+    while (c && c !== p) c = c.parentNode;
+    return c === p;
   }
 
   // type conversions
@@ -299,8 +378,21 @@
           }
         };
 
-        var hideLegend = function (options) {
-          options.legend.enabled = false;
+        var hideLegend = function (options, legend, hideLegend) {
+          if (legend !== undefined) {
+            options.legend.enabled = !!legend;
+            if (legend && legend !== true) {
+              if (legend === "top" || legend === "bottom") {
+                options.legend.verticalAlign = legend;
+              } else {
+                options.legend.layout = "vertical";
+                options.legend.verticalAlign = "middle";
+                options.legend.align = legend;
+              }
+            }
+          } else if (hideLegend) {
+            options.legend.enabled = false;
+          }
         };
 
         var setMin = function (options, min) {
@@ -334,6 +426,9 @@
                 areaspline: {
                   stacking: "normal"
                 },
+                area: {
+                  stacking: "normal"
+                },
                 series: {
                   marker: {
                     enabled: false
@@ -342,15 +437,26 @@
               }
             };
           }
-          var options = jsOptions(chart.data, chart.options, chartOptions), data, i, j;
-          options.xAxis.type = chart.options.discrete ? "category" : "datetime";
-          options.chart.type = chartType;
+
+          if (chart.options.curve === false) {
+            if (chartType === "areaspline") {
+              chartType = "area";
+            } else if (chartType === "spline") {
+              chartType = "line";
+            }
+          }
+
+          var options = jsOptions(chart, chart.options, chartOptions), data, i, j;
+          options.xAxis.type = chart.discrete ? "category" : "datetime";
+          if (!options.chart.type) {
+            options.chart.type = chartType;
+          }
           options.chart.renderTo = chart.element.id;
 
           var series = chart.data;
           for (i = 0; i < series.length; i++) {
             data = series[i].data;
-            if (!chart.options.discrete) {
+            if (!chart.discrete) {
               for (j = 0; j < data.length; j++) {
                 data[j][0] = data[j][0].getTime();
               }
@@ -358,37 +464,46 @@
             series[i].marker = {symbol: "circle"};
           }
           options.series = series;
-          new Highcharts.Chart(options);
+          chart.chart = new Highcharts.Chart(options);
         };
 
         this.renderScatterChart = function (chart) {
           var chartOptions = {};
-          var options = jsOptions(chart.data, chart.options, chartOptions);
-          options.chart.type = 'scatter';
+          var options = jsOptions(chart, chart.options, chartOptions);
+          options.chart.type = "scatter";
           options.chart.renderTo = chart.element.id;
           options.series = chart.data;
-          new Highcharts.Chart(options);
+          chart.chart = new Highcharts.Chart(options);
         };
 
         this.renderPieChart = function (chart) {
-          var chartOptions = {};
+          var chartOptions = merge(defaultOptions, {});
+
           if (chart.options.colors) {
             chartOptions.colors = chart.options.colors;
           }
-          var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
+          if (chart.options.donut) {
+            chartOptions.plotOptions = {pie: {innerSize: "50%"}};
+          }
+
+          if ("legend" in chart.options) {
+            hideLegend(chartOptions, chart.options.legend);
+          }
+
+          var options = merge(chartOptions, chart.options.library || {});
           options.chart.renderTo = chart.element.id;
           options.series = [{
             type: "pie",
             name: chart.options.label || "Value",
             data: chart.data
           }];
-          new Highcharts.Chart(options);
+          chart.chart = new Highcharts.Chart(options);
         };
 
         this.renderColumnChart = function (chart, chartType) {
           chartType = chartType || "column";
           var series = chart.data;
-          var options = jsOptions(series, chart.options), i, j, s, d, rows = [];
+          var options = jsOptions(chart, chart.options), i, j, s, d, rows = [];
           options.chart.type = chartType;
           options.chart.renderTo = chart.element.id;
 
@@ -426,7 +541,7 @@
           }
           options.series = newSeries;
 
-          new Highcharts.Chart(options);
+          chart.chart = new Highcharts.Chart(options);
         };
 
         var self = this;
@@ -441,7 +556,7 @@
       };
       adapters.push(HighchartsAdapter);
     }
-    if (!GoogleChartsAdapter && window.google && window.google.setOnLoadCallback) {
+    if (!GoogleChartsAdapter && window.google && (window.google.setOnLoadCallback || window.google.charts)) {
       GoogleChartsAdapter = new function () {
         var google = window.google;
 
@@ -484,7 +599,12 @@
             if (config.language) {
               loadOptions.language = config.language;
             }
-            google.load("visualization", "1", loadOptions);
+
+            if (window.google.setOnLoadCallback) {
+              google.load("visualization", "1", loadOptions);
+            } else {
+              google.charts.load("current", loadOptions);
+            }
           }
         };
 
@@ -531,8 +651,20 @@
           }
         };
 
-        var hideLegend = function (options) {
-          options.legend.position = "none";
+        var hideLegend = function (options, legend, hideLegend) {
+          if (legend !== undefined) {
+            var position;
+            if (!legend) {
+              position = "none";
+            } else if (legend === true) {
+              position = "right";
+            } else {
+              position = legend;
+            }
+            options.legend.position = position;
+          } else if (hideLegend) {
+            options.legend.position = "none";
+          }
         };
 
         var setMin = function (options, min) {
@@ -626,8 +758,14 @@
 
         this.renderLineChart = function (chart) {
           waitForLoaded(function () {
-            var options = jsOptions(chart.data, chart.options);
-            var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
+            var chartOptions = {};
+
+            if (chart.options.curve === false) {
+              chartOptions.curveType = "none";
+            }
+
+            var options = jsOptions(chart, chart.options, chartOptions);
+            var data = createDataTable(chart.data, chart.discrete ? "string" : "datetime");
             chart.chart = new google.visualization.LineChart(chart.element);
             resize(function () {
               chart.chart.draw(data, options);
@@ -641,10 +779,17 @@
               chartArea: {
                 top: "10%",
                 height: "80%"
-              }
+              },
+              legend: {}
             };
             if (chart.options.colors) {
               chartOptions.colors = chart.options.colors;
+            }
+            if (chart.options.donut) {
+              chartOptions.pieHole = 0.5;
+            }
+            if ("legend" in chart.options) {
+              hideLegend(chartOptions, chart.options.legend);
             }
             var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
@@ -662,7 +807,7 @@
 
         this.renderColumnChart = function (chart) {
           waitForLoaded(function () {
-            var options = jsOptions(chart.data, chart.options);
+            var options = jsOptions(chart, chart.options);
             var data = createDataTable(chart.data, "string");
             chart.chart = new google.visualization.ColumnChart(chart.element);
             resize(function () {
@@ -680,7 +825,7 @@
                 }
               }
             };
-            var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked)(chart.data, chart.options, chartOptions);
+            var options = jsOptionsFunc(defaultOptions, hideLegend, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
             var data = createDataTable(chart.data, "string");
             chart.chart = new google.visualization.BarChart(chart.element);
             resize(function () {
@@ -696,8 +841,8 @@
               pointSize: 0,
               areaOpacity: 0.5
             };
-            var options = jsOptions(chart.data, chart.options, chartOptions);
-            var data = createDataTable(chart.data, chart.options.discrete ? "string" : "datetime");
+            var options = jsOptions(chart, chart.options, chartOptions);
+            var data = createDataTable(chart.data, chart.discrete ? "string" : "datetime");
             chart.chart = new google.visualization.AreaChart(chart.element);
             resize(function () {
               chart.chart.draw(data, options);
@@ -730,7 +875,7 @@
         this.renderScatterChart = function (chart) {
           waitForLoaded(function () {
             var chartOptions = {};
-            var options = jsOptions(chart.data, chart.options, chartOptions);
+            var options = jsOptions(chart, chart.options, chartOptions);
             var data = createDataTable(chart.data, "number");
 
             chart.chart = new google.visualization.ScatterChart(chart.element);
@@ -777,7 +922,11 @@
 
         var baseOptions = {
           maintainAspectRatio: false,
-          animation: false
+          animation: false,
+          tooltips: {
+            displayColors: false
+          },
+          legend: {}
         };
 
         var defaultOptions = {
@@ -808,8 +957,7 @@
                 ticks: {}
               }
             ]
-          },
-          legend: {}
+          }
         };
 
         // http://there4.io/2012/05/02/google-chart-color-list/
@@ -819,8 +967,15 @@
           "#6633CC", "#E67300", "#8B0707", "#329262", "#5574A6", "#3B3EAC"
         ];
 
-        var hideLegend = function (options) {
-          options.legend.display = false;
+        var hideLegend = function (options, legend, hideLegend) {
+          if (legend !== undefined) {
+            options.legend.display = !!legend;
+            if (legend && legend !== true) {
+              options.legend.position = legend;
+            }
+          } else if (hideLegend) {
+            options.legend.display = false;
+          }
         };
 
         var setMin = function (options, min) {
@@ -859,9 +1014,13 @@
         };
 
         var drawChart = function(chart, type, data, options) {
-          chart.element.innerHTML = "<canvas></canvas>";
-          var ctx = chart.element.getElementsByTagName("CANVAS")[0];
+          if (chart.chart) {
+            chart.chart.destroy();
+          } else {
+            chart.element.innerHTML = "<canvas></canvas>";
+          }
 
+          var ctx = chart.element.getElementsByTagName("CANVAS")[0];
           chart.chart = new Chart(ctx, {
             type: type,
             data: data,
@@ -877,6 +1036,9 @@
 
         var setLabelSize = function (chart, data, options) {
           var maxLabelSize = Math.ceil(chart.element.offsetWidth / 4.0 / data.labels.length);
+          if (maxLabelSize > 25) {
+            maxLabelSize = 25;
+          }
           options.scales.xAxes[0].ticks.callback = function (value) {
             value = toStr(value);
             if (value.length > maxLabelSize) {
@@ -902,7 +1064,7 @@
           var year = true;
           var hour = true;
           var minute = true;
-          var detectType = (chartType === "line" || chartType === "area") && !chart.options.discrete;
+          var detectType = (chartType === "line" || chartType === "area") && !chart.discrete;
 
           var series = chart.data;
 
@@ -955,7 +1117,8 @@
             }
             labels.push(value);
             for (j = 0; j < series.length; j++) {
-              rows2[j].push(rows[i][j]);
+              // Chart.js doesn't like undefined
+              rows2[j].push(rows[i][j] === undefined ? null : rows[i][j]);
             }
           }
 
@@ -973,6 +1136,10 @@
               pointBackgroundColor: colors[i],
               borderWidth: 2
             };
+
+            if (chart.options.curve === false) {
+              dataset.lineTension = 0;
+            }
 
             datasets.push(merge(dataset, s.library || {}));
           }
@@ -1003,7 +1170,8 @@
               } else if (day || timeDiff > 10) {
                 options.scales.xAxes[0].time.unit = "day";
                 step = 1;
-              } else if (hour) {
+              } else if (hour || timeDiff > 0.5) {
+                options.scales.xAxes[0].time.displayFormats = {hour: "MMM D, h a"};
                 options.scales.xAxes[0].time.unit = "hour";
                 step = 1 / 24.0;
               } else if (minute) {
@@ -1014,7 +1182,7 @@
 
               if (step && timeDiff > 0) {
                 var unitStepSize = Math.ceil(timeDiff / step / (chart.element.offsetWidth / 100.0));
-                if (week) {
+                if (week && step === 1) {
                   unitStepSize = Math.ceil(unitStepSize / 7.0) * 7;
                 }
                 options.scales.xAxes[0].time.unitStepSize = unitStepSize;
@@ -1041,22 +1209,36 @@
         };
 
         this.renderLineChart = function (chart, chartType) {
-          var areaOptions = {};
+          var chartOptions = {};
           if (chartType === "area") {
             // TODO fix area stacked
-            // areaOptions.stacked = true;
+            // chartOptions.stacked = true;
           }
-          var options = jsOptions(chart.data, merge(areaOptions, chart.options));
+          // fix for https://github.com/chartjs/Chart.js/issues/2441
+          if (!chart.options.max && allZeros(chart.data)) {
+            chartOptions.max = 1;
+          }
+
+          var options = jsOptions(chart, merge(chartOptions, chart.options));
 
           var data = createDataTable(chart, options, chartType || "line");
 
-          options.scales.xAxes[0].type = chart.options.discrete ? "category" : "time";
+          options.scales.xAxes[0].type = chart.discrete ? "category" : "time";
 
           drawChart(chart, "line", data, options);
         };
 
         this.renderPieChart = function (chart) {
-          var options = merge(baseOptions, chart.options.library || {});
+          var options = merge({}, baseOptions);
+          if (chart.options.donut) {
+            options.cutoutPercentage = 50;
+          }
+
+          if ("legend" in chart.options) {
+            hideLegend(options, chart.options.legend);
+          }
+
+          options = merge(options, chart.options.library || {});
 
           var labels = [];
           var values = [];
@@ -1082,9 +1264,9 @@
         this.renderColumnChart = function (chart, chartType) {
           var options;
           if (chartType === "bar") {
-            options = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setBarMin, setBarMax, setStacked)(chart.data, chart.options);
+            options = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options);
           } else {
-            options = jsOptions(chart.data, chart.options);
+            options = jsOptions(chart, chart.options);
           }
           var data = createDataTable(chart, options, "column");
           setLabelSize(chart, data, options);
@@ -1100,15 +1282,57 @@
         this.renderBarChart = function (chart) {
           self.renderColumnChart(chart, "bar");
         };
+
+        this.renderScatterChart = function (chart) {
+          var options = jsOptions(chart, chart.options);
+
+          var colors = chart.options.colors || defaultColors;
+
+          var datasets = [];
+          var series = chart.data;
+          for (var i = 0; i < series.length; i++) {
+            var s = series[i];
+            var d = [];
+            for (var j = 0; j < s.data.length; j++) {
+              d.push({
+                x: toFloat(s.data[j][0]),
+                y: toFloat(s.data[j][1])
+              });
+            }
+
+            datasets.push({
+              label: s.name,
+              showLine: false,
+              data: d,
+              borderColor: colors[i],
+              backgroundColor: colors[i],
+              pointBackgroundColor: colors[i]
+            })
+          }
+
+          var data = {datasets: datasets};
+
+          options.scales.xAxes[0].type = "linear";
+          options.scales.xAxes[0].position = "bottom";
+
+          drawChart(chart, "line", data, options);
+        };
       };
 
       adapters.unshift(ChartjsAdapter);
     }
   }
 
+  function renderChart(chartType, chart) {
+    callAdapter(chartType, chart);
+    if (chart.options.download && !chart.downloadAttached && chart.adapter === "chartjs") {
+      addDownloadButton(chart);
+    }
+  }
+
   // TODO remove chartType if cross-browser way
   // to get the name of the chart class
-  function renderChart(chartType, chart) {
+  function callAdapter(chartType, chart) {
     var i, adapter, fnName, adapterName;
     fnName = "render" + chartType;
     adapterName = chart.options.adapter;
@@ -1118,6 +1342,7 @@
     for (i = 0; i < adapters.length; i++) {
       adapter = adapters[i];
       if ((!adapterName || adapterName === adapter.name) && isFunction(adapter[fnName])) {
+        chart.adapter = adapter.name;
         return adapter[fnName](chart);
       }
     }
@@ -1177,6 +1402,19 @@
     return !isNaN(toDate(obj)) && toStr(obj).length >= 6;
   }
 
+  function allZeros(data) {
+    var i, j, d;
+    for (i = 0; i < data.length; i++) {
+      d = data[i].data;
+      for (j = 0; j < d.length; j++) {
+        if (d[j][1] != 0) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   function detectDiscrete(series) {
     var i, j, data;
     for (i = 0; i < series.length; i++) {
@@ -1190,20 +1428,25 @@
     return false;
   }
 
-  function processSeries(series, opts, keyType) {
+  function processSeries(chart, keyType) {
     var i;
+
+    var opts = chart.options;
+    var series = chart.data;
 
     // see if one series or multiple
     if (!isArray(series) || typeof series[0] !== "object" || isArray(series[0])) {
       series = [{name: opts.label || "Value", data: series}];
-      opts.hideLegend = true;
+      chart.hideLegend = true;
     } else {
-      opts.hideLegend = false;
+      chart.hideLegend = false;
     }
     if ((opts.discrete === null || opts.discrete === undefined)) {
-      opts.discrete = detectDiscrete(series);
+      chart.discrete = detectDiscrete(series);
+    } else {
+      chart.discrete = opts.discrete;
     }
-    if (opts.discrete) {
+    if (chart.discrete) {
       keyType = "string";
     }
 
@@ -1234,12 +1477,12 @@
   }
 
   function processLineData(chart) {
-    chart.data = processSeries(chart.data, chart.options, "datetime");
+    chart.data = processSeries(chart, "datetime");
     renderChart("LineChart", chart);
   }
 
   function processColumnData(chart) {
-    chart.data = processSeries(chart.data, chart.options, "string");
+    chart.data = processSeries(chart, "string");
     renderChart("ColumnChart", chart);
   }
 
@@ -1249,12 +1492,12 @@
   }
 
   function processBarData(chart) {
-    chart.data = processSeries(chart.data, chart.options, "string");
+    chart.data = processSeries(chart, "string");
     renderChart("BarChart", chart);
   }
 
   function processAreaData(chart) {
-    chart.data = processSeries(chart.data, chart.options, "datetime");
+    chart.data = processSeries(chart, "datetime");
     renderChart("AreaChart", chart);
   }
 
@@ -1264,7 +1507,7 @@
   }
 
   function processScatterData(chart) {
-    chart.data = processSeries(chart.data, chart.options, "number");
+    chart.data = processSeries(chart, "number");
     renderChart("ScatterChart", chart);
   }
 
@@ -1274,26 +1517,82 @@
   }
 
   function setElement(chart, element, dataSource, opts, callback) {
+    var elementId;
     if (typeof element === "string") {
+      elementId = element;
       element = document.getElementById(element);
+      if (!element) {
+        throw new Error("No element with id " + elementId);
+      }
     }
+
     chart.element = element;
-    chart.options = opts || {};
+    opts = merge(Chartkick.options, opts || {});
+    chart.options = opts;
     chart.dataSource = dataSource;
+
+    // getters
     chart.getElement = function () {
       return element;
+    };
+    chart.getDataSource = function () {
+      return chart.dataSource;
     };
     chart.getData = function () {
       return chart.data;
     };
     chart.getOptions = function () {
-      return opts || {};
+      return chart.options;
     };
     chart.getChartObject = function () {
       return chart.chart;
     };
+    chart.getAdapter = function () {
+      return chart.adapter;
+    };
+
+    // functions
+    chart.updateData = function (dataSource, options) {
+      chart.dataSource = dataSource;
+      if (options) {
+        chart.options = merge(Chartkick.options, options);
+      }
+      fetchDataSource(chart, callback, dataSource);
+    };
+    chart.setOptions = function (options) {
+      chart.options = merge(Chartkick.options, options);
+      errorCatcher(chart, callback);
+    }
+    chart.refreshData = function () {
+      if (typeof dataSource === "string") {
+        // prevent browser from caching
+        var sep = dataSource.indexOf("?") === -1 ? "?" : "&";
+        var url = dataSource + sep + "_=" + (new Date()).getTime();
+        fetchDataSource(chart, callback, url);
+      }
+    };
+    chart.stopRefresh = function () {
+      if (chart.intervalId) {
+        clearInterval(chart.intervalId);
+      }
+    };
+    chart.toImage = function () {
+      if (chart.adapter === "chartjs") {
+        return chart.chart.toBase64Image();
+      } else {
+        return null;
+      }
+    }
+
     Chartkick.charts[element.id] = chart;
-    fetchDataSource(chart, callback);
+
+    fetchDataSource(chart, callback, dataSource);
+
+    if (opts.refresh) {
+      chart.intervalId = setInterval( function () {
+        chart.refreshData();
+      }, opts.refresh * 1000);
+    }
   }
 
   // define classes
@@ -1323,7 +1622,22 @@
     Timeline: function (element, dataSource, opts) {
       setElement(this, element, dataSource, opts, processTimelineData);
     },
-    charts: {}
+    charts: {},
+    configure: function (options) {
+      for (var key in options) {
+        if (options.hasOwnProperty(key)) {
+          config[key] = options[key];
+        }
+      }
+    },
+    eachChart: function (callback) {
+      for (var chartId in Chartkick.charts) {
+        if (Chartkick.charts.hasOwnProperty(chartId)) {
+          callback(Chartkick.charts[chartId]);
+        }
+      }
+    },
+    options: {}
   };
 
   if (typeof module === "object" && typeof module.exports === "object") {
