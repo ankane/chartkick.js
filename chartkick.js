@@ -382,7 +382,13 @@
           if (legend !== undefined) {
             options.legend.enabled = !!legend;
             if (legend && legend !== true) {
-              options.legend.position = legend;
+              if (legend === "top" || legend === "bottom") {
+                options.legend.verticalAlign = legend;
+              } else {
+                options.legend.layout = "vertical";
+                options.legend.verticalAlign = "middle";
+                options.legend.align = legend;
+              }
             }
           } else if (hideLegend) {
             options.legend.enabled = false;
