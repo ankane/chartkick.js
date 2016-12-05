@@ -4,15 +4,15 @@
     <title>Chartkick.js</title>
     <meta charset="utf-8">
     <!-- <script src="https://www.gstatic.com/charts/loader.js"></script> -->
-    <!-- <script src="http://www.google.com/jsapi"></script> -->
-    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+    <!-- <script src="https://www.google.com/jsapi"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
 
-    <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.2/zepto.min.js"></script> -->
-    <!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
-    <!-- <script src="http://code.highcharts.com/modules/exporting.js"></script> -->
-    <!-- <script src="http://code.highcharts.com/modules/offline-exporting.js"></script> -->
-    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
-    <!-- <script src="http://code.highcharts.com/2.1.9/highcharts.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.2/zepto.min.js"></script> -->
+    <!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
+    <!-- <script src="https://code.highcharts.com/modules/exporting.js"></script> -->
+    <!-- <script src="https://code.highcharts.com/modules/offline-exporting.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
+    <!-- <script src="https://code.highcharts.com/2.1.9/highcharts.js"></script> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
     <!-- <script src="Chart.bundle.js"></script> -->
@@ -21,7 +21,7 @@
     <script>
       Chartkick.configure({language: "de"});
       // Chartkick.options = {colors: ["pink", "#666"]};
-      // Chartkick.options = {download: true};
+      // Chartkick.options = {curve: false};
     </script>
 
     <style>
@@ -41,6 +41,12 @@
     <div id="chart-1" style="height: 300px;"></div>
     <script>
       new Chartkick.LineChart("chart-1", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {download: true});
+    </script>
+
+    <h1>Line Chart - Curve</h1>
+    <div id="curve" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("curve", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {curve: false});
     </script>
 
     <h1>Pie Chart</h1>
@@ -348,12 +354,12 @@
 
     <script>
       var chart = Chartkick.charts["chart-5"];
-      console.log(chart);
-      console.log(chart.getElement());
-      console.log(chart.getDataSource());
-      console.log(chart.getData());
-      console.log(chart.getOptions());
-      console.log(chart.getChartObject());
+      // console.log(chart);
+      // console.log(chart.getElement());
+      // console.log(chart.getDataSource());
+      // console.log(chart.getData());
+      // console.log(chart.getOptions());
+      // console.log(chart.getChartObject());
       Chartkick.eachChart( function (chart) {
         // console.log(chart.getElement());
       });

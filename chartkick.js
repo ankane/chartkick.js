@@ -413,6 +413,9 @@
                 areaspline: {
                   stacking: "normal"
                 },
+                area: {
+                  stacking: "normal"
+                },
                 series: {
                   marker: {
                     enabled: false
@@ -421,6 +424,15 @@
               }
             };
           }
+
+          if (chart.options.curve === false) {
+            if (chartType === "areaspline") {
+              chartType = "area";
+            } else if (chartType === "spline") {
+              chartType = "line";
+            }
+          }
+
           var options = jsOptions(chart, chart.options, chartOptions), data, i, j;
           options.xAxis.type = chart.discrete ? "category" : "datetime";
           if (!options.chart.type) {
@@ -715,7 +727,13 @@
 
         this.renderLineChart = function (chart) {
           waitForLoaded(function () {
-            var options = jsOptions(chart, chart.options);
+            var chartOptions = {};
+
+            if (chart.options.curve === false) {
+              chartOptions.curveType = "none";
+            }
+
+            var options = jsOptions(chart, chart.options, chartOptions);
             var data = createDataTable(chart.data, chart.discrete ? "string" : "datetime");
             chart.chart = new google.visualization.LineChart(chart.element);
             resize(function () {
@@ -1077,6 +1095,10 @@
               borderWidth: 2
             };
 
+            if (chart.options.curve === false) {
+              dataset.lineTension = 0;
+            }
+
             datasets.push(merge(dataset, s.library || {}));
           }
 
@@ -1145,17 +1167,17 @@
         };
 
         this.renderLineChart = function (chart, chartType) {
-          var areaOptions = {};
+          var chartOptions = {};
           if (chartType === "area") {
             // TODO fix area stacked
-            // areaOptions.stacked = true;
+            // chartOptions.stacked = true;
           }
           // fix for https://github.com/chartjs/Chart.js/issues/2441
           if (!chart.options.max && allZeros(chart.data)) {
-            chart.options.max = 1;
+            chartOptions.max = 1;
           }
 
-          var options = jsOptions(chart, merge(areaOptions, chart.options));
+          var options = jsOptions(chart, merge(chartOptions, chart.options));
 
           var data = createDataTable(chart, options, chartType || "line");
 

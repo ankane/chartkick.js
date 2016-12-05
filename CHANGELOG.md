@@ -1,3 +1,7 @@
+## 2.2.1 [unreleased]
+
+- Added `curve` option
+
 ## 2.2.0
 
 - Added global options
