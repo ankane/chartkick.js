@@ -170,6 +170,21 @@ Chartkick.options = {
 }
 ```
 
+### Data
+
+Pass data as an array or object
+
+```javascript
+new Chartkick.PieChart("chart-1", {"Blueberry": 44, "Strawberry": 23})
+new Chartkick.PieChart("chart-1", [["Blueberry", 44], ["Strawberry", 23]])
+```
+
+Times can be a `Date`, a timestamp, or a string (strings are parsed)
+
+```javascript
+new Chartkick.LineChart("chart-1", [[new Date(), 5], [1368174456, 4], ["2013-05-07 00:00:00 UTC", 7]])
+```
+
 ### Download Charts
 
 *Chart.js only*
@@ -187,21 +202,6 @@ new Chartkick.LineChart("chart-1", data, {download: "boom"})
 ```
 
 **Note:** Safari will open the image in a new window instead of downloading.
-
-### Data
-
-Pass data as an array or object
-
-```javascript
-new Chartkick.PieChart("chart-1", {"Blueberry": 44, "Strawberry": 23})
-new Chartkick.PieChart("chart-1", [["Blueberry", 44], ["Strawberry", 23]])
-```
-
-Times can be a `Date`, a timestamp, or a string (strings are parsed)
-
-```javascript
-new Chartkick.LineChart("chart-1", [[new Date(), 5], [1368174456, 4], ["2013-05-07 00:00:00 UTC", 7]])
-```
 
 ## Installation
 
