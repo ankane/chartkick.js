@@ -378,8 +378,15 @@
           }
         };
 
-        var hideLegend = function (options) {
-          options.legend.enabled = false;
+        var hideLegend = function (options, legend, hideLegend) {
+          if (legend !== undefined) {
+            options.legend.enabled = !!legend;
+            if (legend && legend !== true) {
+              options.legend.position = legend;
+            }
+          } else if (hideLegend) {
+            options.legend.enabled = false;
+          }
         };
 
         var setMin = function (options, min) {
@@ -464,14 +471,20 @@
         };
 
         this.renderPieChart = function (chart) {
-          var chartOptions = {};
+          var chartOptions = merge(defaultOptions, {});
+
           if (chart.options.colors) {
             chartOptions.colors = chart.options.colors;
           }
           if (chart.options.donut) {
             chartOptions.plotOptions = {pie: {innerSize: "50%"}};
           }
-          var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
+
+          if ("legend" in chart.options) {
+            hideLegend(chartOptions, chart.options.legend);
+          }
+
+          var options = merge(chartOptions, chart.options.library || {});
           options.chart.renderTo = chart.element.id;
           options.series = [{
             type: "pie",
@@ -632,8 +645,20 @@
           }
         };
 
-        var hideLegend = function (options) {
-          options.legend.position = "none";
+        var hideLegend = function (options, legend, hideLegend) {
+          if (legend !== undefined) {
+            var position;
+            if (!legend) {
+              position = "none";
+            } else if (legend === true) {
+              position = "right";
+            } else {
+              position = legend;
+            }
+            options.legend.position = position;
+          } else if (hideLegend) {
+            options.legend.position = "none";
+          }
         };
 
         var setMin = function (options, min) {
@@ -748,13 +773,17 @@
               chartArea: {
                 top: "10%",
                 height: "80%"
-              }
+              },
+              legend: {}
             };
             if (chart.options.colors) {
               chartOptions.colors = chart.options.colors;
             }
             if (chart.options.donut) {
               chartOptions.pieHole = 0.5;
+            }
+            if ("legend" in chart.options) {
+              hideLegend(chartOptions, chart.options.legend);
             }
             var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
