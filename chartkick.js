@@ -110,8 +110,8 @@
       var options = merge({}, defaultOptions);
       options = merge(options, chartOptions || {});
 
-      if (chart.hideLegend) {
-        hideLegend(options);
+      if (chart.hideLegend || "legend" in opts) {
+        hideLegend(options, opts.legend, chart.hideLegend);
       }
 
       // min
@@ -890,7 +890,8 @@
           animation: false,
           tooltips: {
             displayColors: false
-          }
+          },
+          legend: {}
         };
 
         var defaultOptions = {
@@ -921,8 +922,7 @@
                 ticks: {}
               }
             ]
-          },
-          legend: {}
+          }
         };
 
         // http://there4.io/2012/05/02/google-chart-color-list/
@@ -932,8 +932,15 @@
           "#6633CC", "#E67300", "#8B0707", "#329262", "#5574A6", "#3B3EAC"
         ];
 
-        var hideLegend = function (options) {
-          options.legend.display = false;
+        var hideLegend = function (options, legend, hideLegend) {
+          if (legend !== undefined) {
+            options.legend.display = !!legend;
+            if (legend && legend !== true) {
+              options.legend.position = legend;
+            }
+          } else if (hideLegend) {
+            options.legend.display = false;
+          }
         };
 
         var setMin = function (options, min) {
@@ -1191,6 +1198,11 @@
           if (chart.options.donut) {
             options.cutoutPercentage = 50;
           }
+
+          if ("legend" in chart.options) {
+            hideLegend(options, chart.options.legend);
+          }
+
           options = merge(options, chart.options.library || {});
 
           var labels = [];

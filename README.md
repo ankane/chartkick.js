@@ -128,6 +128,18 @@ Straight lines between points instead of a curve [master]
 new Chartkick.LineChart("chart-1", data, {curve: false})
 ```
 
+Show or hide legend [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {legend: true})
+```
+
+Specify legend position [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {legend: "bottom"})
+```
+
 Donut chart
 
 ```javascript
