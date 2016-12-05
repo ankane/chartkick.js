@@ -3,6 +3,7 @@
 - Added `curve` option
 - Added `legend` option
 - Added `getAdapter` function
+- Added `setOptions` function
 
 ## 2.2.0
 

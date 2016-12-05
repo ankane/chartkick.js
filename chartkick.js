@@ -1559,6 +1559,10 @@
       }
       fetchDataSource(chart, callback, dataSource);
     };
+    chart.setOptions = function (options) {
+      chart.options = merge(Chartkick.options, options);
+      errorCatcher(chart, callback);
+    }
     chart.refreshData = function () {
       if (typeof dataSource === "string") {
         // prevent browser from caching
