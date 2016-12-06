@@ -15,6 +15,7 @@
   var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, adapters = [];
   var DATE_PATTERN = /^(\d\d\d\d)(\-)?(\d\d)(\-)?(\d\d)$/i;
   var GoogleChartsAdapter, HighchartsAdapter, ChartjsAdapter;
+  var pendingRequests = [], runningRequests = 0, maxRequests = 4;
 
   // helpers
 
@@ -166,6 +167,27 @@
     element.style.color = "#ff0000";
   }
 
+  function pushRequest(element, url, success) {
+    pendingRequests.push([element, url, success]);
+    runNext();
+  }
+
+  function runNext() {
+    if (runningRequests < maxRequests) {
+      var request = pendingRequests.shift()
+      if (request) {
+        runningRequests++;
+        getJSON(request[0], request[1], request[2]);
+        runNext();
+      }
+    }
+  }
+
+  function requestComplete() {
+    runningRequests--;
+    runNext();
+  }
+
   function getJSON(element, url, success) {
     ajaxCall(url, success, function (jqXHR, textStatus, errorThrown) {
       var message = (typeof errorThrown === "string") ? errorThrown : errorThrown.message;
@@ -181,13 +203,15 @@
         dataType: "json",
         url: url,
         success: success,
-        error: error
+        error: error,
+        complete: requestComplete
       });
     } else {
       var xhr = new XMLHttpRequest();
       xhr.open("GET", url, true);
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.onload = function () {
+        requestComplete();
         if (xhr.status === 200) {
           success(JSON.parse(xhr.responseText), xhr.statusText, xhr);
         } else {
@@ -209,7 +233,7 @@
 
   function fetchDataSource(chart, callback, dataSource) {
     if (typeof dataSource === "string") {
-      getJSON(chart.element, dataSource, function (data, textStatus, jqXHR) {
+      pushRequest(chart.element, dataSource, function (data, textStatus, jqXHR) {
         chart.rawData = data;
         errorCatcher(chart, callback);
       });

@@ -1,3 +1,7 @@
+## 2.2.2 [unreleased]
+
+- Limit concurrent requests to avoid overloading the server
+
 ## 2.2.1
 
 - Added `curve` option
