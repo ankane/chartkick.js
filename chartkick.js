@@ -1674,7 +1674,8 @@
         }
       }
     },
-    options: {}
+    options: {},
+    adapters: adapters
   };
 
   if (typeof module === "object" && typeof module.exports === "object") {

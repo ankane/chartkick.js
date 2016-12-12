@@ -309,6 +309,22 @@ Chartkick.eachChart( function(chart) {
 })
 ```
 
+## Custom Adapters (experimental) [master]
+
+Add your own custom adapter with:
+
+```javascript
+var CustomAdapter = new function () {
+  this.name = "custom";
+
+  this.renderLineChart = function (chart) {
+    chart.getElement().innerHTML = "Hi";
+  };
+};
+
+Chartkick.adapters.unshift(CustomAdapter);
+```
+
 ## Examples
 
 To run the files in the `examples` directory, you'll need a web server.  Run:
