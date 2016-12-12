@@ -25,6 +25,24 @@
       // Chartkick.options = {colors: ["pink", "#666"]};
       // Chartkick.options = {legend: "right"};
       // Chartkick.options = {title: "Bingo"};
+
+      var CustomAdapter = new function () {
+        this.name = "custom";
+
+        this.renderLineChart = function (chart) {
+          chart.getElement().innerHTML = "Hi";
+        };
+
+        this.renderCustomChart = function (chart) {
+          chart.getElement().innerHTML = "Custom Chart";
+        };
+      };
+
+      Chartkick.CustomChart = function (element, dataSource, options) {
+        Chartkick.createChart("CustomChart", this, element, dataSource, options);
+      };
+
+      Chartkick.adapters.unshift(CustomAdapter);
     </script>
 
     <style>
@@ -345,6 +363,12 @@
     <div id="title" style="height: 300px;"></div>
     <script>
       new Chartkick.LineChart("title", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {title: "Boom"});
+    </script>
+
+    <h1>Custom Chart</h1>
+    <div id="custom" style="height: 300px;"></div>
+    <script>
+      new Chartkick.CustomChart("custom", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {download: true});
     </script>
 
     <h1>Update Data</h1>

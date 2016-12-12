@@ -1545,7 +1545,7 @@
     return processSeries(chart, "number");
   }
 
-  function setElement(chart, element, dataSource, opts, cb, chartType) {
+  function createChart(chartType, chart, element, dataSource, opts, processData) {
     var elementId;
     if (typeof element === "string") {
       elementId = element;
@@ -1559,6 +1559,12 @@
     opts = merge(Chartkick.options, opts || {});
     chart.options = opts;
     chart.dataSource = dataSource;
+
+    if (!processData) {
+      processData = function (chart) {
+        return chart.rawData;
+      }
+    }
 
     // getters
     chart.getElement = function () {
@@ -1581,7 +1587,7 @@
     };
 
     var callback = function () {
-      chart.data = cb(chart);
+      chart.data = processData(chart);
       renderChart(chartType, chart);
     };
 
@@ -1635,29 +1641,29 @@
   // define classes
 
   Chartkick = {
-    LineChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processLineData, "LineChart");
+    LineChart: function (element, dataSource, options) {
+      createChart("LineChart", this, element, dataSource, options, processLineData);
     },
-    PieChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processSimple, "PieChart");
+    PieChart: function (element, dataSource, options) {
+      createChart("PieChart", this, element, dataSource, options, processSimple);
     },
-    ColumnChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processColumnData, "ColumnChart");
+    ColumnChart: function (element, dataSource, options) {
+      createChart("ColumnChart", this, element, dataSource, options, processColumnData);
     },
-    BarChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processBarData, "BarChart");
+    BarChart: function (element, dataSource, options) {
+      createChart("BarChart", this, element, dataSource, options, processBarData);
     },
-    AreaChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processAreaData, "AreaChart");
+    AreaChart: function (element, dataSource, options) {
+      createChart("AreaChart", this, element, dataSource, options, processAreaData);
     },
-    GeoChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processSimple, "GeoChart");
+    GeoChart: function (element, dataSource, options) {
+      createChart("GeoChart", this, element, dataSource, options, processSimple);
     },
-    ScatterChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processScatterData, "ScatterChart");
+    ScatterChart: function (element, dataSource, options) {
+      createChart("ScatterChart", this, element, dataSource, options, processScatterData);
     },
-    Timeline: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processTime, "Timeline");
+    Timeline: function (element, dataSource, options) {
+      createChart("Timeline", this, element, dataSource, options, processTime);
     },
     charts: {},
     configure: function (options) {
@@ -1675,7 +1681,8 @@
       }
     },
     options: {},
-    adapters: adapters
+    adapters: adapters,
+    createChart: createChart
   };
 
   if (typeof module === "object" && typeof module.exports === "object") {
