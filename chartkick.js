@@ -1526,46 +1526,26 @@
   }
 
   function processLineData(chart) {
-    chart.data = processSeries(chart, "datetime");
-    renderChart("LineChart", chart);
+    return processSeries(chart, "datetime");
   }
 
   function processColumnData(chart) {
-    chart.data = processSeries(chart, "string");
-    renderChart("ColumnChart", chart);
-  }
-
-  function processPieData(chart) {
-    chart.data = processSimple(chart);
-    renderChart("PieChart", chart);
+    return processSeries(chart, "string");
   }
 
   function processBarData(chart) {
-    chart.data = processSeries(chart, "string");
-    renderChart("BarChart", chart);
+    return processSeries(chart, "string");
   }
 
   function processAreaData(chart) {
-    chart.data = processSeries(chart, "datetime");
-    renderChart("AreaChart", chart);
-  }
-
-  function processGeoData(chart) {
-    chart.data = processSimple(chart);
-    renderChart("GeoChart", chart);
+    return processSeries(chart, "datetime");
   }
 
   function processScatterData(chart) {
-    chart.data = processSeries(chart, "number");
-    renderChart("ScatterChart", chart);
+    return processSeries(chart, "number");
   }
 
-  function processTimelineData(chart) {
-    chart.data = processTime(chart);
-    renderChart("Timeline", chart);
-  }
-
-  function setElement(chart, element, dataSource, opts, callback) {
+  function setElement(chart, element, dataSource, opts, cb, chartType) {
     var elementId;
     if (typeof element === "string") {
       elementId = element;
@@ -1598,6 +1578,11 @@
     };
     chart.getAdapter = function () {
       return chart.adapter;
+    };
+
+    var callback = function () {
+      chart.data = cb(chart);
+      renderChart(chartType, chart);
     };
 
     // functions
@@ -1651,28 +1636,28 @@
 
   Chartkick = {
     LineChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processLineData);
+      setElement(this, element, dataSource, opts, processLineData, "LineChart");
     },
     PieChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processPieData);
+      setElement(this, element, dataSource, opts, processSimple, "PieChart");
     },
     ColumnChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processColumnData);
+      setElement(this, element, dataSource, opts, processColumnData, "ColumnChart");
     },
     BarChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processBarData);
+      setElement(this, element, dataSource, opts, processBarData, "BarChart");
     },
     AreaChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processAreaData);
+      setElement(this, element, dataSource, opts, processAreaData, "AreaChart");
     },
     GeoChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processGeoData);
+      setElement(this, element, dataSource, opts, processSimple, "GeoChart");
     },
     ScatterChart: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processScatterData);
+      setElement(this, element, dataSource, opts, processScatterData, "ScatterChart");
     },
     Timeline: function (element, dataSource, opts) {
-      setElement(this, element, dataSource, opts, processTimelineData);
+      setElement(this, element, dataSource, opts, processTime, "Timeline");
     },
     charts: {},
     configure: function (options) {
