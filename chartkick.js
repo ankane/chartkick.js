@@ -1332,7 +1332,9 @@
           self.renderColumnChart(chart, "bar");
         };
 
-        this.renderScatterChart = function (chart) {
+        this.renderScatterChart = function (chart, chartType) {
+          chartType = chartType || "line";
+
           var options = jsOptions(chart, chart.options);
 
           var colors = chart.options.colors || defaultColors;
@@ -1343,10 +1345,14 @@
             var s = series[i];
             var d = [];
             for (var j = 0; j < s.data.length; j++) {
-              d.push({
+              var point = {
                 x: toFloat(s.data[j][0]),
                 y: toFloat(s.data[j][1])
-              });
+              };
+              if (chartType === "bubble") {
+                point.r = toFloat(s.data[j][2]);
+              }
+              d.push(point);
             }
 
             datasets.push({
@@ -1364,7 +1370,11 @@
           options.scales.xAxes[0].type = "linear";
           options.scales.xAxes[0].position = "bottom";
 
-          drawChart(chart, "line", data, options);
+          drawChart(chart, chartType, data, options);
+        };
+
+        this.renderBubbleChart = function (chart) {
+          this.renderScatterChart(chart, "bubble");
         };
       };
 
@@ -1414,8 +1424,12 @@
   var formatSeriesData = function (data, keyType) {
     var r = [], key, j;
     for (j = 0; j < data.length; j++) {
-      key = toFormattedKey(data[j][0], keyType);
-      r.push([key, toFloat(data[j][1])]);
+      if (keyType === "bubble") {
+        r.push([toFloat(data[j][0]), toFloat(data[j][1]), toFloat(data[j][2])]);
+      } else {
+        key = toFormattedKey(data[j][0], keyType);
+        r.push([key, toFloat(data[j][1])]);
+      }
     }
     if (keyType === "datetime") {
       r.sort(sortByTime);
@@ -1490,7 +1504,7 @@
     } else {
       chart.hideLegend = false;
     }
-    if ((opts.discrete === null || opts.discrete === undefined)) {
+    if ((opts.discrete === null || opts.discrete === undefined) && keyType !== "bubble") {
       chart.discrete = detectDiscrete(series);
     } else {
       chart.discrete = opts.discrete;
@@ -1543,6 +1557,10 @@
 
   function processScatterData(chart) {
     return processSeries(chart, "number");
+  }
+
+  function processBubbleData(chart) {
+    return processSeries(chart, "bubble");
   }
 
   function createChart(chartType, chart, element, dataSource, opts, processData) {
@@ -1661,6 +1679,9 @@
     },
     ScatterChart: function (element, dataSource, options) {
       createChart("ScatterChart", this, element, dataSource, options, processScatterData);
+    },
+    BubbleChart: function (element, dataSource, options) {
+      createChart("BubbleChart", this, element, dataSource, options, processBubbleData);
     },
     Timeline: function (element, dataSource, options) {
       createChart("Timeline", this, element, dataSource, options, processTime);
