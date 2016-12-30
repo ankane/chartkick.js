@@ -95,7 +95,7 @@ new Chartkick.LineChart("chart-1", data, {min: 1000, max: 5000})
 Colors
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {colors: ["pink", "#999"]})
+new Chartkick.LineChart("chart-1", data, {colors: ["#b00", "#666"]})
 ```
 
 Stacked columns or bars
@@ -166,7 +166,7 @@ To set options for all of your charts, use:
 
 ```javascript
 Chartkick.options = {
-  colors: ["pink", "#999"]
+  colors: ["#b00", "#666"]
 }
 ```
 
