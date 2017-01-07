@@ -257,6 +257,27 @@
       new Chartkick.PieChart("pie-colors", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13]], {"colors": ["#b00", "#666"]});
     </script>
 
+    <h1>Inline Color</h1>
+    <div id="inline-color" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("inline-color", [{"name":"Workout","data":{"2013-02-10":3,"2013-02-17":3,"2013-02-24":3,"2013-03-03":1,"2013-03-10":4,"2013-03-17":3,"2013-03-24":2,"2013-03-31":3}, color: "#b00"},{"name":"Go to concert","data":{"2013-02-10":0,"2013-02-17":0,"2013-02-24":0,"2013-03-03":0,"2013-03-10":2,"2013-03-17":1,"2013-03-24":0,"2013-03-31":0}, color: "#666"},{"name":"Wash face","data":{"2013-02-10":0,"2013-02-17":1,"2013-02-24":0,"2013-03-03":0,"2013-03-10":0,"2013-03-17":1,"2013-03-24":0,"2013-03-31":1}},{"name":"Call parents","data":{"2013-02-10":5,"2013-02-17":3,"2013-02-24":2,"2013-03-03":0,"2013-03-10":0,"2013-03-17":1,"2013-03-24":1,"2013-03-31":0}},{"name":"Eat breakfast","data":{"2013-02-10":3,"2013-02-17":2,"2013-02-24":1,"2013-03-03":0,"2013-03-10":2,"2013-03-17":2,"2013-03-24":3,"2013-03-31":0}}]);
+    </script>
+
+    <h1>Multiple Inline Color</h1>
+    <div id="multiple-inline-color" style="height: 300px;"></div>
+    <script>
+      var scatterData = [{
+        name: 'Female',
+        data: [[174.0, 73.6], [162.6, 61.4], [174.0, 55.5], [162.6, 63.6], [161.3, 60.9]],
+        color: "#b00"
+        }, {
+          name: 'Male',
+          data: [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]],
+          color: "#666"
+      }];
+      new Chartkick.ScatterChart("multiple-inline-color", scatterData);
+    </script>
+
     <h1>Line Label</h1>
     <div id="line-label" style="height: 300px;"></div>
     <script>

@@ -3,6 +3,7 @@
 - Fixed missing scatter points for Google Charts
 - Fixed scatter chart for Highcharts
 - Limit concurrent requests to avoid overloading servers
+- Added ability to specify color with series for Chart.js and Highcharts
 - Added bubble chart for Chart.js [experimental]
 
 ## 2.2.1
