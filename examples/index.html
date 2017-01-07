@@ -368,6 +368,12 @@
       new Chartkick.LineChart("bad-label", [{"name":"Workout","data":{"2013-02-10":3,"2013-02-17":3,"2013-02-24":3,"2013-03-03":1,"2013-03-10":4,"2013-03-17":3,"2013-03-24":2,"2013-03-31":3}},{"name":"Go to concert","data":{"2013-03-31":0}}]);
     </script>
 
+    <h1>NaN Bug - Chart.js</h1>
+    <div id="nan" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("nan", [{"name":"None","data":{"none":501}},{"name":"Shoes","data":[["None",1],["Flats & Loafers",1]]},{"name":"Bottoms","data":[["Skirts",1]]},{"name":"Jewelry","data":[["None",1]]},{"name":"Accessories","data":[["Belts",1]]},{"name":"Bags","data":[["None",1]]},{"name":"Dresses","data":[["None",116],["Midi",6],["Maxi",4]]},{"name":"Tops","data":[["None",6],["Shirts",6],["Sweaters & Cardigans",1]]}], {"stacked":true});
+    </script>
+
     <h1>10 Minutes</h1>
     <div id="ten-minutes" style="height: 300px;"></div>
     <script>
@@ -408,6 +414,12 @@
     <div id="scatter-same-x" style="height: 300px;"></div>
     <script>
       new Chartkick.ScatterChart("scatter-same-x", [[0, -5], [-10, -10], [5, 10], [-5, 5], [10, -5], [-10, 10], [-5, 10]]);
+    </script>
+
+    <h1>Numeric Axis</h1>
+    <div id="numeric-axis" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("numeric-axis", [{"name":"PhD theses","data":{"1978":1,"1996":1,"1998":1,"1999":3,"2000":3,"2001":1,"2002":1,"2003":1,"2004":4,"2005":4,"2006":6,"2007":6,"2008":3,"2009":5,"2010":3,"2011":5,"2012":4,"2013":7,"2014":10}},{"name":"Masters theses","data":{"1982":1,"1983":2,"1984":6,"1985":5,"1986":4,"1987":2,"1988":11,"1989":14,"1990":18,"1991":8,"1992":8,"1993":12,"1994":4,"1995":7,"1996":12,"1997":6,"1998":8,"1999":7,"2000":12,"2001":20,"2002":18,"2003":23,"2004":39,"2005":36,"2006":46,"2007":37,"2008":59,"2009":36,"2010":30,"2011":22,"2012":33,"2013":26,"2014":12}}]);
     </script>
 
     <h1>Custom Chart</h1>
