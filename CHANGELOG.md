@@ -1,6 +1,7 @@
 ## 2.2.2 [unreleased]
 
 - Added bubble chart for Chart.js
+- Fixed missing scatter points for Google Charts
 - Limit concurrent requests to avoid overloading the server
 
 ## 2.2.1

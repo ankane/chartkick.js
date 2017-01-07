@@ -915,7 +915,24 @@
           waitForLoaded(function () {
             var chartOptions = {};
             var options = jsOptions(chart, chart.options, chartOptions);
-            var data = createDataTable(chart.data, "number");
+
+            var series = chart.data, rows2 = [], i, j, data, d;
+            for (i = 0; i < series.length; i++) {
+              d = series[i].data;
+              for (j = 0; j < d.length; j++) {
+                var row = new Array(series.length + 1);
+                row[0] = toFloat(d[j][0]);
+                row[i + 1] = d[j][1];
+                rows2.push(row);
+              }
+            }
+
+            var data = new google.visualization.DataTable();
+            data.addColumn("number", "");
+            for (i = 0; i < series.length; i++) {
+              data.addColumn("number", series[i].name);
+            }
+            data.addRows(rows2);
 
             chart.chart = new google.visualization.ScatterChart(chart.element);
             resize(function () {
