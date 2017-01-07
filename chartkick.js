@@ -921,7 +921,7 @@
               d = series[i].data;
               for (j = 0; j < d.length; j++) {
                 var row = new Array(series.length + 1);
-                row[0] = toFloat(d[j][0]);
+                row[0] = d[j][0];
                 row[i + 1] = d[j][1];
                 rows2.push(row);
               }
@@ -1521,7 +1521,7 @@
     } else {
       chart.hideLegend = false;
     }
-    if ((opts.discrete === null || opts.discrete === undefined) && keyType !== "bubble") {
+    if ((opts.discrete === null || opts.discrete === undefined) && keyType !== "bubble" && keyType !== "number") {
       chart.discrete = detectDiscrete(series);
     } else {
       chart.discrete = opts.discrete;
