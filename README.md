@@ -309,7 +309,7 @@ Chartkick.eachChart( function(chart) {
 })
 ```
 
-## Custom Adapters [master]
+## Custom Adapters
 
 **Note:** This feature is experimental.
 

@@ -1,4 +1,4 @@
-## 2.2.2 [unreleased]
+## 2.2.2
 
 - Fixed missing scatter points for Google Charts
 - Fixed scatter chart for Highcharts
