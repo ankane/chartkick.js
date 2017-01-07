@@ -1,3 +1,7 @@
+## 2.2.3 [unreleased]
+
+- Added `points` option
+
 ## 2.2.2
 
 - Fixed missing scatter points for Google Charts

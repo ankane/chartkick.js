@@ -494,6 +494,9 @@
               }
             }
             series[i].marker = {symbol: "circle"};
+            if (chart.options.points === false) {
+              series[i].marker.enabled = false;
+            }
           }
           options.series = series;
           chart.chart = new Highcharts.Chart(options);
@@ -798,6 +801,10 @@
 
             if (chart.options.curve === false) {
               chartOptions.curveType = "none";
+            }
+
+            if (chart.options.points === false) {
+              chartOptions.pointSize = 0;
             }
 
             var options = jsOptions(chart, chart.options, chartOptions);
@@ -1202,6 +1209,11 @@
 
             if (chart.options.curve === false) {
               dataset.lineTension = 0;
+            }
+
+            if (chart.options.points === false) {
+              dataset.pointRadius = 0;
+              dataset.pointHitRadius = 5;
             }
 
             datasets.push(merge(dataset, s.library || {}));
