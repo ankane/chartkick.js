@@ -351,6 +351,10 @@
     return a[0].getTime() - b[0].getTime();
   }
 
+  function sortByNumberSeries(a, b) {
+    return a[0] - b[0];
+  }
+
   function sortByNumber(a, b) {
     return a - b;
   }
@@ -559,6 +563,10 @@
             }
           }
 
+          if (chart.options.xtype === "number") {
+            categories.sort(sortByNumber);
+          }
+
           options.xAxis.categories = categories;
 
           var newSeries = [];
@@ -739,7 +747,7 @@
         var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
         // cant use object as key
-        var createDataTable = function (series, columnType) {
+        var createDataTable = function (series, columnType, xtype) {
           var i, j, s, d, key, rows = [], sortedLabels = [];
           for (i = 0; i < series.length; i++) {
             s = series[i];
@@ -772,6 +780,16 @@
           }
           if (columnType === "datetime") {
             rows2.sort(sortByTime);
+          } else if (columnType === "number") {
+            rows2.sort(sortByNumberSeries);
+          }
+
+          if (xtype === "number") {
+            rows2.sort(sortByNumberSeries);
+
+            for (var i = 0; i < rows2.length; i++) {
+              rows2[i][0] = toStr(rows2[i][0]);
+            }
           }
 
           // create datatable
@@ -808,7 +826,11 @@
             }
 
             var options = jsOptions(chart, chart.options, chartOptions);
-            var data = createDataTable(chart.data, chart.discrete ? "string" : "datetime");
+            var columnType = chart.discrete ? "string" : "datetime";
+            if (chart.options.xtype === "number") {
+              columnType = "number";
+            }
+            var data = createDataTable(chart.data, columnType);
             chart.chart = new google.visualization.LineChart(chart.element);
             resize(function () {
               chart.chart.draw(data, options);
@@ -854,7 +876,7 @@
         this.renderColumnChart = function (chart) {
           waitForLoaded(function () {
             var options = jsOptions(chart, chart.options);
-            var data = createDataTable(chart.data, "string");
+            var data = createDataTable(chart.data, "string", chart.options.xtype);
             chart.chart = new google.visualization.ColumnChart(chart.element);
             resize(function () {
               chart.chart.draw(data, options);
@@ -872,7 +894,7 @@
               }
             };
             var options = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
-            var data = createDataTable(chart.data, "string");
+            var data = createDataTable(chart.data, "string", chart.options.xtype);
             chart.chart = new google.visualization.BarChart(chart.element);
             resize(function () {
               chart.chart.draw(data, options);
@@ -887,8 +909,13 @@
               pointSize: 0,
               areaOpacity: 0.5
             };
+
             var options = jsOptions(chart, chart.options, chartOptions);
-            var data = createDataTable(chart.data, chart.discrete ? "string" : "datetime");
+            var columnType = chart.discrete ? "string" : "datetime";
+            if (chart.options.xtype === "number") {
+              columnType = "number";
+            }
+            var data = createDataTable(chart.data, columnType);
             chart.chart = new google.visualization.AreaChart(chart.element);
             resize(function () {
               chart.chart.draw(data, options);
@@ -1156,7 +1183,7 @@
             }
           }
 
-          if (detectType) {
+          if (detectType || chart.options.xtype === "number") {
             sortedLabels.sort(sortByNumber);
           }
 
@@ -1284,6 +1311,10 @@
         };
 
         this.renderLineChart = function (chart, chartType) {
+          if (chart.options.xtype === "number") {
+            return self.renderScatterChart(chart, chartType, true);
+          }
+
           var chartOptions = {};
           if (chartType === "area") {
             // TODO fix area stacked
@@ -1362,7 +1393,7 @@
           self.renderColumnChart(chart, "bar");
         };
 
-        this.renderScatterChart = function (chart, chartType) {
+        this.renderScatterChart = function (chart, chartType, lineChart) {
           chartType = chartType || "line";
 
           var options = jsOptions(chart, chart.options);
@@ -1386,15 +1417,21 @@
             }
 
             var color = s.color || colors[i];
+            var backgroundColor = chartType === "area" ? addOpacity(color, 0.5) : color;
 
             datasets.push({
               label: s.name,
-              showLine: false,
+              showLine: lineChart || false,
               data: d,
               borderColor: color,
-              backgroundColor: color,
-              pointBackgroundColor: color
+              backgroundColor: backgroundColor,
+              pointBackgroundColor: color,
+              fill: chartType === "area"
             })
+          }
+
+          if (chartType === "area") {
+            chartType = "line";
           }
 
           var data = {datasets: datasets};
@@ -1465,6 +1502,8 @@
     }
     if (keyType === "datetime") {
       r.sort(sortByTime);
+    } else if (keyType === "number") {
+      r.sort(sortByNumberSeries);
     }
     return r;
   };
@@ -1543,6 +1582,9 @@
     }
     if (chart.discrete) {
       keyType = "string";
+    }
+    if (chart.options.xtype) {
+      keyType = chart.options.xtype;
     }
 
     // right format
