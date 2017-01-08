@@ -1,5 +1,6 @@
 ## 2.2.3 [unreleased]
 
+- Added `xtype` option
 - Added `points` option
 
 ## 2.2.2
