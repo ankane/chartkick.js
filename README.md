@@ -74,6 +74,18 @@ data = [
 new Chartkick.LineChart("chart-1", data)
 ```
 
+Multiple series with custom stacks - *Chart.js 2.5+ or HighCharts*
+
+```javascript
+data = [
+  {name: "John", data: {"Tuesday": 3, "Friday": 4}, stack: 'men'},
+  {name: "Frank", data: {"Tuesday": 1, "Friday": 8}, stack: 'men'},
+  {name: "Sarah", data: {"Tuesday": 3, "Friday": 4}, stack: 'women'},
+  {name: "Jane", data: {"Tuesday": 1, "Friday": 8}, stack: 'women'}
+]
+new Chartkick.BarChart("chart-1", data, {stacked: true})
+```
+
 ### Say Goodbye To Timeouts
 
 Make your pages load super fast and stop worrying about timeouts. Give each chart its own endpoint.

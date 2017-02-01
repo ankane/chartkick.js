@@ -1,5 +1,6 @@
 ## 2.2.3 [unreleased]
 
+- Added named `stack` option to datasets for Chart.js & Highcharts
 - Added `xtype` option
 - Added `points` option
 
