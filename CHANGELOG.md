@@ -1,4 +1,4 @@
-## 2.2.3 [unreleased]
+## 2.2.3
 
 - Added `xtype` option
 - Added `points` option
