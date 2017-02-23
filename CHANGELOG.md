@@ -2,6 +2,7 @@
 
 - Added `xtype` option
 - Added `points` option
+- Added `mapsApiKey` option to `configure`
 
 ## 2.2.2
 

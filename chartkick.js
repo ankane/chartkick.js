@@ -641,6 +641,9 @@
             if (config.language) {
               loadOptions.language = config.language;
             }
+            if (pack === "corechart" && config.mapsApiKey) {
+              loadOptions.mapsApiKey = config.mapsApiKey;
+            }
 
             if (window.google.setOnLoadCallback) {
               google.load("visualization", "1", loadOptions);
