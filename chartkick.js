@@ -578,7 +578,8 @@
 
             newSeries.push({
               name: series[i].name,
-              data: d
+              data: d,
+              stack: series[i].stack ? series[i].stack : null
             });
           }
           options.series = newSeries;
@@ -1230,6 +1231,7 @@
             var dataset = {
               label: s.name,
               data: rows2[i],
+              stack: s.stack ? s.stack : null,
               fill: chartType === "area",
               borderColor: color,
               backgroundColor: backgroundColor,

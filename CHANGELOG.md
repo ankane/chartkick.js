@@ -1,5 +1,6 @@
 ## 2.2.3
 
+- Added named `stack` option to datasets for Chart.js & Highcharts
 - Added `xtype` option
 - Added `points` option
 - Added `mapsApiKey` option to `configure`

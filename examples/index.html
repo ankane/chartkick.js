@@ -137,6 +137,12 @@
       new Chartkick.BarChart("multiple-bar-stacked", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {max: 80, stacked: true});
     </script>
 
+    <h1>Multiple Series Bar Stacked &amp; Grouped (Chart.js 2.5+ or HighCharts only)</h1>
+    <div id="multiple-bar-stacked-grouped" style="height: 300px;"></div>
+    <script>
+      new Chartkick.BarChart("multiple-bar-stacked-grouped", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]], stack: 'stack 1'}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]], stack: 'stack 2'}, {name: "Series C", data: [["0",12],["1",16],["2",18],["3",11],["4",10],["5",3],["6",17]], stack: 'stack 2'}], {max: 80, stacked: true});
+    </script>
+
     <h1>Multiple Series Column Stacked</h1>
     <div id="multiple-column-stack" style="height: 300px;"></div>
     <script>
