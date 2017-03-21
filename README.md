@@ -74,14 +74,14 @@ data = [
 new Chartkick.LineChart("chart-1", data)
 ```
 
-Multiple series with custom stacks - *Chart.js 2.5+ or HighCharts*
+Multiple series stacked and grouped - *Chart.js 2.5+ or Highcharts* [master]
 
 ```javascript
 data = [
-  {name: "John", data: {"Tuesday": 3, "Friday": 4}, stack: 'men'},
-  {name: "Frank", data: {"Tuesday": 1, "Friday": 8}, stack: 'men'},
-  {name: "Sarah", data: {"Tuesday": 3, "Friday": 4}, stack: 'women'},
-  {name: "Jane", data: {"Tuesday": 1, "Friday": 8}, stack: 'women'}
+  {name: "Apple", data: {"Tuesday": 3, "Friday": 4}, stack: "fruit"},
+  {name: "Pear", data: {"Tuesday": 1, "Friday": 8}, stack: "fruit"},
+  {name: "Carrot", data: {"Tuesday": 3, "Friday": 4}, stack: "vegetable"},
+  {name: "Beet", data: {"Tuesday": 1, "Friday": 8}, stack: "vegetable"}
 ]
 new Chartkick.BarChart("chart-1", data, {stacked: true})
 ```

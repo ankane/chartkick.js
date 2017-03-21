@@ -137,10 +137,10 @@
       new Chartkick.BarChart("multiple-bar-stacked", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {max: 80, stacked: true});
     </script>
 
-    <h1>Multiple Series Bar Stacked &amp; Grouped (Chart.js 2.5+ or HighCharts only)</h1>
+    <h1>Multiple Series Bar Stacked and Grouped - Chart.js 2.5+ and Highcharts</h1>
     <div id="multiple-bar-stacked-grouped" style="height: 300px;"></div>
     <script>
-      new Chartkick.BarChart("multiple-bar-stacked-grouped", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]], stack: 'stack 1'}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]], stack: 'stack 2'}, {name: "Series C", data: [["0",12],["1",16],["2",18],["3",11],["4",10],["5",3],["6",17]], stack: 'stack 2'}], {max: 80, stacked: true});
+      new Chartkick.BarChart("multiple-bar-stacked-grouped", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]], stack: "stack 1"}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]], stack: "stack 2"}, {name: "Series C", data: [["0",12],["1",16],["2",18],["3",11],["4",10],["5",3],["6",17]], stack: "stack 2"}], {max: 80, stacked: true});
     </script>
 
     <h1>Multiple Series Column Stacked</h1>
@@ -159,10 +159,10 @@
     <div id="multiple-scatter" style="height: 300px;"></div>
     <script>
       var scatterData = [{
-        name: 'Female',
+        name: "Female",
         data: [[174.0, 73.6], [162.6, 61.4], [174.0, 55.5], [162.6, 63.6], [161.3, 60.9]]
         }, {
-          name: 'Male',
+          name: "Male",
           data: [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]]
       }];
       new Chartkick.ScatterChart("multiple-scatter", scatterData);
@@ -274,11 +274,11 @@
     <div id="multiple-inline-color" style="height: 300px;"></div>
     <script>
       var scatterData = [{
-        name: 'Female',
+        name: "Female",
         data: [[174.0, 73.6], [162.6, 61.4], [174.0, 55.5], [162.6, 63.6], [161.3, 60.9]],
         color: "#b00"
         }, {
-          name: 'Male',
+          name: "Male",
           data: [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]],
           color: "#666"
       }];

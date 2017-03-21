@@ -1,6 +1,9 @@
+## 2.2.4 [unreleased]
+
+- Added multiple series stacked and grouped charts - *Chart.js and Highcharts*
+
 ## 2.2.3
 
-- Added named `stack` option to datasets for Chart.js & Highcharts
 - Added `xtype` option
 - Added `points` option
 - Added `mapsApiKey` option to `configure`
