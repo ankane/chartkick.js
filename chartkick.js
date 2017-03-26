@@ -1567,6 +1567,22 @@
     return false;
   }
 
+  // creates a shallow copy of each element of the array
+  // elements are expected to be objects
+  function copySeries(series) {
+    var newSeries = [], i, j;
+    for (i = 0; i < series.length; i++) {
+      var copy = {}
+      for (j in series[i]) {
+        if (series[i].hasOwnProperty(j)) {
+          copy[j] = series[i][j];
+        }
+      }
+      newSeries.push(copy)
+    }
+    return newSeries;
+  }
+
   function processSeries(chart, keyType) {
     var i;
 
@@ -1593,6 +1609,7 @@
     }
 
     // right format
+    series = copySeries(series);
     for (i = 0; i < series.length; i++) {
       series[i].data = formatSeriesData(toArr(series[i].data), keyType);
     }
