@@ -1,0 +1,25 @@
+{
+    "meta":{
+        "name":"Chartkick.js",
+        "slugname":"Chartkick_js",
+        "version": "1.3.0",
+        "autor": "Andrew Kane - ankane (https://github.com/ankane)",
+        "website": "https://github.com/PSF1/chartkick.js",
+        "description": "Create beautiful Javascript charts with minimal code",
+        "licence": "MIT License"
+    },
+    "configuration": {},
+    "booting": [],
+    "bin_paths": [],
+    "nodetypes": {},
+    "sql": {},
+    "install": [],
+    "uninstall": [],
+    "requirements": {
+        "pharinix": "1.07.x"
+    },
+    "platforms":[
+        "win",
+        "linux"
+    ]
+}
