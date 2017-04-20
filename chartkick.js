@@ -569,18 +569,22 @@
 
           options.xAxis.categories = categories;
 
-          var newSeries = [];
+          var newSeries = [], d2;
           for (i = 0; i < series.length; i++) {
             d = [];
             for (j = 0; j < categories.length; j++) {
               d.push(rows[categories[j]][i] || 0);
             }
 
-            newSeries.push({
+            d2 = {
               name: series[i].name,
-              data: d,
-              stack: series[i].stack ? series[i].stack : null
-            });
+              data: d
+            }
+            if (series[i].stack) {
+              d2.stack = series[i].stack;
+            }
+
+            newSeries.push(d2);
           }
           options.series = newSeries;
 
@@ -1231,13 +1235,16 @@
             var dataset = {
               label: s.name,
               data: rows2[i],
-              stack: s.stack ? s.stack : null,
               fill: chartType === "area",
               borderColor: color,
               backgroundColor: backgroundColor,
               pointBackgroundColor: color,
               borderWidth: 2
             };
+
+            if (s.stack) {
+              dataset.stack = s.stack;
+            }
 
             if (chart.options.curve === false) {
               dataset.lineTension = 0;
