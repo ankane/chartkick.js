@@ -1,6 +1,7 @@
 ## 2.2.4 [unreleased]
 
 - Added multiple series stacked and grouped charts - *Chart.js and Highcharts*
+- Fixed `refreshData` after `updateData`
 - Fixed redraw issue with HighCharts
 
 ## 2.2.3
