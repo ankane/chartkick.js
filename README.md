@@ -74,7 +74,7 @@ data = [
 new Chartkick.LineChart("chart-1", data)
 ```
 
-Multiple series stacked and grouped - *Chart.js 2.5+ or Highcharts* [master]
+Multiple series stacked and grouped - *Chart.js 2.5+ or Highcharts*
 
 ```javascript
 data = [
