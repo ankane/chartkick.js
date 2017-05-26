@@ -1667,6 +1667,10 @@
   }
 
   function createChart(chartType, chart, element, dataSource, opts, processData) {
+    if (Object.keys(dataSource).length == 0) {
+      document.getElementById(element).innerHTML = '<center>No data available</center>';
+      return;
+    }
     var elementId;
     if (typeof element === "string") {
       elementId = element;
