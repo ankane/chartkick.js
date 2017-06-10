@@ -1666,11 +1666,24 @@
     return processSeries(chart, "bubble");
   }
 
+  function defaultEmptyMsg() {
+    return 'No data available';
+  }
+
   function createChart(chartType, chart, element, dataSource, opts, processData) {
     if (Object.keys(dataSource).length == 0) {
-      document.getElementById(element).innerHTML = '<center>No data available</center>';
+      var emptyMsg;
+
+      if(opts['emptyMessage'] != undefined) {
+        emptyMsg = opts['emptyMessage']
+      } else {
+	emptyMsg = defaultEmptyMsg(); 
+      }
+
+      document.getElementById(element).innerHTML = '<center>' + emptyMsg + '</center>';
       return;
     }
+
     var elementId;
     if (typeof element === "string") {
       elementId = element;
