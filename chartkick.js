@@ -319,16 +319,19 @@
     if (typeof n !== "object") {
       if (typeof n === "number") {
         n = new Date(n * 1000); // ms
-      } else if ((matches = n.match(DATE_PATTERN))) {
+      } else {
+        n = toStr(n);
+        if ((matches = n.match(DATE_PATTERN))) {
         year = parseInt(matches[1], 10);
         month = parseInt(matches[3], 10) - 1;
         day = parseInt(matches[5], 10);
         return new Date(year, month, day);
-      } else { // str
-        // try our best to get the str into iso8601
-        // TODO be smarter about this
-        var str = n.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
-        n = parseISO8601(str) || new Date(n);
+        } else { // str
+          // try our best to get the str into iso8601
+          // TODO be smarter about this
+          var str = n.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
+          n = parseISO8601(str) || new Date(n);
+        }
       }
     }
     return n;

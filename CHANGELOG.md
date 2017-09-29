@@ -1,3 +1,7 @@
+## 2.2.5 [unreleased]
+
+- Fixed boolean labels for column chart
+
 ## 2.2.4
 
 - Added multiple series stacked and grouped charts - *Chart.js and Highcharts*
