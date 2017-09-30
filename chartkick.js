@@ -1670,6 +1670,19 @@
   }
 
   function createChart(chartType, chart, element, dataSource, opts, processData) {
+    if (Object.keys(dataSource).length == 0) {
+      var emptyMsg;
+
+      if(opts['emptyMessage'] != undefined) {
+        emptyMsg = opts['emptyMessage']
+      } else {
+	emptyMsg = 'No data available'; 
+      }
+
+      setText(document.getElementById(element), emptyMsg);
+      return;
+    }
+
     var elementId;
     if (typeof element === "string") {
       elementId = element;
