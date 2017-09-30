@@ -514,5 +514,67 @@
         // console.log(chart.getElement());
       });
     </script>
+
+    <h1 id="playground">Playground</h1>
+    <label>Data points:</label>
+    <input id="chart-points" type="number" min="0" value="10">
+    <select id="chart-type">
+      <option value="LineChart" selected="true">LineChart</option>
+      <option value="PieChart">PieChart</option>
+      <option value="ColumnChart">ColumnChart</option>
+      <option value="BarChart">BarChart</option>
+      <option value="AreaChart">AreaChart</option>
+    </select>
+    <select id="chart-adapter">
+      <option value="google" selected="true">Google</option>
+      <option value="highcharts">Highcharts</option>
+    </select>
+    <div id="chart-demo" style="height: 300px;"></div>
+    <script>
+      var ChartDemo = function(id) {
+        var self = this;
+        self.id = id;
+
+        self._createChart = function(type, data, adapter) {
+          new Chartkick[type](self.id, data, {"adapter": adapter});
+        };
+
+        self.chart = function(chartType, nbrOfPoints, adapter) {
+          self._createChart(chartType, self.dataGenerator(nbrOfPoints), adapter);
+        };
+
+        self.dataGenerator = function(nbrOfPoints) {
+          // http://www.highcharts.com/demo/dynamic-update
+          return (function () {
+            // generate an array of random data
+            var data = [],
+                time = (new Date()).getTime(),
+                i;
+
+            for (i = -nbrOfPoints; i <= 0; i += 1) {
+              data.push([
+                time + i * 1000,
+                Math.random()
+              ]);
+            }
+            return data;
+          }());
+        };
+      };
+
+      var demo = new ChartDemo('chart-demo');
+
+      var pointsInput = document.getElementById('chart-points');
+      var typeInput = document.getElementById('chart-type');
+      var adapterInput = document.getElementById('chart-adapter');
+
+      var setChart = function() {
+        demo.chart(typeInput.value, pointsInput.value, adapterInput.value);
+      };
+      pointsInput.onchange = setChart;
+      typeInput.onchange = setChart;
+      adapterInput.onchange = setChart;
+      setChart();
+    </script>
   </body>
 </html>
