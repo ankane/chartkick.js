@@ -1467,7 +1467,7 @@
   }
 
   function dataEmpty(data, chartType) {
-    if (chartType === "PieChart" || chartType === "GeoChart") {
+    if (chartType === "PieChart" || chartType === "GeoChart" || chartType === "Timeline") {
       return data.length === 0;
     } else {
       for (var i = 0; i < data.length; i++) {
