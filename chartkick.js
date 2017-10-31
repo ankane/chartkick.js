@@ -1466,10 +1466,27 @@
     }
   }
 
+  function dataEmpty(data, chartType) {
+    if (chartType === "PieChart" || chartType === "GeoChart") {
+      return data.length === 0;
+    } else {
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].data.length > 0) {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+
   function renderChart(chartType, chart) {
-    callAdapter(chartType, chart);
-    if (chart.options.download && !chart.downloadAttached && chart.adapter === "chartjs") {
-      addDownloadButton(chart);
+    if (chart.options.messages && chart.options.messages.empty && dataEmpty(chart.data, chartType)) {
+      setText(chart.element, chart.options.messages.empty);
+    } else {
+      callAdapter(chartType, chart);
+      if (chart.options.download && !chart.downloadAttached && chart.adapter === "chartjs") {
+        addDownloadButton(chart);
+      }
     }
   }
 

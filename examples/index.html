@@ -459,6 +459,18 @@
       new Chartkick.ColumnChart("boolean-axis-column", [[true, 9], [false, 1], [null, 2]]);
     </script>
 
+    <h1>Empty Message</h1>
+    <div id="empty-message" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("empty-message", {}, {messages: {empty: "No data"}});
+    </script>
+
+    <h1>Empty Pie</h1>
+    <div id="empty-pie" style="height: 300px;"></div>
+    <script>
+      new Chartkick.PieChart("empty-pie", {}, {messages: {empty: "No data"}});
+    </script>
+
     <h1>Custom Chart</h1>
     <div id="custom" style="height: 300px;"></div>
     <script>

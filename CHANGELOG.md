@@ -1,5 +1,6 @@
 ## 2.2.5 [unreleased]
 
+- Added `messages` option
 - Fixed boolean labels for column chart
 
 ## 2.2.4
