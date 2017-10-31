@@ -164,6 +164,12 @@ Donut chart
 new Chartkick.PieChart("chart-1", data, {donut: true})
 ```
 
+Show a message when data is empty [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {messages: {empty: "No data"}})
+```
+
 Refresh data from a remote source every `n` seconds
 
 ```javascript
