@@ -56,9 +56,17 @@
       h1 {
         text-align: center;
       }
+
+      .container-fluid {
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
     </style>
   </head>
   <body>
+    <div class="container-fluid">
+
     <h1>Line Chart</h1>
     <div id="line" style="height: 300px;"></div>
     <script>
@@ -526,5 +534,7 @@
         // console.log(chart.getElement());
       });
     </script>
+
+    </div>
   </body>
 </html>
