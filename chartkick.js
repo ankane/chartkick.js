@@ -2,7 +2,7 @@
  * Chartkick.js
  * Create beautiful charts with one line of JavaScript
  * https://github.com/ankane/chartkick.js
- * v2.2.2
+ * v2.2.4
  * MIT License
  */
 
@@ -319,16 +319,19 @@
     if (typeof n !== "object") {
       if (typeof n === "number") {
         n = new Date(n * 1000); // ms
-      } else if ((matches = n.match(DATE_PATTERN))) {
+      } else {
+        n = toStr(n);
+        if ((matches = n.match(DATE_PATTERN))) {
         year = parseInt(matches[1], 10);
         month = parseInt(matches[3], 10) - 1;
         day = parseInt(matches[5], 10);
         return new Date(year, month, day);
-      } else { // str
-        // try our best to get the str into iso8601
-        // TODO be smarter about this
-        var str = n.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
-        n = parseISO8601(str) || new Date(n);
+        } else { // str
+          // try our best to get the str into iso8601
+          // TODO be smarter about this
+          var str = n.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
+          n = parseISO8601(str) || new Date(n);
+        }
       }
     }
     return n;
@@ -569,17 +572,22 @@
 
           options.xAxis.categories = categories;
 
-          var newSeries = [];
+          var newSeries = [], d2;
           for (i = 0; i < series.length; i++) {
             d = [];
             for (j = 0; j < categories.length; j++) {
               d.push(rows[categories[j]][i] || 0);
             }
 
-            newSeries.push({
+            d2 = {
               name: series[i].name,
               data: d
-            });
+            }
+            if (series[i].stack) {
+              d2.stack = series[i].stack;
+            }
+
+            newSeries.push(d2);
           }
           options.series = newSeries;
 
@@ -640,6 +648,9 @@
             };
             if (config.language) {
               loadOptions.language = config.language;
+            }
+            if (pack === "corechart" && config.mapsApiKey) {
+              loadOptions.mapsApiKey = config.mapsApiKey;
             }
 
             if (window.google.setOnLoadCallback) {
@@ -1055,7 +1066,7 @@
         var defaultColors = [
           "#3366CC", "#DC3912", "#FF9900", "#109618", "#990099", "#3B3EAC", "#0099C6",
           "#DD4477", "#66AA00", "#B82E2E", "#316395", "#994499", "#22AA99", "#AAAA11",
-          "#6633CC", "#E67300", "#8B0707", "#329262", "#5574A6", "#3B3EAC"
+          "#6633CC", "#E67300", "#8B0707", "#329262", "#5574A6", "#651067"
         ];
 
         var hideLegend = function (options, legend, hideLegend) {
@@ -1233,6 +1244,10 @@
               pointBackgroundColor: color,
               borderWidth: 2
             };
+
+            if (s.stack) {
+              dataset.stack = s.stack;
+            }
 
             if (chart.options.curve === false) {
               dataset.lineTension = 0;
@@ -1451,10 +1466,27 @@
     }
   }
 
+  function dataEmpty(data, chartType) {
+    if (chartType === "PieChart" || chartType === "GeoChart" || chartType === "Timeline") {
+      return data.length === 0;
+    } else {
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].data.length > 0) {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+
   function renderChart(chartType, chart) {
-    callAdapter(chartType, chart);
-    if (chart.options.download && !chart.downloadAttached && chart.adapter === "chartjs") {
-      addDownloadButton(chart);
+    if (chart.options.messages && chart.options.messages.empty && dataEmpty(chart.data, chartType)) {
+      setText(chart.element, chart.options.messages.empty);
+    } else {
+      callAdapter(chartType, chart);
+      if (chart.options.download && !chart.downloadAttached && chart.adapter === "chartjs") {
+        addDownloadButton(chart);
+      }
     }
   }
 
@@ -1562,6 +1594,22 @@
     return false;
   }
 
+  // creates a shallow copy of each element of the array
+  // elements are expected to be objects
+  function copySeries(series) {
+    var newSeries = [], i, j;
+    for (i = 0; i < series.length; i++) {
+      var copy = {}
+      for (j in series[i]) {
+        if (series[i].hasOwnProperty(j)) {
+          copy[j] = series[i][j];
+        }
+      }
+      newSeries.push(copy)
+    }
+    return newSeries;
+  }
+
   function processSeries(chart, keyType) {
     var i;
 
@@ -1588,6 +1636,7 @@
     }
 
     // right format
+    series = copySeries(series);
     for (i = 0; i < series.length; i++) {
       series[i].data = formatSeriesData(toArr(series[i].data), keyType);
     }
@@ -1699,10 +1748,10 @@
       fetchDataSource(chart, callback, chart.rawData);
     };
     chart.refreshData = function () {
-      if (typeof dataSource === "string") {
+      if (typeof chart.dataSource === "string") {
         // prevent browser from caching
-        var sep = dataSource.indexOf("?") === -1 ? "?" : "&";
-        var url = dataSource + sep + "_=" + (new Date()).getTime();
+        var sep = chart.dataSource.indexOf("?") === -1 ? "?" : "&";
+        var url = chart.dataSource + sep + "_=" + (new Date()).getTime();
         fetchDataSource(chart, callback, url);
       }
     };
