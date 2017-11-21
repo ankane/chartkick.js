@@ -17,11 +17,12 @@
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
     <!-- <script src="https://code.highcharts.com/2.1.9/highcharts.js"></script> -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
     <!-- <script src="Chart.bundle.js"></script> -->
 
     <script>
       // Chartkick.configure({language: "de"});
+      // Chartkick.configure({mapsApiKey: "test123"})
       // Chartkick.options = {colors: ["#b00", "#666"]};
       // Chartkick.options = {legend: "right"};
       // Chartkick.options = {title: "Bingo"};
@@ -29,9 +30,9 @@
       var CustomAdapter = new function () {
         this.name = "custom";
 
-        this.renderLineChart = function (chart) {
-          chart.getElement().innerHTML = "Hi";
-        };
+        // this.renderLineChart = function (chart) {
+        //   chart.getElement().innerHTML = "Hi";
+        // };
 
         this.renderCustomChart = function (chart) {
           chart.getElement().innerHTML = "Custom Chart";
@@ -55,9 +56,17 @@
       h1 {
         text-align: center;
       }
+
+      .container-fluid {
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
     </style>
   </head>
   <body>
+    <div class="container-fluid">
+
     <h1>Line Chart</h1>
     <div id="line" style="height: 300px;"></div>
     <script>
@@ -136,6 +145,12 @@
       new Chartkick.BarChart("multiple-bar-stacked", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {max: 80, stacked: true});
     </script>
 
+    <h1>Multiple Series Bar Stacked and Grouped - Chart.js 2.5+ and Highcharts</h1>
+    <div id="multiple-bar-stacked-grouped" style="height: 300px;"></div>
+    <script>
+      new Chartkick.BarChart("multiple-bar-stacked-grouped", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]], stack: "stack 1"}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]], stack: "stack 2"}, {name: "Series C", data: [["0",12],["1",16],["2",18],["3",11],["4",10],["5",3],["6",17]], stack: "stack 2"}], {max: 80, stacked: true});
+    </script>
+
     <h1>Multiple Series Column Stacked</h1>
     <div id="multiple-column-stack" style="height: 300px;"></div>
     <script>
@@ -152,10 +167,10 @@
     <div id="multiple-scatter" style="height: 300px;"></div>
     <script>
       var scatterData = [{
-        name: 'Female',
+        name: "Female",
         data: [[174.0, 73.6], [162.6, 61.4], [174.0, 55.5], [162.6, 63.6], [161.3, 60.9]]
         }, {
-          name: 'Male',
+          name: "Male",
           data: [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]]
       }];
       new Chartkick.ScatterChart("multiple-scatter", scatterData);
@@ -257,6 +272,27 @@
       new Chartkick.PieChart("pie-colors", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13]], {"colors": ["#b00", "#666"]});
     </script>
 
+    <h1>Inline Color</h1>
+    <div id="inline-color" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("inline-color", [{"name":"Workout","data":{"2013-02-10":3,"2013-02-17":3,"2013-02-24":3,"2013-03-03":1,"2013-03-10":4,"2013-03-17":3,"2013-03-24":2,"2013-03-31":3}, color: "#b00"},{"name":"Go to concert","data":{"2013-02-10":0,"2013-02-17":0,"2013-02-24":0,"2013-03-03":0,"2013-03-10":2,"2013-03-17":1,"2013-03-24":0,"2013-03-31":0}, color: "#666"},{"name":"Wash face","data":{"2013-02-10":0,"2013-02-17":1,"2013-02-24":0,"2013-03-03":0,"2013-03-10":0,"2013-03-17":1,"2013-03-24":0,"2013-03-31":1}},{"name":"Call parents","data":{"2013-02-10":5,"2013-02-17":3,"2013-02-24":2,"2013-03-03":0,"2013-03-10":0,"2013-03-17":1,"2013-03-24":1,"2013-03-31":0}},{"name":"Eat breakfast","data":{"2013-02-10":3,"2013-02-17":2,"2013-02-24":1,"2013-03-03":0,"2013-03-10":2,"2013-03-17":2,"2013-03-24":3,"2013-03-31":0}}]);
+    </script>
+
+    <h1>Multiple Inline Color</h1>
+    <div id="multiple-inline-color" style="height: 300px;"></div>
+    <script>
+      var scatterData = [{
+        name: "Female",
+        data: [[174.0, 73.6], [162.6, 61.4], [174.0, 55.5], [162.6, 63.6], [161.3, 60.9]],
+        color: "#b00"
+        }, {
+          name: "Male",
+          data: [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]],
+          color: "#666"
+      }];
+      new Chartkick.ScatterChart("multiple-inline-color", scatterData);
+    </script>
+
     <h1>Line Label</h1>
     <div id="line-label" style="height: 300px;"></div>
     <script>
@@ -347,6 +383,12 @@
       new Chartkick.LineChart("bad-label", [{"name":"Workout","data":{"2013-02-10":3,"2013-02-17":3,"2013-02-24":3,"2013-03-03":1,"2013-03-10":4,"2013-03-17":3,"2013-03-24":2,"2013-03-31":3}},{"name":"Go to concert","data":{"2013-03-31":0}}]);
     </script>
 
+    <h1>NaN Bug - Chart.js</h1>
+    <div id="nan" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("nan", [{"name":"None","data":{"none":501}},{"name":"Shoes","data":[["None",1],["Flats & Loafers",1]]},{"name":"Bottoms","data":[["Skirts",1]]},{"name":"Jewelry","data":[["None",1]]},{"name":"Accessories","data":[["Belts",1]]},{"name":"Bags","data":[["None",1]]},{"name":"Dresses","data":[["None",116],["Midi",6],["Maxi",4]]},{"name":"Tops","data":[["None",6],["Shirts",6],["Sweaters & Cardigans",1]]}], {"stacked":true});
+    </script>
+
     <h1>10 Minutes</h1>
     <div id="ten-minutes" style="height: 300px;"></div>
     <script>
@@ -383,10 +425,74 @@
       new Chartkick.LineChart("title", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {title: "Boom"});
     </script>
 
+    <h1>Points</h1>
+    <div id="points" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("points", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {points: false});
+    </script>
+
+    <h1>Scatter Same X</h1>
+    <div id="scatter-same-x" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ScatterChart("scatter-same-x", [[0, -5], [-10, -10], [5, 10], [-5, 5], [10, -5], [-10, 10], [-5, 10]]);
+    </script>
+
+    <h1>Numeric Axis Line</h1>
+    <div id="numeric-axis-line" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("numeric-axis-line", [{name: "Series A", data: [["8",32],["20",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["7",22],["1",36],["2",38],["3",31],["4",30],["5",3],["6",17]]}], {xtype: "number"});
+    </script>
+
+    <h1>Numeric Axis Area</h1>
+    <div id="numeric-axis-area" style="height: 300px;"></div>
+    <script>
+      new Chartkick.AreaChart("numeric-axis-area", [{name: "Series A", data: [["8",32],["20",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["7",22],["1",36],["2",38],["3",31],["4",30],["5",3],["6",17]]}], {xtype: "number"});
+    </script>
+
+    <h1>Numeric Axis Column</h1>
+    <div id="numeric-axis-column" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("numeric-axis-column", [{"name":"PhD theses","data":{"1978":1,"1996":1,"1998":1,"1999":3,"2000":3,"2001":1,"2002":1,"2003":1,"2004":4,"2005":4,"2006":6,"2007":6,"2008":3,"2009":5,"2010":3,"2011":5,"2012":4,"2013":7,"2014":10}},{"name":"Masters theses","data":{"1982":1,"1983":2,"1984":6,"1985":5,"1986":4,"1987":2,"1988":11,"1989":14,"1990":18,"1991":8,"1992":8,"1993":12,"1994":4,"1995":7,"1996":12,"1997":6,"1998":8,"1999":7,"2000":12,"2001":20,"2002":18,"2003":23,"2004":39,"2005":36,"2006":46,"2007":37,"2008":59,"2009":36,"2010":30,"2011":22,"2012":33,"2013":26,"2014":12}}], {xtype: "number"});
+    </script>
+
+    <h1>Numeric Axis Bar</h1>
+    <div id="numeric-axis-bar" style="height: 300px;"></div>
+    <script>
+      new Chartkick.BarChart("numeric-axis-bar", [{"name":"PhD theses","data":{"1978":1,"1996":1,"1998":1,"1999":3,"2000":3,"2001":1,"2002":1,"2003":1,"2004":4,"2005":4,"2006":6,"2007":6,"2008":3,"2009":5,"2010":3,"2011":5,"2012":4,"2013":7,"2014":10}},{"name":"Masters theses","data":{"1982":1,"1983":2,"1984":6,"1985":5,"1986":4,"1987":2,"1988":11,"1989":14,"1990":18,"1991":8,"1992":8,"1993":12,"1994":4,"1995":7,"1996":12,"1997":6,"1998":8,"1999":7,"2000":12,"2001":20,"2002":18,"2003":23,"2004":39,"2005":36,"2006":46,"2007":37,"2008":59,"2009":36,"2010":30,"2011":22,"2012":33,"2013":26,"2014":12}}], {xtype: "number"});
+    </script>
+
+    <h1>Boolean Axis Column</h1>
+    <div id="boolean-axis-column" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("boolean-axis-column", [[true, 9], [false, 1], [null, 2]]);
+    </script>
+
+    <h1>Empty Message</h1>
+    <div id="empty-message" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("empty-message", {}, {messages: {empty: "No data"}});
+    </script>
+
+    <h1>Empty Pie</h1>
+    <div id="empty-pie" style="height: 300px;"></div>
+    <script>
+      new Chartkick.PieChart("empty-pie", {}, {messages: {empty: "No data"}});
+    </script>
+
     <h1>Custom Chart</h1>
     <div id="custom" style="height: 300px;"></div>
     <script>
       new Chartkick.CustomChart("custom", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {download: true});
+    </script>
+
+    <h1>Redraw Chart</h1>
+    <div id="redraw" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("redraw", [{"name":"Visits","type":"area","data":{"March 20, 2017":9,"March 21, 2017":11,"March 22, 2017":9,"March 23, 2017":8,"March 24, 2017":12,"March 25, 2017":10,"March 26, 2017":9}},{"name":"Views","type":"spline","data":{"March 20, 2017":17,"March 21, 2017":9,"March 22, 2017":14,"March 23, 2017":11,"March 24, 2017":14,"March 25, 2017":20,"March 26, 2017":9}}]);
+
+      Chartkick.charts["redraw"].redraw();
+      Chartkick.charts["redraw"].redraw();
+      Chartkick.charts["redraw"].redraw();
     </script>
 
     <h1>Update Data</h1>
@@ -428,5 +534,7 @@
         // console.log(chart.getElement());
       });
     </script>
+
+    </div>
   </body>
 </html>
