@@ -1242,7 +1242,8 @@
               borderColor: color,
               backgroundColor: backgroundColor,
               pointBackgroundColor: color,
-              borderWidth: 2
+              borderWidth: 2,
+              hidden: s.hidden
             };
 
             if (s.stack) {
@@ -1441,7 +1442,8 @@
               borderColor: color,
               backgroundColor: backgroundColor,
               pointBackgroundColor: color,
-              fill: chartType === "area"
+              fill: chartType === "area",
+              hidden: s.hidden
             })
           }
 
