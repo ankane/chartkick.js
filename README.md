@@ -19,7 +19,7 @@ Create a div for the chart
 Line chart
 
 ```javascript
-new Chartkick.LineChart("chart-1", {"2017-01-01 00:00:00 -0800": 11, "2017-01-02 00:00:00 -0800": 6})
+new Chartkick.LineChart("chart-1", {"2017-01-01": 11, "2017-01-02": 6})
 ```
 
 Pie chart
@@ -43,7 +43,7 @@ new Chartkick.BarChart("chart-1", [["Work", 32], ["Play", 1492]])
 Area chart
 
 ```javascript
-new Chartkick.AreaChart("chart-1", {"2017-01-01 00:00:00 -0800": 11, "2017-01-02 00:00:00 -0800": 6})
+new Chartkick.AreaChart("chart-1", {"2017-01-01": 11, "2017-01-02": 6})
 ```
 
 Scatter chart
@@ -68,8 +68,8 @@ Multiple series
 
 ```javascript
 data = [
-  {name: "Workout", data: {"2017-01-01 00:00:00 -0800": 3, "2017-01-02 00:00:00 -0800": 4}},
-  {name: "Call parents", data: {"2017-01-01 00:00:00 -0800": 5, "2017-01-02 00:00:00 -0800": 3}}
+  {name: "Workout", data: {"2017-01-01": 3, "2017-01-02": 4}},
+  {name: "Call parents", data: {"2017-01-01": 5, "2017-01-02": 3}}
 ]
 new Chartkick.LineChart("chart-1", data)
 ```
