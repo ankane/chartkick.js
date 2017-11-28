@@ -174,7 +174,7 @@
 
   function runNext() {
     if (runningRequests < maxRequests) {
-      var request = pendingRequests.shift()
+      var request = pendingRequests.shift();
       if (request) {
         runningRequests++;
         getJSON(request[0], request[1], request[2]);
@@ -587,7 +587,7 @@
             d2 = {
               name: series[i].name,
               data: d
-            }
+            };
             if (series[i].stack) {
               d2.stack = series[i].stack;
             }
@@ -781,8 +781,8 @@
           var rows2 = [];
           var day = true;
           var value;
-          for (var j = 0; j < sortedLabels.length; j++) {
-            var i = sortedLabels[j];
+          for (j = 0; j < sortedLabels.length; j++) {
+            i = sortedLabels[j];
             if (columnType === "datetime") {
               value = new Date(toFloat(i));
               day = day && isDay(value);
@@ -802,7 +802,7 @@
           if (xtype === "number") {
             rows2.sort(sortByNumberSeries);
 
-            for (var i = 0; i < rows2.length; i++) {
+            for (i = 0; i < rows2.length; i++) {
               rows2[i][0] = toStr(rows2[i][0]);
             }
           }
@@ -973,7 +973,7 @@
               }
             }
 
-            var data = new google.visualization.DataTable();
+            data = new google.visualization.DataTable();
             data.addColumn("number", "");
             for (i = 0; i < series.length; i++) {
               data.addColumn("number", series[i].name);
@@ -1437,7 +1437,7 @@
               backgroundColor: backgroundColor,
               pointBackgroundColor: color,
               fill: chartType === "area"
-            })
+            });
           }
 
           if (chartType === "area") {
@@ -1594,13 +1594,13 @@
   function copySeries(series) {
     var newSeries = [], i, j;
     for (i = 0; i < series.length; i++) {
-      var copy = {}
+      var copy = {};
       for (j in series[i]) {
         if (series[i].hasOwnProperty(j)) {
           copy[j] = series[i][j];
         }
       }
-      newSeries.push(copy)
+      newSeries.push(copy);
     }
     return newSeries;
   }
@@ -1699,7 +1699,7 @@
     if (!processData) {
       processData = function (chart) {
         return chart.rawData;
-      }
+      };
     }
 
     // getters
@@ -1761,7 +1761,7 @@
       } else {
         return null;
       }
-    }
+    };
 
     Chartkick.charts[element.id] = chart;
 
