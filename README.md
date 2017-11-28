@@ -340,12 +340,11 @@ Chartkick.eachChart( function(chart) {
 Add your own custom adapter with:
 
 ```javascript
-var CustomAdapter = new function () {
-  this.name = "custom";
-
-  this.renderLineChart = function (chart) {
+var CustomAdapter = {
+  name: "custom",
+  renderLineChart: function (chart) {
     chart.getElement().innerHTML = "Hi";
-  };
+  }
 };
 
 Chartkick.adapters.unshift(CustomAdapter);
