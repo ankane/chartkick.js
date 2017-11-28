@@ -456,6 +456,16 @@
 
         var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
+        var drawChart = function(chart, data, options) {
+          if (chart.chart) {
+            chart.chart.destroy();
+          }
+
+          options.chart.renderTo = chart.element.id;
+          options.series = data;
+          chart.chart = new Highcharts.Chart(options);
+        };
+
         this.renderLineChart = function (chart, chartType) {
           chartType = chartType || "spline";
           var chartOptions = {};
@@ -490,7 +500,6 @@
           if (!options.chart.type) {
             options.chart.type = chartType;
           }
-          options.chart.renderTo = chart.element.id;
 
           var series = chart.data;
           for (i = 0; i < series.length; i++) {
@@ -505,17 +514,14 @@
               series[i].marker.enabled = false;
             }
           }
-          options.series = series;
-          chart.chart = new Highcharts.Chart(options);
+
+          drawChart(chart, series, options);
         };
 
         this.renderScatterChart = function (chart) {
-          var chartOptions = {};
-          var options = jsOptions(chart, chart.options, chartOptions);
+          var options = jsOptions(chart, chart.options, {});
           options.chart.type = "scatter";
-          options.chart.renderTo = chart.element.id;
-          options.series = chart.data;
-          chart.chart = new Highcharts.Chart(options);
+          drawChart(chart, chart.data, options);
         };
 
         this.renderPieChart = function (chart) {
@@ -537,13 +543,13 @@
           }
 
           var options = merge(chartOptions, chart.options.library || {});
-          options.chart.renderTo = chart.element.id;
-          options.series = [{
+          var series = [{
             type: "pie",
             name: chart.options.label || "Value",
             data: chart.data
           }];
-          chart.chart = new Highcharts.Chart(options);
+
+          drawChart(chart, series, options);
         };
 
         this.renderColumnChart = function (chart, chartType) {
@@ -551,7 +557,6 @@
           var series = chart.data;
           var options = jsOptions(chart, chart.options), i, j, s, d, rows = [], categories = [];
           options.chart.type = chartType;
-          options.chart.renderTo = chart.element.id;
 
           for (i = 0; i < series.length; i++) {
             s = series[i];
@@ -589,9 +594,8 @@
 
             newSeries.push(d2);
           }
-          options.series = newSeries;
 
-          chart.chart = new Highcharts.Chart(options);
+          drawChart(chart, newSeries, options);
         };
 
         var self = this;

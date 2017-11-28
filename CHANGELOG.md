@@ -2,6 +2,7 @@
 
 - Added `messages` option
 - Fixed boolean labels for column chart
+- Clean up charts before refresh
 
 ## 2.2.4
 
