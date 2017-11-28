@@ -27,16 +27,14 @@
       // Chartkick.options = {legend: "right"};
       // Chartkick.options = {title: "Bingo"};
 
-      var CustomAdapter = new function () {
-        this.name = "custom";
-
-        // this.renderLineChart = function (chart) {
-        //   chart.getElement().innerHTML = "Hi";
-        // };
-
-        this.renderCustomChart = function (chart) {
+      var CustomAdapter = {
+        name: "custom",
+        renderLineChart: function (chart) {
+          chart.getElement().innerHTML = "Hi";
+        },
+        renderCustomChart: function (chart) {
           chart.getElement().innerHTML = "Custom Chart";
-        };
+        }
       };
 
       Chartkick.CustomChart = function (element, dataSource, options) {

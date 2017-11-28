@@ -354,10 +354,11 @@ Chartkick.adapters.unshift(CustomAdapter);
 Add a new chart type with:
 
 ```javascript
-var CustomAdapter = new function () {
-  this.renderCustomChart = function (chart) {
+var CustomAdapter = {
+  name: "custom",
+  renderCustomChart: function (chart) {
     chart.getElement().innerHTML = "Hi";
-  };
+  }
 };
 
 Chartkick.CustomChart = function (element, dataSource, options) {
