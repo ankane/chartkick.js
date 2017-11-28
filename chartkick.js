@@ -364,10 +364,8 @@
 
   function loadAdapters() {
     if (!HighchartsAdapter && "Highcharts" in window) {
-      HighchartsAdapter = new function () {
+      HighchartsAdapter = (function () {
         var Highcharts = window.Highcharts;
-
-        this.name = "highcharts";
 
         var defaultOptions = {
           chart: {},
@@ -466,7 +464,7 @@
           chart.chart = new Highcharts.Chart(options);
         };
 
-        this.renderLineChart = function (chart, chartType) {
+        var renderLineChart = function (chart, chartType) {
           chartType = chartType || "spline";
           var chartOptions = {};
           if (chartType === "areaspline") {
@@ -518,13 +516,13 @@
           drawChart(chart, series, options);
         };
 
-        this.renderScatterChart = function (chart) {
+        var renderScatterChart = function (chart) {
           var options = jsOptions(chart, chart.options, {});
           options.chart.type = "scatter";
           drawChart(chart, chart.data, options);
         };
 
-        this.renderPieChart = function (chart) {
+        var renderPieChart = function (chart) {
           var chartOptions = merge(defaultOptions, {});
 
           if (chart.options.colors) {
@@ -552,7 +550,7 @@
           drawChart(chart, series, options);
         };
 
-        this.renderColumnChart = function (chart, chartType) {
+        var renderColumnChart = function (chart, chartType) {
           chartType = chartType || "column";
           var series = chart.data;
           var options = jsOptions(chart, chart.options), i, j, s, d, rows = [], categories = [];
@@ -598,23 +596,29 @@
           drawChart(chart, newSeries, options);
         };
 
-        var self = this;
-
-        this.renderBarChart = function (chart) {
-          self.renderColumnChart(chart, "bar");
+        var renderBarChart = function (chart) {
+          renderColumnChart(chart, "bar");
         };
 
-        this.renderAreaChart = function (chart) {
-          self.renderLineChart(chart, "areaspline");
+        var renderAreaChart = function (chart) {
+          renderLineChart(chart, "areaspline");
         };
-      };
+
+        return {
+          name: "highcharts",
+          renderLineChart: renderLineChart,
+          renderPieChart: renderPieChart,
+          renderColumnChart: renderColumnChart,
+          renderBarChart: renderBarChart,
+          renderAreaChart: renderAreaChart,
+          renderScatterChart: renderScatterChart
+        };
+      })();
       adapters.push(HighchartsAdapter);
     }
     if (!GoogleChartsAdapter && window.google && (window.google.setOnLoadCallback || window.google.charts)) {
-      GoogleChartsAdapter = new function () {
+      GoogleChartsAdapter = (function () {
         var google = window.google;
-
-        this.name = "google";
 
         var loaded = {};
         var callbacks = [];
@@ -839,7 +843,7 @@
           });
         };
 
-        this.renderLineChart = function (chart) {
+        var renderLineChart = function (chart) {
           waitForLoaded(function () {
             var chartOptions = {};
 
@@ -862,7 +866,7 @@
           });
         };
 
-        this.renderPieChart = function (chart) {
+        var renderPieChart = function (chart) {
           waitForLoaded(function () {
             var chartOptions = {
               chartArea: {
@@ -894,7 +898,7 @@
           });
         };
 
-        this.renderColumnChart = function (chart) {
+        var renderColumnChart = function (chart) {
           waitForLoaded(function () {
             var options = jsOptions(chart, chart.options);
             var data = createDataTable(chart.data, "string", chart.options.xtype);
@@ -903,7 +907,7 @@
           });
         };
 
-        this.renderBarChart = function (chart) {
+        var renderBarChart = function (chart) {
           waitForLoaded(function () {
             var chartOptions = {
               hAxis: {
@@ -919,7 +923,7 @@
           });
         };
 
-        this.renderAreaChart = function (chart) {
+        var renderAreaChart = function (chart) {
           waitForLoaded(function () {
             var chartOptions = {
               isStacked: true,
@@ -938,7 +942,7 @@
           });
         };
 
-        this.renderGeoChart = function (chart) {
+        var renderGeoChart = function (chart) {
           waitForLoaded(function () {
             var chartOptions = {
               legend: "none",
@@ -957,7 +961,7 @@
           });
         };
 
-        this.renderScatterChart = function (chart) {
+        var renderScatterChart = function (chart) {
           waitForLoaded(function () {
             var chartOptions = {};
             var options = jsOptions(chart, chart.options, chartOptions);
@@ -984,7 +988,7 @@
           });
         };
 
-        this.renderTimeline = function (chart) {
+        var renderTimeline = function (chart) {
           waitForLoaded("timeline", function () {
             var chartOptions = {
               legend: "none"
@@ -1006,15 +1010,25 @@
             drawChart(chart, google.visualization.Timeline, data, options);
           });
         };
-      };
+
+        return {
+          name: "google",
+          renderLineChart: renderLineChart,
+          renderPieChart: renderPieChart,
+          renderColumnChart: renderColumnChart,
+          renderBarChart: renderBarChart,
+          renderAreaChart: renderAreaChart,
+          renderScatterChart: renderScatterChart,
+          renderGeoChart: renderGeoChart,
+          renderTimeline: renderTimeline
+        };
+      })();
 
       adapters.push(GoogleChartsAdapter);
     }
     if (!ChartjsAdapter && "Chart" in window) {
-      ChartjsAdapter = new function () {
+      ChartjsAdapter = (function () {
         var Chart = window.Chart;
-
-        this.name = "chartjs";
 
         var baseOptions = {
           maintainAspectRatio: false,
@@ -1320,9 +1334,9 @@
           return data;
         };
 
-        this.renderLineChart = function (chart, chartType) {
+        var renderLineChart = function (chart, chartType) {
           if (chart.options.xtype === "number") {
-            return self.renderScatterChart(chart, chartType, true);
+            return renderScatterChart(chart, chartType, true);
           }
 
           var chartOptions = {};
@@ -1344,7 +1358,7 @@
           drawChart(chart, "line", data, options);
         };
 
-        this.renderPieChart = function (chart) {
+        var renderPieChart = function (chart) {
           var options = merge({}, baseOptions);
           if (chart.options.donut) {
             options.cutoutPercentage = 50;
@@ -1381,7 +1395,7 @@
           drawChart(chart, "pie", data, options);
         };
 
-        this.renderColumnChart = function (chart, chartType) {
+        var renderColumnChart = function (chart, chartType) {
           var options;
           if (chartType === "bar") {
             options = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options);
@@ -1393,17 +1407,15 @@
           drawChart(chart, (chartType === "bar" ? "horizontalBar" : "bar"), data, options);
         };
 
-        var self = this;
-
-        this.renderAreaChart = function (chart) {
-          self.renderLineChart(chart, "area");
+        var renderAreaChart = function (chart) {
+          renderLineChart(chart, "area");
         };
 
-        this.renderBarChart = function (chart) {
-          self.renderColumnChart(chart, "bar");
+        var renderBarChart = function (chart) {
+          renderColumnChart(chart, "bar");
         };
 
-        this.renderScatterChart = function (chart, chartType, lineChart) {
+        var renderScatterChart = function (chart, chartType, lineChart) {
           chartType = chartType || "line";
 
           var options = jsOptions(chart, chart.options);
@@ -1452,10 +1464,21 @@
           drawChart(chart, chartType, data, options);
         };
 
-        this.renderBubbleChart = function (chart) {
-          this.renderScatterChart(chart, "bubble");
+        var renderBubbleChart = function (chart) {
+          renderScatterChart(chart, "bubble");
         };
-      };
+
+        return {
+          name: "chartjs",
+          renderLineChart: renderLineChart,
+          renderPieChart: renderPieChart,
+          renderColumnChart: renderColumnChart,
+          renderBarChart: renderBarChart,
+          renderAreaChart: renderAreaChart,
+          renderScatterChart: renderScatterChart,
+          renderBubbleChart: renderBubbleChart
+        };
+      })();
 
       adapters.unshift(ChartjsAdapter);
     }
