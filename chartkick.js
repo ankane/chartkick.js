@@ -1779,6 +1779,12 @@
         clearInterval(chart.intervalId);
       }
     };
+    chart.startRefresh = function () {
+      chart.intervalId = setInterval( function () {
+        chart.refreshData();
+      }, chart.getOptions().refresh * 1000);
+    };
+    
     chart.toImage = function () {
       if (chart.adapter === "chartjs") {
         return chart.chart.toBase64Image();
