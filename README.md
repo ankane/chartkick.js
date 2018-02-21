@@ -176,7 +176,7 @@ Suffix, useful for percentages - *Chart.js* [master]
 new Chartkick.LineChart("chart-1", data, {suffix: "%"})
 ```
 
-Set a thousands delimeter - *Chart.js* [master]
+Set a thousands delimiter - *Chart.js* [master]
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {delimiter: ","})
