@@ -164,6 +164,30 @@ Donut chart
 new Chartkick.PieChart("chart-1", data, {donut: true})
 ```
 
+Prefix, useful for currency - *Chart.js* [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {prefix: "$"})
+```
+
+Suffix, useful for percentages - *Chart.js* [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {suffix: "%"})
+```
+
+Set a thousands delimeter - *Chart.js* [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {delimiter: ","})
+```
+
+Set a decimal separator
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {separator: ","})
+```
+
 Show a message when data is empty [master]
 
 ```javascript
