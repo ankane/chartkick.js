@@ -814,6 +814,9 @@
           chartType = chartType || "line";
 
           var options = jsOptions(chart, chart.options);
+          if (!lineChart) {
+            setFormatOptions(chart, options, chartType);
+          }
 
           var colors = chart.options.colors || defaultColors;
 
