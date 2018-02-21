@@ -503,6 +503,52 @@
           };
         };
 
+        var setFormatOptions = function(chart, options, axis) {
+          var formatOptions = {
+            prefix: chart.options.prefix,
+            suffix: chart.options.suffix,
+            delimiter: chart.options.delimiter,
+            separator: chart.options.separator
+          };
+
+          if (formatOptions.prefix || formatOptions.suffix || formatOptions.delimiter || formatOptions.separator) {
+            if (axis && !options.scales.yAxes[0].ticks.callback) {
+              options.scales.yAxes[0].ticks.callback = function (value, index, values) {
+                return formatValue("", value, formatOptions);
+              };
+            }
+
+            if (!options.tooltips.callbacks.label) {
+              if (axis) {
+                options.tooltips.callbacks.label = function (tooltipItem, data) {
+                  var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  return formatValue(label, tooltipItem.yLabel, formatOptions);
+                };
+              } else {
+                // need to use separate label for pie charts
+                options.tooltips.callbacks.label = function (tooltipItem, data) {
+                  var dataLabel = data.labels[tooltipItem.index];
+                  var value = ': ';
+
+                  if (isArray(dataLabel)) {
+                    // show value on first line of multiline label
+                    // need to clone because we are changing the value
+                    dataLabel = dataLabel.slice();
+                    dataLabel[0] += value;
+                  } else {
+                    dataLabel += value;
+                  }
+
+                  return formatValue(dataLabel, data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index], formatOptions);
+                };
+              }
+            }
+          }
+        };
+
         var jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
         var createDataTable = function (chart, options, chartType) {
@@ -688,32 +734,7 @@
           }
 
           var options = jsOptions(chart, merge(chartOptions, chart.options));
-
-          var formatOptions = {
-            prefix: chart.options.prefix,
-            suffix: chart.options.suffix,
-            delimiter: chart.options.delimiter,
-            separator: chart.options.separator
-          };
-
-          if (formatOptions.prefix || formatOptions.suffix || formatOptions.delimiter || formatOptions.separator) {
-            if (!options.scales.yAxes[0].ticks.callback) {
-              options.scales.yAxes[0].ticks.callback = function (value, index, values) {
-                return formatValue(value, formatOptions);
-              };
-            }
-
-            if (!options.tooltips.callbacks.label) {
-              options.tooltips.callbacks.label = function (tooltipItem, data) {
-                var label = data.datasets[tooltipItem.datasetIndex].label || '';
-                if (label) {
-                  label += ': ';
-                }
-                label += tooltipItem.yLabel;
-                return formatValue(label, formatOptions);
-              };
-            }
-          }
+          setFormatOptions(chart, options, true);
 
           var data = createDataTable(chart, options, chartType || "line");
 
@@ -737,6 +758,7 @@
           }
 
           options = merge(options, chart.options.library || {});
+          setFormatOptions(chart, options);
 
           var labels = [];
           var values = [];
@@ -766,6 +788,7 @@
           } else {
             options = jsOptions(chart, chart.options);
           }
+          setFormatOptions(chart, options, true);
           var data = createDataTable(chart, options, "column");
           setLabelSize(chart, data, options);
           drawChart(chart, (chartType === "bar" ? "horizontalBar" : "bar"), data, options);
@@ -1640,7 +1663,7 @@
     return false;
   }
 
-  function formatValue(value, options) {
+  function formatValue(pre, value, options) {
     if (options.delimiter || options.separator) {
       value = toStr(value);
       var parts = value.split(".")
@@ -1652,7 +1675,7 @@
         value += (options.separator || ".") + parts[1];
       }
     }
-    return (options.prefix || "") + value + (options.suffix || "");
+    return pre + (options.prefix || "") + value + (options.suffix || "");
   }
 
   // creates a shallow copy of each element of the array
