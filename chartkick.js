@@ -971,6 +971,29 @@
           chart.chart = new Highcharts.Chart(options);
         };
 
+        var setFormatOptions = function(chart, options, axis) {
+          var formatOptions = {
+            prefix: chart.options.prefix,
+            suffix: chart.options.suffix,
+            thousands: chart.options.thousands,
+            decimal: chart.options.decimal
+          };
+
+          if (formatOptions.prefix || formatOptions.suffix || formatOptions.thousands || formatOptions.decimal) {
+            if (axis && !options.yAxis.labels.formatter) {
+              options.yAxis.labels.formatter = function () {
+                return formatValue("", this.value, formatOptions);
+              };
+            }
+
+            if (!options.tooltip.pointFormatter) {
+              options.tooltip.pointFormatter = function () {
+                return '<span style="color:' + this.color + '>\u25CF</span> ' + formatValue(this.series.name + ': <b>', this.y, formatOptions) + '</b><br/>';
+              };
+            }
+          }
+        };
+
         var renderLineChart = function (chart, chartType) {
           chartType = chartType || "spline";
           var chartOptions = {};
@@ -1005,6 +1028,7 @@
           if (!options.chart.type) {
             options.chart.type = chartType;
           }
+          setFormatOptions(chart, options, true);
 
           var series = chart.data;
           for (i = 0; i < series.length; i++) {
@@ -1048,6 +1072,7 @@
           }
 
           var options = merge(chartOptions, chart.options.library || {});
+          setFormatOptions(chart, options);
           var series = [{
             type: "pie",
             name: chart.options.label || "Value",
@@ -1062,6 +1087,7 @@
           var series = chart.data;
           var options = jsOptions(chart, chart.options), i, j, s, d, rows = [], categories = [];
           options.chart.type = chartType;
+          setFormatOptions(chart, options, true);
 
           for (i = 0; i < series.length; i++) {
             s = series[i];
