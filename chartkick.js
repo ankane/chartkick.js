@@ -1675,7 +1675,17 @@
         value += (options.separator || ".") + parts[1];
       }
     }
-    return pre + (options.prefix || "") + value + (options.suffix || "");
+
+    pre = pre || "";
+    if (options.prefix) {
+      if (value < 0) {
+        value = value * -1;
+        pre += "-";
+      }
+      pre += options.prefix;
+    }
+
+    return pre + value + (options.suffix || "");
   }
 
   // creates a shallow copy of each element of the array
