@@ -689,16 +689,20 @@
 
           var options = jsOptions(chart, merge(chartOptions, chart.options));
 
-          var prefix = chart.options.prefix || "";
-          var suffix = chart.options.suffix || "";
+          var formatOptions = {
+            prefix: chart.options.prefix,
+            suffix: chart.options.suffix,
+            delimiter: chart.options.delimiter,
+            separator: chart.options.separator
+          }
 
-          if (prefix.length > 0 || suffix.length > 0) {
+          if (formatOptions.prefix || formatOptions.suffix || formatOptions.delimiter || formatOptions.separator) {
             options.scales.yAxes[0].ticks.callback = function (value, index, values) {
-              return "" + prefix + value + suffix;
+              return formatValue(value, formatOptions);
             };
 
             options.tooltips.callbacks.label = function (tooltipItem, data) {
-              return "" + prefix + tooltipItem.yLabel + suffix;
+              return formatValue(tooltipItem.yLabel, formatOptions);
             };
           }
 
@@ -1625,6 +1629,21 @@
       }
     }
     return false;
+  }
+
+  function formatValue(value, options) {
+    if (options.delimiter || options.separator) {
+      value = toStr(value);
+      var parts = value.split(".")
+      value = parts[0];
+      if (options.delimiter) {
+        value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, options.delimiter);
+      }
+      if (parts.length > 1) {
+        value += (options.separator || ".") + parts[1];
+      }
+    }
+    return (options.prefix || "") + value + (options.suffix || "");
   }
 
   // creates a shallow copy of each element of the array
