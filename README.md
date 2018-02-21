@@ -182,7 +182,7 @@ Set a thousands delimeter - *Chart.js* [master]
 new Chartkick.LineChart("chart-1", data, {delimiter: ","})
 ```
 
-Set a decimal separator
+Set a decimal separator - *Chart.js* [master]
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {separator: ","})
