@@ -503,7 +503,7 @@
           };
         };
 
-        var setFormatOptions = function(chart, options, axis) {
+        var setFormatOptions = function(chart, options, chartType) {
           var formatOptions = {
             prefix: chart.options.prefix,
             suffix: chart.options.suffix,
@@ -512,20 +512,28 @@
           };
 
           if (formatOptions.prefix || formatOptions.suffix || formatOptions.thousands || formatOptions.decimal) {
-            if (axis && !options.scales.yAxes[0].ticks.callback) {
-              options.scales.yAxes[0].ticks.callback = function (value, index, values) {
-                return formatValue("", value, formatOptions);
-              };
+            if (chartType !== "pie") {
+              var myAxes = options.scales.yAxes;
+              if (chartType === "bar") {
+                myAxes = options.scales.xAxes;
+              }
+
+              if (!myAxes[0].ticks.callback) {
+                myAxes[0].ticks.callback = function (value, index, values) {
+                  return formatValue("", value, formatOptions);
+                };
+              }
             }
 
             if (!options.tooltips.callbacks.label) {
-              if (axis) {
+              if (chartType !== "pie") {
+                var valueLabel = chartType === "bar" ? "xLabel" : "yLabel";
                 options.tooltips.callbacks.label = function (tooltipItem, data) {
                   var label = data.datasets[tooltipItem.datasetIndex].label || '';
                   if (label) {
                     label += ': ';
                   }
-                  return formatValue(label, tooltipItem.yLabel, formatOptions);
+                  return formatValue(label, tooltipItem[valueLabel], formatOptions);
                 };
               } else {
                 // need to use separate label for pie charts
@@ -734,7 +742,7 @@
           }
 
           var options = jsOptions(chart, merge(chartOptions, chart.options));
-          setFormatOptions(chart, options, true);
+          setFormatOptions(chart, options, chartType);
 
           var data = createDataTable(chart, options, chartType || "line");
 
@@ -758,7 +766,7 @@
           }
 
           options = merge(options, chart.options.library || {});
-          setFormatOptions(chart, options);
+          setFormatOptions(chart, options, "pie");
 
           var labels = [];
           var values = [];
@@ -788,9 +796,9 @@
           } else {
             options = jsOptions(chart, chart.options);
           }
-          setFormatOptions(chart, options, true);
+          setFormatOptions(chart, options, chartType);
           var data = createDataTable(chart, options, "column");
-          setLabelSize(chart, data, options);
+          setLabelSize(chart, data, options, chartType);
           drawChart(chart, (chartType === "bar" ? "horizontalBar" : "bar"), data, options);
         };
 
@@ -971,7 +979,7 @@
           chart.chart = new Highcharts.Chart(options);
         };
 
-        var setFormatOptions = function(chart, options, axis) {
+        var setFormatOptions = function(chart, options, chartType) {
           var formatOptions = {
             prefix: chart.options.prefix,
             suffix: chart.options.suffix,
@@ -980,7 +988,7 @@
           };
 
           if (formatOptions.prefix || formatOptions.suffix || formatOptions.thousands || formatOptions.decimal) {
-            if (axis && !options.yAxis.labels.formatter) {
+            if (chartType !== "pie" && !options.yAxis.labels.formatter) {
               options.yAxis.labels.formatter = function () {
                 return formatValue("", this.value, formatOptions);
               };
@@ -1028,7 +1036,7 @@
           if (!options.chart.type) {
             options.chart.type = chartType;
           }
-          setFormatOptions(chart, options, true);
+          setFormatOptions(chart, options, chartType);
 
           var series = chart.data;
           for (i = 0; i < series.length; i++) {
@@ -1072,7 +1080,7 @@
           }
 
           var options = merge(chartOptions, chart.options.library || {});
-          setFormatOptions(chart, options);
+          setFormatOptions(chart, options, "pie");
           var series = [{
             type: "pie",
             name: chart.options.label || "Value",
@@ -1087,7 +1095,7 @@
           var series = chart.data;
           var options = jsOptions(chart, chart.options), i, j, s, d, rows = [], categories = [];
           options.chart.type = chartType;
-          setFormatOptions(chart, options, true);
+          setFormatOptions(chart, options, chartType);
 
           for (i = 0; i < series.length; i++) {
             s = series[i];
