@@ -371,7 +371,8 @@
           maintainAspectRatio: false,
           animation: false,
           tooltips: {
-            displayColors: false
+            displayColors: false,
+            callbacks: {}
           },
           legend: {},
           title: {fontSize: 20, fontColor: "#333"}
@@ -687,6 +688,19 @@
           }
 
           var options = jsOptions(chart, merge(chartOptions, chart.options));
+
+          var prefix = chart.options.prefix || "";
+          var suffix = chart.options.suffix || "";
+
+          if (prefix.length > 0 || suffix.length > 0) {
+            options.scales.yAxes[0].ticks.callback = function (value, index, values) {
+              return "" + prefix + value + suffix;
+            };
+
+            options.tooltips.callbacks.label = function (tooltipItem, data) {
+              return "" + prefix + tooltipItem.yLabel + suffix;
+            };
+          }
 
           var data = createDataTable(chart, options, chartType || "line");
 

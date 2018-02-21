@@ -1,5 +1,6 @@
 ## 2.2.5 [unreleased]
 
+- Added `prefix` and `suffix` for Chart.js
 - Added `messages` option
 - Fixed boolean labels for column chart
 - Clean up charts before refresh
