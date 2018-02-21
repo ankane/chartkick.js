@@ -507,11 +507,11 @@
           var formatOptions = {
             prefix: chart.options.prefix,
             suffix: chart.options.suffix,
-            delimiter: chart.options.delimiter,
-            separator: chart.options.separator
+            thousands: chart.options.thousands,
+            decimal: chart.options.decimal
           };
 
-          if (formatOptions.prefix || formatOptions.suffix || formatOptions.delimiter || formatOptions.separator) {
+          if (formatOptions.prefix || formatOptions.suffix || formatOptions.thousands || formatOptions.decimal) {
             if (axis && !options.scales.yAxes[0].ticks.callback) {
               options.scales.yAxes[0].ticks.callback = function (value, index, values) {
                 return formatValue("", value, formatOptions);
@@ -1664,15 +1664,15 @@
   }
 
   function formatValue(pre, value, options) {
-    if (options.delimiter || options.separator) {
+    if (options.thousands || options.decimal) {
       value = toStr(value);
       var parts = value.split(".")
       value = parts[0];
-      if (options.delimiter) {
-        value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, options.delimiter);
+      if (options.thousands) {
+        value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, options.thousands);
       }
       if (parts.length > 1) {
-        value += (options.separator || ".") + parts[1];
+        value += (options.decimal || ".") + parts[1];
       }
     }
 

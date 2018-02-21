@@ -176,16 +176,16 @@ Suffix, useful for percentages - *Chart.js* [master]
 new Chartkick.LineChart("chart-1", data, {suffix: "%"})
 ```
 
-Set a thousands delimiter - *Chart.js* [master]
+Set a thousands separator - *Chart.js* [master]
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {delimiter: ","})
+new Chartkick.LineChart("chart-1", data, {thousands: ","})
 ```
 
 Set a decimal separator - *Chart.js* [master]
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {separator: ","})
+new Chartkick.LineChart("chart-1", data, {decimal: ","})
 ```
 
 Show a message when data is empty [master]

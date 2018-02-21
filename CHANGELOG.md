@@ -1,7 +1,7 @@
 ## 2.2.5 [unreleased]
 
 - Added `prefix` and `suffix` options for Chart.js
-- Added `delimiter` and `separator` options for Chart.js
+- Added `thousands` and `decimal` options for Chart.js
 - Added `messages` option
 - Fixed boolean labels for column chart
 - Clean up charts before refresh
