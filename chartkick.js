@@ -694,16 +694,25 @@
             suffix: chart.options.suffix,
             delimiter: chart.options.delimiter,
             separator: chart.options.separator
-          }
+          };
 
           if (formatOptions.prefix || formatOptions.suffix || formatOptions.delimiter || formatOptions.separator) {
-            options.scales.yAxes[0].ticks.callback = function (value, index, values) {
-              return formatValue(value, formatOptions);
-            };
+            if (!options.scales.yAxes[0].ticks.callback) {
+              options.scales.yAxes[0].ticks.callback = function (value, index, values) {
+                return formatValue(value, formatOptions);
+              };
+            }
 
-            options.tooltips.callbacks.label = function (tooltipItem, data) {
-              return formatValue(tooltipItem.yLabel, formatOptions);
-            };
+            if (!options.tooltips.callbacks.label) {
+              options.tooltips.callbacks.label = function (tooltipItem, data) {
+                var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                if (label) {
+                  label += ': ';
+                }
+                label += tooltipItem.yLabel;
+                return formatValue(label, formatOptions);
+              };
+            }
           }
 
           var data = createDataTable(chart, options, chartType || "line");
