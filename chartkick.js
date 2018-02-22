@@ -798,7 +798,9 @@
           }
           setFormatOptions(chart, options, chartType);
           var data = createDataTable(chart, options, "column");
-          setLabelSize(chart, data, options, chartType);
+          if (chartType !== "bar") {
+            setLabelSize(chart, data, options);
+          }
           drawChart(chart, (chartType === "bar" ? "horizontalBar" : "bar"), data, options);
         };
 
