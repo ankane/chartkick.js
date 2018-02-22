@@ -29,9 +29,9 @@
 
       var CustomAdapter = {
         name: "custom",
-        renderLineChart: function (chart) {
-          chart.getElement().innerHTML = "Hi";
-        },
+        // renderLineChart: function (chart) {
+        //   chart.getElement().innerHTML = "Hi";
+        // },
         renderCustomChart: function (chart) {
           chart.getElement().innerHTML = "Custom Chart";
         }
@@ -41,7 +41,7 @@
         Chartkick.createChart("CustomChart", this, element, dataSource, options);
       };
 
-      //Chartkick.adapters.unshift(CustomAdapter);
+      Chartkick.adapters.push(CustomAdapter);
     </script>
 
     <style>
