@@ -33,6 +33,18 @@ Feel free to open an issue to get feedback on your idea before spending too much
 
 Also, note that we aren’t currently accepting new chart types.
 
+## Dev Setup
+
+To get started with development and testing:
+
+```sh
+git clone https://github.com/ankane/chartkick.js.git
+cd chartkick.js
+python -m SimpleHTTPServer # starts a web server on port 8000
+```
+
+And visit [http://localhost:8000/examples](http://localhost:8000/examples) in your browser.
+
 ---
 
 This contributing guide is released under [CCO](https://creativecommons.org/publicdomain/zero/1.0/) (public domain). Use it for your own project without attribution.
