@@ -1761,6 +1761,9 @@
     };
     chart.setOptions = function (options) {
       chart.options = merge(Chartkick.options, options);
+      if (chart.options.refresh) {
+        chart.updateRefresh();
+      }
       chart.redraw();
     };
     chart.redraw = function() {
@@ -1784,7 +1787,10 @@
         chart.refreshData();
       }, chart.getOptions().refresh * 1000);
     };
-    
+    chart.updateRefresh = function () {
+      chart.stopRefresh();
+      chart.startRefresh();
+    };
     chart.toImage = function () {
       if (chart.adapter === "chartjs") {
         return chart.chart.toBase64Image();
@@ -1798,9 +1804,7 @@
     fetchDataSource(chart, callback, dataSource);
 
     if (opts.refresh) {
-      chart.intervalId = setInterval( function () {
-        chart.refreshData();
-      }, opts.refresh * 1000);
+      chart.startRefresh();
     }
   }
 
