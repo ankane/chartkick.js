@@ -1,4 +1,4 @@
-## 2.2.5 [unreleased]
+## 2.3.0 [unreleased]
 
 - Added `prefix` and `suffix` options for Chart.js
 - Added `thousands` and `decimal` options for Chart.js
