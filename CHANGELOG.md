@@ -1,4 +1,4 @@
-## 2.3.0 [unreleased]
+## 2.3.0
 
 - Added `prefix` and `suffix` options for Chart.js and Highcharts
 - Added `thousands` and `decimal` options for Chart.js and Highcharts
