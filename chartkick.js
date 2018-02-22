@@ -1614,7 +1614,7 @@
         return adapter[fnName](chart);
       }
     }
-    throw new Error("No adapter found");
+    throw new Error("No charting library found. Be sure to include one before your charts.");
   }
 
   // process data
