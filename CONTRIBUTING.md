@@ -17,7 +17,10 @@ Think you’ve discovered an issue?
 1. Search existing issues to see if it’s been reported.
 2. Try the `master` branch to make sure it hasn’t been fixed.
 
-If the above steps don’t help, create an issue. Include the complete backtrace for exceptions.
+If the above steps don’t help, create an issue. Include:
+
+- Detailed steps to reproduce
+- Complete backtraces for exceptions
 
 ## Pull Requests
 
