@@ -1614,7 +1614,12 @@
         return adapter[fnName](chart);
       }
     }
-    throw new Error("No charting library found. Be sure to include one before your charts.");
+
+    if (adapters.length > 0) {
+      throw new Error("No charting library found for " + chartType);
+    } else {
+      throw new Error("No charting libraries found - be sure to include one before your charts");
+    }
   }
 
   // process data

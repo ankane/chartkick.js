@@ -1,6 +1,7 @@
 ## 2.3.1 [unreleased]
 
 - Fixed issues with `thousands` option
+- Friendlier error messages when charting library not found
 
 ## 2.3.0
 
