@@ -1,3 +1,7 @@
+## 2.3.1 [unreleased]
+
+- Fixed issues with `thousands` option
+
 ## 2.3.0
 
 - Added `prefix` and `suffix` options for Chart.js and Highcharts

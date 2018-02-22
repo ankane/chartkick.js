@@ -1703,18 +1703,6 @@
   }
 
   function formatValue(pre, value, options) {
-    if (options.thousands || options.decimal) {
-      value = toStr(value);
-      var parts = value.split(".")
-      value = parts[0];
-      if (options.thousands) {
-        value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, options.thousands);
-      }
-      if (parts.length > 1) {
-        value += (options.decimal || ".") + parts[1];
-      }
-    }
-
     pre = pre || "";
     if (options.prefix) {
       if (value < 0) {
@@ -1722,6 +1710,18 @@
         pre += "-";
       }
       pre += options.prefix;
+    }
+
+    if (options.thousands || options.decimal) {
+      value = toStr(value);
+      var parts = value.split(".")
+      value = parts[0];
+      if (options.thousands) {
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, options.thousands);
+      }
+      if (parts.length > 1) {
+        value += (options.decimal || ".") + parts[1];
+      }
     }
 
     return pre + value + (options.suffix || "");
