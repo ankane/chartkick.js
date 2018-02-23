@@ -1,7 +1,7 @@
 import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear } from "../helpers";
 
 function allZeros(data) {
-  var i, j, d;
+  let i, j, d;
   for (i = 0; i < data.length; i++) {
     d = data[i].data;
     for (j = 0; j < d.length; j++) {
@@ -13,7 +13,7 @@ function allZeros(data) {
   return true;
 }
 
-var baseOptions = {
+let baseOptions = {
   maintainAspectRatio: false,
   animation: false,
   tooltips: {
@@ -24,7 +24,7 @@ var baseOptions = {
   title: {fontSize: 20, fontColor: "#333"}
 };
 
-var defaultOptions = {
+let defaultOptions = {
   scales: {
     yAxes: [
       {
@@ -56,13 +56,13 @@ var defaultOptions = {
 };
 
 // http://there4.io/2012/05/02/google-chart-color-list/
-var defaultColors = [
+let defaultColors = [
   "#3366CC", "#DC3912", "#FF9900", "#109618", "#990099", "#3B3EAC", "#0099C6",
   "#DD4477", "#66AA00", "#B82E2E", "#316395", "#994499", "#22AA99", "#AAAA11",
   "#6633CC", "#E67300", "#8B0707", "#329262", "#5574A6", "#651067"
 ];
 
-var hideLegend = function (options, legend, hideLegend) {
+let hideLegend = function (options, legend, hideLegend) {
   if (legend !== undefined) {
     options.legend.display = !!legend;
     if (legend && legend !== true) {
@@ -73,54 +73,54 @@ var hideLegend = function (options, legend, hideLegend) {
   }
 };
 
-var setTitle = function (options, title) {
+let setTitle = function (options, title) {
   options.title.display = true;
   options.title.text = title;
 };
 
-var setMin = function (options, min) {
+let setMin = function (options, min) {
   if (min !== null) {
     options.scales.yAxes[0].ticks.min = toFloat(min);
   }
 };
 
-var setMax = function (options, max) {
+let setMax = function (options, max) {
   options.scales.yAxes[0].ticks.max = toFloat(max);
 };
 
-var setBarMin = function (options, min) {
+let setBarMin = function (options, min) {
   if (min !== null) {
     options.scales.xAxes[0].ticks.min = toFloat(min);
   }
 };
 
-var setBarMax = function (options, max) {
+let setBarMax = function (options, max) {
   options.scales.xAxes[0].ticks.max = toFloat(max);
 };
 
-var setStacked = function (options, stacked) {
+let setStacked = function (options, stacked) {
   options.scales.xAxes[0].stacked = !!stacked;
   options.scales.yAxes[0].stacked = !!stacked;
 };
 
-var setXtitle = function (options, title) {
+let setXtitle = function (options, title) {
   options.scales.xAxes[0].scaleLabel.display = true;
   options.scales.xAxes[0].scaleLabel.labelString = title;
 };
 
-var setYtitle = function (options, title) {
+let setYtitle = function (options, title) {
   options.scales.yAxes[0].scaleLabel.display = true;
   options.scales.yAxes[0].scaleLabel.labelString = title;
 };
 
-var drawChart = function(chart, type, data, options) {
+let drawChart = function(chart, type, data, options) {
   if (chart.chart) {
     chart.chart.destroy();
   } else {
     chart.element.innerHTML = "<canvas></canvas>";
   }
 
-  var ctx = chart.element.getElementsByTagName("CANVAS")[0];
+  let ctx = chart.element.getElementsByTagName("CANVAS")[0];
   chart.chart = new window.Chart(ctx, {
     type: type,
     data: data,
@@ -129,13 +129,13 @@ var drawChart = function(chart, type, data, options) {
 };
 
 // http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
-var addOpacity = function(hex, opacity) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+let addOpacity = function(hex, opacity) {
+  let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? "rgba(" + parseInt(result[1], 16) + ", " + parseInt(result[2], 16) + ", " + parseInt(result[3], 16) + ", " + opacity + ")" : hex;
 };
 
-var setLabelSize = function (chart, data, options) {
-  var maxLabelSize = Math.ceil(chart.element.offsetWidth / 4.0 / data.labels.length);
+let setLabelSize = function (chart, data, options) {
+  let maxLabelSize = Math.ceil(chart.element.offsetWidth / 4.0 / data.labels.length);
   if (maxLabelSize > 25) {
     maxLabelSize = 25;
   }
@@ -149,8 +149,8 @@ var setLabelSize = function (chart, data, options) {
   };
 };
 
-var setFormatOptions = function(chart, options, chartType) {
-  var formatOptions = {
+let setFormatOptions = function(chart, options, chartType) {
+  let formatOptions = {
     prefix: chart.options.prefix,
     suffix: chart.options.suffix,
     thousands: chart.options.thousands,
@@ -159,7 +159,7 @@ var setFormatOptions = function(chart, options, chartType) {
 
   if (formatOptions.prefix || formatOptions.suffix || formatOptions.thousands || formatOptions.decimal) {
     if (chartType !== "pie") {
-      var myAxes = options.scales.yAxes;
+      let myAxes = options.scales.yAxes;
       if (chartType === "bar") {
         myAxes = options.scales.xAxes;
       }
@@ -173,9 +173,9 @@ var setFormatOptions = function(chart, options, chartType) {
 
     if (!options.tooltips.callbacks.label) {
       if (chartType !== "pie") {
-        var valueLabel = chartType === "bar" ? "xLabel" : "yLabel";
+        let valueLabel = chartType === "bar" ? "xLabel" : "yLabel";
         options.tooltips.callbacks.label = function (tooltipItem, data) {
-          var label = data.datasets[tooltipItem.datasetIndex].label || '';
+          let label = data.datasets[tooltipItem.datasetIndex].label || '';
           if (label) {
             label += ': ';
           }
@@ -184,8 +184,8 @@ var setFormatOptions = function(chart, options, chartType) {
       } else {
         // need to use separate label for pie charts
         options.tooltips.callbacks.label = function (tooltipItem, data) {
-          var dataLabel = data.labels[tooltipItem.index];
-          var value = ': ';
+          let dataLabel = data.labels[tooltipItem.index];
+          let value = ': ';
 
           if (isArray(dataLabel)) {
             // show value on first line of multiline label
@@ -203,28 +203,28 @@ var setFormatOptions = function(chart, options, chartType) {
   }
 };
 
-var jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
+let jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-var createDataTable = function (chart, options, chartType) {
-  var datasets = [];
-  var labels = [];
+let createDataTable = function (chart, options, chartType) {
+  let datasets = [];
+  let labels = [];
 
-  var colors = chart.options.colors || defaultColors;
+  let colors = chart.options.colors || defaultColors;
 
-  var day = true;
-  var week = true;
-  var dayOfWeek;
-  var month = true;
-  var year = true;
-  var hour = true;
-  var minute = true;
-  var detectType = (chartType === "line" || chartType === "area") && !chart.discrete;
+  let day = true;
+  let week = true;
+  let dayOfWeek;
+  let month = true;
+  let year = true;
+  let hour = true;
+  let minute = true;
+  let detectType = (chartType === "line" || chartType === "area") && !chart.discrete;
 
-  var series = chart.data;
+  let series = chart.data;
 
-  var sortedLabels = [];
+  let sortedLabels = [];
 
-  var i, j, s, d, key, rows = [];
+  let i, j, s, d, key, rows = [];
   for (i = 0; i < series.length; i++) {
     s = series[i];
 
@@ -245,13 +245,13 @@ var createDataTable = function (chart, options, chartType) {
     sortedLabels.sort(sortByNumber);
   }
 
-  var rows2 = [];
+  let rows2 = [];
   for (j = 0; j < series.length; j++) {
     rows2.push([]);
   }
 
-  var value;
-  var k;
+  let value;
+  let k;
   for (k = 0; k < sortedLabels.length; k++) {
     i = sortedLabels[k];
     if (detectType) {
@@ -279,10 +279,10 @@ var createDataTable = function (chart, options, chartType) {
   for (i = 0; i < series.length; i++) {
     s = series[i];
 
-    var color = s.color || colors[i];
-    var backgroundColor = chartType !== "line" ? addOpacity(color, 0.5) : color;
+    let color = s.color || colors[i];
+    let backgroundColor = chartType !== "line" ? addOpacity(color, 0.5) : color;
 
-    var dataset = {
+    let dataset = {
       label: s.name,
       data: rows2[i],
       fill: chartType === "area",
@@ -309,8 +309,8 @@ var createDataTable = function (chart, options, chartType) {
   }
 
   if (detectType && labels.length > 0) {
-    var minTime = labels[0].getTime();
-    var maxTime = labels[0].getTime();
+    let minTime = labels[0].getTime();
+    let maxTime = labels[0].getTime();
     for (i = 1; i < labels.length; i++) {
       value = labels[i].getTime();
       if (value < minTime) {
@@ -321,10 +321,10 @@ var createDataTable = function (chart, options, chartType) {
       }
     }
 
-    var timeDiff = (maxTime - minTime) / (86400 * 1000.0);
+    let timeDiff = (maxTime - minTime) / (86400 * 1000.0);
 
     if (!options.scales.xAxes[0].time.unit) {
-      var step;
+      let step;
       if (year || timeDiff > 365 * 10) {
         options.scales.xAxes[0].time.unit = "year";
         step = 365;
@@ -345,7 +345,7 @@ var createDataTable = function (chart, options, chartType) {
       }
 
       if (step && timeDiff > 0) {
-        var unitStepSize = Math.ceil(timeDiff / step / (chart.element.offsetWidth / 100.0));
+        let unitStepSize = Math.ceil(timeDiff / step / (chart.element.offsetWidth / 100.0));
         if (week && step === 1) {
           unitStepSize = Math.ceil(unitStepSize / 7.0) * 7;
         }
@@ -364,7 +364,7 @@ var createDataTable = function (chart, options, chartType) {
     }
   }
 
-  var data = {
+  let data = {
     labels: labels,
     datasets: datasets
   };
@@ -372,12 +372,12 @@ var createDataTable = function (chart, options, chartType) {
   return data;
 };
 
-var renderLineChart = function (chart, chartType) {
+let renderLineChart = function (chart, chartType) {
   if (chart.options.xtype === "number") {
     return renderScatterChart(chart, chartType, true);
   }
 
-  var chartOptions = {};
+  let chartOptions = {};
   if (chartType === "area") {
     // TODO fix area stacked
     // chartOptions.stacked = true;
@@ -387,18 +387,18 @@ var renderLineChart = function (chart, chartType) {
     chartOptions.max = 1;
   }
 
-  var options = jsOptions(chart, merge(chartOptions, chart.options));
+  let options = jsOptions(chart, merge(chartOptions, chart.options));
   setFormatOptions(chart, options, chartType);
 
-  var data = createDataTable(chart, options, chartType || "line");
+  let data = createDataTable(chart, options, chartType || "line");
 
   options.scales.xAxes[0].type = chart.discrete ? "category" : "time";
 
   drawChart(chart, "line", data, options);
 };
 
-var renderPieChart = function (chart) {
-  var options = merge({}, baseOptions);
+let renderPieChart = function (chart) {
+  let options = merge({}, baseOptions);
   if (chart.options.donut) {
     options.cutoutPercentage = 50;
   }
@@ -414,15 +414,15 @@ var renderPieChart = function (chart) {
   options = merge(options, chart.options.library || {});
   setFormatOptions(chart, options, "pie");
 
-  var labels = [];
-  var values = [];
-  for (var i = 0; i < chart.data.length; i++) {
-    var point = chart.data[i];
+  let labels = [];
+  let values = [];
+  for (let i = 0; i < chart.data.length; i++) {
+    let point = chart.data[i];
     labels.push(point[0]);
     values.push(point[1]);
   }
 
-  var data = {
+  let data = {
     labels: labels,
     datasets: [
       {
@@ -435,46 +435,46 @@ var renderPieChart = function (chart) {
   drawChart(chart, "pie", data, options);
 };
 
-var renderColumnChart = function (chart, chartType) {
-  var options;
+let renderColumnChart = function (chart, chartType) {
+  let options;
   if (chartType === "bar") {
     options = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options);
   } else {
     options = jsOptions(chart, chart.options);
   }
   setFormatOptions(chart, options, chartType);
-  var data = createDataTable(chart, options, "column");
+  let data = createDataTable(chart, options, "column");
   if (chartType !== "bar") {
     setLabelSize(chart, data, options);
   }
   drawChart(chart, (chartType === "bar" ? "horizontalBar" : "bar"), data, options);
 };
 
-var renderAreaChart = function (chart) {
+let renderAreaChart = function (chart) {
   renderLineChart(chart, "area");
 };
 
-var renderBarChart = function (chart) {
+let renderBarChart = function (chart) {
   renderColumnChart(chart, "bar");
 };
 
-var renderScatterChart = function (chart, chartType, lineChart) {
+let renderScatterChart = function (chart, chartType, lineChart) {
   chartType = chartType || "line";
 
-  var options = jsOptions(chart, chart.options);
+  let options = jsOptions(chart, chart.options);
   if (!lineChart) {
     setFormatOptions(chart, options, chartType);
   }
 
-  var colors = chart.options.colors || defaultColors;
+  let colors = chart.options.colors || defaultColors;
 
-  var datasets = [];
-  var series = chart.data;
-  for (var i = 0; i < series.length; i++) {
-    var s = series[i];
-    var d = [];
-    for (var j = 0; j < s.data.length; j++) {
-      var point = {
+  let datasets = [];
+  let series = chart.data;
+  for (let i = 0; i < series.length; i++) {
+    let s = series[i];
+    let d = [];
+    for (let j = 0; j < s.data.length; j++) {
+      let point = {
         x: toFloat(s.data[j][0]),
         y: toFloat(s.data[j][1])
       };
@@ -484,8 +484,8 @@ var renderScatterChart = function (chart, chartType, lineChart) {
       d.push(point);
     }
 
-    var color = s.color || colors[i];
-    var backgroundColor = chartType === "area" ? addOpacity(color, 0.5) : color;
+    let color = s.color || colors[i];
+    let backgroundColor = chartType === "area" ? addOpacity(color, 0.5) : color;
 
     datasets.push({
       label: s.name,
@@ -502,7 +502,7 @@ var renderScatterChart = function (chart, chartType, lineChart) {
     chartType = "line";
   }
 
-  var data = {datasets: datasets};
+  let data = {datasets: datasets};
 
   options.scales.xAxes[0].type = "linear";
   options.scales.xAxes[0].position = "bottom";
@@ -510,7 +510,7 @@ var renderScatterChart = function (chart, chartType, lineChart) {
   drawChart(chart, chartType, data, options);
 };
 
-var renderBubbleChart = function (chart) {
+let renderBubbleChart = function (chart) {
   renderScatterChart(chart, "bubble");
 };
 

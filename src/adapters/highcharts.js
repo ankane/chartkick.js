@@ -1,6 +1,6 @@
 import { formatValue, jsOptionsFunc, merge, sortByNumber } from "../helpers";
 
-var defaultOptions = {
+let defaultOptions = {
   chart: {},
   xAxis: {
     title: {
@@ -44,7 +44,7 @@ var defaultOptions = {
   }
 };
 
-var hideLegend = function (options, legend, hideLegend) {
+let hideLegend = function (options, legend, hideLegend) {
   if (legend !== undefined) {
     options.legend.enabled = !!legend;
     if (legend && legend !== true) {
@@ -61,33 +61,33 @@ var hideLegend = function (options, legend, hideLegend) {
   }
 };
 
-var setTitle = function (options, title) {
+let setTitle = function (options, title) {
   options.title.text = title;
 };
 
-var setMin = function (options, min) {
+let setMin = function (options, min) {
   options.yAxis.min = min;
 };
 
-var setMax = function (options, max) {
+let setMax = function (options, max) {
   options.yAxis.max = max;
 };
 
-var setStacked = function (options, stacked) {
+let setStacked = function (options, stacked) {
   options.plotOptions.series.stacking = stacked ? "normal" : null;
 };
 
-var setXtitle = function (options, title) {
+let setXtitle = function (options, title) {
   options.xAxis.title.text = title;
 };
 
-var setYtitle = function (options, title) {
+let setYtitle = function (options, title) {
   options.yAxis.title.text = title;
 };
 
-var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
+let jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-var drawChart = function(chart, data, options) {
+let drawChart = function(chart, data, options) {
   if (chart.chart) {
     chart.chart.destroy();
   }
@@ -97,8 +97,8 @@ var drawChart = function(chart, data, options) {
   chart.chart = new window.Highcharts.Chart(options);
 };
 
-var setFormatOptions = function(chart, options, chartType) {
-  var formatOptions = {
+let setFormatOptions = function(chart, options, chartType) {
+  let formatOptions = {
     prefix: chart.options.prefix,
     suffix: chart.options.suffix,
     thousands: chart.options.thousands,
@@ -120,9 +120,9 @@ var setFormatOptions = function(chart, options, chartType) {
   }
 };
 
-var renderLineChart = function (chart, chartType) {
+let renderLineChart = function (chart, chartType) {
   chartType = chartType || "spline";
-  var chartOptions = {};
+  let chartOptions = {};
   if (chartType === "areaspline") {
     chartOptions = {
       plotOptions: {
@@ -149,14 +149,14 @@ var renderLineChart = function (chart, chartType) {
     }
   }
 
-  var options = jsOptions(chart, chart.options, chartOptions), data, i, j;
+  let options = jsOptions(chart, chart.options, chartOptions), data, i, j;
   options.xAxis.type = chart.discrete ? "category" : "datetime";
   if (!options.chart.type) {
     options.chart.type = chartType;
   }
   setFormatOptions(chart, options, chartType);
 
-  var series = chart.data;
+  let series = chart.data;
   for (i = 0; i < series.length; i++) {
     data = series[i].data;
     if (!chart.discrete) {
@@ -173,14 +173,14 @@ var renderLineChart = function (chart, chartType) {
   drawChart(chart, series, options);
 };
 
-var renderScatterChart = function (chart) {
-  var options = jsOptions(chart, chart.options, {});
+let renderScatterChart = function (chart) {
+  let options = jsOptions(chart, chart.options, {});
   options.chart.type = "scatter";
   drawChart(chart, chart.data, options);
 };
 
-var renderPieChart = function (chart) {
-  var chartOptions = merge(defaultOptions, {});
+let renderPieChart = function (chart) {
+  let chartOptions = merge(defaultOptions, {});
 
   if (chart.options.colors) {
     chartOptions.colors = chart.options.colors;
@@ -197,9 +197,9 @@ var renderPieChart = function (chart) {
     setTitle(chartOptions, chart.options.title);
   }
 
-  var options = merge(chartOptions, chart.options.library || {});
+  let options = merge(chartOptions, chart.options.library || {});
   setFormatOptions(chart, options, "pie");
-  var series = [{
+  let series = [{
     type: "pie",
     name: chart.options.label || "Value",
     data: chart.data
@@ -208,10 +208,10 @@ var renderPieChart = function (chart) {
   drawChart(chart, series, options);
 };
 
-var renderColumnChart = function (chart, chartType) {
+let renderColumnChart = function (chart, chartType) {
   chartType = chartType || "column";
-  var series = chart.data;
-  var options = jsOptions(chart, chart.options), i, j, s, d, rows = [], categories = [];
+  let series = chart.data;
+  let options = jsOptions(chart, chart.options), i, j, s, d, rows = [], categories = [];
   options.chart.type = chartType;
   setFormatOptions(chart, options, chartType);
 
@@ -234,7 +234,7 @@ var renderColumnChart = function (chart, chartType) {
 
   options.xAxis.categories = categories;
 
-  var newSeries = [], d2;
+  let newSeries = [], d2;
   for (i = 0; i < series.length; i++) {
     d = [];
     for (j = 0; j < categories.length; j++) {
@@ -255,11 +255,11 @@ var renderColumnChart = function (chart, chartType) {
   drawChart(chart, newSeries, options);
 };
 
-var renderBarChart = function (chart) {
+let renderBarChart = function (chart) {
   renderColumnChart(chart, "bar");
 };
 
-var renderAreaChart = function (chart) {
+let renderAreaChart = function (chart) {
   renderLineChart(chart, "areaspline");
 };
 

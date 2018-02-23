@@ -12,9 +12,9 @@ import GoogleChartsAdapter from "./adapters/google";
 
 import { merge, isFunction, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate } from "./helpers";
 
-var config = window.Chartkick || {};
-var adapters = [];
-var pendingRequests = [], runningRequests = 0, maxRequests = 4;
+let config = window.Chartkick || {};
+let adapters = [];
+let pendingRequests = [], runningRequests = 0, maxRequests = 4;
 
 // helpers
 
@@ -38,7 +38,7 @@ function pushRequest(element, url, success) {
 
 function runNext() {
   if (runningRequests < maxRequests) {
-    var request = pendingRequests.shift();
+    let request = pendingRequests.shift();
     if (request) {
       runningRequests++;
       getJSON(request[0], request[1], request[2]);
@@ -54,13 +54,13 @@ function requestComplete() {
 
 function getJSON(element, url, success) {
   ajaxCall(url, success, function (jqXHR, textStatus, errorThrown) {
-    var message = (typeof errorThrown === "string") ? errorThrown : errorThrown.message;
+    let message = (typeof errorThrown === "string") ? errorThrown : errorThrown.message;
     chartError(element, message);
   });
 }
 
 function ajaxCall(url, success, error) {
-  var $ = window.jQuery || window.Zepto || window.$;
+  let $ = window.jQuery || window.Zepto || window.$;
 
   if ($) {
     $.ajax({
@@ -71,7 +71,7 @@ function ajaxCall(url, success, error) {
       complete: requestComplete
     });
   } else {
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onload = function () {
@@ -108,8 +108,8 @@ function fetchDataSource(chart, callback, dataSource) {
 }
 
 function addDownloadButton(chart) {
-  var element = chart.element;
-  var link = document.createElement("a");
+  let element = chart.element;
+  let link = document.createElement("a");
   link.download = chart.options.download === true ? "chart.png" : chart.options.download; // http://caniuse.com/download
   link.style.position = "absolute";
   link.style.top = "20px";
@@ -117,7 +117,7 @@ function addDownloadButton(chart) {
   link.style.zIndex = 1000;
   link.style.lineHeight = "20px";
   link.target = "_blank"; // for safari
-  var image = document.createElement("img");
+  let image = document.createElement("img");
   image.alt = "Download";
   image.style.border = "none";
   // icon from font-awesome
@@ -130,7 +130,7 @@ function addDownloadButton(chart) {
 
   // mouseenter
   addEvent(element, "mouseover", function(e) {
-    var related = e.relatedTarget;
+    let related = e.relatedTarget;
     // check download option again to ensure it wasn't changed
     if (!related || (related !== this && !childOf(this, related)) && chart.options.download) {
       link.href = chart.toImage();
@@ -140,7 +140,7 @@ function addDownloadButton(chart) {
 
   // mouseleave
   addEvent(element, "mouseout", function(e) {
-    var related = e.relatedTarget;
+    let related = e.relatedTarget;
     if (!related || (related !== this && !childOf(this, related))) {
       if (link.parentNode) {
         link.parentNode.removeChild(link);
@@ -192,7 +192,7 @@ function dataEmpty(data, chartType) {
   if (chartType === "PieChart" || chartType === "GeoChart" || chartType === "Timeline") {
     return data.length === 0;
   } else {
-    for (var i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       if (data[i].data.length > 0) {
         return false;
       }
@@ -215,7 +215,7 @@ function renderChart(chartType, chart) {
 // TODO remove chartType if cross-browser way
 // to get the name of the chart class
 function callAdapter(chartType, chart) {
-  var i, adapter, fnName, adapterName;
+  let i, adapter, fnName, adapterName;
   fnName = "render" + chartType;
   adapterName = chart.options.adapter;
 
@@ -238,7 +238,7 @@ function callAdapter(chartType, chart) {
 
 // process data
 
-var toFormattedKey = function (key, keyType) {
+let toFormattedKey = function (key, keyType) {
   if (keyType === "number") {
     key = toFloat(key);
   } else if (keyType === "datetime") {
@@ -249,8 +249,8 @@ var toFormattedKey = function (key, keyType) {
   return key;
 };
 
-var formatSeriesData = function (data, keyType) {
-  var r = [], key, j;
+let formatSeriesData = function (data, keyType) {
+  let r = [], key, j;
   for (j = 0; j < data.length; j++) {
     if (keyType === "bubble") {
       r.push([toFloat(data[j][0]), toFloat(data[j][1]), toFloat(data[j][2])]);
@@ -268,7 +268,7 @@ var formatSeriesData = function (data, keyType) {
 };
 
 function detectDiscrete(series) {
-  var i, j, data;
+  let i, j, data;
   for (i = 0; i < series.length; i++) {
     data = toArr(series[i].data);
     for (j = 0; j < data.length; j++) {
@@ -283,9 +283,9 @@ function detectDiscrete(series) {
 // creates a shallow copy of each element of the array
 // elements are expected to be objects
 function copySeries(series) {
-  var newSeries = [], i, j;
+  let newSeries = [], i, j;
   for (i = 0; i < series.length; i++) {
-    var copy = {};
+    let copy = {};
     for (j in series[i]) {
       if (series[i].hasOwnProperty(j)) {
         copy[j] = series[i][j];
@@ -297,10 +297,10 @@ function copySeries(series) {
 }
 
 function processSeries(chart, keyType) {
-  var i;
+  let i;
 
-  var opts = chart.options;
-  var series = chart.rawData;
+  let opts = chart.options;
+  let series = chart.rawData;
 
   // see if one series or multiple
   if (!isArray(series) || typeof series[0] !== "object" || isArray(series[0])) {
@@ -331,7 +331,7 @@ function processSeries(chart, keyType) {
 }
 
 function processSimple(chart) {
-  var perfectData = toArr(chart.rawData), i;
+  let perfectData = toArr(chart.rawData), i;
   for (i = 0; i < perfectData.length; i++) {
     perfectData[i] = [toStr(perfectData[i][0]), toFloat(perfectData[i][1])];
   }
@@ -342,7 +342,7 @@ function processSimple(chart) {
 
 class Chart {
   constructor(element, dataSource, options) {
-    var elementId;
+    let elementId;
     if (typeof element === "string") {
       elementId = element;
       element = document.getElementById(element);
@@ -406,7 +406,7 @@ class Chart {
   }
 
   __updateOptions(options) {
-    var updateRefresh = options.refresh && options.refresh !== this.options.refresh;
+    let updateRefresh = options.refresh && options.refresh !== this.options.refresh;
     this.options = merge(Chartkick.options, options);
     if (updateRefresh) {
       this.stopRefresh();
@@ -421,14 +421,14 @@ class Chart {
   refreshData() {
     if (typeof this.dataSource === "string") {
       // prevent browser from caching
-      var sep = this.dataSource.indexOf("?") === -1 ? "?" : "&";
-      var url = this.dataSource + sep + "_=" + (new Date()).getTime();
+      let sep = this.dataSource.indexOf("?") === -1 ? "?" : "&";
+      let url = this.dataSource + sep + "_=" + (new Date()).getTime();
       fetchDataSource(this, this.callback, url);
     }
   }
 
   startRefresh() {
-    var refresh = this.options.refresh;
+    let refresh = this.options.refresh;
 
     if (!this.intervalId) {
       if (refresh) {
@@ -507,7 +507,7 @@ class BubbleChart extends Chart {
 
 class Timeline extends Chart {
   processData() {
-    var i, data = this.rawData;
+    let i, data = this.rawData;
     for (i = 0; i < data.length; i++) {
       data[i][1] = toDate(data[i][1]);
       data[i][2] = toDate(data[i][2]);
@@ -528,14 +528,14 @@ export const Chartkick = {
   Timeline: Timeline,
   charts: {},
   configure: function (options) {
-    for (var key in options) {
+    for (let key in options) {
       if (options.hasOwnProperty(key)) {
         Chartkick.config[key] = options[key];
       }
     }
   },
   eachChart: function (callback) {
-    for (var chartId in Chartkick.charts) {
+    for (let chartId in Chartkick.charts) {
       if (Chartkick.charts.hasOwnProperty(chartId)) {
         callback(Chartkick.charts[chartId]);
       }

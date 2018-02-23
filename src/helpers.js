@@ -12,7 +12,7 @@ function isPlainObject(variable) {
 
 // https://github.com/madrobby/zepto/blob/master/src/zepto.js
 function extend(target, source) {
-  var key;
+  let key;
   for (key in source) {
     if (isPlainObject(source[key]) || isArray(source[key])) {
       if (isPlainObject(source[key]) && !isPlainObject(target[key])) {
@@ -29,20 +29,20 @@ function extend(target, source) {
 }
 
 function merge(obj1, obj2) {
-  var target = {};
+  let target = {};
   extend(target, obj1);
   extend(target, obj2);
   return target;
 }
 
-var DATE_PATTERN = /^(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)$/i;
+let DATE_PATTERN = /^(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)$/i;
 
 // https://github.com/Do/iso8601.js
-var ISO8601_PATTERN = /(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)(T)?(\d\d)(:)?(\d\d)?(:)?(\d\d)?([.,]\d+)?($|Z|([+-])(\d\d)(:)?(\d\d)?)/i;
-var DECIMAL_SEPARATOR = String(1.5).charAt(1);
+let ISO8601_PATTERN = /(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)(T)?(\d\d)(:)?(\d\d)?(:)?(\d\d)?([.,]\d+)?($|Z|([+-])(\d\d)(:)?(\d\d)?)/i;
+let DECIMAL_SEPARATOR = String(1.5).charAt(1);
 
 function parseISO8601(input) {
-  var day, hour, matches, milliseconds, minutes, month, offset, result, seconds, type, year;
+  let day, hour, matches, milliseconds, minutes, month, offset, result, seconds, type, year;
   type = Object.prototype.toString.call(input);
   if (type === "[object Date]") {
     return input;
@@ -74,7 +74,7 @@ function parseISO8601(input) {
 // end iso8601.js
 
 function negativeValues(series) {
-  var i, j, data;
+  let i, j, data;
   for (i = 0; i < series.length; i++) {
     data = series[i].data;
     for (j = 0; j < data.length; j++) {
@@ -95,7 +95,7 @@ function toFloat(n) {
 }
 
 function toDate(n) {
-  var matches, year, month, day;
+  let matches, year, month, day;
   if (typeof n !== "object") {
     if (typeof n === "number") {
       n = new Date(n * 1000); // ms
@@ -109,7 +109,7 @@ function toDate(n) {
       } else { // str
         // try our best to get the str into iso8601
         // TODO be smarter about this
-        var str = n.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
+        let str = n.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
         n = parseISO8601(str) || new Date(n);
       }
     }
@@ -119,7 +119,7 @@ function toDate(n) {
 
 function toArr(n) {
   if (!isArray(n)) {
-    var arr = [], i;
+    let arr = [], i;
     for (i in n) {
       if (n.hasOwnProperty(i)) {
         arr.push([i, n[i]]);
@@ -132,8 +132,8 @@ function toArr(n) {
 
 function jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle) {
   return function (chart, opts, chartOptions) {
-    var series = chart.data;
-    var options = merge({}, defaultOptions);
+    let series = chart.data;
+    let options = merge({}, defaultOptions);
     options = merge(options, chartOptions || {});
 
     if (chart.hideLegend || "legend" in opts) {
@@ -231,7 +231,7 @@ function formatValue(pre, value, options) {
 
   if (options.thousands || options.decimal) {
     value = toStr(value);
-    var parts = value.split(".")
+    let parts = value.split(".");
     value = parts[0];
     if (options.thousands) {
       value = value.replace(/\B(?=(\d{3})+(?!\d))/g, options.thousands);

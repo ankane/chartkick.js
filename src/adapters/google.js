@@ -1,11 +1,11 @@
 import { jsOptionsFunc, merge, toStr, toFloat, sortByTime, sortByNumberSeries, isDay } from "../helpers";
 
-var loaded = {};
-var callbacks = [];
+let loaded = {};
+let callbacks = [];
 
-var runCallbacks = function () {
-  var cb, call;
-  for (var i = 0; i < callbacks.length; i++) {
+let runCallbacks = function () {
+  let cb, call;
+  for (let i = 0; i < callbacks.length; i++) {
     cb = callbacks[i];
     call = window.google.visualization && ((cb.pack === "corechart" && window.google.visualization.LineChart) || (cb.pack === "timeline" && window.google.visualization.Timeline));
     if (call) {
@@ -16,7 +16,7 @@ var runCallbacks = function () {
   }
 };
 
-var waitForLoaded = function (pack, callback) {
+let waitForLoaded = function (pack, callback) {
   if (!callback) {
     callback = pack;
     pack = "corechart";
@@ -30,11 +30,11 @@ var waitForLoaded = function (pack, callback) {
     loaded[pack] = true;
 
     // https://groups.google.com/forum/#!topic/google-visualization-api/fMKJcyA2yyI
-    var loadOptions = {
+    let loadOptions = {
       packages: [pack],
       callback: runCallbacks
     };
-    var config = window.Chartkick.config;
+    let config = window.Chartkick.config;
     if (config.language) {
       loadOptions.language = config.language;
     }
@@ -51,7 +51,7 @@ var waitForLoaded = function (pack, callback) {
 };
 
 // Set chart options
-var defaultOptions = {
+let defaultOptions = {
   chartArea: {},
   fontName: "'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, Helvetica, sans-serif",
   pointSize: 6,
@@ -93,9 +93,9 @@ var defaultOptions = {
   }
 };
 
-var hideLegend = function (options, legend, hideLegend) {
+let hideLegend = function (options, legend, hideLegend) {
   if (legend !== undefined) {
-    var position;
+    let position;
     if (!legend) {
       position = "none";
     } else if (legend === true) {
@@ -109,46 +109,46 @@ var hideLegend = function (options, legend, hideLegend) {
   }
 };
 
-var setTitle = function (options, title) {
+let setTitle = function (options, title) {
   options.title = title;
   options.titleTextStyle = {color: "#333", fontSize: "20px"};
 };
 
-var setMin = function (options, min) {
+let setMin = function (options, min) {
   options.vAxis.viewWindow.min = min;
 };
 
-var setMax = function (options, max) {
+let setMax = function (options, max) {
   options.vAxis.viewWindow.max = max;
 };
 
-var setBarMin = function (options, min) {
+let setBarMin = function (options, min) {
   options.hAxis.viewWindow.min = min;
 };
 
-var setBarMax = function (options, max) {
+let setBarMax = function (options, max) {
   options.hAxis.viewWindow.max = max;
 };
 
-var setStacked = function (options, stacked) {
+let setStacked = function (options, stacked) {
   options.isStacked = !!stacked;
 };
 
-var setXtitle = function (options, title) {
+let setXtitle = function (options, title) {
   options.hAxis.title = title;
   options.hAxis.titleTextStyle.italic = false;
 };
 
-var setYtitle = function (options, title) {
+let setYtitle = function (options, title) {
   options.vAxis.title = title;
   options.vAxis.titleTextStyle.italic = false;
 };
 
-var jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
+let jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
 // cant use object as key
-var createDataTable = function (series, columnType, xtype) {
-  var i, j, s, d, key, rows = [], sortedLabels = [];
+let createDataTable = function (series, columnType, xtype) {
+  let i, j, s, d, key, rows = [], sortedLabels = [];
   for (i = 0; i < series.length; i++) {
     s = series[i];
 
@@ -163,9 +163,9 @@ var createDataTable = function (series, columnType, xtype) {
     }
   }
 
-  var rows2 = [];
-  var day = true;
-  var value;
+  let rows2 = [];
+  let day = true;
+  let value;
   for (j = 0; j < sortedLabels.length; j++) {
     i = sortedLabels[j];
     if (columnType === "datetime") {
@@ -193,7 +193,7 @@ var createDataTable = function (series, columnType, xtype) {
   }
 
   // create datatable
-  var data = new window.google.visualization.DataTable();
+  let data = new window.google.visualization.DataTable();
   columnType = columnType === "datetime" && day ? "date" : columnType;
   data.addColumn(columnType, "");
   for (i = 0; i < series.length; i++) {
@@ -204,7 +204,7 @@ var createDataTable = function (series, columnType, xtype) {
   return data;
 };
 
-var resize = function (callback) {
+let resize = function (callback) {
   if (window.attachEvent) {
     window.attachEvent("onresize", callback);
   } else if (window.addEventListener) {
@@ -213,7 +213,7 @@ var resize = function (callback) {
   callback();
 };
 
-var drawChart = function(chart, type, data, options) {
+let drawChart = function(chart, type, data, options) {
   if (chart.chart) {
     chart.chart.clearChart();
   }
@@ -224,9 +224,9 @@ var drawChart = function(chart, type, data, options) {
   });
 };
 
-var renderLineChart = function (chart) {
+let renderLineChart = function (chart) {
   waitForLoaded(function () {
-    var chartOptions = {};
+    let chartOptions = {};
 
     if (chart.options.curve === false) {
       chartOptions.curveType = "none";
@@ -236,20 +236,20 @@ var renderLineChart = function (chart) {
       chartOptions.pointSize = 0;
     }
 
-    var options = jsOptions(chart, chart.options, chartOptions);
-    var columnType = chart.discrete ? "string" : "datetime";
+    let options = jsOptions(chart, chart.options, chartOptions);
+    let columnType = chart.discrete ? "string" : "datetime";
     if (chart.options.xtype === "number") {
       columnType = "number";
     }
-    var data = createDataTable(chart.data, columnType);
+    let data = createDataTable(chart.data, columnType);
 
     drawChart(chart, window.google.visualization.LineChart, data, options);
   });
 };
 
-var renderPieChart = function (chart) {
+let renderPieChart = function (chart) {
   waitForLoaded(function () {
-    var chartOptions = {
+    let chartOptions = {
       chartArea: {
         top: "10%",
         height: "80%"
@@ -268,9 +268,9 @@ var renderPieChart = function (chart) {
     if (chart.options.title) {
       setTitle(chartOptions, chart.options.title);
     }
-    var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
+    let options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
-    var data = new window.google.visualization.DataTable();
+    let data = new window.google.visualization.DataTable();
     data.addColumn("string", "");
     data.addColumn("number", "Value");
     data.addRows(chart.data);
@@ -279,61 +279,61 @@ var renderPieChart = function (chart) {
   });
 };
 
-var renderColumnChart = function (chart) {
+let renderColumnChart = function (chart) {
   waitForLoaded(function () {
-    var options = jsOptions(chart, chart.options);
-    var data = createDataTable(chart.data, "string", chart.options.xtype);
+    let options = jsOptions(chart, chart.options);
+    let data = createDataTable(chart.data, "string", chart.options.xtype);
 
     drawChart(chart, window.google.visualization.ColumnChart, data, options);
   });
 };
 
-var renderBarChart = function (chart) {
+let renderBarChart = function (chart) {
   waitForLoaded(function () {
-    var chartOptions = {
+    let chartOptions = {
       hAxis: {
         gridlines: {
           color: "#ccc"
         }
       }
     };
-    var options = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
-    var data = createDataTable(chart.data, "string", chart.options.xtype);
+    let options = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
+    let data = createDataTable(chart.data, "string", chart.options.xtype);
 
     drawChart(chart, window.google.visualization.BarChart, data, options);
   });
 };
 
-var renderAreaChart = function (chart) {
+let renderAreaChart = function (chart) {
   waitForLoaded(function () {
-    var chartOptions = {
+    let chartOptions = {
       isStacked: true,
       pointSize: 0,
       areaOpacity: 0.5
     };
 
-    var options = jsOptions(chart, chart.options, chartOptions);
-    var columnType = chart.discrete ? "string" : "datetime";
+    let options = jsOptions(chart, chart.options, chartOptions);
+    let columnType = chart.discrete ? "string" : "datetime";
     if (chart.options.xtype === "number") {
       columnType = "number";
     }
-    var data = createDataTable(chart.data, columnType);
+    let data = createDataTable(chart.data, columnType);
 
     drawChart(chart, window.google.visualization.AreaChart, data, options);
   });
 };
 
-var renderGeoChart = function (chart) {
+let renderGeoChart = function (chart) {
   waitForLoaded(function () {
-    var chartOptions = {
+    let chartOptions = {
       legend: "none",
       colorAxis: {
         colors: chart.options.colors || ["#f6c7b6", "#ce502d"]
       }
     };
-    var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
+    let options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
-    var data = new window.google.visualization.DataTable();
+    let data = new window.google.visualization.DataTable();
     data.addColumn("string", "");
     data.addColumn("number", chart.options.label || "Value");
     data.addRows(chart.data);
@@ -342,16 +342,16 @@ var renderGeoChart = function (chart) {
   });
 };
 
-var renderScatterChart = function (chart) {
+let renderScatterChart = function (chart) {
   waitForLoaded(function () {
-    var chartOptions = {};
-    var options = jsOptions(chart, chart.options, chartOptions);
+    let chartOptions = {};
+    let options = jsOptions(chart, chart.options, chartOptions);
 
-    var series = chart.data, rows2 = [], i, j, data, d;
+    let series = chart.data, rows2 = [], i, j, data, d;
     for (i = 0; i < series.length; i++) {
       d = series[i].data;
       for (j = 0; j < d.length; j++) {
-        var row = new Array(series.length + 1);
+        let row = new Array(series.length + 1);
         row[0] = d[j][0];
         row[i + 1] = d[j][1];
         rows2.push(row);
@@ -369,18 +369,18 @@ var renderScatterChart = function (chart) {
   });
 };
 
-var renderTimeline = function (chart) {
+let renderTimeline = function (chart) {
   waitForLoaded("timeline", function () {
-    var chartOptions = {
+    let chartOptions = {
       legend: "none"
     };
 
     if (chart.options.colors) {
       chartOptions.colors = chart.options.colors;
     }
-    var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
+    let options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
-    var data = new window.google.visualization.DataTable();
+    let data = new window.google.visualization.DataTable();
     data.addColumn({type: "string", id: "Name"});
     data.addColumn({type: "date", id: "Start"});
     data.addColumn({type: "date", id: "End"});
