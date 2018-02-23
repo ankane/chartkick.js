@@ -86,24 +86,24 @@ function ajaxCall(url, success, error) {
   }
 }
 
-function errorCatcher(chart, callback) {
+function errorCatcher(chart) {
   try {
-    callback(chart);
+    chart.__render();
   } catch (err) {
     chartError(chart.element, err.message);
     throw err;
   }
 }
 
-function fetchDataSource(chart, callback, dataSource) {
+function fetchDataSource(chart, dataSource) {
   if (typeof dataSource === "string") {
     pushRequest(chart.element, dataSource, function (data) {
       chart.rawData = data;
-      errorCatcher(chart, callback);
+      errorCatcher(chart);
     });
   } else {
     chart.rawData = dataSource;
-    errorCatcher(chart, callback);
+    errorCatcher(chart);
   }
 }
 
@@ -354,14 +354,9 @@ class Chart {
     this.options = merge(Chartkick.options, options || {});
     this.dataSource = dataSource;
 
-    this.callback = () => {
-      this.data = this.processData();
-      renderChart(this.constructor.name, this);
-    };
-
     Chartkick.charts[element.id] = this;
 
-    fetchDataSource(this, this.callback, dataSource);
+    fetchDataSource(this, dataSource);
 
     if (this.options.refresh) {
       this.startRefresh();
@@ -397,7 +392,7 @@ class Chart {
     if (options) {
       this.__updateOptions(options);
     }
-    fetchDataSource(this, this.callback, dataSource);
+    fetchDataSource(this, dataSource);
   }
 
   setOptions(options) {
@@ -405,17 +400,8 @@ class Chart {
     this.redraw();
   }
 
-  __updateOptions(options) {
-    let updateRefresh = options.refresh && options.refresh !== this.options.refresh;
-    this.options = merge(Chartkick.options, options);
-    if (updateRefresh) {
-      this.stopRefresh();
-      this.startRefresh();
-    }
-  }
-
   redraw() {
-    fetchDataSource(this, this.callback, this.rawData);
+    fetchDataSource(this, this.rawData);
   }
 
   refreshData() {
@@ -423,7 +409,7 @@ class Chart {
       // prevent browser from caching
       let sep = this.dataSource.indexOf("?") === -1 ? "?" : "&";
       let url = this.dataSource + sep + "_=" + (new Date()).getTime();
-      fetchDataSource(this, this.callback, url);
+      fetchDataSource(this, url);
     }
   }
 
@@ -455,58 +441,72 @@ class Chart {
       return null;
     }
   }
+
+  __updateOptions(options) {
+    let updateRefresh = options.refresh && options.refresh !== this.options.refresh;
+    this.options = merge(Chartkick.options, options);
+    if (updateRefresh) {
+      this.stopRefresh();
+      this.startRefresh();
+    }
+  }
+
+  __render() {
+    this.data = this.__processData();
+    renderChart(this.constructor.name, this);
+  }
 }
 
 class LineChart extends Chart {
-  processData() {
+  __processData() {
     return processSeries(this, "datetime");
   }
 }
 
 class PieChart extends Chart {
-  processData() {
+  __processData() {
     return processSimple(this);
   }
 }
 
 class ColumnChart extends Chart {
-  processData() {
+  __processData() {
     return processSeries(this, "string");
   }
 }
 
 class BarChart extends Chart {
-  processData() {
+  __processData() {
     return processSeries(this, "string");
   }
 }
 
 class AreaChart extends Chart {
-  processData() {
+  __processData() {
     return processSeries(this, "datetime");
   }
 }
 
 class GeoChart extends Chart {
-  processData() {
+  __processData() {
     return processSimple(this);
   }
 }
 
 class ScatterChart extends Chart {
-  processData() {
+  __processData() {
     return processSeries(this, "number");
   }
 }
 
 class BubbleChart extends Chart {
-  processData() {
+  __processData() {
     return processSeries(this, "bubble");
   }
 }
 
 class Timeline extends Chart {
-  processData() {
+  __processData() {
     let i, data = this.rawData;
     for (i = 0; i < data.length; i++) {
       data[i][1] = toDate(data[i][1]);
