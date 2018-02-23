@@ -5,10 +5,10 @@
   "description": "Create beautiful charts with one line of JavaScript",
   "main": "dist/chartkick.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "lint": "eslint src"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "keywords": [
     "charts"
   ],
@@ -27,6 +27,9 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
+    "eslint": "^4.18.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0",
     "webpack": "^3.8.1"
   }
 }
