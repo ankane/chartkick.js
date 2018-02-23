@@ -1819,129 +1819,180 @@ function processBubbleData(chart) {
   return processSeries(chart, "bubble");
 }
 
-function createChart(chartType, chart, element, dataSource, opts, processData) {
-  var elementId;
-  if (typeof element === "string") {
-    elementId = element;
-    element = document.getElementById(element);
-    if (!element) {
-      throw new Error("No element with id " + elementId);
+// define classes
+
+class Chart {
+  constructor(element, dataSource, options) {
+    var elementId;
+    if (typeof element === "string") {
+      elementId = element;
+      element = document.getElementById(element);
+      if (!element) {
+        throw new Error("No element with id " + elementId);
+      }
     }
-  }
+    this.element = element;
+    this.options = merge(Chartkick.options, options || {});
+    this.dataSource = dataSource;
 
-  chart.element = element;
-  opts = merge(Chartkick.options, opts || {});
-  chart.options = opts;
-  chart.dataSource = dataSource;
-
-  if (!processData) {
-    processData = function (chart) {
-      return chart.rawData;
+    this.callback = () => {
+      this.data = this.processData();
+      renderChart(this.constructor.name, this);
     };
+
+    Chartkick.charts[element.id] = this;
+
+    fetchDataSource(this, this.callback, dataSource);
+
+    if (this.options.refresh) {
+      this.startRefresh();
+    }
   }
 
-  // getters
-  chart.getElement = function () {
-    return element;
-  };
-  chart.getDataSource = function () {
-    return chart.dataSource;
-  };
-  chart.getData = function () {
-    return chart.data;
-  };
-  chart.getOptions = function () {
-    return chart.options;
-  };
-  chart.getChartObject = function () {
-    return chart.chart;
-  };
-  chart.getAdapter = function () {
-    return chart.adapter;
-  };
+  getElement() {
+    return this.element;
+  }
 
-  var callback = function () {
-    chart.data = processData(chart);
-    renderChart(chartType, chart);
-  };
+  getDataSource() {
+    return this.dataSource;
+  }
 
-  // functions
-  chart.updateData = function (dataSource, options) {
-    chart.dataSource = dataSource;
+  getData() {
+    return this.data;
+  }
+
+  getOptions() {
+    return this.options;
+  }
+
+  getChartObject() {
+    return this.chart;
+  }
+
+  getAdapter() {
+    return this.adapter;
+  }
+
+  updateData(dataSource, options) {
+    this.dataSource = dataSource;
     if (options) {
-      chart.options = merge(Chartkick.options, options);
+      this.options = merge(Chartkick.options, options);
     }
-    fetchDataSource(chart, callback, dataSource);
-  };
-  chart.setOptions = function (options) {
-    chart.options = merge(Chartkick.options, options);
-    chart.redraw();
-  };
-  chart.redraw = function() {
-    fetchDataSource(chart, callback, chart.rawData);
-  };
-  chart.refreshData = function () {
-    if (typeof chart.dataSource === "string") {
+    fetchDataSource(this, this.callback, dataSource);
+  }
+
+  setOptions(options) {
+    this.options = merge(Chartkick.options, options);
+    this.redraw();
+  }
+
+  redraw() {
+    fetchDataSource(this, this.callback, this.rawData);
+  }
+
+  refreshData() {
+    if (typeof this.dataSource === "string") {
       // prevent browser from caching
-      var sep = chart.dataSource.indexOf("?") === -1 ? "?" : "&";
-      var url = chart.dataSource + sep + "_=" + (new Date()).getTime();
-      fetchDataSource(chart, callback, url);
+      var sep = this.dataSource.indexOf("?") === -1 ? "?" : "&";
+      var url = this.dataSource + sep + "_=" + (new Date()).getTime();
+      fetchDataSource(this, this.callback, url);
     }
-  };
-  chart.stopRefresh = function () {
-    if (chart.intervalId) {
-      clearInterval(chart.intervalId);
+  }
+
+  startRefresh() {
+    var refresh = this.options.refresh;
+
+    if (!this.intervalId) {
+      if (refresh) {
+        this.intervalId = setInterval( () => {
+          this.refreshData();
+        }, refresh * 1000);
+      } else {
+        throw new Error("No refresh interval");
+      }
     }
-  };
-  chart.toImage = function () {
-    if (chart.adapter === "chartjs") {
-      return chart.chart.toBase64Image();
+  }
+
+  stopRefresh() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+  }
+
+  toImage() {
+    if (this.adapter === "chartjs") {
+      return this.chart.toBase64Image();
     } else {
       return null;
     }
-  };
-
-  Chartkick.charts[element.id] = chart;
-
-  fetchDataSource(chart, callback, dataSource);
-
-  if (opts.refresh) {
-    chart.intervalId = setInterval( function () {
-      chart.refreshData();
-    }, opts.refresh * 1000);
   }
 }
 
-// define classes
+class LineChart extends Chart {
+  processData() {
+    return processLineData(this);
+  }
+}
+
+class PieChart extends Chart {
+  processData() {
+    return processSimple(this);
+  }
+}
+
+class ColumnChart extends Chart {
+  processData() {
+    return processColumnData(this);
+  }
+}
+
+class BarChart extends Chart {
+  processData() {
+    return processBarData(this);
+  }
+}
+
+class AreaChart extends Chart {
+  processData() {
+    return processAreaData(this);
+  }
+}
+
+class GeoChart extends Chart {
+  processData() {
+    return processSimple(this);
+  }
+}
+
+class ScatterChart extends Chart {
+  processData() {
+    return processScatterData(this);
+  }
+}
+
+class BubbleChart extends Chart {
+  processData() {
+    return processBubbleData(this);
+  }
+}
+
+class Timeline extends Chart {
+  processData() {
+    return processTime(this);
+  }
+}
 
 export const Chartkick = {
-  LineChart: function (element, dataSource, options) {
-    createChart("LineChart", this, element, dataSource, options, processLineData);
-  },
-  PieChart: function (element, dataSource, options) {
-    createChart("PieChart", this, element, dataSource, options, processSimple);
-  },
-  ColumnChart: function (element, dataSource, options) {
-    createChart("ColumnChart", this, element, dataSource, options, processColumnData);
-  },
-  BarChart: function (element, dataSource, options) {
-    createChart("BarChart", this, element, dataSource, options, processBarData);
-  },
-  AreaChart: function (element, dataSource, options) {
-    createChart("AreaChart", this, element, dataSource, options, processAreaData);
-  },
-  GeoChart: function (element, dataSource, options) {
-    createChart("GeoChart", this, element, dataSource, options, processSimple);
-  },
-  ScatterChart: function (element, dataSource, options) {
-    createChart("ScatterChart", this, element, dataSource, options, processScatterData);
-  },
-  BubbleChart: function (element, dataSource, options) {
-    createChart("BubbleChart", this, element, dataSource, options, processBubbleData);
-  },
-  Timeline: function (element, dataSource, options) {
-    createChart("Timeline", this, element, dataSource, options, processTime);
-  },
+  LineChart: LineChart,
+  PieChart: PieChart,
+  ColumnChart: ColumnChart,
+  BarChart: BarChart,
+  AreaChart: AreaChart,
+  GeoChart: GeoChart,
+  ScatterChart: ScatterChart,
+  BubbleChart: BubbleChart,
+  Timeline: Timeline,
   charts: {},
   configure: function (options) {
     for (var key in options) {
@@ -1958,6 +2009,5 @@ export const Chartkick = {
     }
   },
   options: {},
-  adapters: adapters,
-  createChart: createChart
+  adapters: adapters
 };
