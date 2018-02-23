@@ -7,7 +7,7 @@
 */
 
 import ChartjsAdapter from "./adapters/chartjs";
-import HighcartsAdapter from "./adapters/highcharts";
+import HighchartsAdapter from "./adapters/highcharts";
 import GoogleChartsAdapter from "./adapters/google";
 
 import { merge, isFunction, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate } from "./helpers";

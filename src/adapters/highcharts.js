@@ -1,8 +1,6 @@
 import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate } from "../helpers";
 
 export default (function () {
-  var Highcharts = window.Highcharts;
-
   var defaultOptions = {
     chart: {},
     xAxis: {
@@ -97,7 +95,7 @@ export default (function () {
 
     options.chart.renderTo = chart.element.id;
     options.series = data;
-    chart.chart = new Highcharts.Chart(options);
+    chart.chart = new window.Highcharts.Chart(options);
   };
 
   var setFormatOptions = function(chart, options, chartType) {
