@@ -253,7 +253,7 @@ new Chartkick.LineChart("chart-1", data, {download: "boom"})
 
 ## Installation
 
-Download [directly](https://raw.githubusercontent.com/ankane/chartkick.js/master/chartkick.js), or with npm or Bower:
+Download [directly](https://raw.githubusercontent.com/ankane/chartkick.js/master/src/chartkick.js), or with Yarn:
 
 ```sh
 npm install chartkick
