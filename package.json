@@ -3,7 +3,10 @@
   "version": "2.3.0",
   "homepage": "https://github.com/ankane/chartkick.js",
   "description": "Create beautiful charts with one line of JavaScript",
-  "main": "chartkick.js",
+  "main": "dist/chartkick.js",
+  "scripts": {
+    "build": "webpack"
+  },
   "dependencies": {
   },
   "keywords": [
@@ -17,9 +20,13 @@
     "type": "git",
     "url": "https://github.com/ankane/chartkick.js"
   },
-  "ignore": [
-    "**/.*",
-    "test",
-    "tests"
-  ]
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.8.1"
+  }
 }
