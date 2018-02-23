@@ -131,7 +131,7 @@ let setBarMax = function (options, max) {
 };
 
 let setStacked = function (options, stacked) {
-  options.isStacked = !!stacked;
+  options.isStacked = stacked ? stacked : false;
 };
 
 let setXtitle = function (options, title) {

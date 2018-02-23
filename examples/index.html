@@ -6,7 +6,7 @@
 
     <script src="../dist/chartkick.js"></script>
 
-    <!-- <script src="https://www.gstatic.com/charts/loader.js"></script> -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <!-- <script src="https://www.google.com/jsapi"></script> -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
 
@@ -17,7 +17,7 @@
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
     <!-- <script src="https://code.highcharts.com/2.1.9/highcharts.js"></script> -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script> -->
     <!-- <script src="Chart.bundle.js"></script> -->
 
     <script>
@@ -147,6 +147,18 @@
     <div id="multiple-bar-stacked-grouped" style="height: 300px;"></div>
     <script>
       new Chartkick.BarChart("multiple-bar-stacked-grouped", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]], stack: "stack 1"}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]], stack: "stack 2"}, {name: "Series C", data: [["0",12],["1",16],["2",18],["3",11],["4",10],["5",3],["6",17]], stack: "stack 2"}], {max: 80, stacked: true});
+    </script>
+
+    <h1>Multiple Series Bar Stacked Percent - Google Charts and Highcharts</h1>
+    <div id="multiple-bar-stacked-percent" style="height: 300px;"></div>
+    <script>
+      new Chartkick.BarChart("multiple-bar-stacked-percent", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {stacked: "percent"});
+    </script>
+
+    <h1>Multiple Series Bar Stacked Relative - Google Charts</h1>
+    <div id="multiple-bar-stacked-relative" style="height: 300px;"></div>
+    <script>
+      new Chartkick.BarChart("multiple-bar-stacked-relative", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {stacked: "relative"});
     </script>
 
     <h1>Multiple Series Column Stacked</h1>

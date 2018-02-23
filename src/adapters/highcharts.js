@@ -74,7 +74,7 @@ let setMax = function (options, max) {
 };
 
 let setStacked = function (options, stacked) {
-  options.plotOptions.series.stacking = stacked ? "normal" : null;
+  options.plotOptions.series.stacking = stacked ? (stacked === true ? "normal" : stacked) : null;
 };
 
 let setXtitle = function (options, title) {

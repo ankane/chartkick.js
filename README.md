@@ -116,6 +116,8 @@ Stacked columns or bars
 new Chartkick.ColumnChart("chart-1", data, {stacked: true})
 ```
 
+> You can also set `stacked` to `percent` or `relative` for Google Charts and `percent` for Highcharts [master]
+
 Discrete axis
 
 ```javascript
