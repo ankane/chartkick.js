@@ -1785,40 +1785,6 @@ function processSimple(chart) {
   return perfectData;
 }
 
-function processTime(chart)
-{
-  var i, data = chart.rawData;
-  for (i = 0; i < data.length; i++) {
-    data[i][1] = toDate(data[i][1]);
-    data[i][2] = toDate(data[i][2]);
-  }
-  return data;
-}
-
-function processLineData(chart) {
-  return processSeries(chart, "datetime");
-}
-
-function processColumnData(chart) {
-  return processSeries(chart, "string");
-}
-
-function processBarData(chart) {
-  return processSeries(chart, "string");
-}
-
-function processAreaData(chart) {
-  return processSeries(chart, "datetime");
-}
-
-function processScatterData(chart) {
-  return processSeries(chart, "number");
-}
-
-function processBubbleData(chart) {
-  return processSeries(chart, "bubble");
-}
-
 // define classes
 
 class Chart {
@@ -1931,7 +1897,7 @@ class Chart {
 
 class LineChart extends Chart {
   processData() {
-    return processLineData(this);
+    return processSeries(this, "datetime");
   }
 }
 
@@ -1943,19 +1909,19 @@ class PieChart extends Chart {
 
 class ColumnChart extends Chart {
   processData() {
-    return processColumnData(this);
+    return processSeries(this, "string");
   }
 }
 
 class BarChart extends Chart {
   processData() {
-    return processBarData(this);
+    return processSeries(this, "string");
   }
 }
 
 class AreaChart extends Chart {
   processData() {
-    return processAreaData(this);
+    return processSeries(this, "datetime");
   }
 }
 
@@ -1967,19 +1933,24 @@ class GeoChart extends Chart {
 
 class ScatterChart extends Chart {
   processData() {
-    return processScatterData(this);
+    return processSeries(this, "number");
   }
 }
 
 class BubbleChart extends Chart {
   processData() {
-    return processBubbleData(this);
+    return processSeries(this, "bubble");
   }
 }
 
 class Timeline extends Chart {
   processData() {
-    return processTime(this);
+    var i, data = this.rawData;
+    for (i = 0; i < data.length; i++) {
+      data[i][1] = toDate(data[i][1]);
+      data[i][2] = toDate(data[i][2]);
+    }
+    return data;
   }
 }
 
