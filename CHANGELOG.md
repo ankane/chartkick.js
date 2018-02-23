@@ -4,6 +4,7 @@
 - Friendlier error messages when charting library not found
 - Refresh interval now updates when `refresh` option changed
 - Removed experimental `Chartkick.createChart` function
+- Stopped pushing updates to Bower
 
 ## 2.3.0
 
