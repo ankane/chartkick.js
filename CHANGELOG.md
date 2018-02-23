@@ -2,6 +2,7 @@
 
 - Fixed issues with `thousands` option
 - Friendlier error messages when charting library not found
+- Refresh interval now updates when `refresh` option changed
 
 ## 2.3.0
 
