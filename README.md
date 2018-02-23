@@ -374,21 +374,6 @@ var CustomAdapter = {
 Chartkick.adapters.unshift(CustomAdapter);
 ```
 
-Add a new chart type with:
-
-```javascript
-var CustomAdapter = {
-  name: "custom",
-  renderCustomChart: function (chart) {
-    chart.getElement().innerHTML = "Hi";
-  }
-};
-
-Chartkick.CustomChart = function (element, dataSource, options) {
-  Chartkick.createChart("CustomChart", this, element, dataSource, options);
-};
-```
-
 ## Examples
 
 To run the files in the `examples` directory, you'll need a web server.  Run:

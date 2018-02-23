@@ -3,6 +3,7 @@
 - Fixed issues with `thousands` option
 - Friendlier error messages when charting library not found
 - Refresh interval now updates when `refresh` option changed
+- Removed experimental `Chartkick.createChart` function
 
 ## 2.3.0
 
