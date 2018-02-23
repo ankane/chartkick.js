@@ -1842,14 +1842,23 @@ class Chart {
   updateData(dataSource, options) {
     this.dataSource = dataSource;
     if (options) {
-      this.options = merge(Chartkick.options, options);
+      this.__updateOptions(options);
     }
     fetchDataSource(this, this.callback, dataSource);
   }
 
   setOptions(options) {
-    this.options = merge(Chartkick.options, options);
+    this.__updateOptions(options);
     this.redraw();
+  }
+
+  __updateOptions(options) {
+    var updateRefresh = options.refresh && options.refresh !== this.options.refresh;
+    this.options = merge(Chartkick.options, options);
+    if (updateRefresh) {
+      this.stopRefresh();
+      this.startRefresh();
+    }
   }
 
   redraw() {
