@@ -530,7 +530,7 @@ export const Chartkick = {
   configure: function (options) {
     for (var key in options) {
       if (options.hasOwnProperty(key)) {
-        config[key] = options[key];
+        Chartkick.config[key] = options[key];
       }
     }
   },
@@ -541,6 +541,7 @@ export const Chartkick = {
       }
     }
   },
+  config: config,
   options: {},
   adapters: adapters
 };

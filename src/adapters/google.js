@@ -1,8 +1,6 @@
 import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate } from "../helpers";
 
 export default (function () {
-  var google = window.google;
-
   var loaded = {};
   var callbacks = [];
 
@@ -10,7 +8,7 @@ export default (function () {
     var cb, call;
     for (var i = 0; i < callbacks.length; i++) {
       cb = callbacks[i];
-      call = google.visualization && ((cb.pack === "corechart" && google.visualization.LineChart) || (cb.pack === "timeline" && google.visualization.Timeline));
+      call = window.google.visualization && ((cb.pack === "corechart" && window.google.visualization.LineChart) || (cb.pack === "timeline" && window.google.visualization.Timeline));
       if (call) {
         cb.callback();
         callbacks.splice(i, 1);
@@ -37,6 +35,7 @@ export default (function () {
         packages: [pack],
         callback: runCallbacks
       };
+      var config = Chartkick.config;
       if (config.language) {
         loadOptions.language = config.language;
       }
@@ -45,9 +44,9 @@ export default (function () {
       }
 
       if (window.google.setOnLoadCallback) {
-        google.load("visualization", "1", loadOptions);
+        window.google.load("visualization", "1", loadOptions);
       } else {
-        google.charts.load("current", loadOptions);
+        window.google.charts.load("current", loadOptions);
       }
     }
   };
@@ -195,7 +194,7 @@ export default (function () {
     }
 
     // create datatable
-    var data = new google.visualization.DataTable();
+    var data = new window.google.visualization.DataTable();
     columnType = columnType === "datetime" && day ? "date" : columnType;
     data.addColumn(columnType, "");
     for (i = 0; i < series.length; i++) {
@@ -245,7 +244,7 @@ export default (function () {
       }
       var data = createDataTable(chart.data, columnType);
 
-      drawChart(chart, google.visualization.LineChart, data, options);
+      drawChart(chart, window.google.visualization.LineChart, data, options);
     });
   };
 
@@ -272,12 +271,12 @@ export default (function () {
       }
       var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
-      var data = new google.visualization.DataTable();
+      var data = new window.google.visualization.DataTable();
       data.addColumn("string", "");
       data.addColumn("number", "Value");
       data.addRows(chart.data);
 
-      drawChart(chart, google.visualization.PieChart, data, options);
+      drawChart(chart, window.google.visualization.PieChart, data, options);
     });
   };
 
@@ -286,7 +285,7 @@ export default (function () {
       var options = jsOptions(chart, chart.options);
       var data = createDataTable(chart.data, "string", chart.options.xtype);
 
-      drawChart(chart, google.visualization.ColumnChart, data, options);
+      drawChart(chart, window.google.visualization.ColumnChart, data, options);
     });
   };
 
@@ -302,7 +301,7 @@ export default (function () {
       var options = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
       var data = createDataTable(chart.data, "string", chart.options.xtype);
 
-      drawChart(chart, google.visualization.BarChart, data, options);
+      drawChart(chart, window.google.visualization.BarChart, data, options);
     });
   };
 
@@ -321,7 +320,7 @@ export default (function () {
       }
       var data = createDataTable(chart.data, columnType);
 
-      drawChart(chart, google.visualization.AreaChart, data, options);
+      drawChart(chart, window.google.visualization.AreaChart, data, options);
     });
   };
 
@@ -335,12 +334,12 @@ export default (function () {
       };
       var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
-      var data = new google.visualization.DataTable();
+      var data = new window.google.visualization.DataTable();
       data.addColumn("string", "");
       data.addColumn("number", chart.options.label || "Value");
       data.addRows(chart.data);
 
-      drawChart(chart, google.visualization.GeoChart, data, options);
+      drawChart(chart, window.google.visualization.GeoChart, data, options);
     });
   };
 
@@ -360,14 +359,14 @@ export default (function () {
         }
       }
 
-      data = new google.visualization.DataTable();
+      data = new window.google.visualization.DataTable();
       data.addColumn("number", "");
       for (i = 0; i < series.length; i++) {
         data.addColumn("number", series[i].name);
       }
       data.addRows(rows2);
 
-      drawChart(chart, google.visualization.ScatterChart, data, options);
+      drawChart(chart, window.google.visualization.ScatterChart, data, options);
     });
   };
 
@@ -382,7 +381,7 @@ export default (function () {
       }
       var options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
-      var data = new google.visualization.DataTable();
+      var data = new window.google.visualization.DataTable();
       data.addColumn({type: "string", id: "Name"});
       data.addColumn({type: "date", id: "Start"});
       data.addColumn({type: "date", id: "End"});
@@ -390,7 +389,7 @@ export default (function () {
 
       chart.element.style.lineHeight = "normal";
 
-      drawChart(chart, google.visualization.Timeline, data, options);
+      drawChart(chart, window.google.visualization.Timeline, data, options);
     });
   };
 
