@@ -42,9 +42,11 @@ function errorCatcher(chart) {
 
 function fetchDataSource(chart, dataSource) {
   if (typeof dataSource === "string") {
-    pushRequest(chart.element, dataSource, function (data) {
+    pushRequest(dataSource, function (data) {
       chart.rawData = data;
       errorCatcher(chart);
+    }, function (message) {
+      chartError(chart.element, message);
     });
   } else {
     chart.rawData = dataSource;

@@ -1,7 +1,7 @@
 let pendingRequests = [], runningRequests = 0, maxRequests = 4;
 
-function pushRequest(element, url, success) {
-  pendingRequests.push([element, url, success]);
+function pushRequest(url, success, error) {
+  pendingRequests.push([url, success, error]);
   runNext();
 }
 
@@ -21,10 +21,10 @@ function requestComplete() {
   runNext();
 }
 
-function getJSON(element, url, success) {
+function getJSON(url, success, error) {
   ajaxCall(url, success, function (jqXHR, textStatus, errorThrown) {
     let message = (typeof errorThrown === "string") ? errorThrown : errorThrown.message;
-    chartError(element, message);
+    error(message);
   });
 }
 
