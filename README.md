@@ -428,14 +428,4 @@ Everyone is encouraged to help improve this project. Here are a few ways you can
 - Write, clarify, or fix documentation
 - Suggest or add new features
 
-If you’re looking for ideas, [try here](https://github.com/ankane/chartkick.js/issues?q=is%3Aissue+is%3Aopen+label%3A%22enhancement%22).
-
-To get started with development and testing:
-
-```sh
-git clone https://github.com/ankane/chartkick.js.git
-cd chartkick.js
-python -m SimpleHTTPServer # starts a web server on port 8000
-```
-
-And visit [http://localhost:8000/examples](http://localhost:8000/examples) in your browser.
+See the [Contributing Guide](CONTRIBUTING.md) for more info.
