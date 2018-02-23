@@ -10,7 +10,7 @@ import ChartjsAdapter from "./adapters/chartjs";
 import HighchartsAdapter from "./adapters/highcharts";
 import GoogleChartsAdapter from "./adapters/google";
 
-import { merge, isFunction, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate } from "./helpers";
+import { merge, isFunction, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate } from "./helpers";
 
 var config = window.Chartkick || {};
 var adapters = [];
@@ -97,7 +97,7 @@ function errorCatcher(chart, callback) {
 
 function fetchDataSource(chart, callback, dataSource) {
   if (typeof dataSource === "string") {
-    pushRequest(chart.element, dataSource, function (data, textStatus, jqXHR) {
+    pushRequest(chart.element, dataSource, function (data) {
       chart.rawData = data;
       errorCatcher(chart, callback);
     });

@@ -1,4 +1,4 @@
-import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate } from "../helpers";
+import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear } from "../helpers";
 
 function allZeros(data) {
   var i, j, d;
@@ -165,7 +165,7 @@ var setFormatOptions = function(chart, options, chartType) {
       }
 
       if (!myAxes[0].ticks.callback) {
-        myAxes[0].ticks.callback = function (value, index, values) {
+        myAxes[0].ticks.callback = function (value) {
           return formatValue("", value, formatOptions);
         };
       }

@@ -1,4 +1,4 @@
-import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate } from "../helpers";
+import { formatValue, jsOptionsFunc, merge, sortByNumber } from "../helpers";
 
 var defaultOptions = {
   chart: {},

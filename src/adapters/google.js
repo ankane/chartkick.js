@@ -1,4 +1,4 @@
-import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate } from "../helpers";
+import { jsOptionsFunc, merge, toStr, toFloat, sortByTime, sortByNumberSeries, isDay } from "../helpers";
 
 var loaded = {};
 var callbacks = [];
@@ -34,7 +34,7 @@ var waitForLoaded = function (pack, callback) {
       packages: [pack],
       callback: runCallbacks
     };
-    var config = Chartkick.config;
+    var config = window.Chartkick.config;
     if (config.language) {
       loadOptions.language = config.language;
     }
