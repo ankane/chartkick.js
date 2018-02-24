@@ -1,5 +1,6 @@
 ## 2.3.2 [unreleased]
 
+- Fixed export for modules
 - Added more `stacked` options
 
 ## 2.3.1
