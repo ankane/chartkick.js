@@ -5,6 +5,7 @@
   "description": "Create beautiful charts with one line of JavaScript",
   "main": "dist/chartkick.js",
   "module": "src/chartkick.js",
+  "jsnext:main": "src/chartkick.js",
   "scripts": {
     "build": "webpack",
     "lint": "eslint src"
