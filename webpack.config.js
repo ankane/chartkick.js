@@ -9,6 +9,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].js",
+    library: "Chartkick",
+    libraryExport: "default",
     libraryTarget: "umd"
   },
   module: {

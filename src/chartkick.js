@@ -463,7 +463,7 @@ class Timeline extends Chart {
   }
 }
 
-export const Chartkick = {
+const Chartkick = {
   LineChart: LineChart,
   PieChart: PieChart,
   ColumnChart: ColumnChart,
@@ -492,3 +492,5 @@ export const Chartkick = {
   options: {},
   adapters: adapters
 };
+
+export default Chartkick;
