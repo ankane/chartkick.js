@@ -284,7 +284,7 @@ window.Highcharts = Highcharts;
 
 ### No Package Manager
 
-Download [chartkick.js](https://unpkg.com/chartkick@2.3.2) directly.
+Download [chartkick.js](https://unpkg.com/chartkick@2.3.3) directly.
 
 For Chart.js (works with 2.1+), [download the bundle](http://www.chartjs.org/docs/#getting-started-download-chart-js) and use:
 
