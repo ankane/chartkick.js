@@ -1,3 +1,7 @@
+## 2.3.3 [unreleased]
+
+- Fixed error when minified
+
 ## 2.3.2
 
 - Fixed export for modules

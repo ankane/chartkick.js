@@ -400,7 +400,7 @@ class Chart {
 
   __render() {
     this.data = this.__processData();
-    renderChart(this.constructor.name, this);
+    renderChart(this.__chartName(), this);
   }
 }
 
@@ -408,11 +408,19 @@ class LineChart extends Chart {
   __processData() {
     return processSeries(this, "datetime");
   }
+
+  __chartName() {
+    return "LineChart";
+  }
 }
 
 class PieChart extends Chart {
   __processData() {
     return processSimple(this);
+  }
+
+  __chartName() {
+    return "PieChart";
   }
 }
 
@@ -420,11 +428,19 @@ class ColumnChart extends Chart {
   __processData() {
     return processSeries(this, "string");
   }
+
+  __chartName() {
+    return "ColumnChart";
+  }
 }
 
 class BarChart extends Chart {
   __processData() {
     return processSeries(this, "string");
+  }
+
+  __chartName() {
+    return "BarChart";
   }
 }
 
@@ -432,11 +448,19 @@ class AreaChart extends Chart {
   __processData() {
     return processSeries(this, "datetime");
   }
+
+  __chartName() {
+    return "AreaChart";
+  }
 }
 
 class GeoChart extends Chart {
   __processData() {
     return processSimple(this);
+  }
+
+  __chartName() {
+    return "GeoChart";
   }
 }
 
@@ -444,11 +468,19 @@ class ScatterChart extends Chart {
   __processData() {
     return processSeries(this, "number");
   }
+
+  __chartName() {
+    return "ScatterChart";
+  }
 }
 
 class BubbleChart extends Chart {
   __processData() {
     return processSeries(this, "bubble");
+  }
+
+  __chartName() {
+    return "BubbleChart";
   }
 }
 
@@ -460,6 +492,10 @@ class Timeline extends Chart {
       data[i][2] = toDate(data[i][2]);
     }
     return data;
+  }
+
+  __chartName() {
+    return "Timeline";
   }
 }
 
