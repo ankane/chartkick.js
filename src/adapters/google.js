@@ -16,7 +16,7 @@ let runCallbacks = function () {
   }
 };
 
-let waitForLoaded = function (pack, callback) {
+let waitForLoaded = function (chart, pack, callback) {
   if (!callback) {
     callback = pack;
     pack = "corechart";
@@ -34,7 +34,7 @@ let waitForLoaded = function (pack, callback) {
       packages: [pack],
       callback: runCallbacks
     };
-    let config = window.Chartkick.config;
+    let config = chart.__config();
     if (config.language) {
       loadOptions.language = config.language;
     }
@@ -225,7 +225,7 @@ let drawChart = function(chart, type, data, options) {
 };
 
 let renderLineChart = function (chart) {
-  waitForLoaded(function () {
+  waitForLoaded(chart, function () {
     let chartOptions = {};
 
     if (chart.options.curve === false) {
@@ -248,7 +248,7 @@ let renderLineChart = function (chart) {
 };
 
 let renderPieChart = function (chart) {
-  waitForLoaded(function () {
+  waitForLoaded(chart, function () {
     let chartOptions = {
       chartArea: {
         top: "10%",
@@ -280,7 +280,7 @@ let renderPieChart = function (chart) {
 };
 
 let renderColumnChart = function (chart) {
-  waitForLoaded(function () {
+  waitForLoaded(chart, function () {
     let options = jsOptions(chart, chart.options);
     let data = createDataTable(chart.data, "string", chart.options.xtype);
 
@@ -289,7 +289,7 @@ let renderColumnChart = function (chart) {
 };
 
 let renderBarChart = function (chart) {
-  waitForLoaded(function () {
+  waitForLoaded(chart, function () {
     let chartOptions = {
       hAxis: {
         gridlines: {
@@ -305,7 +305,7 @@ let renderBarChart = function (chart) {
 };
 
 let renderAreaChart = function (chart) {
-  waitForLoaded(function () {
+  waitForLoaded(chart, function () {
     let chartOptions = {
       isStacked: true,
       pointSize: 0,
@@ -324,7 +324,7 @@ let renderAreaChart = function (chart) {
 };
 
 let renderGeoChart = function (chart) {
-  waitForLoaded(function () {
+  waitForLoaded(chart, function () {
     let chartOptions = {
       legend: "none",
       colorAxis: {
@@ -343,7 +343,7 @@ let renderGeoChart = function (chart) {
 };
 
 let renderScatterChart = function (chart) {
-  waitForLoaded(function () {
+  waitForLoaded(chart, function () {
     let chartOptions = {};
     let options = jsOptions(chart, chart.options, chartOptions);
 
@@ -370,7 +370,7 @@ let renderScatterChart = function (chart) {
 };
 
 let renderTimeline = function (chart) {
-  waitForLoaded("timeline", function () {
+  waitForLoaded(chart, "timeline", function () {
     let chartOptions = {
       legend: "none"
     };

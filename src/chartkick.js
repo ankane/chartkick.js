@@ -402,6 +402,10 @@ class Chart {
     this.data = this.__processData();
     renderChart(this.__chartName(), this);
   }
+
+  __config() {
+    return config;
+  }
 }
 
 class LineChart extends Chart {
@@ -513,7 +517,7 @@ const Chartkick = {
   configure: function (options) {
     for (let key in options) {
       if (options.hasOwnProperty(key)) {
-        Chartkick.config[key] = options[key];
+        config[key] = options[key];
       }
     }
   },
