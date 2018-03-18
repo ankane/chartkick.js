@@ -116,10 +116,9 @@ let setYtitle = function (options, title) {
 let drawChart = function(chart, type, data, options) {
   if (chart.chart) {
     chart.chart.destroy();
-  } else {
-    chart.element.innerHTML = "<canvas></canvas>";
   }
 
+  chart.element.innerHTML = "<canvas></canvas>";
   let ctx = chart.element.getElementsByTagName("CANVAS")[0];
   chart.chart = new window.Chart(ctx, {
     type: type,

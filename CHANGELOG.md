@@ -1,6 +1,7 @@
 ## 2.3.4 [unreleased]
 
 - Fixed `Cannot read property 'config' of undefined` error
+- Fixed error when switching between data and no data with empty message with Chart.js
 
 ## 2.3.3
 
