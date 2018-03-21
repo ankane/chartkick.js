@@ -297,21 +297,21 @@ let renderBarChart = function (chart) {
         }
       }
     };
-    let data 
+    let data;
     
     if (chart.options.customToolTip) {
-       data = new window.google.visualization.DataTable()
-      data.addColumn('string')
-      data.addColumn('number')
+       data = new window.google.visualization.DataTable();
+      data.addColumn('string');
+      data.addColumn('number');
       // A column for custom tooltip content
-      data.addColumn({ type: 'string', role: 'tooltip' })
-      data.addRows(chart.dataSource)
+      data.addColumn({ type: 'string', role: 'tooltip' });
+      data.addRows(chart.dataSource);
     } else {
        data = createDataTable(
         chart.data,
         'string',
         chart.options.xtype
-      )
+      );
     }
     
     let options = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
