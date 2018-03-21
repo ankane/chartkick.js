@@ -297,16 +297,17 @@ let renderBarChart = function (chart) {
         }
       }
     };
-
+    let data 
+    
     if (chart.options.customToolTip) {
-      let data = new window.google.visualization.DataTable()
+       data = new window.google.visualization.DataTable()
       data.addColumn('string')
       data.addColumn('number')
       // A column for custom tooltip content
       data.addColumn({ type: 'string', role: 'tooltip' })
       data.addRows(chart.dataSource)
     } else {
-      let data = createDataTable(
+       data = createDataTable(
         chart.data,
         'string',
         chart.options.xtype
