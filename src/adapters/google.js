@@ -299,7 +299,7 @@ let renderBarChart = function (chart) {
     };
 
     if (chart.options.customToolTip) {
-      let data = new google.visualization.DataTable()
+      let data = new window.google.visualization.DataTable()
       data.addColumn('string')
       data.addColumn('number')
       // A column for custom tooltip content
