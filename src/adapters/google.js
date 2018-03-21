@@ -297,8 +297,23 @@ let renderBarChart = function (chart) {
         }
       }
     };
+
+    if (chart.options.customToolTip) {
+      let data = new google.visualization.DataTable()
+      data.addColumn('string')
+      data.addColumn('number')
+      // A column for custom tooltip content
+      data.addColumn({ type: 'string', role: 'tooltip' })
+      data.addRows(chart.dataSource)
+    } else {
+      let data = createDataTable(
+        chart.data,
+        'string',
+        chart.options.xtype
+      )
+    }
+    
     let options = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
-    let data = createDataTable(chart.data, "string", chart.options.xtype);
 
     drawChart(chart, window.google.visualization.BarChart, data, options);
   });
