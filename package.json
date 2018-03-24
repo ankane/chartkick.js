@@ -4,8 +4,6 @@
   "homepage": "https://github.com/ankane/chartkick.js",
   "description": "Create beautiful charts with one line of JavaScript",
   "main": "dist/chartkick.js",
-  "module": "dist/chartkick.js",
-  "jsnext:main": "dist/chartkick.js",
   "scripts": {
     "build": "webpack",
     "lint": "eslint src"
