@@ -23,8 +23,7 @@
     "url": "https://github.com/ankane/chartkick.js"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "devDependencies": {
     "babel-core": "^6.26.0",
