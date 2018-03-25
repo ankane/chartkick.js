@@ -1,17 +1,9 @@
-/*
-* Chartkick.js
-* Create beautiful charts with one line of JavaScript
-* https://github.com/ankane/chartkick.js
-* v2.3.3
-* MIT License
-*/
-
 import ChartjsAdapter from "./adapters/chartjs";
 import HighchartsAdapter from "./adapters/highcharts";
 import GoogleChartsAdapter from "./adapters/google";
 
 import { merge, isFunction, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate } from "./helpers";
-import { pushRequest } from "./request_queue";
+import { pushRequest } from "./request-queue";
 
 let config = window.Chartkick || {};
 let adapters = [];
