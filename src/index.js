@@ -5,7 +5,7 @@ import GoogleChartsAdapter from "./adapters/google";
 import { merge, isFunction, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate } from "./helpers";
 import { pushRequest } from "./request-queue";
 
-let config = window.Chartkick || {};
+let config = (typeof window !== "undefined" && window.Chartkick) || {};
 let adapters = [];
 
 // helpers
