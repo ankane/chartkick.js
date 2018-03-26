@@ -36,7 +36,7 @@ export default [
     input: input,
     output: {
       name: outputName,
-      file: "dist/chartkick.min.js",
+      file: pkg.main.replace(/\.js$/, ".min.js"),
       format: "umd"
     },
     plugins: [
