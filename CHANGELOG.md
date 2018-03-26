@@ -1,6 +1,6 @@
 ## 2.3.5 [unreleased]
 
-- Added `useAdapter` function
+- Added `addAdapter` function
 
 ## 2.3.4
 

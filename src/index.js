@@ -107,13 +107,7 @@ function childOf(p, c) {
   return c === p;
 }
 
-function addAdapter(adapter) {
-  if (adapters.indexOf(adapter) === -1) {
-    adapters.push(adapter);
-  }
-}
-
-function getLibraryType(library) {
+function getAdapterType(library) {
   if (library.product === "Highcharts") {
     return HighchartsAdapter;
   } else if (library.setOnLoadCallback || library.charts) {
@@ -125,22 +119,26 @@ function getLibraryType(library) {
   }
 }
 
-function useAdapter(library) {
-  let libraryType = getLibraryType(library);
-  addAdapter(new libraryType(library));
+function addAdapter(library) {
+  let adapterType = getAdapterType(library);
+  let adapter = new adapterType(library);
+
+  if (adapters.indexOf(adapter) === -1) {
+    adapters.push(adapter);
+  }
 }
 
 function loadAdapters() {
   if ("Chart" in window) {
-    useAdapter(window.Chart);
+    addAdapter(window.Chart);
   }
 
   if ("Highcharts" in window) {
-    useAdapter(window.Highcharts);
+    addAdapter(window.Highcharts);
   }
 
   if (window.google && (window.google.setOnLoadCallback || window.google.charts)) {
-    useAdapter(window.google);
+    addAdapter(window.google);
   }
 }
 
@@ -540,7 +538,7 @@ const Chartkick = {
   config: config,
   options: {},
   adapters: adapters,
-  useAdapter: useAdapter
+  addAdapter: addAdapter
 };
 
 export default Chartkick;
