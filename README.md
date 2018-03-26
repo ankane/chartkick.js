@@ -4,7 +4,7 @@ Create beautiful charts with one line of JavaScript
 
 [See it in action](https://ankane.github.io/chartkick.js/examples/)
 
-Supports [Chart.js](http://www.chartjs.org/), [Google Charts](https://developers.google.com/chart/), and [Highcharts](https://www.highcharts.com/)
+Supports [Chart.js](https://www.chartjs.org/), [Google Charts](https://developers.google.com/chart/), and [Highcharts](https://www.highcharts.com/)
 
 Also available for [React](https://github.com/ankane/react-chartkick), [Vue.js](https://github.com/ankane/vue-chartkick), [Ruby](https://github.com/ankane/chartkick), [Python](https://github.com/mher/chartkick.py), [Elixir](https://github.com/buren/chartkick-ex), and [Clojure](https://github.com/yfractal/chartkick)
 
@@ -208,7 +208,7 @@ You can pass options directly to the charting library with:
 new Chartkick.LineChart("chart-1", data, {library: {backgroundColor: "pink"}})
 ```
 
-See the documentation for [Chart.js](http://www.chartjs.org/docs/), [Google Charts](https://developers.google.com/chart/interactive/docs/gallery), and [Highcharts](https://api.highcharts.com/highcharts) for more info.
+See the documentation for [Chart.js](https://www.chartjs.org/docs/), [Google Charts](https://developers.google.com/chart/interactive/docs/gallery), and [Highcharts](https://api.highcharts.com/highcharts) for more info.
 
 ### Global Options
 
@@ -286,7 +286,7 @@ window.Highcharts = Highcharts;
 
 Download [chartkick.js](https://unpkg.com/chartkick@2.3.4) directly.
 
-For Chart.js (works with 2.1+), [download the bundle](http://www.chartjs.org/docs/#getting-started-download-chart-js) and use:
+For Chart.js (works with 2.1+), [download the bundle](https://www.chartjs.org/docs/#getting-started-download-chart-js) and use:
 
 ```html
 <script src="/path/to/Chart.bundle.js"></script>
