@@ -1,6 +1,6 @@
 ## 2.3.5 [unreleased]
 
-- Added `useLibrary` function
+- Added `useAdapter` function
 
 ## 2.3.4
 

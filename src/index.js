@@ -125,22 +125,22 @@ function getLibraryType(library) {
   }
 }
 
-function useLibrary(library) {
+function useAdapter(library) {
   let libraryType = getLibraryType(library);
   addAdapter(new libraryType(library));
 }
 
 function loadAdapters() {
   if ("Chart" in window) {
-    useLibrary(window.Chart);
+    useAdapter(window.Chart);
   }
 
   if ("Highcharts" in window) {
-    useLibrary(window.Highcharts);
+    useAdapter(window.Highcharts);
   }
 
   if (window.google && (window.google.setOnLoadCallback || window.google.charts)) {
-    useLibrary(window.google);
+    useAdapter(window.google);
   }
 }
 
@@ -540,7 +540,7 @@ const Chartkick = {
   config: config,
   options: {},
   adapters: adapters,
-  useLibrary: useLibrary
+  useAdapter: useAdapter
 };
 
 export default Chartkick;
