@@ -1,3 +1,7 @@
+## 2.3.5 [unreleased]
+
+- Added `useLibrary` function
+
 ## 2.3.4
 
 - Fixed module build

@@ -113,20 +113,6 @@ let setYtitle = function (options, title) {
   options.scales.yAxes[0].scaleLabel.labelString = title;
 };
 
-let drawChart = function(chart, type, data, options) {
-  if (chart.chart) {
-    chart.chart.destroy();
-  }
-
-  chart.element.innerHTML = "<canvas></canvas>";
-  let ctx = chart.element.getElementsByTagName("CANVAS")[0];
-  chart.chart = new window.Chart(ctx, {
-    type: type,
-    data: data,
-    options: options
-  });
-};
-
 // http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 let addOpacity = function(hex, opacity) {
   let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -371,155 +357,165 @@ let createDataTable = function (chart, options, chartType) {
   return data;
 };
 
-let renderLineChart = function (chart, chartType) {
-  if (chart.options.xtype === "number") {
-    return renderScatterChart(chart, chartType, true);
+export default class {
+  constructor(library) {
+    this.name = "chartjs";
+    this.library = library;
   }
 
-  let chartOptions = {};
-  if (chartType === "area") {
-    // TODO fix area stacked
-    // chartOptions.stacked = true;
-  }
-  // fix for https://github.com/chartjs/Chart.js/issues/2441
-  if (!chart.options.max && allZeros(chart.data)) {
-    chartOptions.max = 1;
-  }
-
-  let options = jsOptions(chart, merge(chartOptions, chart.options));
-  setFormatOptions(chart, options, chartType);
-
-  let data = createDataTable(chart, options, chartType || "line");
-
-  options.scales.xAxes[0].type = chart.discrete ? "category" : "time";
-
-  drawChart(chart, "line", data, options);
-};
-
-let renderPieChart = function (chart) {
-  let options = merge({}, baseOptions);
-  if (chart.options.donut) {
-    options.cutoutPercentage = 50;
-  }
-
-  if ("legend" in chart.options) {
-    hideLegend(options, chart.options.legend);
-  }
-
-  if (chart.options.title) {
-    setTitle(options, chart.options.title);
-  }
-
-  options = merge(options, chart.options.library || {});
-  setFormatOptions(chart, options, "pie");
-
-  let labels = [];
-  let values = [];
-  for (let i = 0; i < chart.data.length; i++) {
-    let point = chart.data[i];
-    labels.push(point[0]);
-    values.push(point[1]);
-  }
-
-  let data = {
-    labels: labels,
-    datasets: [
-      {
-        data: values,
-        backgroundColor: chart.options.colors || defaultColors
-      }
-    ]
-  };
-
-  drawChart(chart, "pie", data, options);
-};
-
-let renderColumnChart = function (chart, chartType) {
-  let options;
-  if (chartType === "bar") {
-    options = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options);
-  } else {
-    options = jsOptions(chart, chart.options);
-  }
-  setFormatOptions(chart, options, chartType);
-  let data = createDataTable(chart, options, "column");
-  if (chartType !== "bar") {
-    setLabelSize(chart, data, options);
-  }
-  drawChart(chart, (chartType === "bar" ? "horizontalBar" : "bar"), data, options);
-};
-
-let renderAreaChart = function (chart) {
-  renderLineChart(chart, "area");
-};
-
-let renderBarChart = function (chart) {
-  renderColumnChart(chart, "bar");
-};
-
-let renderScatterChart = function (chart, chartType, lineChart) {
-  chartType = chartType || "line";
-
-  let options = jsOptions(chart, chart.options);
-  if (!lineChart) {
-    setFormatOptions(chart, options, chartType);
-  }
-
-  let colors = chart.options.colors || defaultColors;
-
-  let datasets = [];
-  let series = chart.data;
-  for (let i = 0; i < series.length; i++) {
-    let s = series[i];
-    let d = [];
-    for (let j = 0; j < s.data.length; j++) {
-      let point = {
-        x: toFloat(s.data[j][0]),
-        y: toFloat(s.data[j][1])
-      };
-      if (chartType === "bubble") {
-        point.r = toFloat(s.data[j][2]);
-      }
-      d.push(point);
+  renderLineChart(chart, chartType) {
+    if (chart.options.xtype === "number") {
+      return this.renderScatterChart(chart, chartType, true);
     }
 
-    let color = s.color || colors[i];
-    let backgroundColor = chartType === "area" ? addOpacity(color, 0.5) : color;
+    let chartOptions = {};
+    if (chartType === "area") {
+      // TODO fix area stacked
+      // chartOptions.stacked = true;
+    }
+    // fix for https://github.com/chartjs/Chart.js/issues/2441
+    if (!chart.options.max && allZeros(chart.data)) {
+      chartOptions.max = 1;
+    }
 
-    datasets.push({
-      label: s.name,
-      showLine: lineChart || false,
-      data: d,
-      borderColor: color,
-      backgroundColor: backgroundColor,
-      pointBackgroundColor: color,
-      fill: chartType === "area"
+    let options = jsOptions(chart, merge(chartOptions, chart.options));
+    setFormatOptions(chart, options, chartType);
+
+    let data = createDataTable(chart, options, chartType || "line");
+
+    options.scales.xAxes[0].type = chart.discrete ? "category" : "time";
+
+    this.drawChart(chart, "line", data, options);
+  }
+
+  renderPieChart(chart) {
+    let options = merge({}, baseOptions);
+    if (chart.options.donut) {
+      options.cutoutPercentage = 50;
+    }
+
+    if ("legend" in chart.options) {
+      hideLegend(options, chart.options.legend);
+    }
+
+    if (chart.options.title) {
+      setTitle(options, chart.options.title);
+    }
+
+    options = merge(options, chart.options.library || {});
+    setFormatOptions(chart, options, "pie");
+
+    let labels = [];
+    let values = [];
+    for (let i = 0; i < chart.data.length; i++) {
+      let point = chart.data[i];
+      labels.push(point[0]);
+      values.push(point[1]);
+    }
+
+    let data = {
+      labels: labels,
+      datasets: [
+        {
+          data: values,
+          backgroundColor: chart.options.colors || defaultColors
+        }
+      ]
+    };
+
+    this.drawChart(chart, "pie", data, options);
+  }
+
+  renderColumnChart(chart, chartType) {
+    let options;
+    if (chartType === "bar") {
+      options = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options);
+    } else {
+      options = jsOptions(chart, chart.options);
+    }
+    setFormatOptions(chart, options, chartType);
+    let data = createDataTable(chart, options, "column");
+    if (chartType !== "bar") {
+      setLabelSize(chart, data, options);
+    }
+    this.drawChart(chart, (chartType === "bar" ? "horizontalBar" : "bar"), data, options);
+  }
+
+  renderAreaChart(chart) {
+    this.renderLineChart(chart, "area");
+  }
+
+  renderBarChart(chart) {
+    this.renderColumnChart(chart, "bar");
+  }
+
+  renderScatterChart(chart, chartType, lineChart) {
+    chartType = chartType || "line";
+
+    let options = jsOptions(chart, chart.options);
+    if (!lineChart) {
+      setFormatOptions(chart, options, chartType);
+    }
+
+    let colors = chart.options.colors || defaultColors;
+
+    let datasets = [];
+    let series = chart.data;
+    for (let i = 0; i < series.length; i++) {
+      let s = series[i];
+      let d = [];
+      for (let j = 0; j < s.data.length; j++) {
+        let point = {
+          x: toFloat(s.data[j][0]),
+          y: toFloat(s.data[j][1])
+        };
+        if (chartType === "bubble") {
+          point.r = toFloat(s.data[j][2]);
+        }
+        d.push(point);
+      }
+
+      let color = s.color || colors[i];
+      let backgroundColor = chartType === "area" ? addOpacity(color, 0.5) : color;
+
+      datasets.push({
+        label: s.name,
+        showLine: lineChart || false,
+        data: d,
+        borderColor: color,
+        backgroundColor: backgroundColor,
+        pointBackgroundColor: color,
+        fill: chartType === "area"
+      });
+    }
+
+    if (chartType === "area") {
+      chartType = "line";
+    }
+
+    let data = {datasets: datasets};
+
+    options.scales.xAxes[0].type = "linear";
+    options.scales.xAxes[0].position = "bottom";
+
+    this.drawChart(chart, chartType, data, options);
+  }
+
+  renderBubbleChart(chart) {
+    this.renderScatterChart(chart, "bubble");
+  }
+
+  drawChart(chart, type, data, options) {
+    if (chart.chart) {
+      chart.chart.destroy();
+    }
+
+    chart.element.innerHTML = "<canvas></canvas>";
+    let ctx = chart.element.getElementsByTagName("CANVAS")[0];
+    chart.chart = new this.library(ctx, {
+      type: type,
+      data: data,
+      options: options
     });
   }
-
-  if (chartType === "area") {
-    chartType = "line";
-  }
-
-  let data = {datasets: datasets};
-
-  options.scales.xAxes[0].type = "linear";
-  options.scales.xAxes[0].position = "bottom";
-
-  drawChart(chart, chartType, data, options);
-};
-
-let renderBubbleChart = function (chart) {
-  renderScatterChart(chart, "bubble");
-};
-
-export default {
-  name: "chartjs",
-  renderLineChart: renderLineChart,
-  renderPieChart: renderPieChart,
-  renderColumnChart: renderColumnChart,
-  renderBarChart: renderBarChart,
-  renderAreaChart: renderAreaChart,
-  renderScatterChart: renderScatterChart,
-  renderBubbleChart: renderBubbleChart
-};
+}

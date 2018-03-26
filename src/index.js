@@ -113,17 +113,34 @@ function addAdapter(adapter) {
   }
 }
 
+function getLibraryType(library) {
+  if (library.product === "Highcharts") {
+    return HighchartsAdapter;
+  } else if (library.setOnLoadCallback || library.charts) {
+    return GoogleChartsAdapter;
+  } else if (isFunction(library)) {
+    return ChartjsAdapter;
+  } else {
+    throw new Error("Unknown adapter");
+  }
+}
+
+function useLibrary(library) {
+  let libraryType = getLibraryType(library);
+  addAdapter(new libraryType(library));
+}
+
 function loadAdapters() {
   if ("Chart" in window) {
-    addAdapter(ChartjsAdapter);
+    useLibrary(window.Chart);
   }
 
   if ("Highcharts" in window) {
-    addAdapter(HighchartsAdapter);
+    useLibrary(window.Highcharts);
   }
 
   if (window.google && (window.google.setOnLoadCallback || window.google.charts)) {
-    addAdapter(GoogleChartsAdapter);
+    useLibrary(window.google);
   }
 }
 
@@ -522,7 +539,8 @@ const Chartkick = {
   },
   config: config,
   options: {},
-  adapters: adapters
+  adapters: adapters,
+  useLibrary: useLibrary
 };
 
 export default Chartkick;
