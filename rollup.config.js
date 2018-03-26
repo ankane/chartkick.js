@@ -4,6 +4,8 @@ import pkg from "./package.json";
 import resolve from "rollup-plugin-node-resolve";
 import uglify from "rollup-plugin-uglify";
 
+const input = "src/index.js";
+const outputName = "Chartkick";
 const banner =
 `/*
  * Chartkick.js
@@ -13,9 +15,6 @@ const banner =
  * ${pkg.license} License
  */
 `;
-
-const input = "src/index.js";
-const outputName = "Chartkick";
 
 export default [
   {
