@@ -268,15 +268,14 @@ Then include them in your app.
 
 ```es6
 import Chartkick from "chartkick";
-window.Chartkick = Chartkick;
 
 // for Chart.js
 import Chart from "chart.js";
-window.Chart = Chart;
+Chartkick.addAdapter(Chart);
 
 // for Highcharts
 import Highcharts from "highcharts";
-window.Highcharts = Highcharts;
+Chartkick.addAdapter(Highcharts);
 
 // for Google Charts
 // just include https://www.gstatic.com/charts/loader.js in your views
@@ -284,7 +283,7 @@ window.Highcharts = Highcharts;
 
 ### No Package Manager
 
-Download [chartkick.js](https://unpkg.com/chartkick@2.3.4) directly.
+Download [chartkick.js](https://unpkg.com/chartkick) directly.
 
 For Chart.js (works with 2.1+), [download the bundle](https://www.chartjs.org/docs/#getting-started-download-chart-js) and use:
 

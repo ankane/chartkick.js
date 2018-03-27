@@ -1,4 +1,4 @@
-## 2.3.5 [unreleased]
+## 2.3.5
 
 - Added `addAdapter` function
 

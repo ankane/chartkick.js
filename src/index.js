@@ -108,15 +108,16 @@ function childOf(p, c) {
 }
 
 function getAdapterType(library) {
-  if (library.product === "Highcharts") {
-    return HighchartsAdapter;
-  } else if (library.setOnLoadCallback || library.charts) {
-    return GoogleChartsAdapter;
-  } else if (isFunction(library)) {
-    return ChartjsAdapter;
-  } else {
-    throw new Error("Unknown adapter");
+  if (library) {
+    if (library.product === "Highcharts") {
+      return HighchartsAdapter;
+    } else if (library.setOnLoadCallback || library.charts) {
+      return GoogleChartsAdapter;
+    } else if (isFunction(library)) {
+      return ChartjsAdapter;
+    }
   }
+  throw new Error("Unknown adapter");
 }
 
 function addAdapter(library) {
