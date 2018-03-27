@@ -255,30 +255,58 @@ new Chartkick.LineChart("chart-1", data, {download: "boom"})
 
 ## Installation
 
-### Yarn
+### Chart.js
 
-Install the JavaScript libraries:
+Run
 
 ```sh
-yarn add chartkick
-yarn add chart.js # or highcharts
+yarn add chartkick chart.js
 ```
 
-Then include them in your app.
+And add
 
 ```es6
 import Chartkick from "chartkick";
-
-// for Chart.js
 import Chart from "chart.js";
+
 Chartkick.addAdapter(Chart);
+```
 
-// for Highcharts
+### Google Charts
+
+Run
+
+```sh
+yarn add chartkick
+```
+
+And add
+
+```es6
+import Chartkick from "chartkick";
+```
+
+And include on the page
+
+```html
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+```
+
+### Highcharts
+
+Run
+
+```sh
+yarn add chartkick highcharts
+```
+
+And add
+
+```es6
+import Chartkick from "chartkick";
 import Highcharts from "highcharts";
-Chartkick.addAdapter(Highcharts);
 
-// for Google Charts
-// just include https://www.gstatic.com/charts/loader.js in your views
+Chartkick.addAdapter(Highcharts);
 ```
 
 ### No Package Manager
