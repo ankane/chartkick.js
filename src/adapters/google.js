@@ -127,11 +127,7 @@ export default class {
       }
 
       let options = jsOptions(chart, chart.options, chartOptions);
-      let columnType = chart.discrete ? "string" : "datetime";
-      if (chart.xtype === "number") {
-        columnType = "number";
-      }
-      let data = this.createDataTable(chart.data, columnType);
+      let data = this.createDataTable(chart.data, chart.xtype);
 
       this.drawChart(chart, this.library.visualization.LineChart, data, options);
     });
@@ -203,11 +199,7 @@ export default class {
       };
 
       let options = jsOptions(chart, chart.options, chartOptions);
-      let columnType = chart.discrete ? "string" : "datetime";
-      if (chart.xtype === "number") {
-        columnType = "number";
-      }
-      let data = this.createDataTable(chart.data, columnType);
+      let data = this.createDataTable(chart.data, chart.xtype);
 
       this.drawChart(chart, this.library.visualization.AreaChart, data, options);
     });

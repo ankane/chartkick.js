@@ -203,7 +203,7 @@ let createDataTable = function (chart, options, chartType) {
   let year = true;
   let hour = true;
   let minute = true;
-  let detectType = (chartType === "line" || chartType === "area") && !chart.discrete;
+  let detectType = (chartType === "line" || chartType === "area") && chart.xtype !== "string";
 
   let series = chart.data;
 
@@ -383,7 +383,7 @@ export default class {
 
     let data = createDataTable(chart, options, chartType || "line");
 
-    options.scales.xAxes[0].type = chart.discrete ? "category" : "time";
+    options.scales.xAxes[0].type = chart.xtype === "string" ? "category" : "time";
 
     this.drawChart(chart, "line", data, options);
   }
