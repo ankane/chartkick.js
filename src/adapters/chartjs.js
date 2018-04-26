@@ -459,6 +459,19 @@ export default class {
 
     let datasets = [];
     let series = chart.data;
+
+    let max = 0;
+    if (chartType == "bubble") {
+      for (let i = 0; i < series.length; i++) {
+        let s = series[i];
+        for (let j = 0; j < s.data.length; j++) {
+          if (s.data[j][2] > max) {
+            max = s.data[j][2];
+          }
+        }
+      }
+    }
+
     for (let i = 0; i < series.length; i++) {
       let s = series[i];
       let d = [];
@@ -468,7 +481,7 @@ export default class {
           y: toFloat(s.data[j][1])
         };
         if (chartType === "bubble") {
-          point.r = toFloat(s.data[j][2]);
+          point.r = toFloat(s.data[j][2]) * 20 / max;
         }
         d.push(point);
       }
