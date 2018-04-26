@@ -222,8 +222,8 @@ let formatSeriesData = function (data, keyType) {
   return r;
 };
 
-function detectXType(series) {
-  if (detectXTypeWithFunction(series, isDate)) {
+function detectXType(series, noDatetime) {
+  if (!noDatetime && detectXTypeWithFunction(series, isDate)) {
     return "datetime";
   } else if (detectXTypeWithFunction(series, isNumber)) {
     return "number";
@@ -261,7 +261,7 @@ function copySeries(series) {
   return newSeries;
 }
 
-function processSeries(chart, keyType) {
+function processSeries(chart, keyType, noDatetime) {
   let i;
 
   let opts = chart.options;
@@ -275,7 +275,7 @@ function processSeries(chart, keyType) {
     chart.hideLegend = false;
   }
 
-  chart.xtype = keyType ? keyType : (opts.discrete ? "string" : detectXType(series));
+  chart.xtype = keyType ? keyType : (opts.discrete ? "string" : detectXType(series, noDatetime));
 
   // right format
   series = copySeries(series);
@@ -439,7 +439,7 @@ class PieChart extends Chart {
 
 class ColumnChart extends Chart {
   __processData() {
-    return processSeries(this);
+    return processSeries(this, null, true);
   }
 
   __chartName() {
@@ -449,7 +449,7 @@ class ColumnChart extends Chart {
 
 class BarChart extends Chart {
   __processData() {
-    return processSeries(this);
+    return processSeries(this, null, true);
   }
 
   __chartName() {
