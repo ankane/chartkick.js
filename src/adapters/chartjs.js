@@ -226,7 +226,7 @@ let createDataTable = function (chart, options, chartType) {
     }
   }
 
-  if (detectType || chart.options.xtype === "number") {
+  if (detectType || chart.xtype === "number") {
     sortedLabels.sort(sortByNumber);
   }
 
@@ -364,7 +364,7 @@ export default class {
   }
 
   renderLineChart(chart, chartType) {
-    if (chart.options.xtype === "number") {
+    if (chart.xtype === "number") {
       return this.renderScatterChart(chart, chartType, true);
     }
 

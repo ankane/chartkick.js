@@ -2,7 +2,7 @@ import ChartjsAdapter from "./adapters/chartjs";
 import HighchartsAdapter from "./adapters/highcharts";
 import GoogleChartsAdapter from "./adapters/google";
 
-import { merge, isFunction, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate } from "./helpers";
+import { merge, isFunction, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate, isNumber } from "./helpers";
 import { pushRequest } from "./request-queue";
 
 let config = (typeof window !== "undefined" && window.Chartkick) || {};
@@ -222,17 +222,27 @@ let formatSeriesData = function (data, keyType) {
   return r;
 };
 
-function detectDiscrete(series) {
+function detectXType(series) {
+  if (detectXTypeWithFunction(series, isDate)) {
+    return "datetime";
+  } else if (detectXTypeWithFunction(series, isNumber)) {
+    return "number";
+  } else {
+    return "string";
+  }
+}
+
+function detectXTypeWithFunction(series, func) {
   let i, j, data;
   for (i = 0; i < series.length; i++) {
     data = toArr(series[i].data);
     for (j = 0; j < data.length; j++) {
-      if (!isDate(data[j][0])) {
-        return true;
+      if (!func(data[j][0])) {
+        return false;
       }
     }
   }
-  return false;
+  return true;
 }
 
 // creates a shallow copy of each element of the array
@@ -264,22 +274,13 @@ function processSeries(chart, keyType) {
   } else {
     chart.hideLegend = false;
   }
-  if ((opts.discrete === null || opts.discrete === undefined) && keyType !== "bubble" && keyType !== "number") {
-    chart.discrete = detectDiscrete(series);
-  } else {
-    chart.discrete = opts.discrete;
-  }
-  if (chart.discrete) {
-    keyType = "string";
-  }
-  if (chart.options.xtype) {
-    keyType = chart.options.xtype;
-  }
+
+  chart.xtype = keyType ? keyType : (opts.discrete ? "string" : detectXType(series));
 
   // right format
   series = copySeries(series);
   for (i = 0; i < series.length; i++) {
-    series[i].data = formatSeriesData(toArr(series[i].data), keyType);
+    series[i].data = formatSeriesData(toArr(series[i].data), chart.xtype);
   }
 
   return series;
@@ -418,7 +419,7 @@ class Chart {
 
 class LineChart extends Chart {
   __processData() {
-    return processSeries(this, "datetime");
+    return processSeries(this);
   }
 
   __chartName() {
@@ -438,7 +439,7 @@ class PieChart extends Chart {
 
 class ColumnChart extends Chart {
   __processData() {
-    return processSeries(this, "string");
+    return processSeries(this);
   }
 
   __chartName() {
@@ -448,7 +449,7 @@ class ColumnChart extends Chart {
 
 class BarChart extends Chart {
   __processData() {
-    return processSeries(this, "string");
+    return processSeries(this);
   }
 
   __chartName() {
@@ -458,7 +459,7 @@ class BarChart extends Chart {
 
 class AreaChart extends Chart {
   __processData() {
-    return processSeries(this, "datetime");
+    return processSeries(this);
   }
 
   __chartName() {

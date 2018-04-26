@@ -128,7 +128,7 @@ export default class {
 
       let options = jsOptions(chart, chart.options, chartOptions);
       let columnType = chart.discrete ? "string" : "datetime";
-      if (chart.options.xtype === "number") {
+      if (chart.xtype === "number") {
         columnType = "number";
       }
       let data = this.createDataTable(chart.data, columnType);
@@ -172,7 +172,7 @@ export default class {
   renderColumnChart(chart) {
     this.waitForLoaded(chart, () => {
       let options = jsOptions(chart, chart.options);
-      let data = this.createDataTable(chart.data, "string", chart.options.xtype);
+      let data = this.createDataTable(chart.data, "string", chart.xtype);
 
       this.drawChart(chart, this.library.visualization.ColumnChart, data, options);
     });
@@ -188,7 +188,7 @@ export default class {
         }
       };
       let options = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
-      let data = this.createDataTable(chart.data, "string", chart.options.xtype);
+      let data = this.createDataTable(chart.data, "string", chart.xtype);
 
       this.drawChart(chart, this.library.visualization.BarChart, data, options);
     });
@@ -204,7 +204,7 @@ export default class {
 
       let options = jsOptions(chart, chart.options, chartOptions);
       let columnType = chart.discrete ? "string" : "datetime";
-      if (chart.options.xtype === "number") {
+      if (chart.xtype === "number") {
         columnType = "number";
       }
       let data = this.createDataTable(chart.data, columnType);

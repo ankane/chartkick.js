@@ -146,7 +146,7 @@ export default class {
     }
 
     let options = jsOptions(chart, chart.options, chartOptions), data, i, j;
-    options.xAxis.type = chart.discrete ? "category" : "datetime";
+    options.xAxis.type = chart.xtype === "string" ? "category" : "datetime";
     if (!options.chart.type) {
       options.chart.type = chartType;
     }
@@ -155,7 +155,7 @@ export default class {
     let series = chart.data;
     for (i = 0; i < series.length; i++) {
       data = series[i].data;
-      if (!chart.discrete) {
+      if (chart.xtype == "datetime") {
         for (j = 0; j < data.length; j++) {
           data[j][0] = data[j][0].getTime();
         }
@@ -224,7 +224,7 @@ export default class {
       }
     }
 
-    if (chart.options.xtype === "number") {
+    if (chart.xtype === "number") {
       categories.sort(sortByNumber);
     }
 
