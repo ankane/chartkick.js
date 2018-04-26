@@ -269,7 +269,7 @@ function processSeries(chart, keyType, noDatetime) {
 
   // see if one series or multiple
   if (!isArray(series) || typeof series[0] !== "object" || isArray(series[0])) {
-    series = [{name: opts.label || "Value", data: series}];
+    series = [{name: opts.label, data: series}];
     chart.hideLegend = true;
   } else {
     chart.hideLegend = false;

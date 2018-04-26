@@ -231,6 +231,7 @@ export default class {
 
       let series = chart.data, rows2 = [], i, j, data, d;
       for (i = 0; i < series.length; i++) {
+        series[i].name = series[i].name || "Value";
         d = series[i].data;
         for (j = 0; j < d.length; j++) {
           let row = new Array(series.length + 1);
@@ -337,6 +338,7 @@ export default class {
     let i, j, s, d, key, rows = [], sortedLabels = [];
     for (i = 0; i < series.length; i++) {
       s = series[i];
+      series[i].name = series[i].name || "Value";
 
       for (j = 0; j < s.data.length; j++) {
         d = s.data[j];
@@ -372,6 +374,8 @@ export default class {
       for (i = 0; i < rows2.length; i++) {
         rows2[i][0] = toStr(rows2[i][0]);
       }
+
+      columnType = "string";
     }
 
     // create datatable

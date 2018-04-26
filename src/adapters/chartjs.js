@@ -142,48 +142,46 @@ let setFormatOptions = function(chart, options, chartType) {
     decimal: chart.options.decimal
   };
 
-  if (formatOptions.prefix || formatOptions.suffix || formatOptions.thousands || formatOptions.decimal) {
-    if (chartType !== "pie") {
-      let myAxes = options.scales.yAxes;
-      if (chartType === "bar") {
-        myAxes = options.scales.xAxes;
-      }
-
-      if (!myAxes[0].ticks.callback) {
-        myAxes[0].ticks.callback = function (value) {
-          return formatValue("", value, formatOptions);
-        };
-      }
+  if (chartType !== "pie") {
+    let myAxes = options.scales.yAxes;
+    if (chartType === "bar") {
+      myAxes = options.scales.xAxes;
     }
 
-    if (!options.tooltips.callbacks.label) {
-      if (chartType !== "pie") {
-        let valueLabel = chartType === "bar" ? "xLabel" : "yLabel";
-        options.tooltips.callbacks.label = function (tooltipItem, data) {
-          let label = data.datasets[tooltipItem.datasetIndex].label || '';
-          if (label) {
-            label += ': ';
-          }
-          return formatValue(label, tooltipItem[valueLabel], formatOptions);
-        };
-      } else {
-        // need to use separate label for pie charts
-        options.tooltips.callbacks.label = function (tooltipItem, data) {
-          let dataLabel = data.labels[tooltipItem.index];
-          let value = ': ';
+    if (!myAxes[0].ticks.callback) {
+      myAxes[0].ticks.callback = function (value) {
+        return formatValue("", value, formatOptions);
+      };
+    }
+  }
 
-          if (isArray(dataLabel)) {
-            // show value on first line of multiline label
-            // need to clone because we are changing the value
-            dataLabel = dataLabel.slice();
-            dataLabel[0] += value;
-          } else {
-            dataLabel += value;
-          }
+  if (!options.tooltips.callbacks.label) {
+    if (chartType !== "pie") {
+      let valueLabel = chartType === "bar" ? "xLabel" : "yLabel";
+      options.tooltips.callbacks.label = function (tooltipItem, data) {
+        let label = data.datasets[tooltipItem.datasetIndex].label || '';
+        if (label) {
+          label += ': ';
+        }
+        return formatValue(label, tooltipItem[valueLabel], formatOptions);
+      };
+    } else {
+      // need to use separate label for pie charts
+      options.tooltips.callbacks.label = function (tooltipItem, data) {
+        let dataLabel = data.labels[tooltipItem.index];
+        let value = ': ';
 
-          return formatValue(dataLabel, data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index], formatOptions);
-        };
-      }
+        if (isArray(dataLabel)) {
+          // show value on first line of multiline label
+          // need to clone because we are changing the value
+          dataLabel = dataLabel.slice();
+          dataLabel[0] += value;
+        } else {
+          dataLabel += value;
+        }
+
+        return formatValue(dataLabel, data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index], formatOptions);
+      };
     }
   }
 };

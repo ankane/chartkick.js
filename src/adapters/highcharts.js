@@ -95,18 +95,16 @@ let setFormatOptions = function(chart, options, chartType) {
     decimal: chart.options.decimal
   };
 
-  if (formatOptions.prefix || formatOptions.suffix || formatOptions.thousands || formatOptions.decimal) {
-    if (chartType !== "pie" && !options.yAxis.labels.formatter) {
-      options.yAxis.labels.formatter = function () {
-        return formatValue("", this.value, formatOptions);
-      };
-    }
+  if (chartType !== "pie" && !options.yAxis.labels.formatter) {
+    options.yAxis.labels.formatter = function () {
+      return formatValue("", this.value, formatOptions);
+    };
+  }
 
-    if (!options.tooltip.pointFormatter) {
-      options.tooltip.pointFormatter = function () {
-        return '<span style="color:' + this.color + '>\u25CF</span> ' + formatValue(this.series.name + ': <b>', this.y, formatOptions) + '</b><br/>';
-      };
-    }
+  if (!options.tooltip.pointFormatter) {
+    options.tooltip.pointFormatter = function () {
+      return '<span style="color:' + this.color + '>\u25CF</span> ' + formatValue(this.series.name + ': <b>', this.y, formatOptions) + '</b><br/>';
+    };
   }
 };
 
@@ -154,6 +152,7 @@ export default class {
 
     let series = chart.data;
     for (i = 0; i < series.length; i++) {
+      series[i].name = series[i].name || "Value";
       data = series[i].data;
       if (chart.xtype == "datetime") {
         for (j = 0; j < data.length; j++) {
@@ -238,7 +237,7 @@ export default class {
       }
 
       d2 = {
-        name: series[i].name,
+        name: series[i].name || "Value",
         data: d
       };
       if (series[i].stack) {
