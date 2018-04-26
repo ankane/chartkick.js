@@ -168,7 +168,7 @@ export default class {
   renderColumnChart(chart) {
     this.waitForLoaded(chart, () => {
       let options = jsOptions(chart, chart.options);
-      let data = this.createDataTable(chart.data, "string", chart.xtype);
+      let data = this.createDataTable(chart.data, chart.xtype);
 
       this.drawChart(chart, this.library.visualization.ColumnChart, data, options);
     });
@@ -184,7 +184,7 @@ export default class {
         }
       };
       let options = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
-      let data = this.createDataTable(chart.data, "string", chart.xtype);
+      let data = this.createDataTable(chart.data, chart.xtype);
 
       this.drawChart(chart, this.library.visualization.BarChart, data, options);
     });
@@ -333,7 +333,7 @@ export default class {
   }
 
   // cant use object as key
-  createDataTable(series, columnType, xtype) {
+  createDataTable(series, columnType) {
     let i, j, s, d, key, rows = [], sortedLabels = [];
     for (i = 0; i < series.length; i++) {
       s = series[i];
@@ -367,10 +367,6 @@ export default class {
     if (columnType === "datetime") {
       rows2.sort(sortByTime);
     } else if (columnType === "number") {
-      rows2.sort(sortByNumberSeries);
-    }
-
-    if (xtype === "number") {
       rows2.sort(sortByNumberSeries);
 
       for (i = 0; i < rows2.length; i++) {
