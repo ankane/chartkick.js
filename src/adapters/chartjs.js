@@ -272,7 +272,8 @@ let createDataTable = function (chart, options, chartType) {
       borderColor: color,
       backgroundColor: backgroundColor,
       pointBackgroundColor: color,
-      borderWidth: 2
+      borderWidth: 2,
+      spanGaps: true
     };
 
     if (s.stack) {
