@@ -1,6 +1,5 @@
 ## 3.0.0 [unreleased]
 
-- Detect numeric axes automatically (and removed `xtype` option)
 - Removed `window.Chartkick = {...}` way to set config
 - Normalize bubble sizes
 

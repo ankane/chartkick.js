@@ -219,12 +219,6 @@ function isDate(obj) {
   return !isNaN(toDate(obj)) && toStr(obj).length >= 6;
 }
 
-let NUMBER_REGEX = /^\d+$/;
-
-function isNumber(obj) {
-  return toStr(obj).match(NUMBER_REGEX);
-}
-
 function formatValue(pre, value, options) {
   pre = pre || "";
   if (options.prefix) {
@@ -250,4 +244,4 @@ function formatValue(pre, value, options) {
   return pre + value + (options.suffix || "");
 }
 
-export { formatValue, jsOptionsFunc, merge, isArray, isFunction, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate, isNumber };
+export { formatValue, jsOptionsFunc, merge, isArray, isFunction, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate };
