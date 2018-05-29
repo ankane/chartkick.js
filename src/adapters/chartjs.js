@@ -274,6 +274,7 @@ let createDataTable = function (chart, options, chartType) {
       borderColor: color,
       backgroundColor: backgroundColor,
       pointBackgroundColor: color,
+      pointHoverBackgroundColor: color,
       borderWidth: 2
     };
 
