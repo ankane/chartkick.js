@@ -290,7 +290,11 @@ let createDataTable = function (chart, options, chartType) {
       dataset.pointHitRadius = 5;
     }
 
-    datasets.push(merge(dataset, s.library || {}));
+    dataset = merge(dataset, chart.options.dataset || {});
+    dataset = merge(dataset, s.library || {});
+    dataset = merge(dataset, s.dataset || {});
+
+    datasets.push(dataset);
   }
 
   if (detectType && labels.length > 0) {
@@ -413,14 +417,15 @@ export default class {
       values.push(point[1]);
     }
 
+    let dataset = {
+      data: values,
+      backgroundColor: chart.options.colors || defaultColors
+    }
+    dataset = merge(dataset, chart.options.dataset || {});
+
     let data = {
       labels: labels,
-      datasets: [
-        {
-          data: values,
-          backgroundColor: chart.options.colors || defaultColors
-        }
-      ]
+      datasets: [dataset]
     };
 
     this.drawChart(chart, "pie", data, options);

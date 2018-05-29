@@ -1,3 +1,7 @@
+## 2.3.6 [unreleased]
+
+- Added `dataset` option for Chart.js
+
 ## 2.3.5
 
 - Added `addAdapter` function
