@@ -71,7 +71,7 @@ function addDownloadButton(chart) {
   addEvent(element, "mouseover", function(e) {
     let related = e.relatedTarget;
     // check download option again to ensure it wasn't changed
-    if (!related || (related !== this && !childOf(this, related)) && chart.options.download) {
+    if (!related || (related !== this && !childOf(this, related)) && chart.options.download && !chart.destroyed) {
       link.href = chart.toImage();
       element.appendChild(link);
     }
@@ -400,8 +400,9 @@ class Chart {
 
   destroy() {
     if (this.__adapterObject) {
-      this.__adapterObject.destroy(this.chart);
+      this.__adapterObject.destroy(this);
     }
+    this.destroyed = true;
 
     // TODO remove download events if needed
   }
