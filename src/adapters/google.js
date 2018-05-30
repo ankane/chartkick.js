@@ -282,10 +282,14 @@ export default class {
     });
   }
 
-  drawChart(chart, type, data, options) {
+  destroy(chart) {
     if (chart.chart) {
       chart.chart.clearChart();
     }
+  }
+
+  drawChart(chart, type, data, options) {
+    this.destroy(chart);
 
     chart.chart = new type(chart.element);
     resize(function () {

@@ -180,6 +180,7 @@ function callAdapter(chartType, chart) {
     adapter = adapters[i];
     if ((!adapterName || adapterName === adapter.name) && isFunction(adapter[fnName])) {
       chart.adapter = adapter.name;
+      chart.__adapterObject = adapter;
       return adapter[fnName](chart);
     }
   }
@@ -395,6 +396,14 @@ class Chart {
     } else {
       return null;
     }
+  }
+
+  destroy() {
+    if (this.__adapterObject) {
+      this.__adapterObject.destroy(this.chart);
+    }
+
+    // TODO remove download events if needed
   }
 
   __updateOptions(options) {

@@ -511,10 +511,14 @@ export default class {
     this.renderScatterChart(chart, "bubble");
   }
 
-  drawChart(chart, type, data, options) {
+  destroy(chart) {
     if (chart.chart) {
       chart.chart.destroy();
     }
+  }
+
+  drawChart(chart, type, data, options) {
+    this.destroy(chart);
 
     chart.element.innerHTML = "<canvas></canvas>";
     let ctx = chart.element.getElementsByTagName("CANVAS")[0];

@@ -1,6 +1,7 @@
 ## 2.3.6 [unreleased]
 
 - Added `dataset` option for Chart.js
+- Added `destroy` function
 
 ## 2.3.5
 
