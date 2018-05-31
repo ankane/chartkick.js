@@ -65,7 +65,7 @@ function addDownloadButton(chart) {
   link.appendChild(image);
   element.style.position = "relative";
 
-  chart.downloadAttached = true;
+  chart.__downloadAttached = true;
 
   // mouseenter
   chart.__enterEvent = addEvent(element, "mouseover", function(e) {
@@ -172,7 +172,7 @@ function renderChart(chartType, chart) {
     setText(chart.element, chart.options.messages.empty);
   } else {
     callAdapter(chartType, chart);
-    if (chart.options.download && !chart.downloadAttached && chart.adapter === "chartjs") {
+    if (chart.options.download && !chart.__downloadAttached && chart.adapter === "chartjs") {
       addDownloadButton(chart);
     }
   }
