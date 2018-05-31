@@ -210,7 +210,7 @@ new Chartkick.LineChart("chart-1", data, {library: {backgroundColor: "pink"}})
 
 See the documentation for [Chart.js](https://www.chartjs.org/docs/), [Google Charts](https://developers.google.com/chart/interactive/docs/gallery), and [Highcharts](https://api.highcharts.com/highcharts) for more info.
 
-To customize datasets in Chart.js, use: [master]
+To customize datasets in Chart.js, use:
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {dataset: {borderWidth: 10}})
