@@ -133,7 +133,7 @@ export default class {
       }
       let data = this.createDataTable(chart.data, columnType);
 
-      this.drawChart(chart, this.library.visualization.LineChart, data, options);
+      this.drawChart(chart, "LineChart", data, options);
     });
   }
 
@@ -165,7 +165,7 @@ export default class {
       data.addColumn("number", "Value");
       data.addRows(chart.data);
 
-      this.drawChart(chart, this.library.visualization.PieChart, data, options);
+      this.drawChart(chart, "PieChart", data, options);
     });
   }
 
@@ -174,7 +174,7 @@ export default class {
       let options = jsOptions(chart, chart.options);
       let data = this.createDataTable(chart.data, "string", chart.options.xtype);
 
-      this.drawChart(chart, this.library.visualization.ColumnChart, data, options);
+      this.drawChart(chart, "ColumnChart", data, options);
     });
   }
 
@@ -190,7 +190,7 @@ export default class {
       let options = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
       let data = this.createDataTable(chart.data, "string", chart.options.xtype);
 
-      this.drawChart(chart, this.library.visualization.BarChart, data, options);
+      this.drawChart(chart, "BarChart", data, options);
     });
   }
 
@@ -209,7 +209,7 @@ export default class {
       }
       let data = this.createDataTable(chart.data, columnType);
 
-      this.drawChart(chart, this.library.visualization.AreaChart, data, options);
+      this.drawChart(chart, "AreaChart", data, options);
     });
   }
 
@@ -228,7 +228,7 @@ export default class {
       data.addColumn("number", chart.options.label || "Value");
       data.addRows(chart.data);
 
-      this.drawChart(chart, this.library.visualization.GeoChart, data, options);
+      this.drawChart(chart, "GeoChart", data, options);
     });
   }
 
@@ -255,7 +255,7 @@ export default class {
       }
       data.addRows(rows2);
 
-      this.drawChart(chart, this.library.visualization.ScatterChart, data, options);
+      this.drawChart(chart, "ScatterChart", data, options);
     });
   }
 
@@ -278,7 +278,7 @@ export default class {
 
       chart.element.style.lineHeight = "normal";
 
-      this.drawChart(chart, this.library.visualization.Timeline, data, options);
+      this.drawChart(chart, "Timeline", data, options);
     });
   }
 
@@ -291,10 +291,14 @@ export default class {
   drawChart(chart, type, data, options) {
     this.destroy(chart);
 
-    chart.chart = new type(chart.element);
-    resize(function () {
-      chart.chart.draw(data, options);
-    });
+    if (chart.options.debug) {
+      chart.element.innerText = "var chart = new google.visualization." + type + "(element);\nchart.draw(data, options);";
+    } else {
+      chart.chart = new this.library.visualization[type](chart.element);
+      resize(function () {
+        chart.chart.draw(data, options);
+      });
+    }
   }
 
   waitForLoaded(chart, pack, callback) {

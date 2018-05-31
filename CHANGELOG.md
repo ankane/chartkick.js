@@ -1,3 +1,7 @@
+## 2.3.7 [unreleased]
+
+- Added `debug` option
+
 ## 2.3.6
 
 - Added `dataset` option for Chart.js

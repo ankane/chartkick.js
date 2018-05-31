@@ -270,6 +270,11 @@ export default class {
 
     options.chart.renderTo = chart.element.id;
     options.series = data;
-    chart.chart = new this.library.Chart(options);
+
+    if (chart.options.debug) {
+      chart.element.innerText = "new Highcharts.Chart(" + JSON.stringify(options) + ");";
+    } else {
+      chart.chart = new this.library.Chart(options);
+    }
   }
 }

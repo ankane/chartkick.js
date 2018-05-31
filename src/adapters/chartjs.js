@@ -520,12 +520,18 @@ export default class {
   drawChart(chart, type, data, options) {
     this.destroy(chart);
 
-    chart.element.innerHTML = "<canvas></canvas>";
-    let ctx = chart.element.getElementsByTagName("CANVAS")[0];
-    chart.chart = new this.library(ctx, {
+    let chartOptions = {
       type: type,
       data: data,
       options: options
-    });
+    };
+
+    if (chart.options.debug) {
+      chart.element.innerText = "new Chart(ctx, " + JSON.stringify(chartOptions) + ");";
+    } else {
+      chart.element.innerHTML = "<canvas></canvas>";
+      let ctx = chart.element.getElementsByTagName("CANVAS")[0];
+      chart.chart = new this.library(ctx, chartOptions);
+    }
   }
 }
