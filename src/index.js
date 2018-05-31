@@ -172,7 +172,7 @@ function renderChart(chartType, chart) {
     setText(chart.element, chart.options.messages.empty);
   } else {
     callAdapter(chartType, chart);
-    if (chart.options.download && !chart.__downloadAttached && chart.adapter === "chartjs") {
+    if (chart.options.download && !chart.__downloadAttached && chart.adapter === "chartjs" && !chart.options.debug) {
       addDownloadButton(chart);
     }
   }
