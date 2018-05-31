@@ -271,7 +271,7 @@ export default class {
     options.chart.renderTo = chart.element.id;
     options.series = data;
 
-    if (chart.options.debug) {
+    if (chart.options.eject) {
       chart.element.innerText = "new Highcharts.Chart(" + JSON.stringify(options) + ");";
     } else {
       chart.chart = new this.library.Chart(options);

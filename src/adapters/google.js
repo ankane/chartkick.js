@@ -291,7 +291,7 @@ export default class {
   drawChart(chart, type, data, options) {
     this.destroy(chart);
 
-    if (chart.options.debug) {
+    if (chart.options.eject) {
       chart.element.innerText = "var data = new google.visualization.DataTable(" + data.toJSON() + ");\nvar chart = new google.visualization." + type + "(element);\nchart.draw(data, " + JSON.stringify(options) + ");";
     } else {
       chart.chart = new this.library.visualization[type](chart.element);

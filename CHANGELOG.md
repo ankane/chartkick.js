@@ -1,6 +1,6 @@
 ## 2.3.7 [unreleased]
 
-- Added `debug` option
+- Added `eject` option
 
 ## 2.3.6
 

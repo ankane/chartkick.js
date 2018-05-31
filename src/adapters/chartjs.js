@@ -526,7 +526,7 @@ export default class {
       options: options
     };
 
-    if (chart.options.debug) {
+    if (chart.options.eject) {
       chart.element.innerText = "new Chart(ctx, " + JSON.stringify(chartOptions) + ");";
     } else {
       chart.element.innerHTML = "<canvas></canvas>";
