@@ -292,7 +292,7 @@ export default class {
     this.destroy(chart);
 
     if (chart.options.debug) {
-      chart.element.innerText = "var chart = new google.visualization." + type + "(element);\nchart.draw(data, " + JSON.stringify(options) + ");";
+      chart.element.innerText = "var data = new google.visualization.DataTable(" + data.toJSON() + ");\nvar chart = new google.visualization." + type + "(element);\nchart.draw(data, " + JSON.stringify(options) + ");";
     } else {
       chart.chart = new this.library.visualization[type](chart.element);
       resize(function () {
