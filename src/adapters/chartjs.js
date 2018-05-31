@@ -421,7 +421,7 @@ export default class {
     let dataset = {
       data: values,
       backgroundColor: chart.options.colors || defaultColors
-    }
+    };
     dataset = merge(dataset, chart.options.dataset || {});
 
     let data = {
