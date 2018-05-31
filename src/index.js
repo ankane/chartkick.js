@@ -68,7 +68,7 @@ function addDownloadButton(chart) {
   chart.downloadAttached = true;
 
   // mouseenter
-  chart.enterEvent = addEvent(element, "mouseover", function(e) {
+  chart.__enterEvent = addEvent(element, "mouseover", function(e) {
     let related = e.relatedTarget;
     // check download option again to ensure it wasn't changed
     if ((!related || (related !== this && !childOf(this, related))) && chart.options.download) {
@@ -78,7 +78,7 @@ function addDownloadButton(chart) {
   });
 
   // mouseleave
-  chart.leaveEvent = addEvent(element, "mouseout", function(e) {
+  chart.__leaveEvent = addEvent(element, "mouseout", function(e) {
     let related = e.relatedTarget;
     if (!related || (related !== this && !childOf(this, related))) {
       if (link.parentNode) {
@@ -414,12 +414,12 @@ class Chart {
       this.__adapterObject.destroy(this);
     }
 
-    if (this.enterEvent) {
-      removeEvent(this.element, "mouseover", this.enterEvent);
+    if (this.__enterEvent) {
+      removeEvent(this.element, "mouseover", this.__enterEvent);
     }
 
-    if (this.leaveEvent) {
-      removeEvent(this.element, "mouseout", this.leaveEvent);
+    if (this.__leaveEvent) {
+      removeEvent(this.element, "mouseout", this.__leaveEvent);
     }
   }
 
