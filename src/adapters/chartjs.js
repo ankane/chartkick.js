@@ -113,7 +113,7 @@ let setYtitle = function (options, title) {
   options.scales.yAxes[0].scaleLabel.labelString = title;
 };
 
-// http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+// https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 let addOpacity = function(hex, opacity) {
   let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? "rgba(" + parseInt(result[1], 16) + ", " + parseInt(result[2], 16) + ", " + parseInt(result[3], 16) + ", " + opacity + ")" : hex;

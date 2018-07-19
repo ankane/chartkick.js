@@ -49,7 +49,7 @@ function fetchDataSource(chart, dataSource) {
 function addDownloadButton(chart) {
   let element = chart.element;
   let link = document.createElement("a");
-  link.download = chart.options.download === true ? "chart.png" : chart.options.download; // http://caniuse.com/download
+  link.download = chart.options.download === true ? "chart.png" : chart.options.download; // https://caniuse.com/download
   link.style.position = "absolute";
   link.style.top = "20px";
   link.style.right = "20px";
@@ -88,7 +88,7 @@ function addDownloadButton(chart) {
   });
 }
 
-// http://stackoverflow.com/questions/10149963/adding-event-listener-cross-browser
+// https://stackoverflow.com/questions/10149963/adding-event-listener-cross-browser
 function addEvent(elem, event, fn) {
   if (elem.addEventListener) {
     elem.addEventListener(event, fn, false);
