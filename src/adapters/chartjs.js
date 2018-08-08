@@ -484,7 +484,7 @@ export default class {
       let color = s.color || colors[i];
       let backgroundColor = chartType === "area" ? addOpacity(color, 0.5) : color;
 
-      datasets.push({
+      let dataset = {
         label: s.name,
         showLine: lineChart || false,
         data: d,
@@ -492,7 +492,13 @@ export default class {
         backgroundColor: backgroundColor,
         pointBackgroundColor: color,
         fill: chartType === "area"
-      });
+      };
+
+      dataset = merge(dataset, chart.options.dataset || {});
+      dataset = merge(dataset, s.library || {});
+      dataset = merge(dataset, s.dataset || {});
+
+      datasets.push(dataset);
     }
 
     if (chartType === "area") {

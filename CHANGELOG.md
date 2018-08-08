@@ -1,6 +1,7 @@
 ## 2.3.7 [unreleased]
 
 - Added `eject` option
+- Fixed `dataset` option for scatter charts
 
 ## 2.3.6
 
