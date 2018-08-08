@@ -123,15 +123,19 @@ let setLabelSize = function (chart, data, options) {
   let maxLabelSize = Math.ceil(chart.element.offsetWidth / 4.0 / data.labels.length);
   if (maxLabelSize > 25) {
     maxLabelSize = 25;
+  } else if (maxLabelSize < 10) {
+    maxLabelSize = 10;
   }
-  options.scales.xAxes[0].ticks.callback = function (value) {
-    value = toStr(value);
-    if (value.length > maxLabelSize) {
-      return value.substring(0, maxLabelSize - 2) + "...";
-    } else {
-      return value;
-    }
-  };
+  if (!options.scales.xAxes[0].ticks.callback) {
+    options.scales.xAxes[0].ticks.callback = function (value) {
+      value = toStr(value);
+      if (value.length > maxLabelSize) {
+        return value.substring(0, maxLabelSize - 2) + "...";
+      } else {
+        return value;
+      }
+    };
+  }
 };
 
 let setFormatOptions = function(chart, options, chartType) {
