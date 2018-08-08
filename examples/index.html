@@ -26,6 +26,7 @@
       // Chartkick.options = {colors: ["#b00", "#666"]};
       // Chartkick.options = {legend: "right"};
       // Chartkick.options = {title: "Bingo"};
+      // Chartkick.options = {eject: true};
 
       // var CustomAdapter = {
       //   name: "custom",
@@ -202,6 +203,30 @@
     <div id="library" style="height: 300px;"></div>
     <script>
       new Chartkick.LineChart("library", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {"library": {"backgroundColor": "#eee", "chart": {"zoomType": "x"}, "legend": {"position": "top"}, "hAxis": {"title": "Time"}, "vAxis": {"title": "Count"}}});
+    </script>
+
+    <h1>Line Chart - Dataset</h1>
+    <div id="line-dataset" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("line-dataset", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {dataset: {borderDash: [10]}});
+    </script>
+
+    <h1>Pie Chart - Dataset</h1>
+    <div id="pie-dataset" style="height: 300px;"></div>
+    <script>
+      new Chartkick.PieChart("pie-dataset", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13]], {dataset: {borderWidth: 10}});
+    </script>
+
+    <h1>Scatter Chart - Dataset</h1>
+    <div id="scatter-dataset" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ScatterChart("scatter-dataset", [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]], {dataset: {showLine: true}});
+    </script>
+
+    <h1>Multiple Series - Dataset</h1>
+    <div id="multiple-line-dataset" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("multiple-line-dataset", [{"name":"Workout","data":{"2013-02-10":3,"2013-02-17":3,"2013-02-24":3,"2013-03-03":1,"2013-03-10":4,"2013-03-17":3,"2013-03-24":2,"2013-03-31":3}},{"name":"Go to concert","data":{"2013-02-10":0,"2013-02-17":0,"2013-02-24":0,"2013-03-03":0,"2013-03-10":2,"2013-03-17":1,"2013-03-24":0,"2013-03-31":0}},{"name":"Wash face","data":{"2013-02-10":0,"2013-02-17":1,"2013-02-24":0,"2013-03-03":0,"2013-03-10":0,"2013-03-17":1,"2013-03-24":0,"2013-03-31":1}},{"name":"Call parents","data":{"2013-02-10":5,"2013-02-17":3,"2013-02-24":2,"2013-03-03":0,"2013-03-10":0,"2013-03-17":1,"2013-03-24":1,"2013-03-31":0}},{"name":"Eat breakfast","data":{"2013-02-10":3,"2013-02-17":2,"2013-02-24":1,"2013-03-03":0,"2013-03-10":2,"2013-03-17":2,"2013-03-24":3,"2013-03-31":0}, dataset: {borderDash: [10]}}]);
     </script>
 
     <h1>Geo Chart</h1>

@@ -4,6 +4,16 @@
 - Removed `window.Chartkick = {...}` way to set config
 - Normalize bubble sizes
 
+## 2.3.7 [unreleased]
+
+- Added `eject` option
+- Fixed `dataset` option for scatter charts
+
+## 2.3.6
+
+- Added `dataset` option for Chart.js
+- Added `destroy` function
+
 ## 2.3.5
 
 - Added `addAdapter` function

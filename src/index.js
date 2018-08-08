@@ -49,7 +49,7 @@ function fetchDataSource(chart, dataSource) {
 function addDownloadButton(chart) {
   let element = chart.element;
   let link = document.createElement("a");
-  link.download = chart.options.download === true ? "chart.png" : chart.options.download; // http://caniuse.com/download
+  link.download = chart.options.download === true ? "chart.png" : chart.options.download; // https://caniuse.com/download
   link.style.position = "absolute";
   link.style.top = "20px";
   link.style.right = "20px";
@@ -65,20 +65,20 @@ function addDownloadButton(chart) {
   link.appendChild(image);
   element.style.position = "relative";
 
-  chart.downloadAttached = true;
+  chart.__downloadAttached = true;
 
   // mouseenter
-  addEvent(element, "mouseover", function(e) {
+  chart.__enterEvent = addEvent(element, "mouseover", function(e) {
     let related = e.relatedTarget;
     // check download option again to ensure it wasn't changed
-    if (!related || (related !== this && !childOf(this, related)) && chart.options.download) {
+    if ((!related || (related !== this && !childOf(this, related))) && chart.options.download) {
       link.href = chart.toImage();
       element.appendChild(link);
     }
   });
 
   // mouseleave
-  addEvent(element, "mouseout", function(e) {
+  chart.__leaveEvent = addEvent(element, "mouseout", function(e) {
     let related = e.relatedTarget;
     if (!related || (related !== this && !childOf(this, related))) {
       if (link.parentNode) {
@@ -88,15 +88,26 @@ function addDownloadButton(chart) {
   });
 }
 
-// http://stackoverflow.com/questions/10149963/adding-event-listener-cross-browser
+// https://stackoverflow.com/questions/10149963/adding-event-listener-cross-browser
 function addEvent(elem, event, fn) {
   if (elem.addEventListener) {
     elem.addEventListener(event, fn, false);
+    return fn;
   } else {
-    elem.attachEvent("on" + event, function() {
+    let fn2 = function() {
       // set the this pointer same as addEventListener when fn is called
       return(fn.call(elem, window.event));
-    });
+    };
+    elem.attachEvent("on" + event, fn2);
+    return fn2;
+  }
+}
+
+function removeEvent(elem, event, fn) {
+  if (elem.removeEventListener) {
+    elem.removeEventListener(event, fn, false);
+  } else {
+    elem.detachEvent("on" + event, fn);
   }
 }
 
@@ -161,7 +172,7 @@ function renderChart(chartType, chart) {
     setText(chart.element, chart.options.messages.empty);
   } else {
     callAdapter(chartType, chart);
-    if (chart.options.download && !chart.downloadAttached && chart.adapter === "chartjs") {
+    if (chart.options.download && !chart.__downloadAttached && chart.adapter === "chartjs" && !chart.options.eject) {
       addDownloadButton(chart);
     }
   }
@@ -180,6 +191,7 @@ function callAdapter(chartType, chart) {
     adapter = adapters[i];
     if ((!adapterName || adapterName === adapter.name) && isFunction(adapter[fnName])) {
       chart.adapter = adapter.name;
+      chart.__adapterObject = adapter;
       return adapter[fnName](chart);
     }
   }
@@ -395,6 +407,20 @@ class Chart {
       return this.chart.toBase64Image();
     } else {
       return null;
+    }
+  }
+
+  destroy() {
+    if (this.__adapterObject) {
+      this.__adapterObject.destroy(this);
+    }
+
+    if (this.__enterEvent) {
+      removeEvent(this.element, "mouseover", this.__enterEvent);
+    }
+
+    if (this.__leaveEvent) {
+      removeEvent(this.element, "mouseout", this.__leaveEvent);
     }
   }
 

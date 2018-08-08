@@ -258,13 +258,22 @@ export default class {
     this.renderLineChart(chart, "areaspline");
   }
 
-  drawChart(chart, data, options) {
+  destroy(chart) {
     if (chart.chart) {
       chart.chart.destroy();
     }
+  }
+
+  drawChart(chart, data, options) {
+    this.destroy(chart);
 
     options.chart.renderTo = chart.element.id;
     options.series = data;
-    chart.chart = new this.library.Chart(options);
+
+    if (chart.options.eject) {
+      chart.element.innerText = "new Highcharts.Chart(" + JSON.stringify(options) + ");";
+    } else {
+      chart.chart = new this.library.Chart(options);
+    }
   }
 }

@@ -113,7 +113,7 @@ let setYtitle = function (options, title) {
   options.scales.yAxes[0].scaleLabel.labelString = title;
 };
 
-// http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+// https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 let addOpacity = function(hex, opacity) {
   let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? "rgba(" + parseInt(result[1], 16) + ", " + parseInt(result[2], 16) + ", " + parseInt(result[3], 16) + ", " + opacity + ")" : hex;
@@ -273,6 +273,7 @@ let createDataTable = function (chart, options, chartType) {
       backgroundColor: backgroundColor,
       pointBackgroundColor: color,
       borderWidth: 2,
+      pointHoverBackgroundColor: color,
       spanGaps: true
     };
 
@@ -289,7 +290,11 @@ let createDataTable = function (chart, options, chartType) {
       dataset.pointHitRadius = 5;
     }
 
-    datasets.push(merge(dataset, s.library || {}));
+    dataset = merge(dataset, chart.options.dataset || {});
+    dataset = merge(dataset, s.library || {});
+    dataset = merge(dataset, s.dataset || {});
+
+    datasets.push(dataset);
   }
 
   if (detectType && labels.length > 0) {
@@ -412,14 +417,15 @@ export default class {
       values.push(point[1]);
     }
 
+    let dataset = {
+      data: values,
+      backgroundColor: chart.options.colors || defaultColors
+    };
+    dataset = merge(dataset, chart.options.dataset || {});
+
     let data = {
       labels: labels,
-      datasets: [
-        {
-          data: values,
-          backgroundColor: chart.options.colors || defaultColors
-        }
-      ]
+      datasets: [dataset]
     };
 
     this.drawChart(chart, "pie", data, options);
@@ -490,7 +496,7 @@ export default class {
       let color = s.color || colors[i];
       let backgroundColor = chartType === "area" ? addOpacity(color, 0.5) : color;
 
-      datasets.push({
+      let dataset = {
         label: s.name,
         showLine: lineChart || false,
         data: d,
@@ -498,7 +504,13 @@ export default class {
         backgroundColor: backgroundColor,
         pointBackgroundColor: color,
         fill: chartType === "area"
-      });
+      };
+
+      dataset = merge(dataset, chart.options.dataset || {});
+      dataset = merge(dataset, s.library || {});
+      dataset = merge(dataset, s.dataset || {});
+
+      datasets.push(dataset);
     }
 
     if (chartType === "area") {
@@ -517,17 +529,27 @@ export default class {
     this.renderScatterChart(chart, "bubble");
   }
 
-  drawChart(chart, type, data, options) {
+  destroy(chart) {
     if (chart.chart) {
       chart.chart.destroy();
     }
+  }
 
-    chart.element.innerHTML = "<canvas></canvas>";
-    let ctx = chart.element.getElementsByTagName("CANVAS")[0];
-    chart.chart = new this.library(ctx, {
+  drawChart(chart, type, data, options) {
+    this.destroy(chart);
+
+    let chartOptions = {
       type: type,
       data: data,
       options: options
-    });
+    };
+
+    if (chart.options.eject) {
+      chart.element.innerText = "new Chart(ctx, " + JSON.stringify(chartOptions) + ");";
+    } else {
+      chart.element.innerHTML = "<canvas></canvas>";
+      let ctx = chart.element.getElementsByTagName("CANVAS")[0];
+      chart.chart = new this.library(ctx, chartOptions);
+    }
   }
 }
