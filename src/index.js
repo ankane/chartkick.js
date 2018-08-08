@@ -2,7 +2,7 @@ import ChartjsAdapter from "./adapters/chartjs";
 import HighchartsAdapter from "./adapters/highcharts";
 import GoogleChartsAdapter from "./adapters/google";
 
-import { merge, isFunction, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate } from "./helpers";
+import { merge, isFunction, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate, isNumber } from "./helpers";
 import { pushRequest } from "./request-queue";
 
 let config = {};
@@ -225,6 +225,8 @@ let formatSeriesData = function (data, keyType) {
 function detectXType(series, noDatetime) {
   if (!noDatetime && detectXTypeWithFunction(series, isDate)) {
     return "datetime";
+  } else if (detectXTypeWithFunction(series, isNumber)) {
+    return "number";
   } else {
     return "string";
   }
@@ -273,15 +275,7 @@ function processSeries(chart, keyType, noDatetime) {
     chart.hideLegend = false;
   }
 
-  if (keyType) {
-    chart.xtype = keyType;
-  } else if (opts.xtype) {
-    chart.xtype = opts.xtype;
-  } else if (opts.discrete) {
-    chart.xtype = "string";
-  } else {
-    chart.xtype = detectXType(series, noDatetime);
-  }
+  chart.xtype = keyType ? keyType : (opts.discrete ? "string" : detectXType(series, noDatetime));
 
   // right format
   series = copySeries(series);
