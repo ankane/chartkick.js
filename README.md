@@ -446,6 +446,13 @@ and visit [http://localhost:8000/examples/](http://localhost:8000/examples/)
 
 ## Upgrading
 
+### 3.0
+
+Breaking changes
+
+- Detect numeric axes automatically (and removed `xtype` option)
+- Removed `window.Chartkick = {...}` way to set config
+
 ### 2.0
 
 Breaking changes
