@@ -244,19 +244,25 @@
     <h1>Discrete Line Chart</h1>
     <div id="discrete-line" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("discrete-line", [["United States",44],["Germany",23],["Brazil",22],["Canada",21],["France",13]], {"discrete": true});
+      new Chartkick.LineChart("discrete-line", [["United States",44],["Germany",23],["Brazil",22],["Canada",21],["France",13]]);
+    </script>
+
+    <h1>Discrete Line Chart Numeric String</h1>
+    <div id="numeric-string" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("chart", [["26",4],["25",8],["24",0],["23",2],["22",2],["21",1],["20",3],["19",5],["18",8],["17",1],["16",3],["15",1],["14",2],["13",5],["12",7],["11",9],["10",1],["9",6],["8",4],["7",0],["6",3],["5",9],["4",8],["3",0],["2",5],["1",2]], {});
     </script>
 
     <h1>Discrete Area Chart</h1>
     <div id="discrete-area" style="height: 300px;"></div>
     <script>
-      new Chartkick.AreaChart("discrete-area", [["United States",44],["Germany",23],["Brazil",22],["Canada",21],["France",13]], {"discrete": true});
+      new Chartkick.AreaChart("discrete-area", [["United States",44],["Germany",23],["Brazil",22],["Canada",21],["France",13]]);
     </script>
 
     <h1>Discrete Multiple Series</h1>
     <div id="multiple-discrete" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("multiple-discrete", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",22],["1",36],["2",38],["3",31],["4",30],["5",3],["6",17]]}], {"discrete": true});
+      new Chartkick.LineChart("multiple-discrete", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",22],["1",36],["2",38],["3",31],["4",30],["5",3],["6",17]]}]);
     </script>
 
     <h1>Different Data</h1>
