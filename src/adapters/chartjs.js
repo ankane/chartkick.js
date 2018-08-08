@@ -201,61 +201,90 @@ let createDataTable = function (chart, options, chartType) {
   let year = true;
   let hour = true;
   let minute = true;
-  let detectType = (chartType === "line" || chartType === "area") && chart.xtype !== "string";
 
   let series = chart.data;
 
-  let sortedLabels = [];
-
-  let i, j, s, d, key, rows = [];
-  for (i = 0; i < series.length; i++) {
-    s = series[i];
-
-    for (j = 0; j < s.data.length; j++) {
-      d = s.data[j];
-      key = detectType ? d[0].getTime() : d[0];
-      if (!rows[key]) {
-        rows[key] = new Array(series.length);
-      }
-      rows[key][i] = toFloat(d[1]);
-      if (sortedLabels.indexOf(key) === -1) {
-        sortedLabels.push(key);
+  let max = 0;
+  if (chartType === "bubble") {
+    for (let i = 0; i < series.length; i++) {
+      let s = series[i];
+      for (let j = 0; j < s.data.length; j++) {
+        if (s.data[j][2] > max) {
+          max = s.data[j][2];
+        }
       }
     }
   }
 
-  if (detectType || chart.xtype === "number") {
-    sortedLabels.sort(sortByNumber);
-  }
+  let i, j, s, d, key, rows = [], rows2 = [];
 
-  let rows2 = [];
-  for (j = 0; j < series.length; j++) {
-    rows2.push([]);
-  }
-
-  let value;
-  let k;
-  for (k = 0; k < sortedLabels.length; k++) {
-    i = sortedLabels[k];
-    if (detectType) {
-      value = new Date(toFloat(i));
-      // TODO make this efficient
-      day = day && isDay(value);
-      if (!dayOfWeek) {
-        dayOfWeek = value.getDay();
+  if (chart.xtype === "number" || chartType === "bubble") {
+    for (let i = 0; i < series.length; i++) {
+      let s = series[i];
+      let d = [];
+      for (let j = 0; j < s.data.length; j++) {
+        let point = {
+          x: toFloat(s.data[j][0]),
+          y: toFloat(s.data[j][1])
+        };
+        if (chartType === "bubble") {
+          point.r = toFloat(s.data[j][2]) * 20 / max;
+        }
+        d.push(point);
       }
-      week = week && isWeek(value, dayOfWeek);
-      month = month && isMonth(value);
-      year = year && isYear(value);
-      hour = hour && isHour(value);
-      minute = minute && isMinute(value);
-    } else {
-      value = i;
+      rows2.push(d)
     }
-    labels.push(value);
+  } else {
+    let sortedLabels = [];
+
+    for (i = 0; i < series.length; i++) {
+      s = series[i];
+
+      for (j = 0; j < s.data.length; j++) {
+        d = s.data[j];
+        key = chart.xtype == "time" ? d[0].getTime() : d[0];
+        if (!rows[key]) {
+          rows[key] = new Array(series.length);
+        }
+        rows[key][i] = toFloat(d[1]);
+        if (sortedLabels.indexOf(key) === -1) {
+          sortedLabels.push(key);
+        }
+      }
+    }
+
+    if (chart.xtype === "time") {
+      sortedLabels.sort(sortByNumber);
+    }
+
     for (j = 0; j < series.length; j++) {
-      // Chart.js doesn't like undefined
-      rows2[j].push(rows[i][j] === undefined ? null : rows[i][j]);
+      rows2.push([]);
+    }
+
+    let value;
+    let k;
+    for (k = 0; k < sortedLabels.length; k++) {
+      i = sortedLabels[k];
+      if (chart.xtype === "time") {
+        value = new Date(toFloat(i));
+        // TODO make this efficient
+        day = day && isDay(value);
+        if (!dayOfWeek) {
+          dayOfWeek = value.getDay();
+        }
+        week = week && isWeek(value, dayOfWeek);
+        month = month && isMonth(value);
+        year = year && isYear(value);
+        hour = hour && isHour(value);
+        minute = minute && isMinute(value);
+      } else {
+        value = i;
+      }
+      labels.push(value);
+      for (j = 0; j < series.length; j++) {
+        // Chart.js doesn't like undefined
+        rows2[j].push(rows[i][j] === undefined ? null : rows[i][j]);
+      }
     }
   }
 
@@ -274,8 +303,12 @@ let createDataTable = function (chart, options, chartType) {
       pointBackgroundColor: color,
       borderWidth: 2,
       pointHoverBackgroundColor: color,
-      spanGaps: true
+      // spanGaps: true
     };
+
+    if (chartType === "scatter" || chartType === "bubble") {
+      dataset.showLine = false;
+    }
 
     if (s.stack) {
       dataset.stack = s.stack;
@@ -297,7 +330,7 @@ let createDataTable = function (chart, options, chartType) {
     datasets.push(dataset);
   }
 
-  if (detectType && labels.length > 0) {
+  if (chart.xtype === "time" && labels.length > 0) {
     let minTime = labels[0].getTime();
     let maxTime = labels[0].getTime();
     for (i = 1; i < labels.length; i++) {
@@ -368,10 +401,6 @@ export default class {
   }
 
   renderLineChart(chart, chartType) {
-    if (chart.xtype === "number") {
-      return this.renderScatterChart(chart, chartType, true);
-    }
-
     let chartOptions = {};
     if (chartType === "area") {
       // TODO fix area stacked
@@ -387,7 +416,7 @@ export default class {
 
     let data = createDataTable(chart, options, chartType || "line");
 
-    options.scales.xAxes[0].type = chart.xtype === "string" ? "category" : "time";
+    options.scales.xAxes[0].type = chart.xtype === "string" ? "category" : (chart.xtype == "number" ? "linear" : "time");
 
     this.drawChart(chart, "line", data, options);
   }
@@ -454,70 +483,13 @@ export default class {
     this.renderColumnChart(chart, "bar");
   }
 
-  renderScatterChart(chart, chartType, lineChart) {
-    chartType = chartType || "line";
+  renderScatterChart(chart, chartType) {
+    chartType = chartType || "scatter";
 
     let options = jsOptions(chart, chart.options);
-    if (!lineChart) {
-      setFormatOptions(chart, options, chartType);
-    }
+    setFormatOptions(chart, options, chartType);
 
-    let colors = chart.options.colors || defaultColors;
-
-    let datasets = [];
-    let series = chart.data;
-
-    let max = 0;
-    if (chartType == "bubble") {
-      for (let i = 0; i < series.length; i++) {
-        let s = series[i];
-        for (let j = 0; j < s.data.length; j++) {
-          if (s.data[j][2] > max) {
-            max = s.data[j][2];
-          }
-        }
-      }
-    }
-
-    for (let i = 0; i < series.length; i++) {
-      let s = series[i];
-      let d = [];
-      for (let j = 0; j < s.data.length; j++) {
-        let point = {
-          x: toFloat(s.data[j][0]),
-          y: toFloat(s.data[j][1])
-        };
-        if (chartType === "bubble") {
-          point.r = toFloat(s.data[j][2]) * 20 / max;
-        }
-        d.push(point);
-      }
-
-      let color = s.color || colors[i];
-      let backgroundColor = chartType === "area" ? addOpacity(color, 0.5) : color;
-
-      let dataset = {
-        label: s.name,
-        showLine: lineChart || false,
-        data: d,
-        borderColor: color,
-        backgroundColor: backgroundColor,
-        pointBackgroundColor: color,
-        fill: chartType === "area"
-      };
-
-      dataset = merge(dataset, chart.options.dataset || {});
-      dataset = merge(dataset, s.library || {});
-      dataset = merge(dataset, s.dataset || {});
-
-      datasets.push(dataset);
-    }
-
-    if (chartType === "area") {
-      chartType = "line";
-    }
-
-    let data = {datasets: datasets};
+    let data = createDataTable(chart, options, chartType);
 
     options.scales.xAxes[0].type = "linear";
     options.scales.xAxes[0].position = "bottom";
