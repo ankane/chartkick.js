@@ -243,6 +243,15 @@ Times can be a `Date`, a timestamp, or a string (strings are parsed)
 new Chartkick.LineChart("chart-1", [[new Date(), 5], [1368174456, 4], ["2017-01-01 00:00:00 UTC", 7]])
 ```
 
+### Multiple Series
+
+You can pass a number of options with a series:
+
+- `name`
+- `data`
+- `color`
+- `dataset` - *Chart.js only*
+
 ### Download Charts
 
 *Chart.js only*
