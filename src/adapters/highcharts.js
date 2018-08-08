@@ -154,7 +154,7 @@ export default class {
     for (i = 0; i < series.length; i++) {
       series[i].name = series[i].name || "Value";
       data = series[i].data;
-      if (chart.xtype == "datetime") {
+      if (chart.xtype === "datetime") {
         for (j = 0; j < data.length; j++) {
           data[j][0] = data[j][0].getTime();
         }

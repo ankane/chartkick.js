@@ -242,7 +242,7 @@ let createDataTable = function (chart, options, chartType) {
 
       for (j = 0; j < s.data.length; j++) {
         d = s.data[j];
-        key = chart.xtype == "time" ? d[0].getTime() : d[0];
+        key = chart.xtype == "datetime" ? d[0].getTime() : d[0];
         if (!rows[key]) {
           rows[key] = new Array(series.length);
         }
@@ -253,7 +253,7 @@ let createDataTable = function (chart, options, chartType) {
       }
     }
 
-    if (chart.xtype === "time") {
+    if (chart.xtype === "datetime") {
       sortedLabels.sort(sortByNumber);
     }
 
@@ -265,7 +265,7 @@ let createDataTable = function (chart, options, chartType) {
     let k;
     for (k = 0; k < sortedLabels.length; k++) {
       i = sortedLabels[k];
-      if (chart.xtype === "time") {
+      if (chart.xtype === "datetime") {
         value = new Date(toFloat(i));
         // TODO make this efficient
         day = day && isDay(value);
@@ -330,11 +330,11 @@ let createDataTable = function (chart, options, chartType) {
     datasets.push(dataset);
   }
 
-  if (chart.xtype === "time" && labels.length > 0) {
+  if (chart.xtype === "datetime" && labels.length > 0) {
     let minTime = labels[0].getTime();
     let maxTime = labels[0].getTime();
     for (i = 1; i < labels.length; i++) {
-      value = labels[i].getTime();
+      let value = labels[i].getTime();
       if (value < minTime) {
         minTime = value;
       }
