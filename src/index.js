@@ -235,10 +235,10 @@ let formatSeriesData = function (data, keyType) {
 };
 
 function detectXType(series, noDatetime) {
-  if (!noDatetime && detectXTypeWithFunction(series, isDate)) {
-    return "datetime";
-  } else if (detectXTypeWithFunction(series, isNumber)) {
+  if (detectXTypeWithFunction(series, isNumber)) {
     return "number";
+  } else if (!noDatetime && detectXTypeWithFunction(series, isDate)) {
+    return "datetime";
   } else {
     return "string";
   }
