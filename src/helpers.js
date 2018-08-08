@@ -222,7 +222,7 @@ function isDate(obj) {
 let NUMBER_REGEX = /^\d+$/;
 
 function isNumber(obj) {
-  return toStr(obj).match(NUMBER_REGEX);
+  return typeof obj === "number";
 }
 
 function formatValue(pre, value, options) {
