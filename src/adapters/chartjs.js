@@ -507,6 +507,10 @@ export default class {
     let options = jsOptions(chart, chart.options);
     setFormatOptions(chart, options, chartType);
 
+    if (!("showLines" in options)) {
+      options.showLines = false;
+    }
+
     let data = createDataTable(chart, options, chartType);
 
     options.scales.xAxes[0].type = "linear";
