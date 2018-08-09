@@ -1,4 +1,4 @@
-## 3.0.0 [unreleased]
+## 3.0.0
 
 - Added `code` option
 - Fixed `dataset` option for scatter charts
