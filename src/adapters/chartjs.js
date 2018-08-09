@@ -318,7 +318,7 @@ let createDataTable = function (chart, options, chartType) {
     let backgroundColor = chartType !== "line" ? addOpacity(color, 0.5) : color;
 
     let dataset = {
-      label: s.name,
+      label: s.name || "",
       data: rows2[i],
       fill: chartType === "area",
       borderColor: color,
