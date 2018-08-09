@@ -1,8 +1,12 @@
 ## 3.0.0 [unreleased]
 
+- Normalize bubble sizes
+
+Breaking changes
+
 - Detect numeric axes automatically (and removed `xtype` option)
 - Removed `window.Chartkick = {...}` way to set config
-- Normalize bubble sizes
+- Removed support for the Google Charts jsapi loader
 
 ## 2.3.7 [unreleased]
 

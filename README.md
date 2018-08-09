@@ -461,6 +461,7 @@ Breaking changes
 
 - Detect numeric axes automatically (and removed `xtype` option)
 - Removed `window.Chartkick = {...}` way to set config
+- Removed support for the Google Charts jsapi loader
 
 ### 2.0
 

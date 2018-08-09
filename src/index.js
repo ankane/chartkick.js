@@ -122,7 +122,7 @@ function getAdapterType(library) {
   if (library) {
     if (library.product === "Highcharts") {
       return HighchartsAdapter;
-    } else if (library.setOnLoadCallback || library.charts) {
+    } else if (library.charts) {
       return GoogleChartsAdapter;
     } else if (isFunction(library)) {
       return ChartjsAdapter;
@@ -149,7 +149,7 @@ function loadAdapters() {
     addAdapter(window.Highcharts);
   }
 
-  if (window.google && (window.google.setOnLoadCallback || window.google.charts)) {
+  if (window.google && window.google.charts) {
     addAdapter(window.google);
   }
 }
