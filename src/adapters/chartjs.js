@@ -167,7 +167,7 @@ let setFormatOptions = function(chart, options, chartType) {
           label += ': ';
         }
         return label + '(' + item.xLabel + ', ' + item.yLabel + ')';
-      }
+      };
     } else if (chartType === "bubble") {
       options.tooltips.callbacks.label = function (item, data) {
         let label = data.datasets[item.datasetIndex].label || '';
@@ -176,7 +176,7 @@ let setFormatOptions = function(chart, options, chartType) {
         }
         let dataPoint = data.datasets[item.datasetIndex].data[item.index];
         return label + '(' + item.xLabel + ', ' + item.yLabel + ', ' + dataPoint.v + ')';
-      }
+      };
     } else if (chartType === "pie") {
       // need to use separate label for pie charts
       options.tooltips.callbacks.label = function (tooltipItem, data) {
@@ -251,11 +251,11 @@ let createDataTable = function (chart, options, chartType) {
         if (chartType === "bubble") {
           point.r = toFloat(s.data[j][2]) * 20 / max;
           // custom attribute, for tooltip
-          point.v = s.data[j][2]
+          point.v = s.data[j][2];
         }
         d.push(point);
       }
-      rows2.push(d)
+      rows2.push(d);
     }
   } else {
     let sortedLabels = [];

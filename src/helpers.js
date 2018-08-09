@@ -219,8 +219,6 @@ function isDate(obj) {
   return !isNaN(toDate(obj)) && toStr(obj).length >= 6;
 }
 
-let NUMBER_REGEX = /^\d+$/;
-
 function isNumber(obj) {
   return typeof obj === "number";
 }
