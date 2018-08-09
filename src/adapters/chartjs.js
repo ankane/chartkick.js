@@ -175,7 +175,7 @@ let setFormatOptions = function(chart, options, chartType) {
           label += ': ';
         }
         let dataPoint = data.datasets[item.datasetIndex].data[item.index];
-        return label + '(' + item.xLabel + ', ' + item.yLabel + ', ' + dataPoint.r + ')';
+        return label + '(' + item.xLabel + ', ' + item.yLabel + ', ' + dataPoint.v + ')';
       }
     } else if (chartType === "pie") {
       // need to use separate label for pie charts
@@ -250,6 +250,8 @@ let createDataTable = function (chart, options, chartType) {
         };
         if (chartType === "bubble") {
           point.r = toFloat(s.data[j][2]) * 20 / max;
+          // custom attribute, for tooltip
+          point.v = s.data[j][2]
         }
         d.push(point);
       }
