@@ -325,8 +325,7 @@ let createDataTable = function (chart, options, chartType) {
       backgroundColor: backgroundColor,
       pointBackgroundColor: color,
       borderWidth: 2,
-      pointHoverBackgroundColor: color,
-      spanGaps: true
+      pointHoverBackgroundColor: color
     };
 
     if (chartType === "scatter" || chartType === "bubble") {
