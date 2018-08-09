@@ -459,9 +459,9 @@ and visit [http://localhost:8000/examples/](http://localhost:8000/examples/)
 
 Breaking changes
 
-- Detect numeric axes automatically (and removed `xtype` option)
-- Removed `window.Chartkick = {...}` way to set config
-- Removed support for the Google Charts jsapi loader
+- Removed `xtype` option - numeric axes are automatically detected
+- Removed `window.Chartkick = {...}` way to set config - use `Chartkick.configure` instead
+- Removed support for the Google Charts jsapi loader - use loader.js instead
 
 ### 2.0
 

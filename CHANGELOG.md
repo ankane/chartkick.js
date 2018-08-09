@@ -1,15 +1,13 @@
 ## 3.0.0 [unreleased]
 
-Breaking changes
-
-- Detect numeric axes automatically (and removed `xtype` option)
-- Removed `window.Chartkick = {...}` way to set config
-- Removed support for the Google Charts jsapi loader
-
-## 2.3.7 [unreleased]
-
 - Added `eject` option
 - Fixed `dataset` option for scatter charts
+
+Breaking changes
+
+- Removed `xtype` option - numeric axes are automatically detected
+- Removed `window.Chartkick = {...}` way to set config - use `Chartkick.configure` instead
+- Removed support for the Google Charts jsapi loader - use loader.js instead
 
 ## 2.3.6
 
