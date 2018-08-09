@@ -262,6 +262,8 @@ new Chartkick.LineChart("chart-1", data, {code: true})
 
 The code will be logged to the JavaScript console.
 
+**Note:** JavaScript functions cannot be logged, so it may not be identical.
+
 ### Download Charts
 
 *Chart.js only*
