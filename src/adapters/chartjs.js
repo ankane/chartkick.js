@@ -328,10 +328,6 @@ let createDataTable = function (chart, options, chartType) {
       pointHoverBackgroundColor: color
     };
 
-    if (chartType === "scatter" || chartType === "bubble") {
-      dataset.showLine = false;
-    }
-
     if (s.stack) {
       dataset.stack = s.stack;
     }
