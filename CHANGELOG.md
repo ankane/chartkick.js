@@ -1,7 +1,5 @@
 ## 3.0.0 [unreleased]
 
-- Normalize bubble sizes
-
 Breaking changes
 
 - Detect numeric axes automatically (and removed `xtype` option)
