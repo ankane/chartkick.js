@@ -284,14 +284,14 @@ export default class {
   drawChart(chart, type, data, options) {
     this.destroy(chart);
 
-    if (chart.options.eject) {
-      chart.element.innerText = "var data = new google.visualization.DataTable(" + data.toJSON() + ");\nvar chart = new google.visualization." + type + "(element);\nchart.draw(data, " + JSON.stringify(options) + ");";
-    } else {
-      chart.chart = new this.library.visualization[type](chart.element);
-      resize(function () {
-        chart.chart.draw(data, options);
-      });
+    if (chart.options.code) {
+      window.console.log("var data = new google.visualization.DataTable(" + data.toJSON() + ");\nvar chart = new google.visualization." + type + "(element);\nchart.draw(data, " + JSON.stringify(options) + ");");
     }
+
+    chart.chart = new this.library.visualization[type](chart.element);
+    resize(function () {
+      chart.chart.draw(data, options);
+    });
   }
 
   waitForLoaded(chart, pack, callback) {

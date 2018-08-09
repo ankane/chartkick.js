@@ -260,6 +260,8 @@ If you want to use the charting library directly, get the code with:
 new Chartkick.LineChart("chart-1", data, {code: true})
 ```
 
+The code will be logged to the JavaScript console.
+
 ### Download Charts
 
 *Chart.js only*

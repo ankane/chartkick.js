@@ -538,12 +538,12 @@ export default class {
       options: options
     };
 
-    if (chart.options.eject) {
-      chart.element.innerText = "new Chart(ctx, " + JSON.stringify(chartOptions) + ");";
-    } else {
-      chart.element.innerHTML = "<canvas></canvas>";
-      let ctx = chart.element.getElementsByTagName("CANVAS")[0];
-      chart.chart = new this.library(ctx, chartOptions);
+    if (chart.options.code) {
+      window.console.log("new Chart(ctx, " + JSON.stringify(chartOptions) + ");");
     }
+
+    chart.element.innerHTML = "<canvas></canvas>";
+    let ctx = chart.element.getElementsByTagName("CANVAS")[0];
+    chart.chart = new this.library(ctx, chartOptions);
   }
 }

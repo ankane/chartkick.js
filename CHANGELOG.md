@@ -1,6 +1,6 @@
 ## 3.0.0 [unreleased]
 
-- Added `eject` option
+- Added `code` option
 - Fixed `dataset` option for scatter charts
 
 Breaking changes
