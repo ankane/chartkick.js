@@ -237,10 +237,10 @@ new Chartkick.PieChart("chart-1", {"Blueberry": 44, "Strawberry": 23})
 new Chartkick.PieChart("chart-1", [["Blueberry", 44], ["Strawberry", 23]])
 ```
 
-Times can be a `Date`, a timestamp, or a string (strings are parsed)
+Times can be a `Date` or a string (strings are parsed)
 
 ```javascript
-new Chartkick.LineChart("chart-1", [[new Date(), 5], [1368174456, 4], ["2017-01-01 00:00:00 UTC", 7]])
+new Chartkick.LineChart("chart-1", [[new Date(), 5], ["2017-01-01 00:00:00 UTC", 7]])
 ```
 
 ### Multiple Series
@@ -251,6 +251,14 @@ You can pass a number of options with a series:
 - `data`
 - `color`
 - `dataset` - *Chart.js only*
+
+### Code
+
+If you want to use the charting library directly, get the code with:
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {code: true})
+```
 
 ### Download Charts
 
