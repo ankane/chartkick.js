@@ -160,16 +160,24 @@ let setFormatOptions = function(chart, options, chartType) {
   }
 
   if (!options.tooltips.callbacks.label) {
-    if (chartType !== "pie") {
-      let valueLabel = chartType === "bar" ? "xLabel" : "yLabel";
-      options.tooltips.callbacks.label = function (tooltipItem, data) {
-        let label = data.datasets[tooltipItem.datasetIndex].label || '';
+    if (chartType === "scatter") {
+      options.tooltips.callbacks.label = function (item, data) {
+        let label = data.datasets[item.datasetIndex].label || '';
         if (label) {
           label += ': ';
         }
-        return formatValue(label, tooltipItem[valueLabel], formatOptions);
-      };
-    } else {
+        return label + '(' + item.xLabel + ', ' + item.yLabel + ')';
+      }
+    } else if (chartType === "bubble") {
+      options.tooltips.callbacks.label = function (item, data) {
+        let label = data.datasets[item.datasetIndex].label || '';
+        if (label) {
+          label += ': ';
+        }
+        let dataPoint = data.datasets[item.datasetIndex].data[item.index];
+        return label + '(' + item.xLabel + ', ' + item.yLabel + ', ' + dataPoint.r + ')';
+      }
+    } else if (chartType === "pie") {
       // need to use separate label for pie charts
       options.tooltips.callbacks.label = function (tooltipItem, data) {
         let dataLabel = data.labels[tooltipItem.index];
@@ -185,6 +193,15 @@ let setFormatOptions = function(chart, options, chartType) {
         }
 
         return formatValue(dataLabel, data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index], formatOptions);
+      };
+    } else {
+      let valueLabel = chartType === "bar" ? "xLabel" : "yLabel";
+      options.tooltips.callbacks.label = function (tooltipItem, data) {
+        let label = data.datasets[tooltipItem.datasetIndex].label || '';
+        if (label) {
+          label += ': ';
+        }
+        return formatValue(label, tooltipItem[valueLabel], formatOptions);
       };
     }
   }
