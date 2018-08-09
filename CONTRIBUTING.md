@@ -19,8 +19,8 @@ Think you’ve discovered an issue?
 
 If the above steps don’t help, create an issue. Include:
 
-- Detailed steps to reproduce
-- Complete backtraces for exceptions
+- Recreate the problem by forking [this gist](https://gist.github.com/ankane/2e92c0ff9c138db7bf482209920466bf). Include a link to your gist and the output in the issue.
+- For exceptions, include the complete backtrace.
 
 ## Pull Requests
 
