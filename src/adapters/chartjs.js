@@ -434,7 +434,12 @@ export default class {
 
     let data = createDataTable(chart, options, chartType || "line");
 
-    options.scales.xAxes[0].type = chart.xtype === "string" ? "category" : (chart.xtype == "number" ? "linear" : "time");
+    if (chart.xtype === "number") {
+      options.scales.xAxes[0].type = "linear";
+      options.scales.xAxes[0].position = "bottom";
+    } else {
+      options.scales.xAxes[0].type = chart.xtype === "string" ? "category" : "time";
+    }
 
     this.drawChart(chart, "line", data, options);
   }
