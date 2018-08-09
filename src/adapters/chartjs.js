@@ -239,25 +239,7 @@ let createDataTable = function (chart, options, chartType) {
 
   let i, j, s, d, key, rows = [], rows2 = [];
 
-  if (chart.xtype === "number" || chartType === "bubble") {
-    for (let i = 0; i < series.length; i++) {
-      let s = series[i];
-      let d = [];
-      for (let j = 0; j < s.data.length; j++) {
-        let point = {
-          x: toFloat(s.data[j][0]),
-          y: toFloat(s.data[j][1])
-        };
-        if (chartType === "bubble") {
-          point.r = toFloat(s.data[j][2]) * 20 / max;
-          // custom attribute, for tooltip
-          point.v = s.data[j][2];
-        }
-        d.push(point);
-      }
-      rows2.push(d);
-    }
-  } else {
+  if (chartType === "bar" || chartType === "column" || (chart.xtype !== "number" && chart.xtype !== "bubble")) {
     let sortedLabels = [];
 
     for (i = 0; i < series.length; i++) {
@@ -276,7 +258,7 @@ let createDataTable = function (chart, options, chartType) {
       }
     }
 
-    if (chart.xtype === "datetime") {
+    if (chart.xtype === "datetime" || chart.xtype === "number") {
       sortedLabels.sort(sortByNumber);
     }
 
@@ -308,6 +290,24 @@ let createDataTable = function (chart, options, chartType) {
         // Chart.js doesn't like undefined
         rows2[j].push(rows[i][j] === undefined ? null : rows[i][j]);
       }
+    }
+  } else {
+    for (let i = 0; i < series.length; i++) {
+      let s = series[i];
+      let d = [];
+      for (let j = 0; j < s.data.length; j++) {
+        let point = {
+          x: toFloat(s.data[j][0]),
+          y: toFloat(s.data[j][1])
+        };
+        if (chartType === "bubble") {
+          point.r = toFloat(s.data[j][2]) * 20 / max;
+          // custom attribute, for tooltip
+          point.v = s.data[j][2];
+        }
+        d.push(point);
+      }
+      rows2.push(d);
     }
   }
 

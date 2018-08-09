@@ -1,3 +1,7 @@
+## 3.0.1 [unreleased]
+
+- Fixed numeric axes for column and bar charts
+
 ## 3.0.0
 
 - Added `code` option
