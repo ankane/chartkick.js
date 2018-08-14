@@ -1,4 +1,4 @@
-## 3.0.1 [unreleased]
+## 3.0.1
 
 - Fixed numeric axes for Chart.js column and bar charts
 
