@@ -245,7 +245,7 @@ new Chartkick.LineChart("chart-1", [[new Date(), 5], ["2017-01-01 00:00:00 UTC",
 
 ### Multiple Series
 
-You can pass a number of options with a series:
+You can pass a few options with a series:
 
 - `name`
 - `data`
