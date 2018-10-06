@@ -373,7 +373,7 @@ Chartkick.configure({language: "de"})
 
 after the JavaScript files and before your charts.
 
-### Adapter
+### Multiple Libraries
 
 If more than one charting library is loaded, choose between them with:
 
