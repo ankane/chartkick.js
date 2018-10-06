@@ -457,13 +457,14 @@ Chartkick.adapters.unshift(CustomAdapter);
 
 ## Examples
 
-To run the files in the `examples` directory, you'll need a web server.  Run:
+To run the files in the `examples` directory, you’ll need a web server. Run:
 
 ```sh
-python -m SimpleHTTPServer
+yarn global add serve
+serve examples
 ```
 
-and visit [http://localhost:8000/examples/](http://localhost:8000/examples/)
+and visit [http://localhost:5000](http://localhost:5000)
 
 ## Upgrading
 
