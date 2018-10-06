@@ -461,10 +461,10 @@ To run the files in the `examples` directory, you’ll need a web server. Run:
 
 ```sh
 yarn global add serve
-serve examples
+serve
 ```
 
-and visit [http://localhost:5000](http://localhost:5000)
+and visit [http://localhost:5000/examples/](http://localhost:5000/examples/)
 
 ## Upgrading
 
