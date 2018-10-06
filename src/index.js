@@ -556,6 +556,9 @@ const Chartkick = {
       }
     }
   },
+  setOptions: function (opts) {
+    Chartkick.options = opts;
+  },
   eachChart: function (callback) {
     for (let chartId in Chartkick.charts) {
       if (Chartkick.charts.hasOwnProperty(chartId)) {

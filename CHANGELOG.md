@@ -1,3 +1,7 @@
+## 3.0.2 [unreleased]
+
+- Added `Chartkick.setOptions` function
+
 ## 3.0.1
 
 - Fixed numeric axes for Chart.js column and bar charts
