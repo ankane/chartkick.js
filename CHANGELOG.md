@@ -1,6 +1,7 @@
 ## 3.0.2 [unreleased]
 
 - Added `Chartkick.setOptions` function
+- Raise an error for `refresh` option and non-URL data source
 
 ## 3.0.1
 

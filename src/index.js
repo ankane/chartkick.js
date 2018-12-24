@@ -384,6 +384,10 @@ class Chart {
   startRefresh() {
     let refresh = this.options.refresh;
 
+    if (refresh && typeof this.dataSource !== "string") {
+      throw new Error("Data source must be a URL for refresh");
+    }
+
     if (!this.intervalId) {
       if (refresh) {
         this.intervalId = setInterval( () => {
