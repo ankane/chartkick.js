@@ -432,7 +432,9 @@ class Chart {
         return this.chart.toBase64Image();
       }
     } else {
-      throw new Error("Feature only available for Chart.js");
+      // TODO throw error in next major version
+      // throw new Error("Feature only available for Chart.js");
+      return null;
     }
   }
 
