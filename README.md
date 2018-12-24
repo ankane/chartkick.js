@@ -297,10 +297,10 @@ yarn add chartkick chart.js
 And add
 
 ```es6
-import Chartkick from "chartkick";
-import Chart from "chart.js";
+import Chartkick from "chartkick"
+import Chart from "chart.js"
 
-Chartkick.addAdapter(Chart);
+Chartkick.addAdapter(Chart)
 ```
 
 ### Google Charts
@@ -314,7 +314,7 @@ yarn add chartkick
 And add
 
 ```es6
-import Chartkick from "chartkick";
+import Chartkick from "chartkick"
 ```
 
 And include on the page
@@ -334,10 +334,10 @@ yarn add chartkick highcharts
 And add
 
 ```es6
-import Chartkick from "chartkick";
-import Highcharts from "highcharts";
+import Chartkick from "chartkick"
+import Highcharts from "highcharts"
 
-Chartkick.addAdapter(Highcharts);
+Chartkick.addAdapter(Highcharts)
 ```
 
 ### No Package Manager
