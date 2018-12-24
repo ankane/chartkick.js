@@ -44,10 +44,13 @@ git clone https://github.com/ankane/chartkick.js.git
 cd chartkick.js
 yarn
 yarn build
-python -m SimpleHTTPServer # starts a web server on port 8000
+
+# start web server
+yarn global add serve
+serve
 ```
 
-And visit [http://localhost:8000/examples](http://localhost:8000/examples) in your browser.
+And visit [http://localhost:5000/examples](http://localhost:5000/examples) in your browser.
 
 ---
 
