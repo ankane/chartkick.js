@@ -13,7 +13,7 @@ Also available for [React](https://github.com/ankane/react-chartkick), [Vue.js](
 Create a div for the chart
 
 ```html
-<div id="chart-1" style="height: 300px"></div>
+<div id="chart-1" style="height: 300px;"></div>
 ```
 
 Line chart
