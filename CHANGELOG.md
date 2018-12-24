@@ -2,6 +2,7 @@
 
 - Added `Chartkick.setDefaultOptions` function
 - Added `points` and `curve` options for individual series with Chart.js
+- Added support for download background color
 - Raise an error for `refresh` option and non-URL data source
 
 ## 3.0.1

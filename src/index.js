@@ -49,7 +49,15 @@ function fetchDataSource(chart, dataSource) {
 function addDownloadButton(chart) {
   let element = chart.element;
   let link = document.createElement("a");
-  link.download = chart.options.download === true ? "chart.png" : chart.options.download; // https://caniuse.com/download
+
+  let download = chart.options.download;
+  if (download === true) {
+    download = {};
+  } else if (typeof download === "string") {
+    download = {filename: download};
+  }
+  link.download = download.filename || "chart.png"; // https://caniuse.com/download
+
   link.style.position = "absolute";
   link.style.top = "20px";
   link.style.right = "20px";
@@ -72,7 +80,7 @@ function addDownloadButton(chart) {
     let related = e.relatedTarget;
     // check download option again to ensure it wasn't changed
     if ((!related || (related !== this && !childOf(this, related))) && chart.options.download) {
-      link.href = chart.toImage();
+      link.href = chart.toImage(download);
       element.appendChild(link);
     }
   });
@@ -406,9 +414,23 @@ class Chart {
     }
   }
 
-  toImage() {
+  toImage(download) {
     if (this.adapter === "chartjs") {
-      return this.chart.toBase64Image();
+      if (download && download.background) {
+        // https://stackoverflow.com/questions/30464750/chartjs-line-chart-set-background-color
+        let canvas = this.chart.chart.canvas;
+        let ctx = this.chart.chart.ctx;
+        let tmpCanvas = document.createElement("canvas");
+        let tmpCtx = tmpCanvas.getContext("2d");
+        tmpCanvas.width = ctx.canvas.width;
+        tmpCanvas.height = ctx.canvas.height;
+        tmpCtx.fillStyle = download.background;
+        tmpCtx.fillRect(0, 0, tmpCanvas.width, tmpCanvas.height);
+        tmpCtx.drawImage(canvas, 0, 0);
+        return tmpCanvas.toDataURL("image/png");
+      } else {
+        return this.chart.toBase64Image();
+      }
     } else {
       throw new Error("Feature only available for Chart.js");
     }
