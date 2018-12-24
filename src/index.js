@@ -416,7 +416,7 @@ class Chart {
 
   toImage(download) {
     if (this.adapter === "chartjs") {
-      if (download && download.background) {
+      if (download && download.background && download.background !== "transparent") {
         // https://stackoverflow.com/questions/30464750/chartjs-line-chart-set-background-color
         let canvas = this.chart.chart.canvas;
         let ctx = this.chart.chart.ctx;
