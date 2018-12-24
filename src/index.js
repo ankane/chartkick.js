@@ -410,7 +410,7 @@ class Chart {
     if (this.adapter === "chartjs") {
       return this.chart.toBase64Image();
     } else {
-      return null;
+      throw new Error("Feature only available for Chart.js");
     }
   }
 
