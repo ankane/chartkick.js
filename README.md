@@ -251,6 +251,8 @@ You can pass a few options with a series:
 - `data`
 - `color`
 - `dataset` - *Chart.js only*
+- `points` - *Chart.js only* [master]
+- `curve` - *Chart.js only* [master]
 
 ### Code
 

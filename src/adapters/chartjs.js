@@ -1,4 +1,4 @@
-import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear } from "../helpers";
+import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, seriesOption } from "../helpers";
 
 function allZeros(data) {
   let i, j, d;
@@ -332,11 +332,13 @@ let createDataTable = function (chart, options, chartType) {
       dataset.stack = s.stack;
     }
 
-    if (chart.options.curve === false) {
+    let curve = seriesOption(chart, s, "curve");
+    if (curve === false) {
       dataset.lineTension = 0;
     }
 
-    if (chart.options.points === false) {
+    let points = seriesOption(chart, s, "points");
+    if (points === false) {
       dataset.pointRadius = 0;
       dataset.pointHitRadius = 5;
     }

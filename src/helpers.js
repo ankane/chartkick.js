@@ -248,4 +248,13 @@ function formatValue(pre, value, options) {
   return pre + value + (options.suffix || "");
 }
 
-export { formatValue, jsOptionsFunc, merge, isArray, isFunction, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate, isNumber };
+function seriesOption(chart, series, option) {
+  if ("points" in series) {
+    return series.points;
+  } else if ("points" in chart.options) {
+    return chart.options.points;
+  }
+  return null;
+}
+
+export { formatValue, jsOptionsFunc, merge, isArray, isFunction, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate, isNumber, seriesOption };
