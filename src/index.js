@@ -560,7 +560,7 @@ const Chartkick = {
       }
     }
   },
-  setOptions: function (opts) {
+  setDefaultOptions: function (opts) {
     Chartkick.options = opts;
   },
   eachChart: function (callback) {

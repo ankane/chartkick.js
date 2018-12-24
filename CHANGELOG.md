@@ -1,6 +1,6 @@
 ## 3.0.2 [unreleased]
 
-- Added `Chartkick.setOptions` function
+- Added `Chartkick.setDefaultOptions` function
 - Added `points` and `curve` options for individual series with Chart.js
 - Raise an error for `refresh` option and non-URL data source
 
