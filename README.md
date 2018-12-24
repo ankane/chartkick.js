@@ -284,6 +284,12 @@ new Chartkick.LineChart("chart-1", data, {download: "boom"})
 
 **Note:** Safari will open the image in a new window instead of downloading.
 
+Set the background color [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {download: {background: "#fff"}})
+```
+
 ## Installation
 
 ### Chart.js
