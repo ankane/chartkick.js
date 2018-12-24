@@ -249,10 +249,10 @@ function formatValue(pre, value, options) {
 }
 
 function seriesOption(chart, series, option) {
-  if ("points" in series) {
-    return series.points;
-  } else if ("points" in chart.options) {
-    return chart.options.points;
+  if (option in series) {
+    return series[option];
+  } else if (option in chart.options) {
+    return chart.options[option];
   }
   return null;
 }
