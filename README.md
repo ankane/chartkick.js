@@ -8,7 +8,26 @@ Supports [Chart.js](https://www.chartjs.org/), [Google Charts](https://developer
 
 Also available for [React](https://github.com/ankane/react-chartkick), [Vue.js](https://github.com/ankane/vue-chartkick), [Ruby](https://github.com/ankane/chartkick), [Python](https://github.com/mher/chartkick.py), [Elixir](https://github.com/buren/chartkick-ex), and [Clojure](https://github.com/yfractal/chartkick)
 
-## Usage
+## Quick Start
+
+Run
+
+```sh
+yarn add chartkick chart.js
+```
+
+And add
+
+```es6
+import Chartkick from "chartkick"
+import Chart from "chart.js"
+
+Chartkick.addAdapter(Chart)
+```
+
+This sets up Chartkick with Chart.js. For other charting libaries, see [detailed instructions](#installation).
+
+## Charts
 
 Create a div for the chart
 
