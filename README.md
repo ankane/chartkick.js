@@ -270,8 +270,8 @@ You can pass a few options with a series:
 - `data`
 - `color`
 - `dataset` - *Chart.js only*
-- `points` - *Chart.js only* [master]
-- `curve` - *Chart.js only* [master]
+- `points` - *Chart.js only*
+- `curve` - *Chart.js only*
 
 ### Code
 
@@ -298,12 +298,12 @@ new Chartkick.LineChart("chart-1", data, {download: true})
 Set the filename
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {download: "boom"})
+new Chartkick.LineChart("chart-1", data, {download: {filename: "boom"}})
 ```
 
 **Note:** Safari will open the image in a new window instead of downloading.
 
-Set the background color [master]
+Set the background color
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {download: {background: "#fff"}})
