@@ -1,3 +1,7 @@
+## 3.0.3 [unreleased]
+
+- Fixed Highcharts tooltip colors
+
 ## 3.0.2
 
 - Added `Chartkick.setDefaultOptions` function
