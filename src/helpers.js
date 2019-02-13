@@ -7,7 +7,7 @@ function isFunction(variable) {
 }
 
 function isPlainObject(variable) {
-  return !isFunction(variable) && Object.prototype.toString.call(variable) === "[object Object]";
+  return Object.prototype.toString.call(variable) === "[object Object]";
 }
 
 // https://github.com/madrobby/zepto/blob/master/src/zepto.js
