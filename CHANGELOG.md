@@ -2,6 +2,7 @@
 
 - Added `xmin` and `xmax` for Chart.js
 - Fixed Highcharts tooltip colors
+- Fixed error when passing images to options
 
 ## 3.0.2
 
