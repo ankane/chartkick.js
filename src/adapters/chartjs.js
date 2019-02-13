@@ -119,6 +119,12 @@ let addOpacity = function(hex, opacity) {
   return result ? "rgba(" + parseInt(result[1], 16) + ", " + parseInt(result[2], 16) + ", " + parseInt(result[3], 16) + ", " + opacity + ")" : hex;
 };
 
+// check if not null or undefined
+// https://stackoverflow.com/a/27757708/1177228
+let notnull = function(x) {
+  return x != null;
+};
+
 let setLabelSize = function (chart, data, options) {
   let maxLabelSize = Math.ceil(chart.element.offsetWidth / 4.0 / data.labels.length);
   if (maxLabelSize > 25) {
@@ -350,21 +356,28 @@ let createDataTable = function (chart, options, chartType) {
     datasets.push(dataset);
   }
 
-  if (chart.xtype === "datetime" && labels.length > 0) {
-    let minTime = labels[0].getTime();
-    let maxTime = labels[0].getTime();
+  let xmin = chart.options.xmin;
+  let xmax = chart.options.xmax;
 
-    let xmin = chart.options.xmin;
-    if (xmin) {
+  if (chart.xtype === "datetime") {
+    if (notnull(xmin)) {
       options.scales.xAxes[0].time.min = toDate(xmin).getTime();
-      minTime = toDate(xmin).getTime();
     }
-
-    let xmax = chart.options.xmax;
-    if (xmax) {
+    if (notnull(xmax)) {
       options.scales.xAxes[0].time.max = toDate(xmax).getTime();
-      maxTime = toDate(xmax).getTime();
     }
+  } else if (chart.xtype === "number") {
+    if (notnull(xmin)) {
+      options.scales.xAxes[0].ticks.min = xmin;
+    }
+    if (notnull(xmax)) {
+      options.scales.xAxes[0].ticks.max = xmax;
+    }
+  }
+
+  if (chart.xtype === "datetime" && labels.length > 0) {
+    let minTime = (notnull(xmin) ? toDate(xmin) : labels[0]).getTime();
+    let maxTime = (notnull(xmax) ? toDate(xmax) : labels[0]).getTime();
 
     for (i = 1; i < labels.length; i++) {
       let value = labels[i].getTime();

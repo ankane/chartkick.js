@@ -280,10 +280,16 @@
       new Chartkick.LineChart("min-null", {"2013-02-10":200,"2013-02-11":206,"2013-02-12":203,"2013-02-13":202,"2013-02-14":205,"2013-02-15":203}, {"min": null});
     </script>
 
-    <h1>X Axis Min and Max - Chart.js</h1>
+    <h1>X-Axis Min and Max - Chart.js</h1>
     <div id="xmin" style="height: 300px;"></div>
     <script>
       new Chartkick.LineChart("xmin", {"2013-02-10":200,"2013-02-11":206,"2013-02-12":203,"2013-02-13":202,"2013-02-14":205,"2013-02-15":203}, {"xmin": "2013-02-01", "xmax": "2013-02-28"});
+    </script>
+
+    <h1>X-Axis Min and Max Scatter - Chart.js</h1>
+    <div id="xmin-scatter" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ScatterChart("xmin-scatter", [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]], {xmin: 0, xmax: 400})
     </script>
 
     <h1>Axis Titles Line</h1>
