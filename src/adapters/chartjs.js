@@ -1,4 +1,4 @@
-import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, seriesOption } from "../helpers";
+import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, seriesOption } from "../helpers";
 
 function allZeros(data) {
   let i, j, d;
@@ -353,6 +353,19 @@ let createDataTable = function (chart, options, chartType) {
   if (chart.xtype === "datetime" && labels.length > 0) {
     let minTime = labels[0].getTime();
     let maxTime = labels[0].getTime();
+
+    let xmin = chart.options.xmin;
+    if (xmin) {
+      options.scales.xAxes[0].time.min = toDate(xmin).getTime();
+      minTime = toDate(xmin).getTime();
+    }
+
+    let xmax = chart.options.xmax;
+    if (xmax) {
+      options.scales.xAxes[0].time.max = toDate(xmax).getTime();
+      maxTime = toDate(xmax).getTime();
+    }
+
     for (i = 1; i < labels.length; i++) {
       let value = labels[i].getTime();
       if (value < minTime) {

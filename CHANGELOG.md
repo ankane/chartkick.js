@@ -1,5 +1,6 @@
 ## 3.0.3 [unreleased]
 
+- Added `xmin` and `xmax` for Chart.js
 - Fixed Highcharts tooltip colors
 
 ## 3.0.2
