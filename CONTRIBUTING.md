@@ -26,10 +26,9 @@ If the above steps don’t help, create an issue. Include:
 
 Fork the project and create a pull request. A few tips:
 
+- New features should be added to Chart.js at the very least.
 - Keep changes to a minimum. If you have multiple features or fixes, submit multiple pull requests.
 - Follow the existing style. The code should read like it’s written by a single person.
-
-If you’re looking for ideas, [try here](https://github.com/ankane/chartkick.js/issues?q=is%3Aissue+is%3Aopen+label%3A%22enhancement%22).
 
 Feel free to open an issue to get feedback on your idea before spending too much time on it.
 
