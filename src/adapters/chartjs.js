@@ -330,7 +330,7 @@ let createDataTable = function (chart, options, chartType) {
       borderColor: color,
       backgroundColor: backgroundColor,
       pointBackgroundColor: color,
-      borderWidth: 2,
+      borderWidth: s.borderWidth || 2,
       pointHoverBackgroundColor: color
     };
 

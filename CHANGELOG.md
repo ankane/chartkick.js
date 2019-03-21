@@ -1,3 +1,7 @@
+## 3.0.4
+
+- Updated `borderWidth` option for individual series with Chart.js
+
 ## 3.0.3 [unreleased]
 
 - Added `xmin` and `xmax` for Chart.js
