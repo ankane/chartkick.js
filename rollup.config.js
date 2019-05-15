@@ -48,7 +48,7 @@ export default [
   {
     input: input,
     output: {
-      file: pkg.module,
+      file: pkg.main.replace(/\.js$/, ".esm.js"),
       format: "es",
       banner: banner
     },

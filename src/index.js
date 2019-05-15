@@ -600,4 +600,13 @@ const Chartkick = {
   addAdapter: addAdapter
 };
 
+// backwards compatibility for esm require
+// clone to prevent circular reference
+Chartkick.default = {}
+for (let key in Chartkick) {
+  if (key != "default" && Chartkick.hasOwnProperty(key)) {
+    Chartkick.default[key] = Chartkick[key];
+  }
+}
+
 export default Chartkick;

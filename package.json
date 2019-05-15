@@ -4,7 +4,6 @@
   "homepage": "https://github.com/ankane/chartkick.js",
   "description": "Create beautiful charts with one line of JavaScript",
   "main": "dist/chartkick.js",
-  "module": "dist/chartkick.esm.js",
   "scripts": {
     "build": "rollup -c",
     "lint": "eslint src"
