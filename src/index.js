@@ -600,6 +600,11 @@ const Chartkick = {
   addAdapter: addAdapter
 };
 
+// not ideal, but allows for simpler integration
+if (typeof window !== "undefined" && !window.Chartkick) {
+  window.Chartkick = Chartkick;
+}
+
 // backwards compatibility for esm require
 // clone to prevent circular reference
 Chartkick.default = {};
