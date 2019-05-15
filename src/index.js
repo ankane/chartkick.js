@@ -602,7 +602,7 @@ const Chartkick = {
 
 // backwards compatibility for esm require
 // clone to prevent circular reference
-Chartkick.default = {}
+Chartkick.default = {};
 for (let key in Chartkick) {
   if (key != "default" && Chartkick.hasOwnProperty(key)) {
     Chartkick.default[key] = Chartkick[key];
