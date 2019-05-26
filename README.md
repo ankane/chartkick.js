@@ -123,7 +123,7 @@ new Chartkick.LineChart("chart-1", data, {min: 1000, max: 5000})
 
 `min` defaults to 0 for charts with non-negative values. Use `null` to let the charting library decide.
 
-Min and max for x-axis - *Chart.js* [master]
+Min and max for x-axis - *Chart.js*
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {xmin: "2018-01-01", xmax: "2019-01-01"})

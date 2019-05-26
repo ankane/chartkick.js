@@ -1,4 +1,4 @@
-## 3.1.0 [unreleased]
+## 3.1.0
 
 - Improved `require` so `default` is no longer needed
 - Added `use` function
