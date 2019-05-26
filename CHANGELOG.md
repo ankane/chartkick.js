@@ -1,6 +1,7 @@
 ## 3.1.0 [unreleased]
 
 - Improved `require` so `default` is no longer needed
+- Added `use` function
 - Added `xmin` and `xmax` for Chart.js
 - Fixed Highcharts tooltip colors
 - Fixed error when passing images to options

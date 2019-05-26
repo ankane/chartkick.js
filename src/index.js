@@ -597,7 +597,11 @@ const Chartkick = {
   config: config,
   options: {},
   adapters: adapters,
-  addAdapter: addAdapter
+  addAdapter: addAdapter,
+  use: function(adapter) {
+    addAdapter(adapter);
+    return Chartkick;
+  }
 };
 
 // not ideal, but allows for simpler integration

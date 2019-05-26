@@ -18,11 +18,11 @@ yarn add chartkick chart.js
 
 And add
 
-```es6
+```javascript
 import Chartkick from "chartkick"
 import Chart from "chart.js"
 
-Chartkick.addAdapter(Chart)
+Chartkick.use(Chart)
 ```
 
 This sets up Chartkick with Chart.js. For other charting libraries, see [detailed instructions](#installation).
@@ -327,11 +327,11 @@ yarn add chartkick chart.js
 
 And add
 
-```es6
+```javascript
 import Chartkick from "chartkick"
 import Chart from "chart.js"
 
-Chartkick.addAdapter(Chart)
+Chartkick.use(Chart)
 ```
 
 ### Google Charts
@@ -344,7 +344,7 @@ yarn add chartkick
 
 And add
 
-```es6
+```javascript
 import Chartkick from "chartkick"
 ```
 
@@ -353,6 +353,14 @@ And include on the page
 ```html
 <script src="https://www.gstatic.com/charts/loader.js"></script>
 ```
+
+To specify a language or Google Maps API key, use:
+
+```js
+Chartkick.configure({language: "de", mapsApiKey: "..."})
+```
+
+before your charts.
 
 ### Highcharts
 
@@ -364,11 +372,11 @@ yarn add chartkick highcharts
 
 And add
 
-```es6
+```javascript
 import Chartkick from "chartkick"
 import Highcharts from "highcharts"
 
-Chartkick.addAdapter(Highcharts)
+Chartkick.use(Highcharts)
 ```
 
 ### No Package Manager
@@ -395,16 +403,6 @@ For Highcharts (works with 2.1+), [download it](https://www.highcharts.com/downl
 <script src="/path/to/highcharts.js"></script>
 <script src="chartkick.js"></script>
 ```
-
-### Localization
-
-To specify a language for Google Charts, add:
-
-```javascript
-Chartkick.configure({language: "de"})
-```
-
-after the JavaScript files and before your charts.
 
 ### Multiple Libraries
 
