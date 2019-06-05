@@ -606,7 +606,9 @@ const Chartkick = {
     let nodes = document.querySelectorAll("[data-chartkick-type]");
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];
+
       // TODO skip already rendered charts
+
       let type = node.getAttribute("data-chartkick-type");
       let data = JSON.parse(node.getAttribute("data-chartkick-data"));
       let options = JSON.parse(node.getAttribute("data-chartkick-options") || "{}");
@@ -621,7 +623,8 @@ const Chartkick = {
 };
 
 if (typeof window !== "undefined") {
-  window.addEventListener("DOMContentLoaded", function() {
+  const eventName = typeof Turbolinks !== "undefined" ? "turbolinks:load" : "DOMContentLoaded";
+  window.addEventListener(eventName, function() {
     Chartkick.mount();
   });
 
