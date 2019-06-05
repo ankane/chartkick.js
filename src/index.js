@@ -624,8 +624,9 @@ const Chartkick = {
     let nodes = document.querySelectorAll("[data-chartkick-type]");
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];
-      // TODO handle charts without id
-      Chartkick.charts[node.id].destroy();
+      if (node.id) {
+        Chartkick.charts[node.id].destroy();
+      }
     }
   }
 };
