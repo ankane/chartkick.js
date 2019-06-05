@@ -601,12 +601,34 @@ const Chartkick = {
   use: function(adapter) {
     addAdapter(adapter);
     return Chartkick;
+  },
+  mount: function() {
+    let nodes = document.querySelectorAll("[data-chartkick-type]");
+    for (let i = 0; i < nodes.length; i++) {
+      let node = nodes[i];
+      // TODO skip already rendered charts
+      let type = node.getAttribute("data-chartkick-type");
+      let data = JSON.parse(node.getAttribute("data-chartkick-data"));
+      let options = JSON.parse(node.getAttribute("data-chartkick-options") || "{}");
+
+      if (Chartkick[type] && Chartkick[type].prototype instanceof Chart) {
+        new Chartkick[type](node, data, options);
+      } else {
+        throw new Error("Unknown chart type");
+      }
+    }
   }
 };
 
-// not ideal, but allows for simpler integration
-if (typeof window !== "undefined" && !window.Chartkick) {
-  window.Chartkick = Chartkick;
+if (typeof window !== "undefined") {
+  window.addEventListener("DOMContentLoaded", function() {
+    Chartkick.mount();
+  });
+
+  // not ideal, but allows for simpler integration
+  if (!window.Chartkick) {
+    window.Chartkick = Chartkick;
+  }
 }
 
 // backwards compatibility for esm require
