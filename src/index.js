@@ -619,14 +619,30 @@ const Chartkick = {
         throw new Error("Unknown chart type");
       }
     }
+  },
+  unmount: function() {
+    let nodes = document.querySelectorAll("[data-chartkick-type]");
+    for (let i = 0; i < nodes.length; i++) {
+      let node = nodes[i];
+      // TODO handle charts without id
+      Chartkick.charts[node.id].destroy();
+    }
   }
 };
 
 if (typeof window !== "undefined") {
-  const eventName = typeof Turbolinks !== "undefined" ? "turbolinks:load" : "DOMContentLoaded";
-  window.addEventListener(eventName, function() {
-    Chartkick.mount();
-  });
+  let addEvent = function(eventName, func) {
+    window.addEventListener(eventName, function() {
+      func();
+    });
+  };
+
+  if (typeof Turbolinks !== "undefined") {
+    addEvent("turbolinks:load", Chartkick.mount);
+    addEvent("turbolinks:before-render", Chartkick.unmount);
+  } else {
+    addEvent("DOMContentLoaded", Chartkick.mount);
+  }
 
   // not ideal, but allows for simpler integration
   if (!window.Chartkick) {
