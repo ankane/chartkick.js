@@ -607,16 +607,17 @@ const Chartkick = {
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];
 
-      // TODO skip already rendered charts
+      // skip already rendered charts
+      if (!node.chart) {
+        let type = node.getAttribute("data-chartkick-type");
+        let data = JSON.parse(node.getAttribute("data-chartkick-data"));
+        let options = JSON.parse(node.getAttribute("data-chartkick-options") || "{}");
 
-      let type = node.getAttribute("data-chartkick-type");
-      let data = JSON.parse(node.getAttribute("data-chartkick-data"));
-      let options = JSON.parse(node.getAttribute("data-chartkick-options") || "{}");
-
-      if (Chartkick[type] && Chartkick[type].prototype instanceof Chart) {
-        new Chartkick[type](node, data, options);
-      } else {
-        throw new Error("Unknown chart type");
+        if (Chartkick[type] && Chartkick[type].prototype instanceof Chart) {
+          node.chart = new Chartkick[type](node, data, options);
+        } else {
+          throw new Error("Unknown chart type");
+        }
       }
     }
   },
@@ -624,8 +625,8 @@ const Chartkick = {
     let nodes = document.querySelectorAll("[data-chartkick-type]");
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];
-      if (node.id) {
-        Chartkick.charts[node.id].destroy();
+      if (node.chart) {
+        node.chart.destroy();
       }
     }
   }
