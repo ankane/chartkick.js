@@ -631,17 +631,11 @@ const Chartkick = {
 };
 
 if (typeof window !== "undefined") {
-  let addEvent = function(eventName, func) {
-    window.addEventListener(eventName, function() {
-      func();
-    });
-  };
-
   if (typeof Turbolinks !== "undefined") {
-    addEvent("turbolinks:load", Chartkick.mount);
-    addEvent("turbolinks:before-render", Chartkick.unmount);
+    addEvent(window, "turbolinks:load", Chartkick.mount);
+    addEvent(window, "turbolinks:before-render", Chartkick.unmount);
   } else {
-    addEvent("DOMContentLoaded", Chartkick.mount);
+    addEvent(window, "DOMContentLoaded", Chartkick.mount);
   }
 
   // not ideal, but allows for simpler integration
