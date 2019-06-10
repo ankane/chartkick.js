@@ -1,3 +1,7 @@
+## 3.1.1 [unreleased]
+
+- Fixed missing bar chart labels with Chart.js 2.8.0
+
 ## 3.1.0
 
 - Improved `require` so `default` is no longer needed
