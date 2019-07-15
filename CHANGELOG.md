@@ -1,4 +1,4 @@
-## 3.1.1 [unreleased]
+## 3.1.1
 
 - Fixed missing bar chart labels with Chart.js 2.8.0
 
