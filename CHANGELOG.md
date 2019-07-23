@@ -1,3 +1,7 @@
+## 3.1.2 [unreleased]
+
+- Fixed `stacked` option for Highcharts area charts
+
 ## 3.1.1
 
 - Fixed missing bar chart labels with Chart.js 2.8.0

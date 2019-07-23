@@ -38,6 +38,7 @@ let defaultOptions = {
   },
   plotOptions: {
     areaspline: {},
+    area: {},
     series: {
       marker: {}
     }
@@ -74,7 +75,10 @@ let setMax = function (options, max) {
 };
 
 let setStacked = function (options, stacked) {
-  options.plotOptions.series.stacking = stacked ? (stacked === true ? "normal" : stacked) : null;
+  let stackedValue = stacked ? (stacked === true ? "normal" : stacked) : null;
+  options.plotOptions.series.stacking = stackedValue;
+  options.plotOptions.area.stacking = stackedValue;
+  options.plotOptions.areaspline.stacking = stackedValue;
 };
 
 let setXtitle = function (options, title) {
