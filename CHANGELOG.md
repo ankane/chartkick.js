@@ -1,6 +1,7 @@
 ## 3.1.2 [unreleased]
 
 - Fixed `stacked` option for Highcharts area charts
+- Fixed error with jQuery slim
 
 ## 3.1.1
 

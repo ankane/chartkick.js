@@ -31,7 +31,7 @@ function getJSON(url, success, error) {
 function ajaxCall(url, success, error) {
   let $ = window.jQuery || window.Zepto || window.$;
 
-  if ($) {
+  if ($ && $.ajax) {
     $.ajax({
       dataType: "json",
       url: url,
