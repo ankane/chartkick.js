@@ -40,6 +40,13 @@ function fetchDataSource(chart, dataSource) {
     }, function (message) {
       chartError(chart.element, message);
     });
+  } else if (typeof dataSource === "function") {
+    dataSource(function (data) {
+      chart.rawData = data;
+      errorCatcher(chart);
+    }, function (message) {
+      chartError(chart.element, message);
+    });
   } else {
     chart.rawData = dataSource;
     errorCatcher(chart);
@@ -386,14 +393,16 @@ class Chart {
       let sep = this.dataSource.indexOf("?") === -1 ? "?" : "&";
       let url = this.dataSource + sep + "_=" + (new Date()).getTime();
       fetchDataSource(this, url);
+    } else if (typeof this.dataSource === "function") {
+      fetchDataSource(this, this.dataSource);
     }
   }
 
   startRefresh() {
     let refresh = this.options.refresh;
 
-    if (refresh && typeof this.dataSource !== "string") {
-      throw new Error("Data source must be a URL for refresh");
+    if (refresh && typeof this.dataSource !== "string" && typeof this.dataSource !== "function") {
+      throw new Error("Data source must be a URL or callback for refresh");
     }
 
     if (!this.intervalId) {
