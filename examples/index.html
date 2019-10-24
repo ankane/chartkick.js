@@ -131,6 +131,21 @@
       });
     </script>
 
+    <h1>Callback Fetch</h1>
+    <div id="callback-fetch" style="height: 300px;"></div>
+    <script>
+      function fetchChart(success, fail) {
+        fetch("remote.json").then(function(response) {
+          if (!response.ok) {
+            throw Error(response.statusText);
+          }
+          return response.json();
+        }).then(success).catch(fail);
+      }
+
+      new Chartkick.LineChart("callback-fetch", fetchChart);
+    </script>
+
     <h1>Callback Error</h1>
     <div id="callback-error" style="height: 300px;"></div>
     <script>
