@@ -1,5 +1,6 @@
 ## 3.1.2 [unreleased]
 
+- Added support for callbacks as data
 - Fixed `stacked` option for Highcharts area charts
 - Fixed error with jQuery slim
 
