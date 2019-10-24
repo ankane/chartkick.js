@@ -41,12 +41,16 @@ function fetchDataSource(chart, dataSource) {
       chartError(chart.element, message);
     });
   } else if (typeof dataSource === "function") {
-    dataSource(function (data) {
-      chart.rawData = data;
-      errorCatcher(chart);
-    }, function (message) {
-      chartError(chart.element, message);
-    });
+    try {
+      dataSource(function (data) {
+        chart.rawData = data;
+        errorCatcher(chart);
+      }, function (message) {
+        chartError(chart.element, message);
+      });
+    } catch (err) {
+      chartError(chart.element, err);
+    }
   } else {
     chart.rawData = dataSource;
     errorCatcher(chart);
