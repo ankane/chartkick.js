@@ -279,6 +279,7 @@ function fetchChart(success, fail) {
     return response.json()
   }).then(success).catch(fail)
 }
+
 new Chartkick.LineChart("chart-1", fetchChart)
 ```
 
