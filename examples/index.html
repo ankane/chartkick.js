@@ -664,14 +664,35 @@
       }, 3000);
     </script>
 
-    <h1>Refresh Data</h1>
-    <div id="refresh-data" style="height: 300px;"></div>
+    <h1>Refresh Data URL</h1>
+    <div id="refresh-data-url" style="height: 300px;"></div>
     <script>
-      var refreshChart = new Chartkick.LineChart("refresh-data", "remote.json", {refresh: 3});
+      var refreshChart = new Chartkick.LineChart("refresh-data-url", "remote.json", {refresh: 3});
 
       setTimeout( function () {
         refreshChart.stopRefresh();
       }, 10000);
+    </script>
+
+    <h1>Refresh Data Callback</h1>
+    <div id="refresh-data-callback" style="height: 300px;"></div>
+    <script>
+      var data = [];
+      var cb = function(success, error) {
+        data.push([data.length + 1, Math.random()]);
+        success(data);
+      };
+      var refreshChart2 = new Chartkick.LineChart("refresh-data-callback", cb, {refresh: 3});
+
+      setTimeout( function () {
+        refreshChart2.stopRefresh();
+      }, 30000);
+    </script>
+
+    <h1>Refresh Data Error</h1>
+    <div id="refresh-data-error" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("refresh-data-error", [], {refresh: 3});
     </script>
 
     <script>
