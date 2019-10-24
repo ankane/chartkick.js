@@ -41,10 +41,10 @@ function fetchDataSource(chart, dataSource) {
       chartError(chart.element, message);
     });
   } else if (typeof dataSource === "function") {
-    Promise.resolve(dataSource()).then(function (data) {
+    dataSource(function (data) {
       chart.rawData = data;
       errorCatcher(chart);
-    }).catch(function (message) {
+    }, function (message) {
       chartError(chart.element, message);
     });
   } else {
