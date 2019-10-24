@@ -274,10 +274,10 @@ Data can also be a callback [master]
 function fetchChart(success, fail) {
   fetch(url).then(function(response) {
     if (!response.ok) {
-      throw Error(response.statusText);
+      throw Error(response.statusText)
     }
-    return response.json();
-  }).then(success).catch(fail);
+    return response.json()
+  }).then(success).catch(fail)
 }
 new Chartkick.LineChart("chart-1", fetchChart)
 ```
