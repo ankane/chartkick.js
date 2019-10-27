@@ -215,7 +215,7 @@ let setFormatOptions = function(chart, options, chartType) {
 
 let jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-let createDataTable = function (chart, options, chartType) {
+let createDataTable = function (chart, options, chartType, library) {
   let datasets = [];
   let labels = [];
 
@@ -362,7 +362,7 @@ let createDataTable = function (chart, options, chartType) {
   if (chart.xtype === "datetime") {
     // hacky check for Chart.js >= 2.9.0
     // https://github.com/chartjs/Chart.js/compare/v2.8.0...v2.9.0
-    let gte29 = "math" in Chart.helpers;
+    let gte29 = "math" in library.helpers;
     let ticksKey = gte29 ? "ticks" : "time";
     if (notnull(xmin)) {
       options.scales.xAxes[0][ticksKey].min = toDate(xmin).getTime();
@@ -464,7 +464,7 @@ export default class {
     let options = jsOptions(chart, merge(chartOptions, chart.options));
     setFormatOptions(chart, options, chartType);
 
-    let data = createDataTable(chart, options, chartType || "line");
+    let data = createDataTable(chart, options, chartType || "line", this.library);
 
     if (chart.xtype === "number") {
       options.scales.xAxes[0].type = "linear";
@@ -525,7 +525,7 @@ export default class {
       options = jsOptions(chart, chart.options);
     }
     setFormatOptions(chart, options, chartType);
-    let data = createDataTable(chart, options, "column");
+    let data = createDataTable(chart, options, "column", this.library);
     if (chartType !== "bar") {
       setLabelSize(chart, data, options);
     }
@@ -550,7 +550,7 @@ export default class {
       options.showLines = false;
     }
 
-    let data = createDataTable(chart, options, chartType);
+    let data = createDataTable(chart, options, chartType, this.library);
 
     options.scales.xAxes[0].type = "linear";
     options.scales.xAxes[0].position = "bottom";
