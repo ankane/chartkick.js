@@ -271,7 +271,7 @@ new Chartkick.LineChart("chart-1", [[new Date(), 5], ["2017-01-01 00:00:00 UTC",
 Data can also be a callback [master]
 
 ```javascript
-function fetchChart(success, fail) {
+function fetchData(success, fail) {
   fetch(url).then(function(response) {
     if (!response.ok) {
       throw Error(response.statusText)
@@ -280,7 +280,7 @@ function fetchChart(success, fail) {
   }).then(success).catch(fail)
 }
 
-new Chartkick.LineChart("chart-1", fetchChart)
+new Chartkick.LineChart("chart-1", fetchData)
 ```
 
 ### Multiple Series
