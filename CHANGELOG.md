@@ -3,6 +3,7 @@
 - Added support for callbacks as data
 - Fixed `stacked` option for Highcharts area charts
 - Fixed error with jQuery slim
+- Fixed deprecation warning with Chart.js 2.9.0+
 
 ## 3.1.1
 

@@ -360,11 +360,15 @@ let createDataTable = function (chart, options, chartType) {
   let xmax = chart.options.xmax;
 
   if (chart.xtype === "datetime") {
+    // hacky check for Chart.js >= 2.9.0
+    // https://github.com/chartjs/Chart.js/compare/v2.8.0...v2.9.0
+    let gte29 = "math" in Chart.helpers;
+    let ticksKey = gte29 ? "ticks" : "time";
     if (notnull(xmin)) {
-      options.scales.xAxes[0].time.min = toDate(xmin).getTime();
+      options.scales.xAxes[0][ticksKey].min = toDate(xmin).getTime();
     }
     if (notnull(xmax)) {
-      options.scales.xAxes[0].time.max = toDate(xmax).getTime();
+      options.scales.xAxes[0][ticksKey].max = toDate(xmax).getTime();
     }
   } else if (chart.xtype === "number") {
     if (notnull(xmin)) {
