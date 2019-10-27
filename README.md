@@ -272,12 +272,8 @@ Data can also be a callback [master]
 
 ```javascript
 function fetchData(success, fail) {
-  fetch(url).then(function(response) {
-    if (!response.ok) {
-      throw Error(response.statusText)
-    }
-    return response.json()
-  }).then(success).catch(fail)
+  success({"Blueberry": 44, "Strawberry": 23})
+  // or fail("Data not available")
 }
 
 new Chartkick.LineChart("chart-1", fetchData)
