@@ -18,8 +18,12 @@ function setText(element, text) {
   }
 }
 
-function chartError(element, message) {
-  setText(element, "Error Loading Chart: " + message);
+// TODO remove prefix for all messages
+function chartError(element, message, noPrefix) {
+  if (!noPrefix) {
+    message = "Error Loading Chart: " + message;
+  }
+  setText(element, message);
   element.style.color = "#ff0000";
 }
 
@@ -46,10 +50,10 @@ function fetchDataSource(chart, dataSource) {
         chart.rawData = data;
         errorCatcher(chart);
       }, function (message) {
-        chartError(chart.element, message);
+        chartError(chart.element, message, true);
       });
     } catch (err) {
-      chartError(chart.element, err);
+      chartError(chart.element, err, true);
     }
   } else {
     chart.rawData = dataSource;

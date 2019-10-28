@@ -1,3 +1,7 @@
+## 3.1.3 [unreleased]
+
+- Removed `Error Loading Chart` prefix for callback errors
+
 ## 3.1.2
 
 - Added support for callbacks as data
