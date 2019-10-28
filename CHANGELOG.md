@@ -1,4 +1,4 @@
-## 3.1.3 [unreleased]
+## 3.1.3
 
 - Removed `Error Loading Chart` prefix for callback errors
 
