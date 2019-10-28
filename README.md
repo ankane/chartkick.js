@@ -268,7 +268,7 @@ Times can be a `Date` or a string (strings are parsed)
 new Chartkick.LineChart("chart-1", [[new Date(), 5], ["2017-01-01 00:00:00 UTC", 7]])
 ```
 
-Data can also be a callback [master]
+Data can also be a callback
 
 ```javascript
 function fetchData(success, fail) {

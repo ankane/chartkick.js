@@ -1,4 +1,4 @@
-## 3.1.2 [unreleased]
+## 3.1.2
 
 - Added support for callbacks as data
 - Fixed `stacked` option for Highcharts area charts
