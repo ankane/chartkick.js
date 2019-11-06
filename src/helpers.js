@@ -224,6 +224,15 @@ function isNumber(obj) {
 }
 
 function formatValue(pre, value, options) {
+  if (options.round !== undefined) {
+    if (options.round < 0) {
+      let num = Math.pow(10, -1 * options.round);
+      value = parseInt((1.0 * value / num).toFixed(0)) * num;
+    } else {
+      value = parseFloat(value.toFixed(options.round));
+    }
+  }
+
   pre = pre || "";
   if (options.prefix) {
     if (value < 0) {

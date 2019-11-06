@@ -149,7 +149,8 @@ let setFormatOptions = function(chart, options, chartType) {
     prefix: chart.options.prefix,
     suffix: chart.options.suffix,
     thousands: chart.options.thousands,
-    decimal: chart.options.decimal
+    decimal: chart.options.decimal,
+    round: chart.options.round
   };
 
   if (chartType !== "pie") {

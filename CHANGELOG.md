@@ -1,3 +1,7 @@
+## 3.1.4 [unreleased]
+
+- Added `round` option
+
 ## 3.1.3
 
 - Removed `Error Loading Chart` prefix for callback errors
