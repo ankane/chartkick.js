@@ -215,6 +215,12 @@ Set a decimal separator - *Chart.js, Highcharts*
 new Chartkick.LineChart("chart-1", data, {decimal: ","})
 ```
 
+Friendly file sizes - *Chart.js* [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {bytes: true})
+```
+
 Show a message when data is empty
 
 ```javascript
