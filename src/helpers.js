@@ -235,6 +235,7 @@ function formatValue(pre, value, options, axis) {
 
   let suffix = options.suffix || "";
   let precision = options.precision;
+  let round = options.round;
 
   if (options.byteScale) {
     let baseValue = axis ? options.byteScale : value;
@@ -254,9 +255,13 @@ function formatValue(pre, value, options, axis) {
       suffix = " bytes";
     }
 
-    if (precision === undefined) {
+    if (precision === undefined && round === undefined) {
       precision = 3;
     }
+  }
+
+  if (precision !== undefined && round !== undefined) {
+    throw Error("Use either round or precision, not both");
   }
 
   if (!axis) {
@@ -265,12 +270,12 @@ function formatValue(pre, value, options, axis) {
       value = parseFloat(value).toString(); // no insignificant zeros
     }
 
-    if (options.round !== undefined) {
-      if (options.round < 0) {
-        let num = Math.pow(10, -1 * options.round);
+    if (round !== undefined) {
+      if (round < 0) {
+        let num = Math.pow(10, -1 * round);
         value = parseInt((1.0 * value / num).toFixed(0)) * num;
       } else {
-        value = parseFloat(value.toFixed(options.round));
+        value = parseFloat(value.toFixed(round));
       }
     }
   }
