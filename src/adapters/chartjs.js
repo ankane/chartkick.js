@@ -152,15 +152,52 @@ let setFormatOptions = function(chart, options, chartType) {
     decimal: chart.options.decimal
   };
 
+  if (chart.options.bytes) {
+    let series = chart.data;
+    if (chartType === "pie") {
+      series = [{data: series}];
+    }
+
+    // calculate max
+    let max = 0;
+    for (let i = 0; i < series.length; i++) {
+      let s = series[i];
+      for (let j = 0; j < s.data.length; j++) {
+        if (s.data[j][1] > max) {
+          max = s.data[j][1];
+        }
+      }
+    }
+
+    // calculate scale
+    let scale = 1;
+    while (max >= 1024) {
+      scale *= 1024;
+      max /= 1024;
+    }
+
+    // set step size
+    formatOptions.byteScale = scale;
+  }
+
   if (chartType !== "pie") {
     let myAxes = options.scales.yAxes;
     if (chartType === "bar") {
       myAxes = options.scales.xAxes;
     }
 
+    if (formatOptions.byteScale) {
+      if (!myAxes[0].ticks.stepSize) {
+        myAxes[0].ticks.stepSize = formatOptions.byteScale / 2;
+      }
+      if (!myAxes[0].ticks.maxTicksLimit) {
+        myAxes[0].ticks.maxTicksLimit = 4;
+      }
+    }
+
     if (!myAxes[0].ticks.callback) {
       myAxes[0].ticks.callback = function (value) {
-        return formatValue("", value, formatOptions);
+        return formatValue("", value, formatOptions, true);
       };
     }
   }

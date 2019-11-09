@@ -223,7 +223,7 @@ function isNumber(obj) {
   return typeof obj === "number";
 }
 
-function formatValue(pre, value, options) {
+function formatValue(pre, value, options, axis) {
   pre = pre || "";
   if (options.prefix) {
     if (value < 0) {
@@ -231,6 +231,28 @@ function formatValue(pre, value, options) {
       pre += "-";
     }
     pre += options.prefix;
+  }
+
+  let suffix = options.suffix || "";
+  if (options.byteScale) {
+    let baseValue = axis ? options.byteScale : value;
+    if (baseValue >= 1099511627776) {
+      value /= 1099511627776;
+      suffix = " TB";
+    } else if (baseValue >= 1073741824) {
+      value /= 1073741824;
+      suffix = " GB";
+    } else if (baseValue >= 1048576) {
+      value /= 1048576;
+      suffix = " MB";
+    } else if (baseValue >= 1024) {
+      value /= 1024;
+      suffix = " KB";
+    } else {
+      suffix = " bytes";
+    }
+    value = value.toPrecision(3);
+    value = parseFloat(value).toString(); // no insignificant zeros
   }
 
   if (options.thousands || options.decimal) {
@@ -245,7 +267,7 @@ function formatValue(pre, value, options) {
     }
   }
 
-  return pre + value + (options.suffix || "");
+  return pre + value + suffix;
 }
 
 function seriesOption(chart, series, option) {
