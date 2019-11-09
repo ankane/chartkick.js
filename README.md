@@ -221,7 +221,7 @@ Set significant digits - *Chart.js, Highcharts* [master]
 new Chartkick.LineChart("chart-1", data, {precision: 3})
 ```
 
-Round values when displayed - *Chart.js, Highcharts* [master]
+Set rounding - *Chart.js, Highcharts* [master]
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {round: 2})
