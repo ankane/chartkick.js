@@ -259,17 +259,19 @@ function formatValue(pre, value, options, axis) {
     }
   }
 
-  if (precision !== undefined) {
-    value = value.toPrecision(precision);
-    value = parseFloat(value).toString(); // no insignificant zeros
-  }
+  if (!axis) {
+    if (precision !== undefined) {
+      value = value.toPrecision(precision);
+      value = parseFloat(value).toString(); // no insignificant zeros
+    }
 
-  if (options.round !== undefined) {
-    if (options.round < 0) {
-      let num = Math.pow(10, -1 * options.round);
-      value = parseInt((1.0 * value / num).toFixed(0)) * num;
-    } else {
-      value = parseFloat(value.toFixed(options.round));
+    if (options.round !== undefined) {
+      if (options.round < 0) {
+        let num = Math.pow(10, -1 * options.round);
+        value = parseInt((1.0 * value / num).toFixed(0)) * num;
+      } else {
+        value = parseFloat(value.toFixed(options.round));
+      }
     }
   }
 
