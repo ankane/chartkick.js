@@ -215,6 +215,12 @@ Set a decimal separator - *Chart.js, Highcharts*
 new Chartkick.LineChart("chart-1", data, {decimal: ","})
 ```
 
+Set significant digits - *Chart.js, Highcharts* [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {precision: 3})
+```
+
 Round values when displayed - *Chart.js, Highcharts* [master]
 
 ```javascript

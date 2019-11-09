@@ -234,6 +234,8 @@ function formatValue(pre, value, options, axis) {
   }
 
   let suffix = options.suffix || "";
+  let precision = options.precision;
+
   if (options.byteScale) {
     let baseValue = axis ? options.byteScale : value;
     if (baseValue >= 1099511627776) {
@@ -251,7 +253,14 @@ function formatValue(pre, value, options, axis) {
     } else {
       suffix = " bytes";
     }
-    value = value.toPrecision(3);
+
+    if (precision === undefined) {
+      precision = 3;
+    }
+  }
+
+  if (precision !== undefined) {
+    value = value.toPrecision(precision);
     value = parseFloat(value).toString(); // no insignificant zeros
   }
 

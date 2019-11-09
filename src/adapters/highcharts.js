@@ -97,6 +97,7 @@ let setFormatOptions = function(chart, options, chartType) {
     suffix: chart.options.suffix,
     thousands: chart.options.thousands,
     decimal: chart.options.decimal,
+    precision: chart.options.precision,
     round: chart.options.round
   };
 
