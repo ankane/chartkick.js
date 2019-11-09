@@ -1,6 +1,7 @@
 ## 3.1.4 [unreleased]
 
 - Added `bytes` option for Chart.js
+- Added `round` option
 
 ## 3.1.3
 

@@ -658,6 +658,18 @@
       new Chartkick.BarChart("bytes-bar", [["A",2147483648],["B",4294967296],["C",6442450944],["D",8589934592],["E",10737418240]], {bytes: true});
     </script>
 
+    <h1>Round - Positive</h1>
+    <div id="round-positive" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("round-positive", [["A",2.147483648],["B",4.294967296],["C",6.442450944],["D",8.589934592],["E",1.0737418240]], {round: 2});
+    </script>
+
+    <h1>Round - Negative</h1>
+    <div id="round-negative" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("round-negative", [["A",21474.83648],["B",42949.67296],["C",64424.50944],["D",85899.34592],["E",10737.418240]], {round: -3});
+    </script>
+
     <h1>Null Data</h1>
     <div id="null-data" style="height: 300px;"></div>
     <script>

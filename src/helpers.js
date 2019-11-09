@@ -255,6 +255,15 @@ function formatValue(pre, value, options, axis) {
     value = parseFloat(value).toString(); // no insignificant zeros
   }
 
+  if (options.round !== undefined) {
+    if (options.round < 0) {
+      let num = Math.pow(10, -1 * options.round);
+      value = parseInt((1.0 * value / num).toFixed(0)) * num;
+    } else {
+      value = parseFloat(value.toFixed(options.round));
+    }
+  }
+
   if (options.thousands || options.decimal) {
     value = toStr(value);
     let parts = value.split(".");

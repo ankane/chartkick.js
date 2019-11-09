@@ -215,6 +215,12 @@ Set a decimal separator - *Chart.js, Highcharts*
 new Chartkick.LineChart("chart-1", data, {decimal: ","})
 ```
 
+Round values when displayed - *Chart.js, Highcharts* [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {round: 2})
+```
+
 Friendly file sizes - *Chart.js 2.8+* [master]
 
 ```javascript
