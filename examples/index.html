@@ -466,10 +466,10 @@
       new Chartkick.LineChart("one-point", [{"name":"boom","data":[["2016-04-24","21.0"]],"library":null},{"name":"bam","data":[["2016-04-24","75.0"]],"library":null},{"name":"hello","data":[["2016-04-24","4.0"]]}], {"min":null});
     </script>
 
-    <h1>Zeros</h1>
-    <div id="zeros" style="height: 300px;"></div>
+    <h1>All Zeros</h1>
+    <div id="all-zeros" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("zeros", [{"name":"Revisions","data":{"2016-04-03":0,"2016-04-10":0,"2016-04-17":0,"2016-04-24":0,"2016-05-01":0,"2016-05-08":0,"2016-05-15":0,"2016-05-22":0,"2016-05-29":0}}], {});
+      new Chartkick.LineChart("all-zeros", [{"name":"Revisions","data":{"2016-04-03":0,"2016-04-10":0,"2016-04-17":0,"2016-04-24":0,"2016-05-01":0,"2016-05-08":0,"2016-05-15":0,"2016-05-22":0,"2016-05-29":0}}], {});
     </script>
 
     <h1>Overlapping Labels - Chart.js</h1>
@@ -668,6 +668,12 @@
     <div id="round-negative" style="height: 300px;"></div>
     <script>
       new Chartkick.ColumnChart("round-negative", [["A",21474.83648],["B",42949.67296],["C",64424.50944],["D",85899.34592],["E",10737.418240]], {round: -3});
+    </script>
+
+    <h1>Zeros</h1>
+    <div id="zeros" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("zeros", [["A",1],["B",1.2],["C",1.23],["D",1.234],["E",1.2345]], {round: 2, zeros: true});
     </script>
 
     <h1>Precision - Large</h1>

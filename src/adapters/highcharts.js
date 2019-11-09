@@ -98,7 +98,8 @@ let setFormatOptions = function(chart, options, chartType) {
     thousands: chart.options.thousands,
     decimal: chart.options.decimal,
     precision: chart.options.precision,
-    round: chart.options.round
+    round: chart.options.round,
+    zeros: chart.options.zeros
   };
 
   if (chartType !== "pie" && !options.yAxis.labels.formatter) {

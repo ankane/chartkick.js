@@ -3,6 +3,7 @@
 - Added `bytes` option for Chart.js
 - Added `precision` option
 - Added `round` option
+- Added `zeros` option
 
 ## 3.1.3
 

@@ -267,7 +267,9 @@ function formatValue(pre, value, options, axis) {
   if (!axis) {
     if (precision !== undefined) {
       value = value.toPrecision(precision);
-      value = parseFloat(value).toString(); // no insignificant zeros
+      if (!options.zeros) {
+        value = parseFloat(value);
+      }
     }
 
     if (round !== undefined) {
@@ -275,7 +277,10 @@ function formatValue(pre, value, options, axis) {
         let num = Math.pow(10, -1 * round);
         value = parseInt((1.0 * value / num).toFixed(0)) * num;
       } else {
-        value = parseFloat(value.toFixed(round));
+        value = value.toFixed(round);
+        if (!options.zeros) {
+          value = parseFloat(value);
+        }
       }
     }
   }

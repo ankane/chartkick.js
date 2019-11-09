@@ -227,6 +227,12 @@ Set rounding - *Chart.js, Highcharts* [master]
 new Chartkick.LineChart("chart-1", data, {round: 2})
 ```
 
+Show insignificant zeros, useful for currency - *Chart.js, Highcharts* [master]
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {round: 2, zeros: true})
+```
+
 Friendly file sizes - *Chart.js 2.8+* [master]
 
 ```javascript
