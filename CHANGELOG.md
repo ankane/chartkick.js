@@ -1,5 +1,6 @@
-## 3.1.4 [unreleased]
+## 3.2.0 [unreleased]
 
+- Fixed prototype pollution - see [#117](https://github.com/ankane/chartkick.js/issues/117)
 - Added `bytes` option for Chart.js
 - Added `precision` option
 - Added `round` option

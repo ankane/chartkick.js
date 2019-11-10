@@ -7,13 +7,17 @@ function isFunction(variable) {
 }
 
 function isPlainObject(variable) {
-  return Object.prototype.toString.call(variable) === "[object Object]";
+  // protect against prototype pollution, defense 2
+  return Object.prototype.toString.call(variable) === "[object Object]" && !isFunction(variable) && variable instanceof Object;
 }
 
 // https://github.com/madrobby/zepto/blob/master/src/zepto.js
 function extend(target, source) {
   let key;
   for (key in source) {
+    // protect against prototype pollution, defense 1
+    if (key === "__proto__") continue;
+
     if (isPlainObject(source[key]) || isArray(source[key])) {
       if (isPlainObject(source[key]) && !isPlainObject(target[key])) {
         target[key] = {};
