@@ -215,25 +215,25 @@ Set a decimal separator - *Chart.js, Highcharts*
 new Chartkick.LineChart("chart-1", data, {decimal: ","})
 ```
 
-Set significant digits - *Chart.js, Highcharts* [master]
+Set significant digits - *Chart.js, Highcharts*
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {precision: 3})
 ```
 
-Set rounding - *Chart.js, Highcharts* [master]
+Set rounding - *Chart.js, Highcharts*
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {round: 2})
 ```
 
-Show insignificant zeros, useful for currency - *Chart.js, Highcharts* [master]
+Show insignificant zeros, useful for currency - *Chart.js, Highcharts*
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {round: 2, zeros: true})
 ```
 
-Friendly file sizes - *Chart.js 2.8+* [master]
+Friendly file sizes - *Chart.js 2.8+*
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {bytes: true})
