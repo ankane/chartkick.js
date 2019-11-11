@@ -269,8 +269,8 @@ function formatValue(pre, value, options, axis) {
     // TODO handle manual precision case
     if (precision === undefined && round === undefined) {
       if (value >= 1023.5) {
-        value = 1.0;
         if (suffixIdx < byteSuffixes.length - 1) {
+          value = 1.0;
           suffixIdx += 1;
         }
       }
