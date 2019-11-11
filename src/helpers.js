@@ -270,7 +270,7 @@ function formatValue(pre, value, options, axis) {
     if (precision === undefined && round === undefined) {
       if (value >= 1023.5) {
         value = 1.0;
-        if (suffixIdx < 5) {
+        if (suffixIdx < byteSuffixes.length - 1) {
           suffixIdx += 1;
         }
       }
