@@ -227,7 +227,7 @@ function isNumber(obj) {
   return typeof obj === "number";
 }
 
-let byteSuffixes = ["bytes", "KB", "MB", "GB", "TB", "PB"];
+let byteSuffixes = ["bytes", "KB", "MB", "GB", "TB", "PB", "EB"];
 
 function formatValue(pre, value, options, axis) {
   pre = pre || "";
@@ -247,7 +247,10 @@ function formatValue(pre, value, options, axis) {
     let suffixIdx;
     let baseValue = axis ? options.byteScale : value;
 
-    if (baseValue >= 1125899906842624) {
+    if (baseValue >= 1152921504606846976) {
+      value /= 1152921504606846976;
+      suffixIdx = 6;
+    } else if (baseValue >= 1125899906842624) {
       value /= 1125899906842624;
       suffixIdx = 5;
     } else if (baseValue >= 1099511627776) {

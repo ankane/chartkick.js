@@ -1,4 +1,8 @@
-## 3.2.0 [unreleased]
+## 3.2.1 [unreleased]
+
+- Added support for petabytes and exabytes
+
+## 3.2.0
 
 - Fixed prototype pollution - see [#117](https://github.com/ankane/chartkick.js/issues/117)
 - Added `bytes` option for Chart.js
