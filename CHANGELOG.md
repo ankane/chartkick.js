@@ -169,7 +169,7 @@ Breaking changes
 - New official API
 - Fixed min and max for Chart.js bar charts
 
-## 1.5.1
+## 1.5.1 (2016-05-03)
 
 - Added bar chart for Chart.js
 - Added `library` option for series
