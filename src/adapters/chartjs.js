@@ -419,6 +419,22 @@ let createDataTable = function (chart, options, chartType, library) {
     }
   }
 
+  // for empty datetime chart
+  if (chart.xtype === "datetime" && labels.length === 0) {
+    if (notnull(xmin)) {
+      labels.push(toDate(xmin));
+    }
+    if (notnull(xmax)) {
+      labels.push(toDate(xmax));
+    }
+    day = false;
+    week = false;
+    month = false;
+    year = false;
+    hour = false;
+    minute = false;
+  }
+
   if (chart.xtype === "datetime" && labels.length > 0) {
     let minTime = (notnull(xmin) ? toDate(xmin) : labels[0]).getTime();
     let maxTime = (notnull(xmax) ? toDate(xmax) : labels[0]).getTime();

@@ -257,8 +257,14 @@ let formatSeriesData = function (data, keyType) {
   return r;
 };
 
-function detectXType(series, noDatetime) {
-  if (detectXTypeWithFunction(series, isNumber)) {
+function detectXType(series, noDatetime, options) {
+  if (dataEmpty(series)) {
+    if ((options.xmin || options.xmax) && (!options.xmin || isDate(options.xmin)) && (!options.xmax || isDate(options.xmax))) {
+      return "datetime";
+    } else {
+      return "number";
+    }
+  } else if (detectXTypeWithFunction(series, isNumber)) {
     return "number";
   } else if (!noDatetime && detectXTypeWithFunction(series, isDate)) {
     return "datetime";
@@ -310,12 +316,18 @@ function processSeries(chart, keyType, noDatetime) {
     chart.hideLegend = false;
   }
 
-  chart.xtype = keyType ? keyType : (opts.discrete ? "string" : detectXType(series, noDatetime));
-
-  // right format
+  // convert to array
+  // must come before dataEmpty check
   series = copySeries(series);
   for (i = 0; i < series.length; i++) {
-    series[i].data = formatSeriesData(toArr(series[i].data), chart.xtype);
+    series[i].data = toArr(series[i].data);
+  }
+
+  chart.xtype = keyType ? keyType : (opts.discrete ? "string" : detectXType(series, noDatetime, opts));
+
+  // right format
+  for (i = 0; i < series.length; i++) {
+    series[i].data = formatSeriesData(series[i].data, chart.xtype);
   }
 
   return series;

@@ -1,6 +1,7 @@
-## 3.2.1 [unreleased]
+## 3.2.1 (unreleased)
 
 - Added support for petabytes and exabytes
+- Fixed error with `xmin` and `xmax` and empty data
 
 ## 3.2.0 (2019-11-09)
 
