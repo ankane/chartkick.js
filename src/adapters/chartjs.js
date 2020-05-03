@@ -251,6 +251,11 @@ let setFormatOptions = function(chart, options, chartType) {
       };
     }
   }
+
+  if (chart.options.nearest) {
+    options.tooltips.intersect = false;
+    options.tooltips.mode = chart.data.length === 1 ? "index" : "nearest";
+  }
 };
 
 let jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
