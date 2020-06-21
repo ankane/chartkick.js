@@ -13,7 +13,7 @@ Also available for [React](https://github.com/ankane/react-chartkick), [Vue.js](
 Run
 
 ```sh
-yarn add chartkick chart.js
+npm install chartkick chart.js
 ```
 
 And add
