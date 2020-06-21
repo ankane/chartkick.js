@@ -41,11 +41,11 @@ To get started with development and testing:
 ```sh
 git clone https://github.com/ankane/chartkick.js.git
 cd chartkick.js
-yarn
-yarn build
+npm install
+npm run build
 
 # start web server
-yarn global add serve
+npm install -g serve
 serve
 ```
 
