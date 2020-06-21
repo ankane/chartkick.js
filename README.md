@@ -357,7 +357,7 @@ new Chartkick.LineChart("chart-1", data, {download: {background: "#fff"}})
 Run
 
 ```sh
-yarn add chartkick chart.js
+npm install chartkick chart.js
 ```
 
 And add
@@ -374,7 +374,7 @@ Chartkick.use(Chart)
 Run
 
 ```sh
-yarn add chartkick
+npm install chartkick
 ```
 
 And add
@@ -402,7 +402,7 @@ before your charts.
 Run
 
 ```sh
-yarn add chartkick highcharts
+npm install chartkick highcharts
 ```
 
 And add
@@ -526,7 +526,7 @@ Chartkick.adapters.unshift(CustomAdapter);
 To run the files in the `examples` directory, you’ll need a web server. Run:
 
 ```sh
-yarn global add serve
+npm install -g serve
 serve
 ```
 
