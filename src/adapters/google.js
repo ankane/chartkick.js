@@ -206,7 +206,7 @@ export default class {
   }
 
   renderGeoChart(chart) {
-    this.waitForLoaded(chart, () => {
+    this.waitForLoaded(chart, "geochart", () => {
       let chartOptions = {
         legend: "none",
         colorAxis: {
@@ -316,7 +316,7 @@ export default class {
       if (config.language) {
         loadOptions.language = config.language;
       }
-      if (pack === "corechart" && config.mapsApiKey) {
+      if (pack === "geochart" && config.mapsApiKey) {
         loadOptions.mapsApiKey = config.mapsApiKey;
       }
 
@@ -328,7 +328,7 @@ export default class {
     let cb, call;
     for (let i = 0; i < callbacks.length; i++) {
       cb = callbacks[i];
-      call = this.library.visualization && ((cb.pack === "corechart" && this.library.visualization.LineChart) || (cb.pack === "timeline" && this.library.visualization.Timeline));
+      call = this.library.visualization && ((cb.pack === "corechart" && this.library.visualization.LineChart) || (cb.pack === "timeline" && this.library.visualization.Timeline) || (cb.pack === "geochart" && this.library.visualization.GeoChart));
       if (call) {
         cb.callback();
         callbacks.splice(i, 1);
