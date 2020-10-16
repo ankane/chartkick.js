@@ -239,6 +239,45 @@ let toFormattedKey = function (key, keyType) {
   return key;
 };
 
+function dateAddSeconds(date, seconds) {
+  let r;
+
+  if (!(date instanceof Date)) {
+    return undefined;
+  }
+
+  r = new Date(date);
+  r.setTime(r.getTime() + (seconds * 1000));
+
+  return r;
+}
+
+let formatDatesToBeUnique = function (data, keyType) {
+  let r = [], dateIterator = 0, key, j, addTime;
+
+  for (j = 0; j < data.length; j++) {
+    key = data[j][0];
+
+    if (j > 0) {
+      if (key.toString() === toFormattedKey(data[j-1][0], keyType).toString()) {
+        dateIterator++;
+
+        if (dateIterator <= 86399) {
+          key = dateAddSeconds(key, dateIterator);
+        } else {
+          throw new Error("Can't plot more than 86399 points on a single date " + key);
+        }
+      } else {
+        dateIterator = 0;
+      }
+    }
+
+    r.push([key, toFloat(data[j][1])]);
+  }
+
+  return r;
+}
+
 let formatSeriesData = function (data, keyType) {
   let r = [], key, j;
   for (j = 0; j < data.length; j++) {
@@ -328,6 +367,10 @@ function processSeries(chart, keyType, noDatetime) {
   // right format
   for (i = 0; i < series.length; i++) {
     series[i].data = formatSeriesData(series[i].data, chart.xtype);
+
+    if (chart.__chartName() === "ScatterChart" && series[i].data[0][0] instanceof Date) {
+      series[i].data = formatDatesToBeUnique(series[i].data, chart.xtype);
+    }
   }
 
   return series;
@@ -562,7 +605,7 @@ class GeoChart extends Chart {
 
 class ScatterChart extends Chart {
   __processData() {
-    return processSeries(this, "number");
+    return processSeries(this);
   }
 
   __chartName() {

@@ -176,8 +176,31 @@ export default class {
   }
 
   renderScatterChart(chart) {
-    let options = jsOptions(chart, chart.options, {});
+    let options = jsOptions(chart, chart.options, {}), data, i, j;
     options.chart.type = "scatter";
+
+    let series = chart.data;
+    for (i = 0; i < series.length; i++) {
+      series[i].name = series[i].name || "Value";
+      data = series[i].data;
+      if (chart.xtype === "datetime") {
+        for (j = 0; j < data.length; j++) {
+          data[j][0] = data[j][0].getTime();
+        }
+      }
+      series[i].marker = {symbol: "circle"};
+      if (chart.options.points === false) {
+        series[i].marker.enabled = false;
+      }
+    }
+
+    if (chart.xtype === "datetime") {
+      options.xAxis.type = "datetime";
+      options.tooltip.formatter = function() {
+        return `(<b>${Highcharts.dateFormat('%b %d %Y', new Date(this.x))}</b>, <b>${this.y}</b>)`;
+      }
+    }
+
     this.drawChart(chart, chart.data, options);
   }
 

@@ -608,7 +608,14 @@ export default class {
 
     let data = createDataTable(chart, options, chartType, this.library);
 
-    options.scales.xAxes[0].type = "linear";
+    if (data.labels[0] instanceof Date) {
+      options.scales.xAxes[0].type = "time";
+      options.scales.xAxes[0].time.unit = "day";
+      options.scales.xAxes[0].time.tooltipFormat = "MMM D YYYY";
+    } else {
+      options.scales.xAxes[0].type = "linear";
+    }
+
     options.scales.xAxes[0].position = "bottom";
 
     this.drawChart(chart, chartType, data, options);

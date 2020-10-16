@@ -229,7 +229,7 @@ export default class {
       let chartOptions = {};
       let options = jsOptions(chart, chart.options, chartOptions);
 
-      let series = chart.data, rows2 = [], i, j, data, d;
+      let series = chart.data, rows2 = [], i, j, data, d, dataType, dateFormatter;
       for (i = 0; i < series.length; i++) {
         series[i].name = series[i].name || "Value";
         d = series[i].data;
@@ -242,11 +242,24 @@ export default class {
       }
 
       data = new this.library.visualization.DataTable();
-      data.addColumn("number", "");
+
+      if (series[0].data[0][0] instanceof Date) {
+        dataType = "datetime";
+      } else {
+        dataType = "number";
+      }
+
+      data.addColumn(dataType, "");
       for (i = 0; i < series.length; i++) {
         data.addColumn("number", series[i].name);
       }
       data.addRows(rows2);
+
+      if (dataType === "datetime") {
+        // https://developers.google.com/chart/interactive/docs/reference#dateformatter
+        dateFormatter = new google.visualization.DateFormat({pattern: "MMM d YYYY"});
+        dateFormatter.format(data, 0);
+      }
 
       this.drawChart(chart, "ScatterChart", data, options);
     });
