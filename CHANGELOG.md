@@ -1,3 +1,7 @@
+## 3.2.2 (unreleased)
+
+- Stopped refresh when chart is destroyed
+
 ## 3.2.1 (2020-07-23)
 
 - Added support for petabytes and exabytes

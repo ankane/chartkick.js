@@ -468,6 +468,8 @@ class Chart {
   }
 
   destroy() {
+    this.stopRefresh();
+
     if (this.__adapterObject) {
       this.__adapterObject.destroy(this);
     }
