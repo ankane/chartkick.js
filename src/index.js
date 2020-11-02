@@ -638,6 +638,7 @@ const Chartkick = {
 // not ideal, but allows for simpler integration
 if (typeof window !== "undefined" && !window.Chartkick) {
   window.Chartkick = Chartkick;
+  window.dispatchEvent(new Event("chartkick:load"));
 }
 
 // backwards compatibility for esm require
