@@ -395,6 +395,7 @@ let createDataTable = function (chart, options, chartType) {
       dataset.pointBackgroundColor = color;
       dataset.pointHoverBackgroundColor = color;
       dataset.pointHitRadius = 50;
+      // prevent hover effect on multiple points on scatter chart
       dataset.pointHoverBorderWidth = 0;
     }
 
