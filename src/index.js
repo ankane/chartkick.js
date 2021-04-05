@@ -317,9 +317,9 @@ function processSeries(chart, keyType, noDatetime) {
   // see if one series or multiple
   if (!isArray(series) || typeof series[0] !== "object" || isArray(series[0])) {
     series = [{name: opts.label, data: series}];
-    chart.hideLegend = true;
+    chart.singleSeriesFormat = true;
   } else {
-    chart.hideLegend = false;
+    chart.singleSeriesFormat = false;
   }
 
   // convert to array

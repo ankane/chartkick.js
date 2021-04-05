@@ -104,8 +104,8 @@ function jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, set
     let options = merge({}, defaultOptions);
     options = merge(options, chartOptions || {});
 
-    if (chart.hideLegend || "legend" in opts) {
-      hideLegend(options, opts.legend, chart.hideLegend);
+    if (chart.singleSeriesFormat || "legend" in opts) {
+      hideLegend(options, opts.legend, chart.singleSeriesFormat);
     }
 
     if (opts.title) {

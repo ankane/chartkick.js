@@ -370,7 +370,7 @@ let createDataTable = function (chart, options, chartType) {
     s = series[i];
 
     // use colors for each bar for single series format
-    if (chart.options.colors && chart.hideLegend && (chartType === "bar" || chartType === "column") && !s.color) {
+    if (chart.options.colors && chart.singleSeriesFormat && (chartType === "bar" || chartType === "column") && !s.color) {
       color = colors;
       backgroundColor = [];
       for (let j = 0; j < colors.length; j++) {
