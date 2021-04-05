@@ -15,7 +15,7 @@ Also available for [React](https://github.com/ankane/react-chartkick), [Vue.js](
 Run
 
 ```sh
-npm install chartkick
+npm install chartkick chart.js
 ```
 
 And add
@@ -363,7 +363,7 @@ new Chartkick.LineChart("chart-1", data, {download: {background: "#fff"}})
 Run
 
 ```sh
-npm install chartkick
+npm install chartkick chart.js
 ```
 
 And add
@@ -545,7 +545,13 @@ Run:
 npm install chartkick@latest
 ```
 
-For Chart.js, change:
+For Chart.js, also run:
+
+```sh
+npm install chart.js@latest
+```
+
+And change:
 
 ```javascript
 import Chart from "chart.js"
