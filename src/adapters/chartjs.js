@@ -29,6 +29,7 @@ let baseOptions = {
       color: "#333"
     }
   },
+  interaction: {}
 };
 
 let defaultOptions = {
@@ -395,9 +396,6 @@ let createDataTable = function (chart, options, chartType) {
       dataset.pointBackgroundColor = color;
       dataset.pointHoverBackgroundColor = color;
       dataset.pointHitRadius = 50;
-      // prevent hover effect on multiple points on scatter chart
-      // apply to all point charts for consistency
-      dataset.pointHoverBorderWidth = 0;
     }
 
     if (chartType === "bubble") {
@@ -647,9 +645,9 @@ export default class {
     options.scales.x.type = "linear";
     options.scales.x.position = "bottom";
 
-    // prevent grouping tooltips
-    if (!("mode" in options.plugins.tooltip)) {
-      options.plugins.tooltip.mode = "nearest";
+    // prevent grouping hover and tooltips
+    if (!("mode" in options.interaction)) {
+      options.interaction.mode = "nearest";
     }
 
     this.drawChart(chart, chartType, data, options);
