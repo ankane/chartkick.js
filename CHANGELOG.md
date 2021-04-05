@@ -1,6 +1,7 @@
 ## 3.2.2 (unreleased)
 
 - Added `destroyAll` function
+- Added `chartkick:load` event
 - Stopped refresh when chart is destroyed
 
 ## 3.2.1 (2020-07-23)
