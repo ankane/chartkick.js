@@ -7,7 +7,7 @@ import { uglify } from "rollup-plugin-uglify";
 const input = "src/index.js";
 const outputName = "Chartkick";
 const banner =
-`/*
+`/*!
  * Chartkick.js
  * ${pkg.description}
  * ${pkg.repository.url}
@@ -15,6 +15,8 @@ const banner =
  * ${pkg.license} License
  */
 `;
+
+const minBanner = `/*! Chartkick.js v${pkg.version} | ${pkg.license} License */`;
 
 export default [
   {
@@ -36,13 +38,18 @@ export default [
     output: {
       name: outputName,
       file: pkg.main.replace(/\.js$/, ".min.js"),
-      format: "umd"
+      format: "umd",
+      banner: minBanner
     },
     plugins: [
       resolve(),
       commonjs(),
       buble(),
-      uglify()
+      uglify({
+        output: {
+          comments: /^!/
+        }
+      })
     ]
   },
   {
