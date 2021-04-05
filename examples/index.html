@@ -51,7 +51,7 @@
     <h1>Donut Chart</h1>
     <div id="donut" style="height: 300px;"></div>
     <script>
-      new Chartkick.PieChart("donut", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13]], {donut: true});
+      new Chartkick.PieChart("donut", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13]], {donut: true, download: {background: "#fff"}});
     </script>
 
     <h1>Column Chart</h1>
@@ -96,6 +96,57 @@
       new Chartkick.Timeline("timeline", [["Washington", "1789-04-29", "1797-03-03"],["Adams", "1797-03-03", "1801-03-03"],["Jefferson", "1801-03-03", "1809-03-03"]]);
     </script>
 
+    <h1>URL</h1>
+    <div id="url" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("url", "remote.json");
+    </script>
+
+    <h1>URL Error</h1>
+    <div id="url-error" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("url-error", "404.json");
+    </script>
+
+    <h1>Callback Success</h1>
+    <div id="callback-success" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("callback-success", function(success, error) {
+        success({"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8});
+      });
+    </script>
+
+    <h1>Callback Fetch</h1>
+    <div id="callback-fetch" style="height: 300px;"></div>
+    <script>
+      function fetchChart(success, fail) {
+        fetch("remote.json").then(function(response) {
+          if (!response.ok) {
+            throw Error(response.statusText);
+          }
+          return response.json();
+        }).then(success).catch(fail);
+      }
+
+      new Chartkick.LineChart("callback-fetch", fetchChart);
+    </script>
+
+    <h1>Callback Error</h1>
+    <div id="callback-error" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("callback-error", function(success, error) {
+        error("Test error");
+      });
+    </script>
+
+    <h1>Callback Error 2</h1>
+    <div id="callback-error2" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("callback-error2", function(success, error) {
+        throw "Test error";
+      });
+    </script>
+
     <h1>Multiple Series Line</h1>
     <div id="multiple-line" style="height: 300px;"></div>
     <script>
@@ -105,13 +156,19 @@
     <h1>Multiple Series Bar</h1>
     <div id="multiple-bar" style="height: 300px;"></div>
     <script>
-      new Chartkick.BarChart("multiple-bar", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {max: 80});
+      new Chartkick.BarChart("multiple-bar", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}]);
     </script>
 
     <h1>Multiple Series Bar Stacked</h1>
     <div id="multiple-bar-stacked" style="height: 300px;"></div>
     <script>
-      new Chartkick.BarChart("multiple-bar-stacked", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {max: 80, stacked: true});
+      new Chartkick.BarChart("multiple-bar-stacked", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {stacked: true});
+    </script>
+
+    <h1>Multiple Series Area Unstacked</h1>
+    <div id="multiple-area-unstacked" style="height: 300px;"></div>
+    <script>
+      new Chartkick.AreaChart("multiple-area-unstacked", [{"name":"Workout","data":{"2013-02-10":3,"2013-02-17":3,"2013-02-24":3,"2013-03-03":1,"2013-03-10":4,"2013-03-17":3,"2013-03-24":2,"2013-03-31":3}},{"name":"Go to concert","data":{"2013-02-10":0,"2013-02-17":0,"2013-02-24":0,"2013-03-03":0,"2013-03-10":2,"2013-03-17":1,"2013-03-24":0,"2013-03-31":0}},{"name":"Wash face","data":{"2013-02-10":0,"2013-02-17":1,"2013-02-24":0,"2013-03-03":0,"2013-03-10":0,"2013-03-17":1,"2013-03-24":0,"2013-03-31":1}},{"name":"Call parents","data":{"2013-02-10":5,"2013-02-17":3,"2013-02-24":2,"2013-03-03":0,"2013-03-10":0,"2013-03-17":1,"2013-03-24":1,"2013-03-31":0}},{"name":"Eat breakfast","data":{"2013-02-10":3,"2013-02-17":2,"2013-02-24":1,"2013-03-03":0,"2013-03-10":2,"2013-03-17":2,"2013-03-24":3,"2013-03-31":0}}], {stacked: false});
     </script>
 
     <h1>Multiple Series Bar Stacked and Grouped - Chart.js 2.5+ and Highcharts</h1>
@@ -261,6 +318,30 @@
       new Chartkick.LineChart("min-null", {"2013-02-10":200,"2013-02-11":206,"2013-02-12":203,"2013-02-13":202,"2013-02-14":205,"2013-02-15":203}, {"min": null});
     </script>
 
+    <h1>X-Axis Min and Max - Chart.js</h1>
+    <div id="xmin" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("xmin", {"2013-02-10":200,"2013-02-11":206,"2013-02-12":203,"2013-02-13":202,"2013-02-14":205,"2013-02-15":203}, {"xmin": "2013-02-01", "xmax": "2013-02-28"});
+    </script>
+
+    <h1>X-Axis Min and Max Empty - Chart.js</h1>
+    <div id="xmin-empty" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("xmin-empty", {}, {"xmin": "2013-02-01", "xmax": "2013-02-28"});
+    </script>
+
+    <h1>X-Axis Min and Max Scatter - Chart.js</h1>
+    <div id="xmin-scatter" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ScatterChart("xmin-scatter", [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]], {xmin: 0, xmax: 400})
+    </script>
+
+    <h1>X-Axis Min and Max Scatter Empty - Chart.js</h1>
+    <div id="xmin-scatter-empty" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ScatterChart("xmin-scatter-empty", [], {xmin: 0, xmax: 400})
+    </script>
+
     <h1>Axis Titles Line</h1>
     <div id="axis-titles" style="height: 300px;"></div>
     <script>
@@ -283,6 +364,12 @@
     <div id="pie-colors" style="height: 300px;"></div>
     <script>
       new Chartkick.PieChart("pie-colors", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13]], {"colors": ["#b00", "#666"]});
+    </script>
+
+    <h1>Column Colors</h1>
+    <div id="column-colors" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("column-colors", [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]], {"colors": ["#b00", "#666"]});
     </script>
 
     <h1>Inline Color</h1>
@@ -378,10 +465,10 @@
       new Chartkick.LineChart("one-point", [{"name":"boom","data":[["2016-04-24","21.0"]],"library":null},{"name":"bam","data":[["2016-04-24","75.0"]],"library":null},{"name":"hello","data":[["2016-04-24","4.0"]]}], {"min":null});
     </script>
 
-    <h1>Zeros</h1>
-    <div id="zeros" style="height: 300px;"></div>
+    <h1>All Zeros</h1>
+    <div id="all-zeros" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("zeros", [{"name":"Revisions","data":{"2016-04-03":0,"2016-04-10":0,"2016-04-17":0,"2016-04-24":0,"2016-05-01":0,"2016-05-08":0,"2016-05-15":0,"2016-05-22":0,"2016-05-29":0}}], {});
+      new Chartkick.LineChart("all-zeros", [{"name":"Revisions","data":{"2016-04-03":0,"2016-04-10":0,"2016-04-17":0,"2016-04-24":0,"2016-05-01":0,"2016-05-08":0,"2016-05-15":0,"2016-05-22":0,"2016-05-29":0}}], {});
     </script>
 
     <h1>Overlapping Labels - Chart.js</h1>
@@ -429,13 +516,13 @@
     <h1>Line Chart - Legend Bottom</h1>
     <div id="legend-bottom" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("legend-bottom", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {legend: "bottom"});
+      new Chartkick.LineChart("legend-bottom", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {legend: "bottom", label: "Boom"});
     </script>
 
     <h1>Line Chart - Title</h1>
     <div id="title" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("title", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {title: "Boom"});
+      new Chartkick.LineChart("title", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {title: "Boom", download: true});
     </script>
 
     <h1>Points</h1>
@@ -546,22 +633,88 @@
       new Chartkick.ColumnChart("boolean-axis-column", [[true, 9], [false, 1], [null, 2]]);
     </script>
 
+    <h1>Bytes - Line Chart</h1>
+    <div id="bytes-line" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("bytes-line", [["2013-02-10",1073217535],["2013-02-11",1073217536],["2013-02-12",812017254.4],["2013-02-13",677799526.4],["2013-02-14",1147561574.4],["2013-02-15",1281779302.4],["2013-02-16",476472934.4],["2013-02-17",879126118.4],["2013-02-18",610690662.4],["2013-02-19",1415997030.4],["2013-02-20",1080452710.4],["2013-02-21",409364070.4],["2013-02-22",1013343846.4],["2013-02-23",1348888166.4],["2013-02-24",744908390.4]], {bytes: true});
+    </script>
+
+    <h1>Bytes - Pie Chart</h1>
+    <div id="bytes-pie" style="height: 300px;"></div>
+    <script>
+      new Chartkick.PieChart("bytes-pie", [["A",262144],["B",524288],["C",786432],["D",1048576],["E",1310720]], {bytes: true});
+    </script>
+
+    <h1>Bytes - Column Chart</h1>
+    <div id="bytes-column" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("bytes-column", [["A",536870912],["B",1073741824],["C",1610612736],["D",2147483648],["E",2684354560]], {bytes: true});
+    </script>
+
+    <h1>Bytes - Bar Chart</h1>
+    <div id="bytes-bar" style="height: 300px;"></div>
+    <script>
+      new Chartkick.BarChart("bytes-bar", [["A",2147483648],["B",4294967296],["C",6442450944],["D",8589934592],["E",10737418240]], {bytes: true});
+    </script>
+
+    <h1>Precision - Large</h1>
+    <div id="precision-large" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("precision-large", [["A",12354],["B",1235.4],["C",123.54]], {precision: 3});
+    </script>
+
+    <h1>Precision - Small</h1>
+    <div id="precision-small" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("precision-small", [["A",1.2345],["B",0.12345],["C",0.012345]], {precision: 3});
+    </script>
+
+    <h1>Round - Positive</h1>
+    <div id="round-positive" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("round-positive", [["A",2.147483648],["B",4.294967296],["C",6.442450944],["D",8.589934592],["E",1.0737418240]], {round: 2});
+    </script>
+
+    <h1>Round - Negative</h1>
+    <div id="round-negative" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("round-negative", [["A",21474.83648],["B",42949.67296],["C",64424.50944],["D",85899.34592],["E",10737.418240]], {round: -3});
+    </script>
+
+    <h1>Round and Precision</h1>
+    <div id="round-precision" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("round-precision", [["A",1.2345],["B",0.12345],["C",0.012345]], {round: 2, precision: 3});
+    </script>
+
+    <h1>Zeros - Precision</h1>
+    <div id="zeros-precision" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("zeros-precision", [["A",12],["B",12.3],["C",12.34],["D",12.345],["E",12.3456]], {precision: 4, zeros: true});
+    </script>
+
+    <h1>Zeros - Round</h1>
+    <div id="zeros-round" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("zeros-round", [["A",12],["B",12.3],["C",12.34],["D",12.345],["E",12.3456]], {round: 4, zeros: true});
+    </script>
+
     <h1>Null Data</h1>
     <div id="null-data" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("null-data", null, {messages: {empty: "No data"}});
+      new Chartkick.LineChart("null-data", null);
     </script>
 
     <h1>Empty Message</h1>
     <div id="empty-message" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("empty-message", {}, {messages: {empty: "No data"}});
+      new Chartkick.LineChart("empty-message", {}, {empty: "No data!!"});
     </script>
 
     <h1>Empty Pie</h1>
     <div id="empty-pie" style="height: 300px;"></div>
     <script>
-      new Chartkick.PieChart("empty-pie", {}, {messages: {empty: "No data"}});
+      new Chartkick.PieChart("empty-pie", {}, {empty: "No data!!"});
     </script>
 
     <h1>Custom Chart</h1>
@@ -597,14 +750,35 @@
       }, 3000);
     </script>
 
-    <h1>Refresh Data</h1>
-    <div id="refresh-data" style="height: 300px;"></div>
+    <h1>Refresh Data URL</h1>
+    <div id="refresh-data-url" style="height: 300px;"></div>
     <script>
-      var refreshChart = new Chartkick.LineChart("refresh-data", "remote.json", {refresh: 3});
+      var refreshChart = new Chartkick.LineChart("refresh-data-url", "remote.json", {refresh: 3});
 
       setTimeout( function () {
         refreshChart.stopRefresh();
       }, 10000);
+    </script>
+
+    <h1>Refresh Data Callback</h1>
+    <div id="refresh-data-callback" style="height: 300px;"></div>
+    <script>
+      var data = [];
+      var cb = function(success, error) {
+        data.push([data.length + 1, Math.random()]);
+        success(data);
+      };
+      var refreshChart2 = new Chartkick.LineChart("refresh-data-callback", cb, {refresh: 3});
+
+      setTimeout( function () {
+        refreshChart2.stopRefresh();
+      }, 30000);
+    </script>
+
+    <h1>Refresh Data Error</h1>
+    <div id="refresh-data-error" style="height: 300px;"></div>
+    <script>
+      new Chartkick.LineChart("refresh-data-error", [], {refresh: 3});
     </script>
 
     <script>
