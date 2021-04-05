@@ -275,6 +275,7 @@ export default class {
     });
   }
 
+  // TODO remove resize events
   destroy(chart) {
     if (chart.chart) {
       chart.chart.clearChart();
@@ -283,6 +284,7 @@ export default class {
 
   drawChart(chart, type, data, options) {
     this.destroy(chart);
+    if (chart.destroyed) return;
 
     if (chart.options.code) {
       window.console.log("var data = new google.visualization.DataTable(" + data.toJSON() + ");\nvar chart = new google.visualization." + type + "(element);\nchart.draw(data, " + JSON.stringify(options) + ");");

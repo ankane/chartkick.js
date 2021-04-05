@@ -273,6 +273,7 @@ export default class {
 
   drawChart(chart, data, options) {
     this.destroy(chart);
+    if (chart.destroyed) return;
 
     options.chart.renderTo = chart.element.id;
     options.series = data;

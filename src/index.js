@@ -468,6 +468,7 @@ class Chart {
   }
 
   destroy() {
+    this.destroyed = true;
     this.stopRefresh();
 
     if (this.__adapterObject) {
@@ -622,6 +623,14 @@ const Chartkick = {
     for (let chartId in Chartkick.charts) {
       if (Chartkick.charts.hasOwnProperty(chartId)) {
         callback(Chartkick.charts[chartId]);
+      }
+    }
+  },
+  destroyAll: function() {
+    for (let chartId in Chartkick.charts) {
+      if (Chartkick.charts.hasOwnProperty(chartId)) {
+        Chartkick.charts[chartId].destroy();
+        delete Chartkick.charts[chartId];
       }
     }
   },

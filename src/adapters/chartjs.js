@@ -626,6 +626,7 @@ export default class {
 
   drawChart(chart, type, data, options) {
     this.destroy(chart);
+    if (chart.destroyed) return;
 
     let chartOptions = {
       type: type,
