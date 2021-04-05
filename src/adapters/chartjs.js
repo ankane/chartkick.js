@@ -395,6 +395,7 @@ let createDataTable = function (chart, options, chartType) {
       dataset.pointBackgroundColor = color;
       dataset.pointHoverBackgroundColor = color;
       dataset.pointHitRadius = 50;
+      dataset.pointHoverBorderWidth = 0;
     }
 
     if (chartType === "bubble") {
