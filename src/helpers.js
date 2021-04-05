@@ -78,7 +78,8 @@ function toDate(n) {
         // try our best to get the str into iso8601
         // TODO be smarter about this
         let str = n.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
-        n = new Date(str) || new Date(n);
+        // use Date.parse for str since it returns NaN instead of invalid date
+        n = Date.parse(str) || new Date(n);
       }
     }
   }

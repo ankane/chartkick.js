@@ -1,3 +1,7 @@
+## 4.0.1 (unreleased)
+
+- Fixed time parsing logic
+
 ## 4.0.0 (2021-04-04)
 
 - Added support for Chart.js 3
