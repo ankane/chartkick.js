@@ -648,6 +648,11 @@ const Chartkick = {
 if (typeof window !== "undefined" && !window.Chartkick) {
   window.Chartkick = Chartkick;
 
+  // clean up previous charts before Turbolinks loads new page
+  document.addEventListener("turbolinks:before-render", function() {
+    Chartkick.destroyAll();
+  });
+
   // use setTimeout so charting library can come later in same JS file
   setTimeout(function() {
     window.dispatchEvent(new Event("chartkick:load"));

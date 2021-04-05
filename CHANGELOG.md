@@ -1,4 +1,4 @@
-## 3.2.2 (unreleased)
+## 4.0.0 (unreleased)
 
 - Added `destroyAll` function
 - Added `chartkick:load` event
