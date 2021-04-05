@@ -41,42 +41,6 @@ function merge(obj1, obj2) {
 
 let DATE_PATTERN = /^(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)$/i;
 
-// https://github.com/Do/iso8601.js
-let ISO8601_PATTERN = /(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)(T)?(\d\d)(:)?(\d\d)?(:)?(\d\d)?([.,]\d+)?($|Z|([+-])(\d\d)(:)?(\d\d)?)/i;
-let DECIMAL_SEPARATOR = String(1.5).charAt(1);
-
-function parseISO8601(input) {
-  let day, hour, matches, milliseconds, minutes, month, offset, result, seconds, type, year;
-  type = Object.prototype.toString.call(input);
-  if (type === "[object Date]") {
-    return input;
-  }
-  if (type !== "[object String]") {
-    return;
-  }
-  matches = input.match(ISO8601_PATTERN);
-  if (matches) {
-    year = parseInt(matches[1], 10);
-    month = parseInt(matches[3], 10) - 1;
-    day = parseInt(matches[5], 10);
-    hour = parseInt(matches[7], 10);
-    minutes = matches[9] ? parseInt(matches[9], 10) : 0;
-    seconds = matches[11] ? parseInt(matches[11], 10) : 0;
-    milliseconds = matches[12] ? parseFloat(DECIMAL_SEPARATOR + matches[12].slice(1)) * 1000 : 0;
-    result = Date.UTC(year, month, day, hour, minutes, seconds, milliseconds);
-    if (matches[13] && matches[14]) {
-      offset = matches[15] * 60;
-      if (matches[17]) {
-        offset += parseInt(matches[17], 10);
-      }
-      offset *= matches[14] === "-" ? -1 : 1;
-      result -= offset * 60 * 1000;
-    }
-    return new Date(result);
-  }
-}
-// end iso8601.js
-
 function negativeValues(series) {
   let i, j, data;
   for (i = 0; i < series.length; i++) {
@@ -106,15 +70,15 @@ function toDate(n) {
     } else {
       n = toStr(n);
       if ((matches = n.match(DATE_PATTERN))) {
-      year = parseInt(matches[1], 10);
-      month = parseInt(matches[3], 10) - 1;
-      day = parseInt(matches[5], 10);
-      return new Date(year, month, day);
-      } else { // str
+        year = parseInt(matches[1], 10);
+        month = parseInt(matches[3], 10) - 1;
+        day = parseInt(matches[5], 10);
+        return new Date(year, month, day);
+      } else {
         // try our best to get the str into iso8601
         // TODO be smarter about this
         let str = n.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
-        n = parseISO8601(str) || new Date(n);
+        n = new Date(str) || new Date(n);
       }
     }
   }

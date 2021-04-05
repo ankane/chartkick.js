@@ -42,6 +42,9 @@ let defaultOptions = {
     series: {
       marker: {}
     }
+  },
+  time: {
+    useUTC: false
   }
 };
 

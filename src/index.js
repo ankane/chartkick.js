@@ -36,7 +36,12 @@ function errorCatcher(chart) {
   }
 }
 
-function fetchDataSource(chart, dataSource) {
+function fetchDataSource(chart, dataSource, showLoading) {
+  // only show loading message for urls and callbacks
+  if (showLoading && chart.options.loading && (typeof dataSource === "string" || typeof dataSource === "function")) {
+    setText(chart.element, chart.options.loading);
+  }
+
   if (typeof dataSource === "string") {
     pushRequest(dataSource, function (data) {
       chart.rawData = data;
@@ -191,8 +196,9 @@ function dataEmpty(data, chartType) {
 }
 
 function renderChart(chartType, chart) {
-  if (chart.options.messages && chart.options.messages.empty && dataEmpty(chart.data, chartType)) {
-    setText(chart.element, chart.options.messages.empty);
+  if (dataEmpty(chart.data, chartType)) {
+    let message = chart.options.empty || (chart.options.messages && chart.options.messages.empty) || "No data";
+    setText(chart.element, message);
   } else {
     callAdapter(chartType, chart);
     if (chart.options.download && !chart.__downloadAttached && chart.adapter === "chartjs") {
@@ -359,7 +365,7 @@ class Chart {
 
     Chartkick.charts[element.id] = this;
 
-    fetchDataSource(this, dataSource);
+    fetchDataSource(this, dataSource, true);
 
     if (this.options.refresh) {
       this.startRefresh();
@@ -395,7 +401,7 @@ class Chart {
     if (options) {
       this.__updateOptions(options);
     }
-    fetchDataSource(this, dataSource);
+    fetchDataSource(this, dataSource, true);
   }
 
   setOptions(options) {

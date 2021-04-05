@@ -21,7 +21,9 @@
     "url": "https://github.com/ankane/chartkick.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "chart.js",
+    "highcharts"
   ],
   "devDependencies": {
     "@rollup/plugin-buble": "^0.21.1",
@@ -30,5 +32,10 @@
     "eslint": "^5.16.0",
     "rollup": "^1.11.3",
     "rollup-plugin-uglify": "^6.0.2"
+  },
+  "optionalDependencies": {
+    "chart.js": ">=3.0.2",
+    "chartjs-adapter-date-fns": ">=2.0.0",
+    "date-fns": ">=2.0.0"
   }
 }

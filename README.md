@@ -4,6 +4,8 @@ Create beautiful charts with one line of JavaScript
 
 [See it in action](https://ankane.github.io/chartkick.js/examples/)
 
+**Chartkick.js 4.0 was recently released** - see [how to upgrade](#upgrading)
+
 Supports [Chart.js](https://www.chartjs.org/), [Google Charts](https://developers.google.com/chart/), and [Highcharts](https://www.highcharts.com/)
 
 Also available for [React](https://github.com/ankane/react-chartkick), [Vue.js](https://github.com/ankane/vue-chartkick), [Ruby](https://github.com/ankane/chartkick), [Python](https://github.com/mher/chartkick.py), [Elixir](https://github.com/buren/chartkick-ex), and [Clojure](https://github.com/yfractal/chartkick)
@@ -13,16 +15,14 @@ Also available for [React](https://github.com/ankane/react-chartkick), [Vue.js](
 Run
 
 ```sh
-npm install chartkick chart.js
+npm install chartkick
 ```
 
 And add
 
 ```javascript
 import Chartkick from "chartkick"
-import Chart from "chart.js"
-
-Chartkick.use(Chart)
+import "chartkick/chart.js"
 ```
 
 This sets up Chartkick with Chart.js. For other charting libraries, see [detailed instructions](#installation).
@@ -93,7 +93,7 @@ data = [
 new Chartkick.LineChart("chart-1", data)
 ```
 
-Multiple series stacked and grouped - *Chart.js 2.5+ or Highcharts*
+Multiple series stacked and grouped - *Chart.js or Highcharts*
 
 ```javascript
 data = [
@@ -233,16 +233,22 @@ Show insignificant zeros, useful for currency - *Chart.js, Highcharts*
 new Chartkick.LineChart("chart-1", data, {round: 2, zeros: true})
 ```
 
-Friendly byte sizes - *Chart.js 2.8+*
+Friendly byte sizes - *Chart.js*
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {bytes: true})
 ```
 
+Show a message when the chart is loading
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {loading: "Loading..."})
+```
+
 Show a message when data is empty
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {messages: {empty: "No data"}})
+new Chartkick.LineChart("chart-1", data, {empty: "No data"})
 ```
 
 Refresh data from a remote source every `n` seconds
@@ -357,16 +363,14 @@ new Chartkick.LineChart("chart-1", data, {download: {background: "#fff"}})
 Run
 
 ```sh
-npm install chartkick chart.js
+npm install chartkick
 ```
 
 And add
 
 ```javascript
 import Chartkick from "chartkick"
-import Chart from "chart.js"
-
-Chartkick.use(Chart)
+import "chartkick/chart.js"
 ```
 
 ### Google Charts
@@ -409,19 +413,18 @@ And add
 
 ```javascript
 import Chartkick from "chartkick"
-import Highcharts from "highcharts"
-
-Chartkick.use(Highcharts)
+import "chartkick/highcharts"
 ```
 
 ### No Package Manager
 
 Download [chartkick.js](https://unpkg.com/chartkick) directly.
 
-For Chart.js (works with 2.1+), [download the bundle](https://www.chartjs.org/docs/#getting-started-download-chart-js) and use:
+For Chart.js (works with 3+), [download it](https://www.chartjs.org/docs/latest/getting-started/installation.html) and the [date-fns adapter bundle](https://github.com/chartjs/chartjs-adapter-date-fns) and use:
 
 ```html
-<script src="/path/to/Chart.bundle.js"></script>
+<script src="/path/to/chart.js"></script>
+<script src="/path/to/chartjs-adapter-date-fns.bundle.js"></script>
 <script src="chartkick.js"></script>
 ```
 
@@ -534,21 +537,27 @@ and visit [http://localhost:5000/examples/](http://localhost:5000/examples/)
 
 ## Upgrading
 
-### 3.0
+### 4.0
 
-Breaking changes
+Run:
 
-- Removed `xtype` option - numeric axes are automatically detected
-- Removed `window.Chartkick = {...}` way to set config - use `Chartkick.configure` instead
-- Removed support for the Google Charts jsapi loader - use loader.js instead
+```sh
+npm install chartkick@latest
+```
 
-### 2.0
+For Chart.js, change:
 
-Breaking changes
+```javascript
+import Chart from "chart.js"
 
-- Chart.js is now the default adapter if multiple are loaded - yay open source!
-- Axis types are automatically detected - no need for `discrete: true`
-- Better date support - dates are no longer treated as UTC
+Chartkick.use(Chart)
+```
+
+to:
+
+```javascript
+import "chartkick/chart.js"
+```
 
 ## Credits
 

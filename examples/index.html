@@ -6,7 +6,8 @@
 
     <script src="../dist/chartkick.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.js"></script>
     <!-- <script src="https://www.gstatic.com/charts/loader.js"></script> -->
     <!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
 
@@ -177,13 +178,13 @@
     <h1>Multiple Series Bar</h1>
     <div id="multiple-bar" style="height: 300px;"></div>
     <script>
-      new Chartkick.BarChart("multiple-bar", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {max: 80});
+      new Chartkick.BarChart("multiple-bar", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}]);
     </script>
 
     <h1>Multiple Series Bar Stacked</h1>
     <div id="multiple-bar-stacked" style="height: 300px;"></div>
     <script>
-      new Chartkick.BarChart("multiple-bar-stacked", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {max: 80, stacked: true});
+      new Chartkick.BarChart("multiple-bar-stacked", [{name: "Series A", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}, {name: "Series B", data: [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]}], {stacked: true});
     </script>
 
     <h1>Multiple Series Area Unstacked</h1>
@@ -383,6 +384,12 @@
     <div id="pie-colors" style="height: 300px;"></div>
     <script>
       new Chartkick.PieChart("pie-colors", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13]], {"colors": ["#b00", "#666"]});
+    </script>
+
+    <h1>Column Colors</h1>
+    <div id="column-colors" style="height: 300px;"></div>
+    <script>
+      new Chartkick.ColumnChart("column-colors", [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]], {"colors": ["#b00", "#666"]});
     </script>
 
     <h1>Inline Color</h1>
@@ -715,19 +722,19 @@
     <h1>Null Data</h1>
     <div id="null-data" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("null-data", null, {messages: {empty: "No data"}});
+      new Chartkick.LineChart("null-data", null);
     </script>
 
     <h1>Empty Message</h1>
     <div id="empty-message" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("empty-message", {}, {messages: {empty: "No data"}});
+      new Chartkick.LineChart("empty-message", {}, {empty: "No data!!"});
     </script>
 
     <h1>Empty Pie</h1>
     <div id="empty-pie" style="height: 300px;"></div>
     <script>
-      new Chartkick.PieChart("empty-pie", {}, {messages: {empty: "No data"}});
+      new Chartkick.PieChart("empty-pie", {}, {empty: "No data!!"});
     </script>
 
     <h1>Custom Chart</h1>

@@ -16,42 +16,48 @@ function allZeros(data) {
 let baseOptions = {
   maintainAspectRatio: false,
   animation: false,
-  tooltips: {
-    displayColors: false,
-    callbacks: {}
+  plugins: {
+    legend: {},
+    tooltip: {
+      displayColors: false,
+      callbacks: {}
+    },
+    title: {
+      font: {
+        size: 20
+      },
+      color: "#333"
+    }
   },
-  legend: {},
-  title: {fontSize: 20, fontColor: "#333"}
 };
 
 let defaultOptions = {
   scales: {
-    yAxes: [
-      {
-        ticks: {
-          maxTicksLimit: 4
+    y: {
+      ticks: {
+        maxTicksLimit: 4
+      },
+      title: {
+        font: {
+          size: 16
         },
-        scaleLabel: {
-          fontSize: 16,
-          // fontStyle: "bold",
-          fontColor: "#333"
-        }
-      }
-    ],
-    xAxes: [
-      {
-        gridLines: {
-          drawOnChartArea: false
+        color: "#333"
+      },
+      grid: {}
+    },
+    x: {
+      grid: {
+        drawOnChartArea: false
+      },
+      title: {
+        font: {
+          size: 16
         },
-        scaleLabel: {
-          fontSize: 16,
-          // fontStyle: "bold",
-          fontColor: "#333"
-        },
-        time: {},
-        ticks: {}
-      }
-    ]
+        color: "#333"
+      },
+      time: {},
+      ticks: {}
+    }
   }
 };
 
@@ -64,64 +70,64 @@ let defaultColors = [
 
 let hideLegend = function (options, legend, hideLegend) {
   if (legend !== undefined) {
-    options.legend.display = !!legend;
+    options.plugins.legend.display = !!legend;
     if (legend && legend !== true) {
-      options.legend.position = legend;
+      options.plugins.legend.position = legend;
     }
   } else if (hideLegend) {
-    options.legend.display = false;
+    options.plugins.legend.display = false;
   }
 };
 
 let setTitle = function (options, title) {
-  options.title.display = true;
-  options.title.text = title;
+  options.plugins.title.display = true;
+  options.plugins.title.text = title;
 };
 
 let setMin = function (options, min) {
   if (min !== null) {
-    options.scales.yAxes[0].ticks.min = toFloat(min);
+    options.scales.y.min = toFloat(min);
   }
 };
 
 let setMax = function (options, max) {
-  options.scales.yAxes[0].ticks.max = toFloat(max);
+  options.scales.y.max = toFloat(max);
 };
 
 let setBarMin = function (options, min) {
   if (min !== null) {
-    options.scales.xAxes[0].ticks.min = toFloat(min);
+    options.scales.x.min = toFloat(min);
   }
 };
 
 let setBarMax = function (options, max) {
-  options.scales.xAxes[0].ticks.max = toFloat(max);
+  options.scales.x.max = toFloat(max);
 };
 
 let setStacked = function (options, stacked) {
-  options.scales.xAxes[0].stacked = !!stacked;
-  options.scales.yAxes[0].stacked = !!stacked;
+  options.scales.x.stacked = !!stacked;
+  options.scales.y.stacked = !!stacked;
 };
 
 let setXtitle = function (options, title) {
-  options.scales.xAxes[0].scaleLabel.display = true;
-  options.scales.xAxes[0].scaleLabel.labelString = title;
+  options.scales.x.title.display = true;
+  options.scales.x.title.text = title;
 };
 
 let setYtitle = function (options, title) {
-  options.scales.yAxes[0].scaleLabel.display = true;
-  options.scales.yAxes[0].scaleLabel.labelString = title;
+  options.scales.y.title.display = true;
+  options.scales.y.title.text = title;
 };
 
 // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
-let addOpacity = function(hex, opacity) {
+let addOpacity = function (hex, opacity) {
   let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? "rgba(" + parseInt(result[1], 16) + ", " + parseInt(result[2], 16) + ", " + parseInt(result[3], 16) + ", " + opacity + ")" : hex;
 };
 
 // check if not null or undefined
 // https://stackoverflow.com/a/27757708/1177228
-let notnull = function(x) {
+let notnull = function (x) {
   return x != null;
 };
 
@@ -132,9 +138,9 @@ let setLabelSize = function (chart, data, options) {
   } else if (maxLabelSize < 10) {
     maxLabelSize = 10;
   }
-  if (!options.scales.xAxes[0].ticks.callback) {
-    options.scales.xAxes[0].ticks.callback = function (value) {
-      value = toStr(value);
+  if (!options.scales.x.ticks.callback) {
+    options.scales.x.ticks.callback = function (value) {
+      value = toStr(this.getLabelForValue(value));
       if (value.length > maxLabelSize) {
         return value.substring(0, maxLabelSize - 2) + "...";
       } else {
@@ -144,7 +150,7 @@ let setLabelSize = function (chart, data, options) {
   }
 };
 
-let setFormatOptions = function(chart, options, chartType) {
+let setFormatOptions = function (chart, options, chartType) {
   let formatOptions = {
     prefix: chart.options.prefix,
     suffix: chart.options.suffix,
@@ -184,49 +190,49 @@ let setFormatOptions = function(chart, options, chartType) {
   }
 
   if (chartType !== "pie") {
-    let myAxes = options.scales.yAxes;
+    let axis = options.scales.y;
     if (chartType === "bar") {
-      myAxes = options.scales.xAxes;
+      axis = options.scales.x;
     }
 
     if (formatOptions.byteScale) {
-      if (!myAxes[0].ticks.stepSize) {
-        myAxes[0].ticks.stepSize = formatOptions.byteScale / 2;
+      if (!axis.ticks.stepSize) {
+        axis.ticks.stepSize = formatOptions.byteScale / 2;
       }
-      if (!myAxes[0].ticks.maxTicksLimit) {
-        myAxes[0].ticks.maxTicksLimit = 4;
+      if (!axis.ticks.maxTicksLimit) {
+        axis.ticks.maxTicksLimit = 4;
       }
     }
 
-    if (!myAxes[0].ticks.callback) {
-      myAxes[0].ticks.callback = function (value) {
+    if (!axis.ticks.callback) {
+      axis.ticks.callback = function (value) {
         return formatValue("", value, formatOptions, true);
       };
     }
   }
 
-  if (!options.tooltips.callbacks.label) {
+  if (!options.plugins.tooltip.callbacks.label) {
     if (chartType === "scatter") {
-      options.tooltips.callbacks.label = function (item, data) {
-        let label = data.datasets[item.datasetIndex].label || '';
+      options.plugins.tooltip.callbacks.label = function (context) {
+        let label = context.dataset.label || '';
         if (label) {
           label += ': ';
         }
-        return label + '(' + item.xLabel + ', ' + item.yLabel + ')';
+        return label + '(' + context.label + ', ' + context.formattedValue + ')';
       };
     } else if (chartType === "bubble") {
-      options.tooltips.callbacks.label = function (item, data) {
-        let label = data.datasets[item.datasetIndex].label || '';
+      options.plugins.tooltip.callbacks.label = function (context) {
+        let label = context.dataset.label || '';
         if (label) {
           label += ': ';
         }
-        let dataPoint = data.datasets[item.datasetIndex].data[item.index];
-        return label + '(' + item.xLabel + ', ' + item.yLabel + ', ' + dataPoint.v + ')';
+        let dataPoint = context.raw;
+        return label + '(' + dataPoint.x + ', ' + dataPoint.y + ', ' + dataPoint.v + ')';
       };
     } else if (chartType === "pie") {
       // need to use separate label for pie charts
-      options.tooltips.callbacks.label = function (tooltipItem, data) {
-        let dataLabel = data.labels[tooltipItem.index];
+      options.plugins.tooltip.callbacks.label = function (context) {
+        let dataLabel = context.label;
         let value = ': ';
 
         if (isArray(dataLabel)) {
@@ -238,16 +244,16 @@ let setFormatOptions = function(chart, options, chartType) {
           dataLabel += value;
         }
 
-        return formatValue(dataLabel, data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index], formatOptions);
+        return formatValue(dataLabel, context.parsed, formatOptions);
       };
     } else {
-      let valueLabel = chartType === "bar" ? "xLabel" : "yLabel";
-      options.tooltips.callbacks.label = function (tooltipItem, data) {
-        let label = data.datasets[tooltipItem.datasetIndex].label || '';
+      let valueLabel = chartType === "bar" ? "x" : "y";
+      options.plugins.tooltip.callbacks.label = function (context) {
+        let label = context.dataset.label || '';
         if (label) {
           label += ': ';
         }
-        return formatValue(label, tooltipItem[valueLabel], formatOptions);
+        return formatValue(label, context.parsed[valueLabel], formatOptions);
       };
     }
   }
@@ -255,7 +261,7 @@ let setFormatOptions = function(chart, options, chartType) {
 
 let jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-let createDataTable = function (chart, options, chartType, library) {
+let createDataTable = function (chart, options, chartType) {
   let datasets = [];
   let labels = [];
 
@@ -357,11 +363,23 @@ let createDataTable = function (chart, options, chartType, library) {
     }
   }
 
+  let color;
+  let backgroundColor;
+
   for (i = 0; i < series.length; i++) {
     s = series[i];
 
-    let color = s.color || colors[i];
-    let backgroundColor = chartType !== "line" ? addOpacity(color, 0.5) : color;
+    // use colors for each bar for single series format
+    if (chart.options.colors && chart.hideLegend && (chartType === "bar" || chartType === "column") && !s.color) {
+      color = colors;
+      backgroundColor = [];
+      for (let j = 0; j < colors.length; j++) {
+        backgroundColor[j] = addOpacity(color[j], 0.5);
+      }
+    } else {
+      color = s.color || colors[i];
+      backgroundColor = chartType !== "line" ? addOpacity(color, 0.5) : color;
+    }
 
     let dataset = {
       label: s.name || "",
@@ -369,10 +387,21 @@ let createDataTable = function (chart, options, chartType, library) {
       fill: chartType === "area",
       borderColor: color,
       backgroundColor: backgroundColor,
-      pointBackgroundColor: color,
-      borderWidth: 2,
-      pointHoverBackgroundColor: color
+      borderWidth: 2
     };
+
+    let pointChart = chartType === "line" || chartType === "area" || chartType === "scatter" || chartType === "bubble";
+    if (pointChart) {
+      dataset.pointBackgroundColor = color;
+      dataset.pointHoverBackgroundColor = color;
+      dataset.pointHitRadius = 50;
+    }
+
+    if (chartType === "bubble") {
+      dataset.pointBackgroundColor = backgroundColor;
+      dataset.pointHoverBackgroundColor = backgroundColor;
+      dataset.pointHoverBorderWidth = 2;
+    }
 
     if (s.stack) {
       dataset.stack = s.stack;
@@ -380,7 +409,9 @@ let createDataTable = function (chart, options, chartType, library) {
 
     let curve = seriesOption(chart, s, "curve");
     if (curve === false) {
-      dataset.lineTension = 0;
+      dataset.tension = 0;
+    } else if (pointChart) {
+      dataset.tension = 0.4;
     }
 
     let points = seriesOption(chart, s, "points");
@@ -400,22 +431,18 @@ let createDataTable = function (chart, options, chartType, library) {
   let xmax = chart.options.xmax;
 
   if (chart.xtype === "datetime") {
-    // hacky check for Chart.js >= 2.9.0
-    // https://github.com/chartjs/Chart.js/compare/v2.8.0...v2.9.0
-    let gte29 = "math" in library.helpers;
-    let ticksKey = gte29 ? "ticks" : "time";
     if (notnull(xmin)) {
-      options.scales.xAxes[0][ticksKey].min = toDate(xmin).getTime();
+      options.scales.x.ticks.min = toDate(xmin).getTime();
     }
     if (notnull(xmax)) {
-      options.scales.xAxes[0][ticksKey].max = toDate(xmax).getTime();
+      options.scales.x.ticks.max = toDate(xmax).getTime();
     }
   } else if (chart.xtype === "number") {
     if (notnull(xmin)) {
-      options.scales.xAxes[0].ticks.min = xmin;
+      options.scales.x.ticks.min = xmin;
     }
     if (notnull(xmax)) {
-      options.scales.xAxes[0].ticks.max = xmax;
+      options.scales.x.ticks.max = xmax;
     }
   }
 
@@ -451,24 +478,24 @@ let createDataTable = function (chart, options, chartType, library) {
 
     let timeDiff = (maxTime - minTime) / (86400 * 1000.0);
 
-    if (!options.scales.xAxes[0].time.unit) {
+    if (!options.scales.x.time.unit) {
       let step;
       if (year || timeDiff > 365 * 10) {
-        options.scales.xAxes[0].time.unit = "year";
+        options.scales.x.time.unit = "year";
         step = 365;
       } else if (month || timeDiff > 30 * 10) {
-        options.scales.xAxes[0].time.unit = "month";
+        options.scales.x.time.unit = "month";
         step = 30;
       } else if (day || timeDiff > 10) {
-        options.scales.xAxes[0].time.unit = "day";
+        options.scales.x.time.unit = "day";
         step = 1;
       } else if (hour || timeDiff > 0.5) {
-        options.scales.xAxes[0].time.displayFormats = {hour: "MMM D, h a"};
-        options.scales.xAxes[0].time.unit = "hour";
+        options.scales.x.time.displayFormats = {hour: "MMM d, h a"};
+        options.scales.x.time.unit = "hour";
         step = 1 / 24.0;
       } else if (minute) {
-        options.scales.xAxes[0].time.displayFormats = {minute: "h:mm a"};
-        options.scales.xAxes[0].time.unit = "minute";
+        options.scales.x.time.displayFormats = {minute: "h:mm a"};
+        options.scales.x.time.unit = "minute";
         step = 1 / 24.0 / 60.0;
       }
 
@@ -477,17 +504,17 @@ let createDataTable = function (chart, options, chartType, library) {
         if (week && step === 1) {
           unitStepSize = Math.ceil(unitStepSize / 7.0) * 7;
         }
-        options.scales.xAxes[0].time.unitStepSize = unitStepSize;
+        options.scales.x.time.stepSize = unitStepSize;
       }
     }
 
-    if (!options.scales.xAxes[0].time.tooltipFormat) {
+    if (!options.scales.x.time.tooltipFormat) {
       if (day) {
-        options.scales.xAxes[0].time.tooltipFormat = "ll";
+        options.scales.x.time.tooltipFormat = "PP";
       } else if (hour) {
-        options.scales.xAxes[0].time.tooltipFormat = "MMM D, h a";
+        options.scales.x.time.tooltipFormat = "MMM d, h a";
       } else if (minute) {
-        options.scales.xAxes[0].time.tooltipFormat = "h:mm a";
+        options.scales.x.time.tooltipFormat = "h:mm a";
       }
     }
   }
@@ -520,13 +547,13 @@ export default class {
     let options = jsOptions(chart, merge(chartOptions, chart.options));
     setFormatOptions(chart, options, chartType);
 
-    let data = createDataTable(chart, options, chartType || "line", this.library);
+    let data = createDataTable(chart, options, chartType || "line");
 
     if (chart.xtype === "number") {
-      options.scales.xAxes[0].type = "linear";
-      options.scales.xAxes[0].position = "bottom";
+      options.scales.x.type = "linear";
+      options.scales.x.position = "bottom";
     } else {
-      options.scales.xAxes[0].type = chart.xtype === "string" ? "category" : "time";
+      options.scales.x.type = chart.xtype === "string" ? "category" : "time";
     }
 
     this.drawChart(chart, "line", data, options);
@@ -535,7 +562,7 @@ export default class {
   renderPieChart(chart) {
     let options = merge({}, baseOptions);
     if (chart.options.donut) {
-      options.cutoutPercentage = 50;
+      options.cutout = "50%";
     }
 
     if ("legend" in chart.options) {
@@ -575,17 +602,23 @@ export default class {
     let options;
     if (chartType === "bar") {
       let barOptions = merge(baseOptions, defaultOptions);
-      delete barOptions.scales.yAxes[0].ticks.maxTicksLimit;
+      barOptions.indexAxis = "y";
+
+      // ensure gridlines have proper orientation
+      barOptions.scales.x.grid.drawOnChartArea = true;
+      barOptions.scales.y.grid.drawOnChartArea = false;
+      delete barOptions.scales.y.ticks.maxTicksLimit;
+
       options = jsOptionsFunc(barOptions, hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options);
     } else {
       options = jsOptions(chart, chart.options);
     }
     setFormatOptions(chart, options, chartType);
-    let data = createDataTable(chart, options, "column", this.library);
+    let data = createDataTable(chart, options, "column");
     if (chartType !== "bar") {
       setLabelSize(chart, data, options);
     }
-    this.drawChart(chart, (chartType === "bar" ? "horizontalBar" : "bar"), data, options);
+    this.drawChart(chart, "bar", data, options);
   }
 
   renderAreaChart(chart) {
@@ -602,14 +635,19 @@ export default class {
     let options = jsOptions(chart, chart.options);
     setFormatOptions(chart, options, chartType);
 
-    if (!("showLines" in options)) {
-      options.showLines = false;
+    if (!("showLine" in options)) {
+      options.showLine = false;
     }
 
-    let data = createDataTable(chart, options, chartType, this.library);
+    let data = createDataTable(chart, options, chartType);
 
-    options.scales.xAxes[0].type = "linear";
-    options.scales.xAxes[0].position = "bottom";
+    options.scales.x.type = "linear";
+    options.scales.x.position = "bottom";
+
+    // prevent grouping tooltips
+    if (!("mode" in options.plugins.tooltip)) {
+      options.plugins.tooltip.mode = "nearest";
+    }
 
     this.drawChart(chart, chartType, data, options);
   }

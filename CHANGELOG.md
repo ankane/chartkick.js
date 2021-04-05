@@ -1,8 +1,20 @@
 ## 4.0.0 (unreleased)
 
+- Added support for Chart.js 3
+- Added `loading` option
 - Added `destroyAll` function
 - Added `chartkick:load` event
+- Improved `colors` option for single-series column and bar charts
+- Increased hover radius for line, area, scatter, and bubble charts
+- Prefer `empty` over `messages: {empty: ...}`
 - Stopped refresh when chart is destroyed
+- Fixed gridline orientation for bar charts
+
+Breaking changes
+
+- Removed support for Chart.js 2
+- Charts with no data show message instead of empty chart
+- Dates are shown in local time instead of UTC for Highcharts to be consistent with other adapters
 
 ## 3.2.1 (2020-07-23)
 
