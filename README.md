@@ -239,13 +239,13 @@ Friendly byte sizes - *Chart.js*
 new Chartkick.LineChart("chart-1", data, {bytes: true})
 ```
 
-Show a message when the chart is loading
+Specify the message when the chart is loading
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {loading: "Loading..."})
 ```
 
-Show a message when data is empty
+Specify the message when data is empty
 
 ```javascript
 new Chartkick.LineChart("chart-1", data, {empty: "No data"})
