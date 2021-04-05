@@ -417,7 +417,7 @@ let createDataTable = function (chart, options, chartType) {
     let points = seriesOption(chart, s, "points");
     if (points === false) {
       dataset.pointRadius = 0;
-      dataset.pointHitRadius = 5;
+      dataset.pointHoverRadius = 0;
     }
 
     dataset = merge(dataset, chart.options.dataset || {});
