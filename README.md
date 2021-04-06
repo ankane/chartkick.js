@@ -38,7 +38,7 @@ Create a div for the chart
 Line chart
 
 ```javascript
-new Chartkick.LineChart("chart-1", {"2017-01-01": 11, "2017-01-02": 6})
+new Chartkick.LineChart("chart-1", {"2021-01-01": 11, "2021-01-02": 6})
 ```
 
 Pie chart
@@ -62,7 +62,7 @@ new Chartkick.BarChart("chart-1", [["Work", 32], ["Play", 1492]])
 Area chart
 
 ```javascript
-new Chartkick.AreaChart("chart-1", {"2017-01-01": 11, "2017-01-02": 6})
+new Chartkick.AreaChart("chart-1", {"2021-01-01": 11, "2021-01-02": 6})
 ```
 
 Scatter chart
@@ -87,8 +87,8 @@ Multiple series
 
 ```javascript
 data = [
-  {name: "Workout", data: {"2017-01-01": 3, "2017-01-02": 4}},
-  {name: "Call parents", data: {"2017-01-01": 5, "2017-01-02": 3}}
+  {name: "Workout", data: {"2021-01-01": 3, "2021-01-02": 4}},
+  {name: "Call parents", data: {"2021-01-01": 5, "2021-01-02": 3}}
 ]
 new Chartkick.LineChart("chart-1", data)
 ```
@@ -126,7 +126,7 @@ new Chartkick.LineChart("chart-1", data, {min: 1000, max: 5000})
 Min and max for x-axis - *Chart.js*
 
 ```javascript
-new Chartkick.LineChart("chart-1", data, {xmin: "2018-01-01", xmax: "2019-01-01"})
+new Chartkick.LineChart("chart-1", data, {xmin: "2021-01-01", xmax: "2022-01-01"})
 ```
 
 Colors
@@ -295,7 +295,7 @@ new Chartkick.PieChart("chart-1", [["Blueberry", 44], ["Strawberry", 23]])
 Times can be a `Date` or a string (strings are parsed)
 
 ```javascript
-new Chartkick.LineChart("chart-1", [[new Date(), 5], ["2017-01-01 00:00:00 UTC", 7]])
+new Chartkick.LineChart("chart-1", [[new Date(), 5], ["2021-01-01 00:00:00 UTC", 7]])
 ```
 
 Data can also be a callback
