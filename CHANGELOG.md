@@ -1,3 +1,7 @@
+## 4.0.2 (unreleased)
+
+- Fixed error with time parsing
+
 ## 4.0.1 (2021-04-06)
 
 - Fixed time parsing logic
