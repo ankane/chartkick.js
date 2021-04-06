@@ -565,10 +565,6 @@ to:
 import "chartkick/chart.js"
 ```
 
-## Credits
-
-Chartkick uses [iso8601.js](https://github.com/Do/iso8601.js) to parse dates and times.
-
 ## History
 
 View the [changelog](https://github.com/ankane/chartkick.js/blob/master/CHANGELOG.md)
