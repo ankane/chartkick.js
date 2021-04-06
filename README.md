@@ -569,8 +569,6 @@ import "chartkick/chart.js"
 
 View the [changelog](https://github.com/ankane/chartkick.js/blob/master/CHANGELOG.md)
 
-Chartkick.js follows [Semantic Versioning](https://semver.org/)
-
 ## Contributing
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:
