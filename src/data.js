@@ -1,6 +1,6 @@
 import { isFunction, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate, isNumber } from "./helpers";
 
-let formatSeriesData = function (data, keyType) {
+function formatSeriesData(data, keyType) {
   let r = [], j, keyFunc;
 
   if (keyType === "number") {
