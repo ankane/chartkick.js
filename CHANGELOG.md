@@ -1,3 +1,7 @@
+## 4.0.3 (unreleased)
+
+- Fixed error with `background` option for downloads
+
 ## 4.0.2 (2021-04-06)
 
 - Fixed error with time parsing
