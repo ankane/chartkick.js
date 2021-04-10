@@ -250,6 +250,11 @@ let setFormatOptions = function (chart, options, chartType) {
     } else {
       let valueLabel = chartType === "bar" ? "x" : "y";
       options.plugins.tooltip.callbacks.label = function (context) {
+        // don't show null values for stacked charts
+        if (context.parsed[valueLabel] === null) {
+          return;
+        }
+
         let label = context.dataset.label || '';
         if (label) {
           label += ': ';

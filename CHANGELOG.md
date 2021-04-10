@@ -1,6 +1,7 @@
 ## 4.0.3 (unreleased)
 
 - Fixed error with `background` option for downloads
+- Fixed null values in stacked column and bar charts
 
 ## 4.0.2 (2021-04-06)
 
