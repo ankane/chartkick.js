@@ -316,11 +316,9 @@ function processSeries(chart, keyType, noDatetime) {
   let series = chart.rawData;
 
   // see if one series or multiple
-  if (!isArray(series) || typeof series[0] !== "object" || isArray(series[0])) {
+  chart.singleSeriesFormat = (!isArray(series) || typeof series[0] !== "object" || isArray(series[0]));
+  if (chart.singleSeriesFormat) {
     series = [{name: opts.label, data: series}];
-    chart.singleSeriesFormat = true;
-  } else {
-    chart.singleSeriesFormat = false;
   }
 
   // convert to array
