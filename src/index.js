@@ -234,32 +234,33 @@ function callAdapter(chartType, chart) {
 
 // process data
 
-let toFormattedKey = function (key, keyType) {
-  if (keyType === "number") {
-    key = toFloat(key);
-  } else if (keyType === "datetime") {
-    key = toDate(key);
-  } else {
-    key = toStr(key);
-  }
-  return key;
-};
-
 let formatSeriesData = function (data, keyType) {
-  let r = [], key, j;
-  for (j = 0; j < data.length; j++) {
-    if (keyType === "bubble") {
+  let r = [], j, keyFunc;
+
+  if (keyType === "number") {
+    keyFunc = toFloat;
+  } else if (keyType === "datetime") {
+    keyFunc = toDate;
+  } else {
+    keyFunc = toStr;
+  }
+
+  if (keyType === "bubble") {
+    for (j = 0; j < data.length; j++) {
       r.push([toFloat(data[j][0]), toFloat(data[j][1]), toFloat(data[j][2])]);
-    } else {
-      key = toFormattedKey(data[j][0], keyType);
-      r.push([key, toFloat(data[j][1])]);
+    }
+  } else {
+    for (j = 0; j < data.length; j++) {
+      r.push([keyFunc(data[j][0]), toFloat(data[j][1])]);
     }
   }
+
   if (keyType === "datetime") {
     r.sort(sortByTime);
   } else if (keyType === "number") {
     r.sort(sortByNumberSeries);
   }
+
   return r;
 };
 
