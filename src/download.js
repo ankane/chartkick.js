@@ -78,4 +78,4 @@ function childOf(p, c) {
   return c === p;
 }
 
-export { addDownloadButton };
+export { addDownloadButton, removeEvent };

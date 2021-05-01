@@ -1,4 +1,4 @@
-import { isFunction, isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate, isNumber } from "./helpers";
+import { isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate, isNumber } from "./helpers";
 
 function formatSeriesData(data, keyType) {
   let r = [], j, keyFunc;
@@ -28,7 +28,7 @@ function formatSeriesData(data, keyType) {
   }
 
   return r;
-};
+}
 
 function detectXType(series, noDatetime, options) {
   if (dataEmpty(series)) {

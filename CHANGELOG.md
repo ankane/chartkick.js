@@ -1,3 +1,7 @@
+## 4.0.4 (unreleased)
+
+- Fixed error with `destroy` function
+
 ## 4.0.3 (2021-04-10)
 
 - Fixed error with `background` option for downloads

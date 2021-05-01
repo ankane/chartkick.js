@@ -9,6 +9,7 @@
   },
   "rules": {
     "no-var": "error",
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "no-prototype-builtins": "off"
   }
 }

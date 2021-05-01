@@ -3,7 +3,7 @@ import HighchartsAdapter from "./adapters/highcharts";
 import GoogleChartsAdapter from "./adapters/google";
 
 import { dataEmpty, processSeries, processSimple } from "./data";
-import { addDownloadButton } from "./download";
+import { addDownloadButton, removeEvent } from "./download";
 import { merge, isFunction, toDate } from "./helpers";
 import { pushRequest } from "./request-queue";
 
