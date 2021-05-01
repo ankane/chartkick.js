@@ -1,4 +1,4 @@
-## 4.0.4 (unreleased)
+## 4.0.4 (2021-05-01)
 
 - Fixed error with `destroy` function
 - Fixed error with hidden charts

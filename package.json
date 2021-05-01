@@ -1,6 +1,6 @@
 {
   "name": "chartkick",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "homepage": "https://github.com/ankane/chartkick.js",
   "description": "Create beautiful charts with one line of JavaScript",
   "main": "dist/chartkick.js",
