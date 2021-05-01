@@ -1,8 +1,27 @@
+---
+name: Bug report
+about: Report a bug
+title: ''
+labels: ''
+assignees: ''
+
+---
+
+**First**
+Search existing issues to see if it’s been reported and make sure you’re on the latest version.
+
+**Describe the bug**
+A clear and concise description of the bug. Include the complete backtrace for exceptions.
+
+**To reproduce**
+Use this code to reproduce:
+
+```html
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="../dist/chartkick.min.js"></script>
+    <script src="https://unpkg.com/chartkick"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.js"></script>
     <!-- <script src="https://www.gstatic.com/charts/loader.js"></script> -->
@@ -11,7 +30,8 @@
   <body>
     <div id="chart" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("chart", {"2013-02-10":11,"2013-02-11":6,"2013-02-12":3,"2013-02-13":2,"2013-02-14":5,"2013-02-15":3,"2013-02-16":8,"2013-02-17":6,"2013-02-18":6,"2013-02-19":12,"2013-02-20":5,"2013-02-21":5,"2013-02-22":3,"2013-02-23":1,"2013-02-24":10,"2013-02-25":1,"2013-02-26":3,"2013-02-27":2,"2013-02-28":3,"2013-03-01":2,"2013-03-02":8}, {download: true, code: true});
+      new Chartkick.LineChart("chart", yourData, yourOptions);
     </script>
   </body>
 </html>
+```

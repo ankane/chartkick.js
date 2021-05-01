@@ -580,4 +580,15 @@ Everyone is encouraged to help improve this project. Here are a few ways you can
 - Write, clarify, or fix documentation
 - Suggest or add new features
 
-See the [Contributing Guide](CONTRIBUTING.md) for more info.
+To get started with development:
+
+```sh
+git clone https://github.com/ankane/chartkick.js.git
+cd chartkick.js
+npm install
+npm run build
+
+# start web server
+npm install -g serve
+serve
+```
