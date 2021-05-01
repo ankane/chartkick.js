@@ -10,6 +10,8 @@ Supports [Chart.js](https://www.chartjs.org/), [Google Charts](https://developer
 
 Also available for [React](https://github.com/ankane/react-chartkick), [Vue.js](https://github.com/ankane/vue-chartkick), [Ruby](https://github.com/ankane/chartkick), [Python](https://github.com/mher/chartkick.py), [Elixir](https://github.com/buren/chartkick-ex), and [Clojure](https://github.com/yfractal/chartkick)
 
+[![Build Status](https://github.com/ankane/chartkick.js/workflows/build/badge.svg?branch=master)](https://github.com/ankane/chartkick.js/actions)
+
 ## Quick Start
 
 Run
