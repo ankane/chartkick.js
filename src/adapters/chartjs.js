@@ -506,11 +506,15 @@ let createDataTable = function (chart, options, chartType) {
       }
 
       if (step && timeDiff > 0) {
-        let unitStepSize = Math.ceil(timeDiff / step / (chart.element.offsetWidth / 100.0));
-        if (week && step === 1) {
-          unitStepSize = Math.ceil(unitStepSize / 7.0) * 7;
+        // width not available for hidden elements
+        let width = chart.element.offsetWidth;
+        if (width > 0) {
+          let unitStepSize = Math.ceil(timeDiff / step / (width / 100.0));
+          if (week && step === 1) {
+            unitStepSize = Math.ceil(unitStepSize / 7.0) * 7;
+          }
+          options.scales.x.time.stepSize = unitStepSize;
         }
-        options.scales.x.time.stepSize = unitStepSize;
       }
     }
 

@@ -1,6 +1,7 @@
 ## 4.0.4 (unreleased)
 
 - Fixed error with `destroy` function
+- Fixed error with hidden charts
 
 ## 4.0.3 (2021-04-10)
 
