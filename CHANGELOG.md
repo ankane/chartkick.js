@@ -1,3 +1,7 @@
+## 4.0.5 (unreleased)
+
+- Fixed `pointFormat` for Highcharts
+
 ## 4.0.4 (2021-05-01)
 
 - Fixed error with `destroy` function

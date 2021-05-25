@@ -111,7 +111,7 @@ let setFormatOptions = function(chart, options, chartType) {
     };
   }
 
-  if (!options.tooltip.pointFormatter) {
+  if (!options.tooltip.pointFormatter && !options.tooltip.pointFormat) {
     options.tooltip.pointFormatter = function () {
       return '<span style="color:' + this.color + '">\u25CF</span> ' + formatValue(this.series.name + ': <b>', this.y, formatOptions) + '</b><br/>';
     };
