@@ -49,6 +49,12 @@ Pie chart
 new Chartkick.PieChart("chart-1", [["Blueberry", 44], ["Strawberry", 23]])
 ```
 
+Funnel chart
+
+```javascript
+new Chartkick.FunnelChart("chart-1", [["Submit Survey", 44], ["Visit Survey", 23]])
+```
+
 Column chart
 
 ```javascript
