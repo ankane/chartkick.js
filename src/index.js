@@ -321,6 +321,16 @@ class PieChart extends Chart {
   }
 }
 
+class FunnelChart extends Chart {
+  __processData() {
+    return processSimple(this);
+  }
+
+  __chartName() {
+    return "FunnelChart";
+  }
+}
+
 class ColumnChart extends Chart {
   __processData() {
     return processSeries(this, null, true);
@@ -399,6 +409,7 @@ class Timeline extends Chart {
 const Chartkick = {
   LineChart: LineChart,
   PieChart: PieChart,
+  FunnelChart: FunnelChart,
   ColumnChart: ColumnChart,
   BarChart: BarChart,
   AreaChart: AreaChart,

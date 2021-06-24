@@ -213,6 +213,32 @@ export default class {
     this.drawChart(chart, series, options);
   }
 
+  renderFunnelChart(chart) {
+    let chartOptions = merge(defaultOptions, {});
+
+    if (chart.options.colors) {
+      chartOptions.colors = chart.options.colors;
+    }
+
+    if ("legend" in chart.options) {
+      hideLegend(chartOptions, chart.options.legend);
+    }
+
+    if (chart.options.title) {
+      setTitle(chartOptions, chart.options.title);
+    }
+
+    let options = merge(chartOptions, chart.options.library || {});
+    setFormatOptions(chart, options, "funnel");
+    var series = [{
+        type: "funnel",
+        name: chart.options.label || "Value",
+        data: chart.data
+      }];
+
+    this.drawChart(chart, series, options);
+  }
+
   renderColumnChart(chart, chartType) {
     chartType = chartType || "column";
     let series = chart.data;

@@ -8,8 +8,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.0/dist/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.js"></script>
-    <!-- <script src="https://www.gstatic.com/charts/loader.js"></script> -->
-    <!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/funnel.js"></script>
 
     <script>
       // Chartkick.configure({language: "de"});
@@ -68,6 +69,12 @@
     <div id="pie" style="height: 300px;"></div>
     <script>
       new Chartkick.PieChart("pie", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13]], {download: "pie"});
+    </script>
+
+    <h1>Funnel Chart</h1>
+    <div id="funnel" style="height: 300px;"></div>
+    <script>
+      new Chartkick.FunnelChart("funnel", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13]], {download: "pie"});
     </script>
 
     <h1>Donut Chart</h1>
