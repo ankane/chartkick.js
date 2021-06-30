@@ -239,6 +239,34 @@ export default class {
     this.drawChart(chart, series, options);
   }
 
+  renderWordCloud(chart) {
+    let chartOptions = merge(defaultOptions, {});
+
+    if (chart.options.colors) {
+      chartOptions.colors = chart.options.colors;
+    }
+
+    if ("legend" in chart.options) {
+      hideLegend(chartOptions, chart.options.legend);
+    }
+
+    if (chart.options.title) {
+      setTitle(chartOptions, chart.options.title);
+    }
+
+    let options = merge(chartOptions, chart.options.library || {});
+    setFormatOptions(chart, options, "WordCloud");
+    
+    var series = [{
+        type: "wordcloud",
+        name: chart.options.label || "Value",
+        data: chart.data
+      }];
+      console.log("I am e");
+      console.log(chart.data);
+    this.drawChart(chart, series, options);
+  }
+
   renderColumnChart(chart, chartType) {
     chartType = chartType || "column";
     let series = chart.data;

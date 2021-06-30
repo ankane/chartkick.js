@@ -113,7 +113,7 @@ function processSimple(chart) {
 }
 
 function dataEmpty(data, chartType) {
-  if (chartType === "PieChart" || chartType === "GeoChart" || chartType === "Timeline" || chartType === "FunnelChart") {
+  if (chartType === "PieChart" || chartType === "GeoChart" || chartType === "Timeline" || chartType === "FunnelChart" || chartType === "WordCloud" ) {
     return data.length === 0;
   } else {
     for (let i = 0; i < data.length; i++) {
