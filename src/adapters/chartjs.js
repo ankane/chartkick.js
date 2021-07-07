@@ -560,8 +560,8 @@ export default class {
     let data = createDataTable(chart, options, chartType || "line");
 
     if (chart.xtype === "number") {
-      options.scales.x.type = "linear";
-      options.scales.x.position = "bottom";
+      options.scales.x.type = options.scales.x.type || "linear";
+      options.scales.x.position = options.scales.x.position ||"bottom";
     } else {
       options.scales.x.type = chart.xtype === "string" ? "category" : "time";
     }
@@ -651,8 +651,8 @@ export default class {
 
     let data = createDataTable(chart, options, chartType);
 
-    options.scales.x.type = "linear";
-    options.scales.x.position = "bottom";
+    options.scales.x.type = options.scales.x.type || "linear";
+    options.scales.x.position = options.scales.x.position || "bottom";
 
     // prevent grouping hover and tooltips
     if (!("mode" in options.interaction)) {

@@ -154,7 +154,11 @@ export default class {
     }
 
     let options = jsOptions(chart, chart.options, chartOptions), data, i, j;
-    options.xAxis.type = chart.xtype === "string" ? "category" : (chart.xtype === "number" ? "linear" : "datetime");
+    if (chart.xtype === "number") {
+      options.xAxis.type = options.xAxis.type || "linear";
+    } else {
+      options.xAxis.type = chart.xtype === "string" ? "category" : "datetime";
+    }
     if (!options.chart.type) {
       options.chart.type = chartType;
     }
