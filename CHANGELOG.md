@@ -1,4 +1,4 @@
-## 4.0.5 (unreleased)
+## 4.0.5 (2021-07-07)
 
 - Fixed x-axis type and position `library` options
 - Fixed `pointFormat` for Highcharts
