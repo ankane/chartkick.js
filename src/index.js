@@ -341,6 +341,16 @@ class WordCloud extends Chart {
   }
 }
 
+class RadarChart extends Chart {
+  __processData() {
+    return processSimple(this);
+  }
+
+  __chartName() {
+    return "RadarChart";
+  }
+}
+
 class ColumnChart extends Chart {
   __processData() {
     return processSeries(this, null, true);
@@ -421,6 +431,7 @@ const Chartkick = {
   PieChart: PieChart,
   FunnelChart: FunnelChart,
   WordCloud: WordCloud,
+  RadarChart: RadarChart,
   ColumnChart: ColumnChart,
   BarChart: BarChart,
   AreaChart: AreaChart,

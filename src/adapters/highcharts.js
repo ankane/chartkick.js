@@ -48,6 +48,71 @@ let defaultOptions = {
   }
 };
 
+
+let radarOptions = {
+  chart: {
+    polar: true
+  },
+  pane: {
+    startAngle: 0,
+    endAngle: 360
+  },
+  xAxis: {
+    tickInterval: 45,
+    min: 0,
+    max: 360,
+    title: {
+      text: null
+    },
+    labels: {
+      style: {
+        fontSize: "12px"
+      }
+    }
+  },
+  yAxis: {
+    min: 0,
+    title: {
+      text: null
+    },
+    labels: {
+      style: {
+        fontSize: "12px"
+      }
+    }
+  },
+  title: {
+    text: null
+  },
+  credits: {
+    enabled: false
+  },
+  legend: {
+    borderWidth: 0
+  },
+  tooltip: {
+    style: {
+      fontSize: "12px"
+    }
+  },
+  plotOptions: {
+      series: {
+        pointStart: 0,
+        pointInterval: 45,
+        marker: {}
+    },
+    column: {
+        pointPadding: 0,
+        groupPadding: 0
+    },
+    areaspline: {},
+    area: {}
+  },
+  time: {
+    useUTC: false
+  }
+};
+
 let hideLegend = function (options, legend, hideLegend) {
   if (legend !== undefined) {
     options.legend.enabled = !!legend;
@@ -262,6 +327,49 @@ export default class {
         name: chart.options.label || "Value",
         data: chart.data
       }];
+      console.log("I am e");
+      console.log(chart.data);
+    this.drawChart(chart, series, options);
+  }
+
+
+  renderRadarChart(chart) {
+  
+    let chartOptions = merge(radarOptions, {});
+    
+    if (chart.options.colors) {
+      chartOptions.colors = chart.options.colors;
+    }
+
+    if ("legend" in chart.options) {
+      hideLegend(chartOptions, chart.options.legend);
+    }
+
+    if (chart.options.title) {
+      setTitle(chartOptions, chart.options.title);
+    }
+
+    let options = merge(chartOptions, chart.options.library || {});
+    setFormatOptions(chart, options, "RadarChart");
+
+    
+    var series = [{
+        type: "column",
+        name: chart.options.label || "Value",
+        data: chart.data,
+        pointPlacement: 'between'
+      },
+      {
+        type: "line",
+        name: chart.options.label || "Value",
+        data: chart.data
+      }, 
+      {
+        type: "area",
+        name: chart.options.label || "Value",
+        data: chart.data
+      }
+    ];
       console.log("I am e");
       console.log(chart.data);
     this.drawChart(chart, series, options);
