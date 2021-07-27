@@ -10,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.js"></script>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/funnel.js"></script>
     <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
 
@@ -84,6 +85,19 @@
       new Chartkick.WordCloud("word", [["Blueberry",44],["Strawberry",23],["Banana",22],["Apple",21],["Grape",13]]);
     </script>
 
+    <h1>Radar</h1>
+    <div id="radar" style="height: 300px;"></div>
+    <script>
+      data = [
+      [8, 7, 6, 5, 4, 3, 2, 1],
+      [1, 2, 3, 4, 5, 6, 7, 8],
+      [1, 8, 2, 7, 3, 6, 4, 5]
+      ]
+  
+      
+      new Chartkick.RadarChart("radar", data);
+    </script>
+
 
     <h1>Donut Chart</h1>
     <div id="donut" style="height: 300px;"></div>
@@ -100,7 +114,13 @@
     <h1>Bar Chart</h1>
     <div id="bar" style="height: 300px;"></div>
     <script>
-      new Chartkick.BarChart("bar", [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]]);
+      data = [
+  {name: "Meet", data: {"Asia": 3, "Africa": 4, "Us": 1, "Canada": 5}},
+  {name: "Google", data: {"Asia": 5, "Africa": 3, "Us": 3, "Canada": 8}},
+  {name: "AWS", data: {"Asia": 5, "Africa": 3, "Us": 6, "Canada": 2}},
+  {name: "Toy", data: {"Asia": 5, "Africa": 3, "Us": 10, "Canada": 6}}
+]
+      new Chartkick.BarChart("bar", data, {adapter: "highcharts"});
     </script>
 
     <h1>Area Chart</h1>
