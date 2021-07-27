@@ -321,14 +321,14 @@ export default class {
 
     let options = merge(chartOptions, chart.options.library || {});
     setFormatOptions(chart, options, "WordCloud");
-    
+
     var series = [{
-        type: "wordcloud",
-        name: chart.options.label || "Value",
-        data: chart.data
-      }];
-      console.log("I am e");
-      console.log(chart.data);
+      type: "wordcloud",
+      name: chart.options.label || "Occurrences",
+      data: chart.data
+    }];
+
+    delete options.tooltip;
     this.drawChart(chart, series, options);
   }
 
