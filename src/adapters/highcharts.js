@@ -113,69 +113,6 @@ let radarOptions = {
   }
 };
 
-
-
-let spiderOptions = {
-  chart: {
-    polar: true,
-    type: 'line'
-  },
-  pane: {
-    size: '80%'
-  },
-  xAxis: {
-    categories: ['Sales', 'Marketing', 'Development', 'Customer Support',
-            'Information Technology', 'Administration'],
-    tickmarkPlacement: 'on',
-    lineWidth: 0,
-    title: {
-      text: null
-    },
-    labels: {
-      style: {
-        fontSize: "12px"
-      }
-    }
-  },
-  yAxis: {
-    gridLineInterpolation: 'polygon',
-    lineWidth: 0,
-    min: 0,
-    title: {
-      text: null
-    },
-    labels: {
-      style: {
-        fontSize: "12px"
-      }
-    }
-  },
-  title: {
-    text: null
-  },
-  credits: {
-    enabled: false
-  },
-  legend: {
-    borderWidth: 0
-  },
-  tooltip: {
-    style: {
-      fontSize: "12px"
-    }
-  },
-  plotOptions: {
-    areaspline: {},
-    area: {},
-    series: {
-      marker: {}
-    }
-  },
-  time: {
-    useUTC: false
-  }
-};
-
 let hideLegend = function (options, legend, hideLegend) {
   if (legend !== undefined) {
     options.legend.enabled = !!legend;
