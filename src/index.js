@@ -343,7 +343,7 @@ class WordCloud extends Chart {
 
 class RadarChart extends Chart {
   __processData() {
-    return processSimple(this);
+    return processSeries(this, "radar");
   }
 
   __chartName() {

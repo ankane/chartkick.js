@@ -89,12 +89,12 @@
     <div id="radar" style="height: 300px;"></div>
     <script>
       data = [
-      [8, 7, 6, 5, 4, 3, 2, 1],
-      [1, 2, 3, 4, 5, 6, 7, 8],
-      [1, 8, 2, 7, 3, 6, 4, 5]
+      {name: "Test 1", data: [5, 3, 2, 6, 7, 8]},
+      {name: "Test 2", data: [7, 3, 6, 2, 1, 7]},
+      {name: "Test 3", data: [1, 8, 2, 7, 3, 6]}
       ]
-  
-      
+
+
       new Chartkick.RadarChart("radar", data);
     </script>
 

@@ -334,9 +334,8 @@ export default class {
 
 
   renderRadarChart(chart) {
-  
     let chartOptions = merge(radarOptions, {});
-    
+
     if (chart.options.colors) {
       chartOptions.colors = chart.options.colors;
     }
@@ -352,26 +351,24 @@ export default class {
     let options = merge(chartOptions, chart.options.library || {});
     setFormatOptions(chart, options, "RadarChart");
 
-    
     var series = [{
         type: "column",
-        name: chart.options.label || "Value",
-        data: chart.data,
+        name: chart.data[0].name,
+        data: chart.data[0].data,
         pointPlacement: 'between'
       },
       {
         type: "line",
-        name: chart.options.label || "Value",
-        data: chart.data
-      }, 
+        name: chart.data[1].name,
+        data: chart.data[1].data
+      },
       {
         type: "area",
-        name: chart.options.label || "Value",
-        data: chart.data
+        name: chart.data[2].name,
+        data: chart.data[2].data
       }
     ];
-      console.log("I am e");
-      console.log(chart.data);
+
     this.drawChart(chart, series, options);
   }
 

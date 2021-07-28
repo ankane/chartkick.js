@@ -78,6 +78,9 @@ function copySeries(series) {
 function processSeries(chart, keyType, noDatetime) {
   let i;
 
+  if(keyType == 'radar')
+    return chart.rawData;
+
   let opts = chart.options;
   let series = chart.rawData;
 
@@ -113,7 +116,7 @@ function processSimple(chart) {
 }
 
 function dataEmpty(data, chartType) {
-  if (chartType === "PieChart" || chartType === "GeoChart" || chartType === "Timeline" || chartType === "FunnelChart" || chartType === "WordCloud" || chartType === "RadarChart" ) {
+  if (chartType === "PieChart" || chartType === "GeoChart" || chartType === "Timeline" || chartType === "FunnelChart" || chartType === "WordCloud" ) {
     return data.length === 0;
   } else {
     for (let i = 0; i < data.length; i++) {
