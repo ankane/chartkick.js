@@ -353,18 +353,18 @@ export default class {
 
     var series = [{
         type: "column",
-        name: chart.data[0].name,
+        name: chart.data[0].name || 'Column',
         data: chart.data[0].data,
         pointPlacement: 'between'
       },
       {
         type: "line",
-        name: chart.data[1].name,
+        name: chart.data[1].name || 'Line',
         data: chart.data[1].data
       },
       {
         type: "area",
-        name: chart.data[2].name,
+        name: chart.data[2].name || 'Area',
         data: chart.data[2].data
       }
     ];
