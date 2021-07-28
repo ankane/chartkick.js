@@ -13,6 +13,9 @@
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/funnel.js"></script>
     <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
     <script>
       // Chartkick.configure({language: "de"});
@@ -96,6 +99,19 @@
 
 
       new Chartkick.RadarChart("radar", data);
+    </script>
+
+
+    <h1>Spider</h1>
+    <div id="spider" style="height: 300px;"></div>
+    <script>
+      data = [
+        {name: "AI", data: [5, 3, 2, 6, 7, 8]},
+        {name: "No-Code", data: [7, 3, 6, 2, 1, 7]},
+        {name: "Yes", data: [2, 8, 2, 7, 3, 6]},
+        {name: "Four", data: [9, 6, 6, 7, 3, 6]}
+      ]
+      new Chartkick.PolarSpiderChart("spider", data);
     </script>
 
 

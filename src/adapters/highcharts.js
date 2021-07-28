@@ -113,6 +113,69 @@ let radarOptions = {
   }
 };
 
+
+
+let spiderOptions = {
+  chart: {
+    polar: true,
+    type: 'line'
+  },
+  pane: {
+    size: '80%'
+  },
+  xAxis: {
+    categories: ['Sales', 'Marketing', 'Development', 'Customer Support',
+            'Information Technology', 'Administration'],
+    tickmarkPlacement: 'on',
+    lineWidth: 0,
+    title: {
+      text: null
+    },
+    labels: {
+      style: {
+        fontSize: "12px"
+      }
+    }
+  },
+  yAxis: {
+    gridLineInterpolation: 'polygon',
+    lineWidth: 0,
+    min: 0,
+    title: {
+      text: null
+    },
+    labels: {
+      style: {
+        fontSize: "12px"
+      }
+    }
+  },
+  title: {
+    text: null
+  },
+  credits: {
+    enabled: false
+  },
+  legend: {
+    borderWidth: 0
+  },
+  tooltip: {
+    style: {
+      fontSize: "12px"
+    }
+  },
+  plotOptions: {
+    areaspline: {},
+    area: {},
+    series: {
+      marker: {}
+    }
+  },
+  time: {
+    useUTC: false
+  }
+};
+
 let hideLegend = function (options, legend, hideLegend) {
   if (legend !== undefined) {
     options.legend.enabled = !!legend;
@@ -368,6 +431,48 @@ export default class {
         data: chart.data[2].data
       }
     ];
+
+    this.drawChart(chart, series, options);
+  }
+
+  renderPolarSpiderChart(chart, chartType) {
+    chartType = chartType || "PolarSpiderChart";
+    let chartOptions = {};
+    chartOptions = {
+      chart: {
+          polar: true,
+          type: 'line'
+      },
+      pane: {
+          size: '80%'
+      },
+      xAxis: {
+          categories: ['Sales', 'Marketing', 'Development', 'Customer Support',
+          'Information Technology', 'Administration'],
+          tickmarkPlacement: 'on',
+          lineWidth: 0
+      },
+      yAxis: {
+          gridLineInterpolation: 'polygon',
+          lineWidth: 0,
+          min: 0
+      }
+
+
+    }
+
+    let options = jsOptions(chart, chart.options, chartOptions), data, i;
+    options.xAxis.type = chart.xtype === "string" ? "category" : (chart.xtype === "number" ? "linear" : "datetime");
+    if (!options.chart.type) {
+      options.chart.type = chartType;
+    }
+    setFormatOptions(chart, options, chartType);
+
+    let series = chart.rawData;
+    for (i = 0; i < series.length; i++) {
+      series[i].name = series[i].name || "Value";
+      data = series[i].data;
+    }
 
     this.drawChart(chart, series, options);
   }
