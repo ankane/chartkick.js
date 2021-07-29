@@ -351,6 +351,17 @@ class RadarChart extends Chart {
   }
 }
 
+
+class PolarSpiderChart extends Chart {
+  __processData() {
+    return processSeries(this);
+  }
+
+  __chartName() {
+    return "PolarSpiderChart";
+  }
+}
+
 class ColumnChart extends Chart {
   __processData() {
     return processSeries(this, null, true);
@@ -432,6 +443,7 @@ const Chartkick = {
   FunnelChart: FunnelChart,
   WordCloud: WordCloud,
   RadarChart: RadarChart,
+  PolarSpiderChart:PolarSpiderChart,
   ColumnChart: ColumnChart,
   BarChart: BarChart,
   AreaChart: AreaChart,
