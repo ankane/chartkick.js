@@ -96,8 +96,6 @@
       {name: "Test 2", data: [7, 3, 6, 2, 1, 7]},
       {name: "Test 3", data: [1, 8, 2, 7, 3, 6]}
       ]
-
-
       new Chartkick.RadarChart("radar", data);
     </script>
 
@@ -105,13 +103,24 @@
     <h1>Spider</h1>
     <div id="spider" style="height: 300px;"></div>
     <script>
-      data = [
-        {name: "AI", data: [5, 3, 2, 6, 7, 8]},
-        {name: "No-Code", data: [7, 3, 6, 2, 1, 7]},
-        {name: "Yes", data: [2, 8, 2, 7, 3, 6]},
-        {name: "Four", data: [9, 6, 6, 7, 3, 6]}
-      ]
-      new Chartkick.PolarSpiderChart("spider", data);
+      options = {
+        xAxis: {
+          categories: ['Sales', 'Marketing', 'Development', 'Customer Support',
+            'Information Technology', 'Administration'],
+          tickmarkPlacement: 'on',
+          lineWidth: 0
+        }
+      }
+      data = [{
+        name: 'Allocated Budget',
+          data: [43000, 19000, 60000, 35000, 17000, 10000],
+          pointPlacement: 'on'
+        }, {
+          name: 'Actual Spending',
+          data: [50000, 39000, 42000, 31000, 26000, 14000],
+          pointPlacement: 'on'
+      }]
+      new Chartkick.PolarSpiderChart("spider", data, options);
     </script>
 
 

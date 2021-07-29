@@ -384,8 +384,7 @@ export default class {
           size: '80%'
       },
       xAxis: {
-          categories: ['Sales', 'Marketing', 'Development', 'Customer Support',
-          'Information Technology', 'Administration'],
+          categories: chart.options.xAxis.categories || [],
           tickmarkPlacement: 'on',
           lineWidth: 0
       },
@@ -394,8 +393,6 @@ export default class {
           lineWidth: 0,
           min: 0
       }
-
-
     }
 
     let options = jsOptions(chart, chart.options, chartOptions), data, i;
