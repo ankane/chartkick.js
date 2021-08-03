@@ -510,7 +510,7 @@ export default class {
     let options = merge(chartOptions, chart.options.library || {});
     setFormatOptions(chart, options, "SparklineChart");
     let series = [{
-      name: chart.options.label || "Value"
+      name: chart.options.label || "Value",
       data: chart.data[0].data
     }];
     this.drawChart(chart, series, options);
