@@ -48,6 +48,99 @@ let defaultOptions = {
   }
 };
 
+let sparkOptions = {
+  chart: {
+    backgroundColor: null,
+    borderWidth: 0,
+    type: 'area',
+    margin: [2, 0, 2, 0],
+    width: 120,
+    height: 20,
+    style: { 
+      overflow: 'visible'
+    },
+    skipClone: true
+  },
+  navigation: {
+    buttonOptions: {
+        enabled: false
+    }
+  },
+  credits: {
+    enabled: false
+  },
+  xAxis: {
+    title: {
+      text: null
+    },
+    labels: {
+      style: {
+        fontSize: "12px"
+      }
+    },
+    startOnTick: false,
+    endOnTick: false,
+    tickPositions: []
+  },
+  yAxis: {
+    endOnTick: false,
+    startOnTick: false,
+
+    title: {
+      text: null
+    },
+    labels: {
+      enabled: false
+    },
+    tickPositions: [0]
+  },
+  title: {
+    text: null
+  },
+  credits: {
+    enabled: false
+  },
+  legend: {
+    enabled: false
+  },
+  tooltip: {
+    style: {
+      fontSize: "12px"
+    },
+    hideDelay: 0,
+    outside: true,
+    shared: true
+  },
+  plotOptions: {
+    series: {
+      animation: false,
+      lineWidth: 1,
+      shadow: false,
+      states: {
+            hover: {
+                lineWidth: 1
+            }
+      },
+      marker: {
+        radius: 1,
+        states: {
+          hover: {
+              radius: 2
+          }
+        }
+      },
+      fillOpacity: 0.25
+    },
+    column: {
+      negativeColor: '#910000',
+      borderColor: 'silver'
+    }
+  },
+  time: {
+    useUTC: false
+  }
+};
+
 
 let radarOptions = {
   chart: {
@@ -413,6 +506,19 @@ export default class {
 
     this.drawChart(chart, series, options);
   }
+
+  renderSparklineChart(chart) {
+    let chartOptions = merge(sparkOptions, {});
+
+    let options = merge(chartOptions, chart.options.library || {});
+    setFormatOptions(chart, options, "SparklineChart");
+    let series = [{
+      name: chart.options.label,
+      data: chart.data[0].data
+    }];
+    this.drawChart(chart, series, options);
+  }
+
 
   renderColumnChart(chart, chartType) {
     chartType = chartType || "column";

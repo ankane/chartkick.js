@@ -8,7 +8,9 @@
     "build": "rollup -c",
     "lint": "eslint src"
   },
-  "dependencies": {},
+  "dependencies": {
+    "serve": "^12.0.0"
+  },
   "keywords": [
     "charts"
   ],

@@ -362,6 +362,16 @@ class PolarSpiderChart extends Chart {
   }
 }
 
+class SparklineChart extends Chart {
+  __processData() {
+    return processSeries(this, null, true);
+  }
+
+  __chartName() {
+    return "SparklineChart";
+  }
+}
+
 class ColumnChart extends Chart {
   __processData() {
     return processSeries(this, null, true);
@@ -444,6 +454,7 @@ const Chartkick = {
   WordCloud: WordCloud,
   RadarChart: RadarChart,
   PolarSpiderChart:PolarSpiderChart,
+  SparklineChart:SparklineChart,
   ColumnChart: ColumnChart,
   BarChart: BarChart,
   AreaChart: AreaChart,
