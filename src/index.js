@@ -311,6 +311,16 @@ class LineChart extends Chart {
   }
 }
 
+class SunBurstChart extends Chart {
+  __processData() {
+  return processSeries(this, 'sunburst', true);
+  }
+
+  __chartName() {
+    return "SunBurstChart";
+  }
+}
+
 class PieChart extends Chart {
   __processData() {
     return processSimple(this);
@@ -462,6 +472,7 @@ const Chartkick = {
   ScatterChart: ScatterChart,
   BubbleChart: BubbleChart,
   Timeline: Timeline,
+  SunBurstChart : SunBurstChart,
   charts: {},
   configure: function (options) {
     for (let key in options) {

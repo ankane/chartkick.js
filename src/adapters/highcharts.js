@@ -206,6 +206,7 @@ let radarOptions = {
   }
 };
 
+
 let hideLegend = function (options, legend, hideLegend) {
   if (legend !== undefined) {
     options.legend.enabled = !!legend;
@@ -335,6 +336,22 @@ export default class {
 
     this.drawChart(chart, series, options);
   }
+
+  renderSunBurstChart(chart) {
+
+    console.log("Sunburstttttt inside renderrrrr",chart)
+    let chartOptions = merge(defaultOptions, {});
+    let options = merge(chartOptions,chart.options.library)
+    setFormatOptions(chart, options, "SunBurstChart")
+    let series = [{
+      type: "sunburst",
+      name: chart.options.label || "Value",
+      data: chart.rawData
+    }];
+
+    this.drawChart(chart, series, options);
+  }
+
 
   renderScatterChart(chart) {
     let options = jsOptions(chart, chart.options, {});

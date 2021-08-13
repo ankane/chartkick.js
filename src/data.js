@@ -76,10 +76,13 @@ function copySeries(series) {
 }
 
 function processSeries(chart, keyType, noDatetime) {
+  console.log("inside series", chart , keyType, noDatetime)
   let i;
 
-  if(keyType == 'radar')
+  if(keyType == 'radar' || keyType == 'sunburst1') {
+    console.log("before return",chart.rawData)
     return chart.rawData;
+  }
 
   let opts = chart.options;
   let series = chart.rawData;
@@ -93,9 +96,11 @@ function processSeries(chart, keyType, noDatetime) {
   // convert to array
   // must come before dataEmpty check
   series = copySeries(series);
+  console.log('seriesqqqqqqqq',series)
   for (i = 0; i < series.length; i++) {
     series[i].data = toArr(series[i].data);
   }
+  console.log('pppppppppppppppp',series)
 
   chart.xtype = keyType ? keyType : (opts.discrete ? "string" : detectXType(series, noDatetime, opts));
 
@@ -104,10 +109,17 @@ function processSeries(chart, keyType, noDatetime) {
     series[i].data = formatSeriesData(series[i].data, chart.xtype);
   }
 
+  if( keyType == 'sunburst') {
+    series[0].data.push('Pass check')
+    console.log('aaaaaaa',series)
+    return series
+  }
+   console.log('seriessssssssssssaaaaaaaaa',series)
   return series;
 }
 
 function processSimple(chart) {
+  // console.log("inside process simple", chart)
   let perfectData = toArr(chart.rawData), i;
   for (i = 0; i < perfectData.length; i++) {
     perfectData[i] = [toStr(perfectData[i][0]), toFloat(perfectData[i][1])];
@@ -116,7 +128,7 @@ function processSimple(chart) {
 }
 
 function dataEmpty(data, chartType) {
-  if (chartType === "PieChart" || chartType === "GeoChart" || chartType === "Timeline" || chartType === "FunnelChart" || chartType === "WordCloud" ) {
+  if (chartType === "PieChart" || chartType === "GeoChart" || chartType === "Timeline" || chartType === "FunnelChart" || chartType === "WordCloud"  ) {
     return data.length === 0;
   } else {
     for (let i = 0; i < data.length; i++) {

@@ -32,8 +32,8 @@
     "@rollup/plugin-commonjs": "^18.0.0",
     "@rollup/plugin-node-resolve": "^11.2.1",
     "eslint": "^7.23.0",
-    "rollup": "^2.44.0",
-    "rollup-plugin-uglify": "^6.0.2"
+    "rollup": "^2.56.2",
+    "rollup-plugin-uglify": "^5.0.2"
   },
   "optionalDependencies": {
     "chart.js": ">=3.0.2",
