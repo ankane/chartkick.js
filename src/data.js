@@ -76,11 +76,9 @@ function copySeries(series) {
 }
 
 function processSeries(chart, keyType, noDatetime) {
-  console.log("inside series", chart , keyType, noDatetime)
   let i;
 
   if(keyType == 'radar' || keyType == 'sunburst1') {
-    console.log("before return",chart.rawData)
     return chart.rawData;
   }
 
@@ -96,11 +94,9 @@ function processSeries(chart, keyType, noDatetime) {
   // convert to array
   // must come before dataEmpty check
   series = copySeries(series);
-  console.log('seriesqqqqqqqq',series)
   for (i = 0; i < series.length; i++) {
     series[i].data = toArr(series[i].data);
   }
-  console.log('pppppppppppppppp',series)
 
   chart.xtype = keyType ? keyType : (opts.discrete ? "string" : detectXType(series, noDatetime, opts));
 
@@ -111,10 +107,8 @@ function processSeries(chart, keyType, noDatetime) {
 
   if( keyType == 'sunburst') {
     series[0].data.push('Pass check')
-    console.log('aaaaaaa',series)
     return series
   }
-   console.log('seriessssssssssssaaaaaaaaa',series)
   return series;
 }
 
