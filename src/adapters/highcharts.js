@@ -1,7 +1,8 @@
 import { formatValue, jsOptionsFunc, merge, sortByNumber } from "../helpers";
 
 let defaultOptions = {
-  chart: {},
+  chart: { type: '',
+            zoomType:''},
   xAxis: {
     title: {
       text: null
@@ -342,7 +343,6 @@ export default class {
 
   renderSunBurstChart(chart) {
 
-    console.log("Sunburstttttt inside renderrrrr",chart)
     let options = merge(defaultOptions, {});
     let allowDrillToNode = true
 
@@ -403,9 +403,40 @@ export default class {
           }
       }]
     }];
-    console.log('optionnsssssssssssssssssd',options)
     this.drawChart(chart, series, options);
   }
+
+  renderBubbleChart2(chart) {
+    console.log('bubble2222222222222222',chart)
+    let chartOptions = {};
+    let options = jsOptions(chart, chart.options, chartOptions)
+   
+    options.chart.type= 'bubble'
+    options.chart.zoomType='xy'
+
+    console.log('optionsssssssssss',options)
+
+
+    let series = []
+    for(let i = 0 ; i < chart.data.length; i++){
+      
+      let seriesObject = {
+        name:'',
+        color: '',
+        data : []
+      }
+      seriesObject.name = chart.data[i]['name'] || `Series${i}`
+      seriesObject.color = chart.data[i]['color'] || 'grey'
+      seriesObject.data = chart.rawData[i]['data'] 
+      series = [...series, seriesObject]
+    }
+
+    console.log('final seriesssss', series)
+
+   
+    this.drawChart(chart, series, options);
+  }
+
 
 
   renderScatterChart(chart) {

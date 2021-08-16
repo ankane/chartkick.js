@@ -64,6 +64,14 @@
   <body>
     <div class="container-fluid">
 
+    <h1>Bubble Chart</h1>
+    <div id="Bubble" style="height: 300px;"></div>
+    <script>
+      let Bubble_data1 = [[1,2,4],[1.5,1.8,6],[2,2.9,4],[1.2,3,4],[1.2,1.2,9],[1.4,2.8,12],[3,1,18]]
+      let Bubble_data2 = [[1.2,2.2,4],[3,2.8,6],[2.2,2.9,4],[1.4,2.2,4],[1.9,2.1,9]]
+      new Chartkick.BubbleChart2("Bubble", [ {name : 'Project A', color :'blue', data: Bubble_data1} ,{name : 'Project B', color : 'grey', data : Bubble_data2}], {download: true, title : ' Strategy Vs Risk '});
+    </script>       
+
     <h1>Sun Burst</h1>
     <div id="sunburst" style="height: 300px;"></div>
     <script>

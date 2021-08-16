@@ -76,9 +76,10 @@ function copySeries(series) {
 }
 
 function processSeries(chart, keyType, noDatetime) {
+  console.log('inside seriessssssss', chart)
   let i;
 
-  if(keyType == 'radar' || keyType == 'sunburst1') {
+  if(keyType == 'radar' ) {
     return chart.rawData;
   }
 
@@ -109,6 +110,7 @@ function processSeries(chart, keyType, noDatetime) {
     series[0].data.push('Pass check')
     return series
   }
+  console.log('before return', series)
   return series;
 }
 
