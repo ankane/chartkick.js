@@ -33,11 +33,12 @@ let defaultOptions = {
     enabled: false
   },
   legend: {
-    borderWidth: 0
+    borderWidth: 0,
   },
   tooltip: {
     headerFormat: '',
     pointFormat: '',
+    clusterFormat:'',
     style: {
       fontSize: "12px"
     }
@@ -413,6 +414,17 @@ export default class {
    
     options.chart.type= 'bubble'
     options.chart.zoomType='xy'
+    options.tooltip.pointFormat = '<b> x={point.x}</b>, <b> y={point.y}</b>'
+    options.tooltip.headerFormat='<b>{series.name}</b><br>'
+    options.tooltip.clusterFormat= 'Clustered points: {point.clusterPointsAmount}'
+
+    if(chart.options.X_title){
+      options.xAxis.title.text = chart.options.X_title
+    }
+
+    if(chart.options.Y_title){
+      options.yAxis.title.text = chart.options.Y_title
+    }
 
     console.log('optionsssssssssss',options)
 
