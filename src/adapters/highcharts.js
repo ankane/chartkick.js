@@ -344,6 +344,7 @@ export default class {
 
     console.log("Sunburstttttt inside renderrrrr",chart)
     let options = merge(defaultOptions, {});
+    let allowDrillToNode = true
 
     if (chart.options.title) {
       options.title.text = chart.options.title;
@@ -357,13 +358,14 @@ export default class {
       options.tooltip.pointFormat = '<b>{point.name}</b> : <b>{point.value}</b>'
     }
 
-    
-    
-    setFormatOptions(chart, options, "Pie")
+    if(chart.options.allowDrillToNode){
+      allowDrillToNode = chart.options.allowDrillToNode
+    }
+
     let series = [{
       type: "sunburst",
       data: chart.rawData,
-      allowDrillToNode: true,
+      allowDrillToNode: allowDrillToNode,
       cursor: 'pointer',
       dataLabels: {
           format: '{point.name}',
