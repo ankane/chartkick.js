@@ -5,7 +5,6 @@
     <meta charset="utf-8">
 
     <script src="../dist/chartkick.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.0/dist/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.js"></script>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
@@ -14,8 +13,9 @@
     <script src="https://code.highcharts.com/modules/funnel.js"></script>
     <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/sunburst.js"></script>
 
     <script>
       // Chartkick.configure({language: "de"});
@@ -63,6 +63,14 @@
   </head>
   <body>
     <div class="container-fluid">
+
+    <h1>Sun Burst</h1>
+    <div id="sunburst" style="height: 300px;"></div>
+    <script>
+      let sun_data = [
+      { name: 'World', id: 'id'}, {name: 'Africa', parent: 'id', id :'id-1',value: 2}, {name: 'America',parent: 'id', id: 'id-2', value: 1},{ name : 'Something', parent:'id-1', value: 2},{ name : 'Something2', parent:'id-1', value: .5},{ name : 'Something3', parent:'id-1', value: .5},{ name : 'Something4', parent:'id-2', value: 1.5},{ name : 'Something5', parent:'id-2', value: .5}];
+      new Chartkick.SunBurstChart("sunburst", sun_data, {download: true, title : 'World Chart '});
+    </script>     
 
     <h1>Line Chart</h1>
     <div id="line" style="height: 300px;"></div>

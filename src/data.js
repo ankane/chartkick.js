@@ -78,8 +78,9 @@ function copySeries(series) {
 function processSeries(chart, keyType, noDatetime) {
   let i;
 
-  if(keyType == 'radar')
+  if(keyType == 'radar' || keyType == 'sunburst1') {
     return chart.rawData;
+  }
 
   let opts = chart.options;
   let series = chart.rawData;
@@ -104,10 +105,15 @@ function processSeries(chart, keyType, noDatetime) {
     series[i].data = formatSeriesData(series[i].data, chart.xtype);
   }
 
+  if( keyType == 'sunburst') {
+    series[0].data.push('Pass check')
+    return series
+  }
   return series;
 }
 
 function processSimple(chart) {
+  // console.log("inside process simple", chart)
   let perfectData = toArr(chart.rawData), i;
   for (i = 0; i < perfectData.length; i++) {
     perfectData[i] = [toStr(perfectData[i][0]), toFloat(perfectData[i][1])];
@@ -116,7 +122,7 @@ function processSimple(chart) {
 }
 
 function dataEmpty(data, chartType) {
-  if (chartType === "PieChart" || chartType === "GeoChart" || chartType === "Timeline" || chartType === "FunnelChart" || chartType === "WordCloud" ) {
+  if (chartType === "PieChart" || chartType === "GeoChart" || chartType === "Timeline" || chartType === "FunnelChart" || chartType === "WordCloud"  ) {
     return data.length === 0;
   } else {
     for (let i = 0; i < data.length; i++) {

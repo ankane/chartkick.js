@@ -25,6 +25,9 @@ let defaultOptions = {
   title: {
     text: null
   },
+  subtitle: {
+    text: null
+  },
   credits: {
     enabled: false
   },
@@ -32,6 +35,8 @@ let defaultOptions = {
     borderWidth: 0
   },
   tooltip: {
+    headerFormat: '',
+    pointFormat: '',
     style: {
       fontSize: "12px"
     }
@@ -332,9 +337,76 @@ export default class {
         series[i].marker.enabled = false;
       }
     }
-
     this.drawChart(chart, series, options);
   }
+
+  renderSunBurstChart(chart) {
+
+    console.log("Sunburstttttt inside renderrrrr",chart)
+    let options = merge(defaultOptions, {});
+    let allowDrillToNode = true
+
+    if (chart.options.title) {
+      options.title.text = chart.options.title;
+    }
+
+    if (chart.options.subtitle) {
+      options.subtitle.text = chart.options.subtitle;
+    }
+
+    if(chart.xtype == 'sunburst'){
+      options.tooltip.pointFormat = '<b>{point.name}</b> : <b>{point.value}</b>'
+    }
+
+    if(chart.options.allowDrillToNode){
+      allowDrillToNode = chart.options.allowDrillToNode
+    }
+
+    let series = [{
+      type: "sunburst",
+      data: chart.rawData,
+      allowDrillToNode: allowDrillToNode,
+      cursor: 'pointer',
+      dataLabels: {
+          format: '{point.name}',
+          filter: {
+              property: 'innerArcLength',
+              operator: '>',
+              value: 16
+          },
+          rotationMode: 'circular'
+      },
+      levels: [{
+          level: 1,
+          levelIsConstant: false,
+          dataLabels: {
+              filter: {
+                  property: 'outerArcLength',
+                  operator: '>',
+                  value: 64
+              }
+          }
+      }, {
+          level: 2,
+          colorByPoint: true
+        }, {
+          level: 3,
+          colorVariation: {
+              key: 'brightness',
+              to: -0.5
+          }
+      }, {
+          level: 4,
+          colorVariation: {
+              key: 'brightness',
+              to: 0.5
+          }
+      }]
+    }];
+    console.log('optionnsssssssssssssssssd',options)
+    this.drawChart(chart, series, options);
+  }
+
 
   renderScatterChart(chart) {
     let options = jsOptions(chart, chart.options, {});
@@ -367,7 +439,6 @@ export default class {
       name: chart.options.label || "Value",
       data: chart.data
     }];
-
     this.drawChart(chart, series, options);
   }
 
