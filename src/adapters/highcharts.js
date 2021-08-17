@@ -408,7 +408,6 @@ export default class {
   }
 
   renderBubbleChart2(chart) {
-    console.log('bubble2222222222222222',chart)
     let chartOptions = {};
     let options = jsOptions(chart, chart.options, chartOptions)
    
@@ -426,9 +425,6 @@ export default class {
       options.yAxis.title.text = chart.options.Y_title
     }
 
-    console.log('optionsssssssssss',options)
-
-
     let series = []
     for(let i = 0 ; i < chart.data.length; i++){
       
@@ -443,11 +439,48 @@ export default class {
       series = [...series, seriesObject]
     }
 
-    console.log('final seriesssss', series)
-
-   
     this.drawChart(chart, series, options);
   }
+
+  renderBoxPlot(chart) {
+    let options = merge(defaultOptions, {});
+    options.chart.type = 'boxplot'
+   
+    if(chart.options.X_title){
+      options.xAxis.title.text = chart.options.X_title
+    }
+
+    if(chart.options.Y_title){
+      options.yAxis.title.text = chart.options.Y_title
+    }
+
+    if(chart.options.categories){
+      options.xAxis.categories = chart.options.categories
+    }
+
+    let pointInfo =  function () {
+      return '<span style="color:' + 
+          this.series.color + '">\u25CF</span> <b> ' +
+          this.series.name + '</b><br/>' +
+          'Maximum: ' + (this.high) + '<br/>' +
+          'Upper quartile: ' + (this.q3 ) + '<br/>' +
+          'Median: ' + (this.median ) + '<br/>' +
+          'Lower quartile: ' + (this.q1 ) + '<br/>' +
+          'Minimum: ' + (this.low ) + '<br/>'
+  }
+    options.tooltip.headerFormat = '<em>{point.key}</em><br/>'
+    options.tooltip.pointFormatter = pointInfo
+
+    let series = [{
+      name: chart.options.name || "Series 1",
+      data: chart.rawData
+    }];
+
+ 
+
+    this.drawChart(chart, series, options);
+  }
+
 
 
 

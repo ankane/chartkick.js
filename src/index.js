@@ -331,6 +331,16 @@ class SunBurstChart extends Chart {
   }
 }
 
+class BoxPlot extends Chart {
+  __processData() {
+    return processSeries(this);
+  }
+
+  __chartName() {
+    return "BoxPlot";
+  }
+}
+
 class PieChart extends Chart {
   __processData() {
     return processSimple(this);
@@ -484,6 +494,7 @@ const Chartkick = {
   Timeline: Timeline,
   SunBurstChart : SunBurstChart,
   BubbleChart2 : BubbleChart2,
+  BoxPlot : BoxPlot,
   charts: {},
   configure: function (options) {
     for (let key in options) {

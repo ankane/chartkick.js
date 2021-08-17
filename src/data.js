@@ -76,7 +76,6 @@ function copySeries(series) {
 }
 
 function processSeries(chart, keyType, noDatetime) {
-  console.log('inside seriessssssss', chart)
   let i;
 
   if(keyType == 'radar' ) {
@@ -110,12 +109,11 @@ function processSeries(chart, keyType, noDatetime) {
     series[0].data.push('Pass check')
     return series
   }
-  console.log('before return', series)
+
   return series;
 }
 
 function processSimple(chart) {
-  // console.log("inside process simple", chart)
   let perfectData = toArr(chart.rawData), i;
   for (i = 0; i < perfectData.length; i++) {
     perfectData[i] = [toStr(perfectData[i][0]), toFloat(perfectData[i][1])];
