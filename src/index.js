@@ -331,15 +331,15 @@ class SunBurstChart extends Chart {
   }
 }
 
-// class OrganizationChart extends Chart {
-//   __processData() {
-//   return processSeries(this);
-//   }
+class OrganizationChart extends Chart {
+  __processData() {
+  return processSeries(this);
+  }
 
-//   __chartName() {
-//     return "OrganizationChart";
-//   }
-// }
+  __chartName() {
+    return "OrganizationChart";
+  }
+}
 
 class BoxPlot extends Chart {
   __processData() {
