@@ -321,6 +321,16 @@ class BubbleChart2 extends Chart {
   }
 }
 
+class SentimentAnalysisChart extends Chart {
+  __processData() {
+  return processSeries(this);
+  }
+
+  __chartName() {
+    return "SentimentAnalysisChart";
+  }
+}
+
 class SunBurstChart extends Chart {
   __processData() {
   return processSeries(this, 'sunburst');
@@ -506,6 +516,7 @@ const Chartkick = {
   BubbleChart2 : BubbleChart2,
   BoxPlot : BoxPlot,
   OrganizationChart:OrganizationChart,
+  SentimentAnalysisChart,SentimentAnalysisChart,
   charts: {},
   configure: function (options) {
     for (let key in options) {

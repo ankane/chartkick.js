@@ -504,11 +504,27 @@ export default class {
     this.drawChart(chart, series, options);
   }
 
+  renderSentimentAnalysisChart(chart){
+    let options = merge(defaultOptions, {});
+    options.chart.type='bar'
+
+    if(chart.options.categories){
+      options.xAxis.categories = chart.options.categories
+    }
+
+    let series = chart.rawData
+    options.plotOptions.series.stacking = 'normal'
+    options.tooltip.formatter = function () {
+      return '<b> Series:' + this.series.name + ',point: ' + this.point.category + '</b><br/>' +
+          'Value: ' + this.point.y ;
+  }
+    this.drawChart(chart, series, options);
+
+  }
+
   renderOrganizationChart(chart) {
     let options = merge(organizationOptions, {});
-    console.log('inside render ', chart)
     
-
     options.chart.height = chart.options.height || 600
     options.chart.inverted = chart.options.inverted || true
 

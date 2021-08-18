@@ -67,6 +67,14 @@
   <body>
     <div class="container-fluid">
 
+    <h1>Sentiment Analysis</h1>
+    <div id="sentiment" style="height: 300px;"></div>
+    <script>
+      let categories_1 = ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+      let sen_data = [{name: 'John', data: [5, 3, 0, 7, 2,-3]}, {name: 'Jane',data: [2, -2, -3, 0, 1,-4]}, {name: 'Joe', data: [0, 4, 4, -2, 5,7]}]
+      new Chartkick.SentimentAnalysisChart("sentiment", sen_data, {categories:categories_1});
+    </script>     
+
     
     <h1>Organization chart</h1>
       <div id="Organization" style="height: auto;"></div>
