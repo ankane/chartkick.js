@@ -61,6 +61,12 @@ let organizationOptions = {
 title: {
     text: ''
 },
+tooltip: {
+  style: {
+    fontSize: "12px"
+  },
+  outside: true
+},
 accessibility: {
     point: {
         descriptionFormatter: function (point) {
@@ -506,19 +512,54 @@ export default class {
     options.chart.height = chart.options.height || 600
     options.chart.inverted = chart.options.inverted || true
 
-    console.log('optionssssss1111', options)  
     if(chart.options.title){
       options.title.text = chart.options.title
     }
 
-    
+    let levels =[]
+    if(chart.options.levels){
+      for(let i = 0; i < chart.options.levels; i++){
+        let level = {
+          level: null,
+          color: '',
+          dataLabels: {
+              color: ''
+          },
+          height: 25
+        } 
+        if( i != chart.options.levels -1) {
+        level.level = i
+        } else {
+          level.level = i +1
+        }
+        if(chart.options.colors){
+        level.color = chart.options.colors[i]
+        }
+        if(chart.options.text_color){
+        level.dataLabels.color = chart.options.text_color || ''
+        }
+        if(chart.options.height){
+        level.height = chart.options.height[i]
+        }
+        levels.push(level)
+      }
+    }
+
     let series = [{
       type: 'organization',
       name: chart.options.name || "Series",
+      keys: ['from', 'to'],
       data: chart.rawData[0],
-      nodes: chart.rawData[1]
+      levels: levels,
+      nodes: chart.rawData[1],
+      colorByPoint: false,
+      color: '#007ad0',
+      dataLabels: {
+          color: 'white'
+      },
+      borderColor: 'white',
+      nodeWidth: 65
     }];
-    console.log('optionssssss', options)
 
     this.drawChart(chart, series, options);
   }
