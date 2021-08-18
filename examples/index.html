@@ -66,14 +66,65 @@
   <body>
     <div class="container-fluid">
 
-    
+    <h1>Organization chart</h1>
+      <div id="Organization" style="height: 300px;"></div>
+      <script>  
+      let data = [['Shareholders', 'Board'],['Board', 'CEO'],['CEO', 'CTO'],['CEO', 'CPO'],['CEO', 'CSO'],['CEO', 'HR'],['CTO', 'Product'],['CTO', 'Web'],['CSO', 'Sales'],['HR', 'Market'],['CSO', 'Market'],['HR', 'Market'],['CTO', 'Market']]
+      let node_info = [{
+            id: 'Shareholders'
+        }, {
+            id: 'Board'
+        }, {
+            id: 'CEO',
+            title: 'CEO',
+            name: 'Grethe Hjetland',
+            image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2020/03/17131126/Highsoft_03862_.jpg'
+        }, {
+            id: 'HR',
+            title: 'HR/CFO',
+            name: 'Anne Jorunn Fjærestad',
+            color: '#007ad0',
+            image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2020/03/17131210/Highsoft_04045_.jpg'
+        }, {
+            id: 'CTO',
+            title: 'CTO',
+            name: 'Christer Vasseng',
+            image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2020/03/17131120/Highsoft_04074_.jpg'
+        }, {
+            id: 'CPO',
+            title: 'CPO',
+            name: 'Torstein Hønsi',
+            image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2020/03/17131213/Highsoft_03998_.jpg'
+        }, {
+            id: 'CSO',
+            title: 'CSO',
+            name: 'Anita Nesse',
+            image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2020/03/17131156/Highsoft_03834_.jpg'
+        }, {
+            id: 'Product',
+            name: 'Product developers'
+        }, {
+            id: 'Web',
+            name: 'Web devs, sys admin'
+        }, {
+            id: 'Sales',
+            name: 'Sales team'
+        }, {
+            id: 'Market',
+            name: 'Marketing team',
+            column: 5
+        }]
+        new Chartkick.OrganizationChart("Organization", data , node_info);
+    </script>   
+
+
     <h1>Box Plot</h1>
     <div id="BOX" style="height: 300px;"></div>
     <script>
-      let data = [[760, 801, 848, 895, 965],[733, 853, 939, 980, 1080],[714, 762, 817, 870, 918],[724, 802, 806, 871, 950],[834, 836, 864, 882, 910]]
+      let box_data = [[760, 801, 848, 895, 965],[733, 853, 939, 980, 1080],[714, 762, 817, 870, 918],[724, 802, 806, 871, 950],[834, 836, 864, 882, 910]]
       //optional catogary name
       let categories = ['CatA','CatB','CatC','CatD','CatE'] 
-      new Chartkick.BoxPlot("BOX", data , {download: true, name : 'observations' , title : 'Box Plot ' , X_title : 'X-Axis', Y_title: 'Y-Axis', categories: categories });
+      new Chartkick.BoxPlot("BOX", box_data , {download: true, name : 'observations' , title : 'Box Plot ' , X_title : 'X-Axis', Y_title: 'Y-Axis', categories: categories });
     </script> 
 
     <h1>Bubble Chart</h1>

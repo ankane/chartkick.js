@@ -476,7 +476,24 @@ export default class {
       data: chart.rawData
     }];
 
- 
+    this.drawChart(chart, series, options);
+  }
+
+  renderOrganizationChart(chart) {
+    let options = merge(defaultOptions, {});
+    console.log('inside render ', chart)
+    console.log('optionssssss', options)
+    options.chart.type = ''
+   
+    if(chart.options.X_title){
+      options.xAxis.title.text = chart.options.X_title
+    }
+
+    
+    let series = [{
+      name: chart.options.name || "Series 1",
+      data: chart.rawData
+    }];
 
     this.drawChart(chart, series, options);
   }
