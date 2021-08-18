@@ -55,6 +55,25 @@ let defaultOptions = {
   }
 };
 
+let organizationOptions = {
+  chart: { },
+
+title: {
+    text: ''
+},
+accessibility: {
+    point: {
+        descriptionFormatter: function (point) {
+            var nodeName = point.toNode.name,
+                nodeId = point.toNode.id,
+                nodeDesc = nodeName === nodeId ? nodeName : nodeName + ', ' + nodeId,
+                parentDesc = point.fromNode.id;
+            return point.index + '. ' + nodeDesc + ', reports to ' + parentDesc + '.';
+        }
+    }
+}
+}
+
 let sparkOptions = {
   chart: {
     backgroundColor: null,
@@ -480,20 +499,26 @@ export default class {
   }
 
   renderOrganizationChart(chart) {
-    let options = merge(defaultOptions, {});
+    let options = merge(organizationOptions, {});
     console.log('inside render ', chart)
-    console.log('optionssssss', options)
-    options.chart.type = ''
-   
-    if(chart.options.X_title){
-      options.xAxis.title.text = chart.options.X_title
+    
+
+    options.chart.height = chart.options.height || 600
+    options.chart.inverted = chart.options.inverted || true
+
+    console.log('optionssssss1111', options)  
+    if(chart.options.title){
+      options.title.text = chart.options.title
     }
 
     
     let series = [{
-      name: chart.options.name || "Series 1",
-      data: chart.rawData
+      type: 'organization',
+      name: chart.options.name || "Series",
+      data: chart.rawData[0],
+      nodes: chart.rawData[1]
     }];
+    console.log('optionssssss', options)
 
     this.drawChart(chart, series, options);
   }

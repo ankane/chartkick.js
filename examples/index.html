@@ -19,6 +19,7 @@
     <script src="https://code.highcharts.com/modules/sankey.js"></script>
     <script src="https://code.highcharts.com/modules/organization.js"></script>
 
+
     <script>
       // Chartkick.configure({language: "de"});
       // Chartkick.configure({mapsApiKey: "test123"})
@@ -66,10 +67,11 @@
   <body>
     <div class="container-fluid">
 
+    
     <h1>Organization chart</h1>
-      <div id="Organization" style="height: 300px;"></div>
+      <div id="Organization" style="height: auto;"></div>
       <script>  
-      let data = [['Shareholders', 'Board'],['Board', 'CEO'],['CEO', 'CTO'],['CEO', 'CPO'],['CEO', 'CSO'],['CEO', 'HR'],['CTO', 'Product'],['CTO', 'Web'],['CSO', 'Sales'],['HR', 'Market'],['CSO', 'Market'],['HR', 'Market'],['CTO', 'Market']]
+      let Org_data = [['Shareholders', 'Board'],['Board', 'CEO'],['CEO', 'CTO'],['CEO', 'CPO'],['CEO', 'CSO'],['CEO', 'HR'],['CTO', 'Product'],['CTO', 'Web'],['CSO', 'Sales'],['HR', 'Market'],['CSO', 'Market'],['HR', 'Market'],['CTO', 'Market']]
       let node_info = [{
             id: 'Shareholders'
         }, {
@@ -114,10 +116,10 @@
             name: 'Marketing team',
             column: 5
         }]
-        new Chartkick.OrganizationChart("Organization", data , node_info);
+        new Chartkick.OrganizationChart("Organization", [Org_data , node_info], {title : 'Organization chart ', name : 'highsoft'});
     </script>   
 
-
+    
     <h1>Box Plot</h1>
     <div id="BOX" style="height: 300px;"></div>
     <script>
