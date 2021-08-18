@@ -1,7 +1,8 @@
 import { formatValue, jsOptionsFunc, merge, sortByNumber } from "../helpers";
 
 let defaultOptions = {
-  chart: {},
+  chart: { type: '',
+            zoomType:''},
   xAxis: {
     title: {
       text: null
@@ -32,11 +33,12 @@ let defaultOptions = {
     enabled: false
   },
   legend: {
-    borderWidth: 0
+    borderWidth: 0,
   },
   tooltip: {
     headerFormat: '',
     pointFormat: '',
+    clusterFormat:'',
     style: {
       fontSize: "12px"
     }
@@ -342,7 +344,6 @@ export default class {
 
   renderSunBurstChart(chart) {
 
-    console.log("Sunburstttttt inside renderrrrr",chart)
     let options = merge(defaultOptions, {});
     let allowDrillToNode = true
 
@@ -403,9 +404,101 @@ export default class {
           }
       }]
     }];
-    console.log('optionnsssssssssssssssssd',options)
     this.drawChart(chart, series, options);
   }
+
+  renderBubbleChart2(chart) {
+    let chartOptions = {};
+    let options = jsOptions(chart, chart.options, chartOptions)
+   
+    options.chart.type= 'bubble'
+    options.chart.zoomType='xy'
+    options.tooltip.pointFormat = '<b> x={point.x}</b>, <b> y={point.y}</b>'
+    options.tooltip.headerFormat='<b>{series.name}</b><br>'
+    options.tooltip.clusterFormat= 'Clustered points: {point.clusterPointsAmount}'
+
+    if(chart.options.X_title){
+      options.xAxis.title.text = chart.options.X_title
+    }
+
+    if(chart.options.Y_title){
+      options.yAxis.title.text = chart.options.Y_title
+    }
+
+    let series = []
+    for(let i = 0 ; i < chart.data.length; i++){
+      
+      let seriesObject = {
+        name:'',
+        color: '',
+        data : []
+      }
+      seriesObject.name = chart.data[i]['name'] || `Series${i}`
+      seriesObject.color = chart.data[i]['color'] || 'grey'
+      seriesObject.data = chart.rawData[i]['data'] 
+      series = [...series, seriesObject]
+    }
+
+    this.drawChart(chart, series, options);
+  }
+
+  renderBoxPlot(chart) {
+    let options = merge(defaultOptions, {});
+    options.chart.type = 'boxplot'
+   
+    if(chart.options.X_title){
+      options.xAxis.title.text = chart.options.X_title
+    }
+
+    if(chart.options.Y_title){
+      options.yAxis.title.text = chart.options.Y_title
+    }
+
+    if(chart.options.categories){
+      options.xAxis.categories = chart.options.categories
+    }
+
+    let pointInfo =  function () {
+      return '<span style="color:' + 
+          this.series.color + '">\u25CF</span> <b> ' +
+          this.series.name + '</b><br/>' +
+          'Maximum: ' + (this.high) + '<br/>' +
+          'Upper quartile: ' + (this.q3 ) + '<br/>' +
+          'Median: ' + (this.median ) + '<br/>' +
+          'Lower quartile: ' + (this.q1 ) + '<br/>' +
+          'Minimum: ' + (this.low ) + '<br/>'
+  }
+    options.tooltip.headerFormat = '<em>{point.key}</em><br/>'
+    options.tooltip.pointFormatter = pointInfo
+
+    let series = [{
+      name: chart.options.name || "Series 1",
+      data: chart.rawData
+    }];
+
+    this.drawChart(chart, series, options);
+  }
+
+  renderOrganizationChart(chart) {
+    let options = merge(defaultOptions, {});
+    console.log('inside render ', chart)
+    console.log('optionssssss', options)
+    options.chart.type = ''
+   
+    if(chart.options.X_title){
+      options.xAxis.title.text = chart.options.X_title
+    }
+
+    
+    let series = [{
+      name: chart.options.name || "Series 1",
+      data: chart.rawData
+    }];
+
+    this.drawChart(chart, series, options);
+  }
+
+
 
 
   renderScatterChart(chart) {

@@ -311,13 +311,43 @@ class LineChart extends Chart {
   }
 }
 
+class BubbleChart2 extends Chart {
+  __processData() {
+  return processSeries(this, 'bubblechart2');
+  }
+
+  __chartName() {
+    return "BubbleChart2";
+  }
+}
+
 class SunBurstChart extends Chart {
   __processData() {
-  return processSeries(this, 'sunburst', true);
+  return processSeries(this, 'sunburst');
   }
 
   __chartName() {
     return "SunBurstChart";
+  }
+}
+
+// class OrganizationChart extends Chart {
+//   __processData() {
+//   return processSeries(this);
+//   }
+
+//   __chartName() {
+//     return "OrganizationChart";
+//   }
+// }
+
+class BoxPlot extends Chart {
+  __processData() {
+    return processSeries(this);
+  }
+
+  __chartName() {
+    return "BoxPlot";
   }
 }
 
@@ -473,6 +503,9 @@ const Chartkick = {
   BubbleChart: BubbleChart,
   Timeline: Timeline,
   SunBurstChart : SunBurstChart,
+  BubbleChart2 : BubbleChart2,
+  BoxPlot : BoxPlot,
+  OrganizationChart:OrganizationChart,
   charts: {},
   configure: function (options) {
     for (let key in options) {
