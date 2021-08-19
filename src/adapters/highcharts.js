@@ -540,7 +540,31 @@ export default class {
     }
 
     options.xAxis.categories = chart.options.X_title
+    options.xAxis.opposite=true
     options.yAxis.categories = chart.options.Y_title
+    options.plotOptions.rowsize = 55
+    options.yAxis.labels.formatter = function () {
+      if ('Monday' === this.value) {
+         return '<span style="color: orange;">' + this.value + '</span>';
+      } else {
+          return this.value;
+      }
+    }
+    
+    let allBlackout = []
+    for(let i=0;i<chart.options.black_out.length;i++){
+      let blackout =  {
+        value: null,
+        color: 'black',
+        width: chart.options.width || 55,
+        zIndex: 10
+      }
+
+      blackout.value = chart.options.black_out[i]
+      allBlackout.push(blackout)
+    }
+
+    options.yAxis.plotLines= allBlackout
 
     options.colorAxis = {
       min: 0,
@@ -557,6 +581,7 @@ export default class {
       symbolHeight: 280
     }
 
+   
     options.tooltip.formatter =  function () {
       return '<b>' + getPointCategoryName(this.point, 'x') + '</b> sold <br><b>' +
           this.point.value + '</b> items on <br><b>' + getPointCategoryName(this.point, 'y') + '</b>';
@@ -572,6 +597,7 @@ export default class {
       }
     }]
 
+    console.log('options3333333333333333',options)
     this.drawChart(chart, series, options);
 
   }
