@@ -522,6 +522,60 @@ export default class {
 
   }
 
+  renderHeatChart(chart){
+    function getPointCategoryName(point, dimension) {
+      var series = point.series,
+          isY = dimension === 'y',
+          axis = series[isY ? 'yAxis' : 'xAxis'];
+      return axis.categories[point[isY ? 'y' : 'x']];
+  }
+
+    let options = merge(defaultOptions, {});
+
+    options.chart= {
+      type: 'heatmap',
+      marginTop: 40,
+      marginBottom: 80,
+      plotBorderWidth: 1
+    }
+
+    options.xAxis.categories = chart.options.X_title
+    options.yAxis.categories = chart.options.Y_title
+
+    options.colorAxis = {
+      min: 0,
+      minColor: '#FFFFFF',
+      maxColor: Highcharts.getOptions().colors[0]
+    }
+
+    options.legend = {
+      align: 'right',
+      layout: 'vertical',
+      margin: 0,
+      verticalAlign: 'top',
+      y: 25,
+      symbolHeight: 280
+    }
+
+    options.tooltip.formatter =  function () {
+      return '<b>' + getPointCategoryName(this.point, 'x') + '</b> sold <br><b>' +
+          this.point.value + '</b> items on <br><b>' + getPointCategoryName(this.point, 'y') + '</b>';
+    }
+
+    let series = [{
+      name: chart.options.title,
+      borderWidth: 1,
+      data: chart.rawData,
+      dataLabels: {
+          enabled: true,
+          color: '#000000'
+      }
+    }]
+
+    this.drawChart(chart, series, options);
+
+  }
+
   renderOrganizationChart(chart) {
     let options = merge(organizationOptions, {});
     

@@ -442,6 +442,16 @@ class BarChart extends Chart {
   }
 }
 
+class HeatChart extends Chart {
+  __processData() {
+    return processSeries(this);
+  }
+
+  __chartName() {
+    return "HeatChart";
+  }
+}
+
 class AreaChart extends Chart {
   __processData() {
     return processSeries(this);
@@ -517,6 +527,7 @@ const Chartkick = {
   BoxPlot : BoxPlot,
   OrganizationChart:OrganizationChart,
   SentimentAnalysisChart,SentimentAnalysisChart,
+  HeatChart:HeatChart,
   charts: {},
   configure: function (options) {
     for (let key in options) {
