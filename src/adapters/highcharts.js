@@ -55,6 +55,64 @@ let defaultOptions = {
   }
 };
 
+let gaugeOptions = {
+  chart: {
+      type: 'solidgauge'
+  },
+
+  title: null,
+
+  pane: {
+      center: ['50%', '85%'],
+      size: '140%',
+      startAngle: -90,
+      endAngle: 90,
+      background: {
+          backgroundColor:'#EEE',
+          innerRadius: '60%',
+          outerRadius: '100%',
+          shape: 'arc'
+      }
+  },
+
+  exporting: {
+      enabled: false
+  },
+
+  tooltip: {
+      enabled: false
+  },
+
+  // the value axis
+  yAxis: {
+      stops: [
+          [0.1, '#55BF3B'], // green
+          [0.5, '#DDDF0D'], // yellow
+          [0.9, '#DF5353'] // red
+      ],
+      lineWidth: 0,
+      tickWidth: 0,
+      minorTickInterval: null,
+      tickAmount: 2,
+      title: {
+          y: -70
+      },
+      labels: {
+          y: 16
+      }
+  },
+
+  plotOptions: {
+      solidgauge: {
+          dataLabels: {
+              y: 5,
+              borderWidth: 0,
+              useHTML: true
+          }
+      }
+  }
+};
+
 let organizationOptions = {
   chart: { },
 
@@ -79,6 +137,7 @@ accessibility: {
     }
 }
 }
+
 
 let sparkOptions = {
   chart: {
@@ -431,6 +490,36 @@ export default class {
     }];
     this.drawChart(chart, series, options);
   }
+  
+
+  renderSolidGaugeChart(chart) {
+    let options = merge(gaugeOptions, {});
+
+    options.yAxis.min = chart.options.min
+    options.yAxis.max = chart.options.max
+
+    if (chart.options.intervals){
+      options.yAxis.stops = chart.options.intervals
+    }
+
+    let series = [{
+      name: chart.options.name || '',
+      data: chart.rawData,
+      dataLabels: {
+          format:
+              '<div style="text-align:center">' +
+              '<span style="font-size:25px">{y}</span><br/>' +
+              `<span style="font-size:12px;opacity:0.4">${chart.options.valueSuffix}</span>` +
+              '</div>'
+      },
+      tooltip: {
+          valueSuffix: chart.options.valueSuffix
+      }
+  }]
+  
+    this.drawChart(chart, series, options);
+  }
+
 
   renderBubbleChart2(chart) {
     let chartOptions = {};
@@ -523,13 +612,6 @@ export default class {
   }
 
   renderHeatChart(chart){
-    function getPointCategoryName(point, dimension) {
-      var series = point.series,
-          isY = dimension === 'y',
-          axis = series[isY ? 'yAxis' : 'xAxis'];
-      return axis.categories[point[isY ? 'y' : 'x']];
-  }
-
     let options = merge(defaultOptions, {});
 
     options.chart= {
@@ -543,6 +625,9 @@ export default class {
     options.xAxis.opposite=true
     options.yAxis.categories = chart.options.Y_title
     options.plotOptions.rowsize = 55
+    delete options.tooltip 
+
+    
     options.yAxis.labels.formatter = function () {
       if ('Monday' === this.value) {
          return '<span style="color: orange;">' + this.value + '</span>';
@@ -550,6 +635,25 @@ export default class {
           return this.value;
       }
     }
+
+    
+    // let object =  chart.options.highlight
+    // console.log('objjjjjj', object)
+
+    // let colorfunc1  = function (object1) {
+    //   for (const [key, value] of Object.entries(object1)) {
+    //     if (key == this.value) {
+    //         return `<span style="color: ${value}";>` + this.value + '</span>';
+    //     } else {
+    //         return this.value;
+    //     }
+    //   }
+    // }
+
+    // options.yAxis.labels.formatter = colorfunc1(object)
+    
+
+  
     
     let allBlackout = []
     for(let i=0;i<chart.options.black_out.length;i++){
@@ -581,11 +685,7 @@ export default class {
       symbolHeight: 280
     }
 
-   
-    options.tooltip.formatter =  function () {
-      return '<b>' + getPointCategoryName(this.point, 'x') + '</b> sold <br><b>' +
-          this.point.value + '</b> items on <br><b>' + getPointCategoryName(this.point, 'y') + '</b>';
-    }
+
 
     let series = [{
       name: chart.options.title,
@@ -596,8 +696,7 @@ export default class {
           color: '#000000'
       }
     }]
-
-    console.log('options3333333333333333',options)
+    
     this.drawChart(chart, series, options);
 
   }

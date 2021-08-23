@@ -301,6 +301,18 @@ class Chart {
   }
 }
 
+
+
+class SolidGaugeChart extends Chart {
+  __processData() {
+    return processSeries(this);
+  }
+
+  __chartName() {
+    return "SolidGaugeChart";
+  }
+}
+
 class LineChart extends Chart {
   __processData() {
     return processSeries(this);
@@ -528,6 +540,7 @@ const Chartkick = {
   OrganizationChart:OrganizationChart,
   SentimentAnalysisChart,SentimentAnalysisChart,
   HeatChart:HeatChart,
+  SolidGaugeChart:SolidGaugeChart,
   charts: {},
   configure: function (options) {
     for (let key in options) {
