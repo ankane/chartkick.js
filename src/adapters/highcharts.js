@@ -521,7 +521,6 @@ export default class {
   }
 
   renderCompareBarChart(chart) {
-    console.log('charttttt',chart)
     let options = merge(defaultOptions, {});
     
     options.chart.type = 'bar'
@@ -535,6 +534,10 @@ export default class {
       return 'Series: ' + this.series.name + 
           '</br>Value: '+ Math.abs(this.y);
     }
+
+    options.yAxis.labels.formatter = function() {
+          return Math.abs(this.value);
+      }
   
     let series = chart.rawData.series_data
     this.drawChart(chart, series, options);
