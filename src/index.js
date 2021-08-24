@@ -434,6 +434,17 @@ class SparklineChart extends Chart {
   }
 }
 
+
+class CompareBarChart extends Chart {
+  __processData() {
+    return processSeries(this);
+  }
+
+  __chartName() {
+    return "CompareBarChart";
+  }
+}
+
 class ColumnChart extends Chart {
   __processData() {
     return processSeries(this, null, true);
@@ -541,6 +552,7 @@ const Chartkick = {
   SentimentAnalysisChart,SentimentAnalysisChart,
   HeatChart:HeatChart,
   SolidGaugeChart:SolidGaugeChart,
+  CompareBarChart,CompareBarChart,
   charts: {},
   configure: function (options) {
     for (let key in options) {

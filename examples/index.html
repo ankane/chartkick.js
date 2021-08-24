@@ -69,6 +69,22 @@
   <body>
     <div class="container-fluid">
 
+    <h1>Negativr bar with grouped data</h1>
+    <div id="BarNeg" style="height: 300px;"></div>
+    <script>
+      let bar_data = [{name: 'Past Mixed',data: [-400, -31, -635, -203]}, 
+       {name: 'Future Mixed',data: [133, 156, 947, 408]}, {
+        name: 'Past Positve ',data: [-814, -841, -3714, -727]}, {
+        name: 'Future Positive',data: [1216, 1001, 436, 738]},{
+        name: 'Past Negative',data: [-1216, -1001, -436, -738]},{ 
+        name: 'Future Negative',data: [1216, 1001, 436, 738]},{
+        name: 'Past Neutral',data: [-1216, -1001, -436, -738]},{
+        name: 'Future Neutral',data: [1216, 1001, 436, 738]}]
+      let bar_cat= ['Technology','Communication','Bussiness', 'Workforce']  
+
+      new Chartkick.CompareBarChart("BarNeg", data = { series_data: bar_data, categories : bar_cat }, {y_min : -1500, groupPadding: .15, pointPadding : -.3});
+    </script> 
+
     <h1>Solid Gauge</h1>
     <div id="SolidGauge" style="height: 300px;"></div>
     <script>

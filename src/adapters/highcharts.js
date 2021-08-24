@@ -520,6 +520,27 @@ export default class {
     this.drawChart(chart, series, options);
   }
 
+  renderCompareBarChart(chart) {
+    console.log('charttttt',chart)
+    let options = merge(defaultOptions, {});
+    
+    options.chart.type = 'bar'
+    options.yAxis.min = chart.options.y_min
+    options.xAxis.categories = chart.rawData.categories
+    options.plotOptions.series.groupPadding = chart.options.groupPadding
+    options.plotOptions.series.pointPadding = chart.options.pointPadding
+    options.yAxis.labels.overflow = 'justify'
+    options.tooltip.useHTML= true,
+    options.tooltip.formatter =function () {
+      return 'Series: ' + this.series.name + 
+          '</br>Value: '+ Math.abs(this.y);
+    }
+  
+    let series = chart.rawData.series_data
+    this.drawChart(chart, series, options);
+  }
+
+
 
   renderBubbleChart2(chart) {
     let chartOptions = {};
@@ -696,7 +717,7 @@ export default class {
           color: '#000000'
       }
     }]
-    
+
     this.drawChart(chart, series, options);
 
   }
