@@ -147,7 +147,7 @@ let sparkOptions = {
     margin: [2, 0, 2, 0],
     width: 120,
     height: 20,
-    style: { 
+    style: {
       overflow: 'visible'
     },
     skipClone: true
@@ -435,6 +435,10 @@ export default class {
       options.title.text = chart.options.title;
     }
 
+    if (chart.options.colors) {
+      options.colors = chart.options.colors;
+    }
+
     if (chart.options.subtitle) {
       options.subtitle.text = chart.options.subtitle;
     }
@@ -548,7 +552,7 @@ export default class {
   renderBubbleChart2(chart) {
     let chartOptions = {};
     let options = jsOptions(chart, chart.options, chartOptions)
-   
+
     options.chart.type= 'bubble'
     options.chart.zoomType='xy'
     options.tooltip.pointFormat = '<b> x={point.x}</b>, <b> y={point.y}</b>'
@@ -565,7 +569,7 @@ export default class {
 
     let series = []
     for(let i = 0 ; i < chart.data.length; i++){
-      
+
       let seriesObject = {
         name:'',
         color: '',
@@ -573,7 +577,7 @@ export default class {
       }
       seriesObject.name = chart.data[i]['name'] || `Series${i}`
       seriesObject.color = chart.data[i]['color'] || 'grey'
-      seriesObject.data = chart.rawData[i]['data'] 
+      seriesObject.data = chart.rawData[i]['data']
       series = [...series, seriesObject]
     }
 
@@ -583,7 +587,7 @@ export default class {
   renderBoxPlot(chart) {
     let options = merge(defaultOptions, {});
     options.chart.type = 'boxplot'
-   
+
     if(chart.options.X_title){
       options.xAxis.title.text = chart.options.X_title
     }
@@ -597,7 +601,7 @@ export default class {
     }
 
     let pointInfo =  function () {
-      return '<span style="color:' + 
+      return '<span style="color:' +
           this.series.color + '">\u25CF</span> <b> ' +
           this.series.name + '</b><br/>' +
           'Maximum: ' + (this.high) + '<br/>' +
@@ -619,6 +623,7 @@ export default class {
 
   renderSentimentAnalysisChart(chart){
     let options = merge(defaultOptions, {});
+
     options.chart.type='bar'
 
     if(chart.options.categories){
@@ -762,8 +767,7 @@ export default class {
         }
         levels.push(level)
       }
-    }
-
+      
     let series = [{
       type: 'organization',
       name: chart.options.name || "Series",
