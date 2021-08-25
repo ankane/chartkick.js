@@ -786,6 +786,7 @@ export default class {
 
     this.drawChart(chart, series, options);
   }
+}
 
 
 

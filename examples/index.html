@@ -20,6 +20,7 @@
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
     <script src="https://code.highcharts.com/modules/heatmap.js"></script>
     <script src="https://code.highcharts.com/modules/organization.js"></script>
+    <script src="https://code.highcharts.com/modules/sankey.js"></script>
 
 
     <script>
@@ -68,6 +69,14 @@
   </head>
   <body>
     <div class="container-fluid">
+
+    <h1>Sanky Chart</h1>
+    <div id="Sanky" style="height: auto;"></div>
+    <script>
+    
+    
+      new Chartkick.SankyChart("SankyChart", gauge_data, solidOptions);
+    </script> 
 
     <h1>Negativr bar with grouped data</h1>
     <div id="BarNeg" style="height: 300px;"></div>
