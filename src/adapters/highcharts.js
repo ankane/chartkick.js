@@ -55,6 +55,90 @@ let defaultOptions = {
   }
 };
 
+let gaugeOptions = {
+  chart: {
+      type: 'solidgauge'
+  },
+
+  title: null,
+
+  pane: {
+      center: ['50%', '85%'],
+      size: '140%',
+      startAngle: -90,
+      endAngle: 90,
+      background: {
+          backgroundColor:'#EEE',
+          innerRadius: '60%',
+          outerRadius: '100%',
+          shape: 'arc'
+      }
+  },
+
+  exporting: {
+      enabled: false
+  },
+
+  tooltip: {
+      enabled: false
+  },
+
+  // the value axis
+  yAxis: {
+      stops: [
+          [0.1, '#55BF3B'], // green
+          [0.5, '#DDDF0D'], // yellow
+          [0.9, '#DF5353'] // red
+      ],
+      lineWidth: 0,
+      tickWidth: 0,
+      minorTickInterval: null,
+      tickAmount: 2,
+      title: {
+          y: -70
+      },
+      labels: {
+          y: 16
+      }
+  },
+
+  plotOptions: {
+      solidgauge: {
+          dataLabels: {
+              y: 5,
+              borderWidth: 0,
+              useHTML: true
+          }
+      }
+  }
+};
+
+let organizationOptions = {
+  chart: { },
+
+title: {
+    text: ''
+},
+tooltip: {
+  style: {
+    fontSize: "12px"
+  },
+  outside: true
+},
+accessibility: {
+    point: {
+        descriptionFormatter: function (point) {
+            var nodeName = point.toNode.name,
+                nodeId = point.toNode.id,
+                nodeDesc = nodeName === nodeId ? nodeName : nodeName + ', ' + nodeId,
+                parentDesc = point.fromNode.id;
+            return point.index + '. ' + nodeDesc + ', reports to ' + parentDesc + '.';
+        }
+    }
+}
+}
+
+
 let sparkOptions = {
   chart: {
     backgroundColor: null,
@@ -410,6 +494,60 @@ export default class {
     }];
     this.drawChart(chart, series, options);
   }
+  
+
+  renderSolidGaugeChart(chart) {
+    let options = merge(gaugeOptions, {});
+
+    options.yAxis.min = chart.options.min
+    options.yAxis.max = chart.options.max
+
+    if (chart.options.intervals){
+      options.yAxis.stops = chart.options.intervals
+    }
+
+    let series = [{
+      name: chart.options.name || '',
+      data: chart.rawData,
+      dataLabels: {
+          format:
+              '<div style="text-align:center">' +
+              '<span style="font-size:25px">{y}</span><br/>' +
+              `<span style="font-size:12px;opacity:0.4">${chart.options.valueSuffix}</span>` +
+              '</div>'
+      },
+      tooltip: {
+          valueSuffix: chart.options.valueSuffix
+      }
+  }]
+  
+    this.drawChart(chart, series, options);
+  }
+
+  renderCompareBarChart(chart) {
+    let options = merge(defaultOptions, {});
+    
+    options.chart.type = 'bar'
+    options.yAxis.min = chart.options.y_min
+    options.xAxis.categories = chart.rawData.categories
+    options.plotOptions.series.groupPadding = chart.options.groupPadding
+    options.plotOptions.series.pointPadding = chart.options.pointPadding
+    options.yAxis.labels.overflow = 'justify'
+    options.tooltip.useHTML= true,
+    options.tooltip.formatter =function () {
+      return 'Series: ' + this.series.name + 
+          '</br>Value: '+ Math.abs(this.y);
+    }
+
+    options.yAxis.labels.formatter = function() {
+          return Math.abs(this.value);
+      }
+  
+    let series = chart.rawData.series_data
+    this.drawChart(chart, series, options);
+  }
+
+
 
   renderBubbleChart2(chart) {
     let chartOptions = {};
@@ -483,20 +621,167 @@ export default class {
     this.drawChart(chart, series, options);
   }
 
-  renderOrganizationChart(chart) {
+  renderSentimentAnalysisChart(chart){
     let options = merge(defaultOptions, {});
-    console.log('inside render ', chart)
-    console.log('optionssssss', options)
-    options.chart.type = ''
 
-    if(chart.options.X_title){
-      options.xAxis.title.text = chart.options.X_title
+    options.chart.type='bar'
+
+    if(chart.options.categories){
+      options.xAxis.categories = chart.options.categories
+    }
+
+    let series = chart.rawData
+    options.plotOptions.series.stacking = 'normal'
+    options.tooltip.formatter = function () {
+      return '<b> Series:' + this.series.name + ',point: ' + this.point.category + '</b><br/>' +
+          'Value: ' + this.point.y ;
+  }
+    this.drawChart(chart, series, options);
+
+  }
+
+  renderHeatChart(chart){
+    let options = merge(defaultOptions, {});
+
+    options.chart= {
+      type: 'heatmap',
+      marginTop: 40,
+      marginBottom: 80,
+      plotBorderWidth: 1
+    }
+
+    options.xAxis.categories = chart.options.X_title
+    options.xAxis.opposite=true
+    options.yAxis.categories = chart.options.Y_title
+    options.plotOptions.rowsize = 55
+    delete options.tooltip 
+
+    
+    options.yAxis.labels.formatter = function () {
+      if ('Monday' === this.value) {
+         return '<span style="color: orange;">' + this.value + '</span>';
+      } else {
+          return this.value;
+      }
+    }
+
+    
+    // let object =  chart.options.highlight
+    // console.log('objjjjjj', object)
+
+    // let colorfunc1  = function (object1) {
+    //   for (const [key, value] of Object.entries(object1)) {
+    //     if (key == this.value) {
+    //         return `<span style="color: ${value}";>` + this.value + '</span>';
+    //     } else {
+    //         return this.value;
+    //     }
+    //   }
+    // }
+
+    // options.yAxis.labels.formatter = colorfunc1(object)
+    
+
+  
+    
+    let allBlackout = []
+    for(let i=0;i<chart.options.black_out.length;i++){
+      let blackout =  {
+        value: null,
+        color: 'black',
+        width: chart.options.width || 55,
+        zIndex: 10
+      }
+
+      blackout.value = chart.options.black_out[i]
+      allBlackout.push(blackout)
+    }
+
+    options.yAxis.plotLines= allBlackout
+
+    options.colorAxis = {
+      min: 0,
+      minColor: '#FFFFFF',
+      maxColor: Highcharts.getOptions().colors[0]
+    }
+
+    options.legend = {
+      align: 'right',
+      layout: 'vertical',
+      margin: 0,
+      verticalAlign: 'top',
+      y: 25,
+      symbolHeight: 280
     }
 
 
+
     let series = [{
-      name: chart.options.name || "Series 1",
-      data: chart.rawData
+      name: chart.options.title,
+      borderWidth: 1,
+      data: chart.rawData,
+      dataLabels: {
+          enabled: true,
+          color: '#000000'
+      }
+    }]
+
+    this.drawChart(chart, series, options);
+
+  }
+
+  renderOrganizationChart(chart) {
+    let options = merge(organizationOptions, {});
+    
+    options.chart.height = chart.options.height || 600
+    options.chart.inverted = chart.options.inverted || true
+
+    if(chart.options.title){
+      options.title.text = chart.options.title
+    }
+
+    let levels =[]
+    if(chart.options.levels){
+      for(let i = 0; i < chart.options.levels; i++){
+        let level = {
+          level: null,
+          color: '',
+          dataLabels: {
+              color: ''
+          },
+          height: 25
+        } 
+        if( i != chart.options.levels -1) {
+        level.level = i
+        } else {
+          level.level = i +1
+        }
+        if(chart.options.colors){
+        level.color = chart.options.colors[i]
+        }
+        if(chart.options.text_color){
+        level.dataLabels.color = chart.options.text_color || ''
+        }
+        if(chart.options.height){
+        level.height = chart.options.height[i]
+        }
+        levels.push(level)
+      }
+      
+    let series = [{
+      type: 'organization',
+      name: chart.options.name || "Series",
+      keys: ['from', 'to'],
+      data: chart.rawData[0],
+      levels: levels,
+      nodes: chart.rawData[1],
+      colorByPoint: false,
+      color: '#007ad0',
+      dataLabels: {
+          color: 'white'
+      },
+      borderColor: 'white',
+      nodeWidth: 65
     }];
 
     this.drawChart(chart, series, options);

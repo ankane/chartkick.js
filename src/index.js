@@ -301,6 +301,18 @@ class Chart {
   }
 }
 
+
+
+class SolidGaugeChart extends Chart {
+  __processData() {
+    return processSeries(this);
+  }
+
+  __chartName() {
+    return "SolidGaugeChart";
+  }
+}
+
 class LineChart extends Chart {
   __processData() {
     return processSeries(this);
@@ -321,6 +333,16 @@ class BubbleChart2 extends Chart {
   }
 }
 
+class SentimentAnalysisChart extends Chart {
+  __processData() {
+  return processSeries(this);
+  }
+
+  __chartName() {
+    return "SentimentAnalysisChart";
+  }
+}
+
 class SunBurstChart extends Chart {
   __processData() {
   return processSeries(this, 'sunburst');
@@ -331,15 +353,15 @@ class SunBurstChart extends Chart {
   }
 }
 
-// class OrganizationChart extends Chart {
-//   __processData() {
-//   return processSeries(this);
-//   }
+class OrganizationChart extends Chart {
+  __processData() {
+  return processSeries(this);
+  }
 
-//   __chartName() {
-//     return "OrganizationChart";
-//   }
-// }
+  __chartName() {
+    return "OrganizationChart";
+  }
+}
 
 class BoxPlot extends Chart {
   __processData() {
@@ -412,6 +434,17 @@ class SparklineChart extends Chart {
   }
 }
 
+
+class CompareBarChart extends Chart {
+  __processData() {
+    return processSeries(this);
+  }
+
+  __chartName() {
+    return "CompareBarChart";
+  }
+}
+
 class ColumnChart extends Chart {
   __processData() {
     return processSeries(this, null, true);
@@ -429,6 +462,16 @@ class BarChart extends Chart {
 
   __chartName() {
     return "BarChart";
+  }
+}
+
+class HeatChart extends Chart {
+  __processData() {
+    return processSeries(this);
+  }
+
+  __chartName() {
+    return "HeatChart";
   }
 }
 
@@ -506,6 +549,10 @@ const Chartkick = {
   BubbleChart2 : BubbleChart2,
   BoxPlot : BoxPlot,
   OrganizationChart:OrganizationChart,
+  SentimentAnalysisChart,SentimentAnalysisChart,
+  HeatChart:HeatChart,
+  SolidGaugeChart:SolidGaugeChart,
+  CompareBarChart,CompareBarChart,
   charts: {},
   configure: function (options) {
     for (let key in options) {
