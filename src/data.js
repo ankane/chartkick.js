@@ -1,4 +1,4 @@
-import { isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate, isNumber } from "./helpers";
+import { isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate, isNumber , convertToHighChartFormat} from "./helpers";
 
 function formatSeriesData(data, keyType) {
   let r = [], j, keyFunc;
@@ -76,7 +76,6 @@ function copySeries(series) {
 }
 
 function processSeries(chart, keyType, noDatetime) {
-  console.log('inside processss',chart)
   let i;
   if(keyType == 'radar' ) {
     return chart.rawData;
@@ -84,6 +83,13 @@ function processSeries(chart, keyType, noDatetime) {
 
   let opts = chart.options;
   let series = chart.rawData;
+
+  if (opts.highchartformat === true ) {
+      let formatted_series = convertToHighChartFormat(series)
+      chart.xtype = opts.xtype || "string"
+      console.log('before fromatted', formatted_series)
+      return formatted_series
+  }
 
   // see if one series or multiple
   chart.singleSeriesFormat = (!isArray(series) || typeof series[0] !== "object" || isArray(series[0]));
@@ -109,7 +115,8 @@ function processSeries(chart, keyType, noDatetime) {
     series[0].data.push('Pass check')
     return series
   }
-  console.log('before return',chart)
+
+  console.log('before return', series)
   return series;
 }
 

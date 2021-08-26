@@ -115,6 +115,7 @@ export default class {
   }
 
   renderLineChart(chart) {
+    console.log('from google',chart)
     this.waitForLoaded(chart, () => {
       let chartOptions = {};
 
