@@ -128,7 +128,7 @@ tooltip: {
 accessibility: {
     point: {
         descriptionFormatter: function (point) {
-            var nodeName = point.toNode.name,
+            let nodeName = point.toNode.name,
                 nodeId = point.toNode.id,
                 nodeDesc = nodeName === nodeId ? nodeName : nodeName + ', ' + nodeId,
                 parentDesc = point.fromNode.id;
@@ -136,7 +136,7 @@ accessibility: {
         }
     }
 }
-}
+};
 
 
 let sparkOptions = {
@@ -429,7 +429,7 @@ export default class {
   renderSunBurstChart(chart) {
 
     let options = merge(defaultOptions, {});
-    let allowDrillToNode = true
+    let allowDrillToNode = true;
 
     if (chart.options.title) {
       options.title.text = chart.options.title;
@@ -444,11 +444,11 @@ export default class {
     }
 
     if(chart.xtype == 'sunburst'){
-      options.tooltip.pointFormat = '<b>{point.name}</b> : <b>{point.value}</b>'
+      options.tooltip.pointFormat = '<b>{point.name}</b> : <b>{point.value}</b>';
     }
 
     if(chart.options.allowDrillToNode){
-      allowDrillToNode = chart.options.allowDrillToNode
+      allowDrillToNode = chart.options.allowDrillToNode;
     }
 
     let series = [{
@@ -499,11 +499,11 @@ export default class {
   renderSolidGaugeChart(chart) {
     let options = merge(gaugeOptions, {});
 
-    options.yAxis.min = chart.options.min
-    options.yAxis.max = chart.options.max
+    options.yAxis.min = chart.options.min;
+    options.yAxis.max = chart.options.max;
 
     if (chart.options.intervals){
-      options.yAxis.stops = chart.options.intervals
+      options.yAxis.stops = chart.options.intervals;
     }
 
     let series = [{
@@ -519,7 +519,7 @@ export default class {
       tooltip: {
           valueSuffix: chart.options.valueSuffix
       }
-  }]
+  }];
   
     this.drawChart(chart, series, options);
   }
@@ -527,23 +527,23 @@ export default class {
   renderCompareBarChart(chart) {
     let options = merge(defaultOptions, {});
     
-    options.chart.type = 'bar'
-    options.yAxis.min = chart.options.y_min
-    options.xAxis.categories = chart.rawData.categories
-    options.plotOptions.series.groupPadding = chart.options.groupPadding
-    options.plotOptions.series.pointPadding = chart.options.pointPadding
-    options.yAxis.labels.overflow = 'justify'
+    options.chart.type = 'bar';
+    options.yAxis.min = chart.options.y_min;
+    options.xAxis.categories = chart.rawData.categories;
+    options.plotOptions.series.groupPadding = chart.options.groupPadding;
+    options.plotOptions.series.pointPadding = chart.options.pointPadding;
+    options.yAxis.labels.overflow = 'justify';
     options.tooltip.useHTML= true,
     options.tooltip.formatter =function () {
       return 'Series: ' + this.series.name + 
           '</br>Value: '+ Math.abs(this.y);
-    }
+    };
 
     options.yAxis.labels.formatter = function() {
           return Math.abs(this.value);
-      }
+      };
   
-    let series = chart.rawData.series_data
+    let series = chart.rawData.series_data;
     this.drawChart(chart, series, options);
   }
 
@@ -551,34 +551,34 @@ export default class {
 
   renderBubbleChart2(chart) {
     let chartOptions = {};
-    let options = jsOptions(chart, chart.options, chartOptions)
+    let options = jsOptions(chart, chart.options, chartOptions);
 
-    options.chart.type= 'bubble'
-    options.chart.zoomType='xy'
-    options.tooltip.pointFormat = '<b> x={point.x}</b>, <b> y={point.y}</b>'
-    options.tooltip.headerFormat='<b>{series.name}</b><br>'
-    options.tooltip.clusterFormat= 'Clustered points: {point.clusterPointsAmount}'
+    options.chart.type= 'bubble';
+    options.chart.zoomType='xy';
+    options.tooltip.pointFormat = '<b> x={point.x}</b>, <b> y={point.y}</b>';
+    options.tooltip.headerFormat='<b>{series.name}</b><br>';
+    options.tooltip.clusterFormat= 'Clustered points: {point.clusterPointsAmount}';
 
     if(chart.options.X_title){
-      options.xAxis.title.text = chart.options.X_title
+      options.xAxis.title.text = chart.options.X_title;
     }
 
     if(chart.options.Y_title){
-      options.yAxis.title.text = chart.options.Y_title
+      options.yAxis.title.text = chart.options.Y_title;
     }
 
-    let series = []
+    let series = [];
     for(let i = 0 ; i < chart.data.length; i++){
 
       let seriesObject = {
         name:'',
         color: '',
         data : []
-      }
-      seriesObject.name = chart.data[i]['name'] || `Series${i}`
-      seriesObject.color = chart.data[i]['color'] || 'grey'
-      seriesObject.data = chart.rawData[i]['data']
-      series = [...series, seriesObject]
+      };
+      seriesObject.name = chart.data[i]['name'] || `Series${i}`;
+      seriesObject.color = chart.data[i]['color'] || 'grey';
+      seriesObject.data = chart.rawData[i]['data'];
+      series = [...series, seriesObject];
     }
 
     this.drawChart(chart, series, options);
@@ -586,18 +586,18 @@ export default class {
 
   renderBoxPlot(chart) {
     let options = merge(defaultOptions, {});
-    options.chart.type = 'boxplot'
+    options.chart.type = 'boxplot';
 
     if(chart.options.X_title){
-      options.xAxis.title.text = chart.options.X_title
+      options.xAxis.title.text = chart.options.X_title;
     }
 
     if(chart.options.Y_title){
-      options.yAxis.title.text = chart.options.Y_title
+      options.yAxis.title.text = chart.options.Y_title;
     }
 
     if(chart.options.categories){
-      options.xAxis.categories = chart.options.categories
+      options.xAxis.categories = chart.options.categories;
     }
 
     let pointInfo =  function () {
@@ -608,10 +608,10 @@ export default class {
           'Upper quartile: ' + (this.q3 ) + '<br/>' +
           'Median: ' + (this.median ) + '<br/>' +
           'Lower quartile: ' + (this.q1 ) + '<br/>' +
-          'Minimum: ' + (this.low ) + '<br/>'
-  }
-    options.tooltip.headerFormat = '<em>{point.key}</em><br/>'
-    options.tooltip.pointFormatter = pointInfo
+          'Minimum: ' + (this.low ) + '<br/>';
+  };
+    options.tooltip.headerFormat = '<em>{point.key}</em><br/>';
+    options.tooltip.pointFormatter = pointInfo;
 
     let series = [{
       name: chart.options.name || "Series 1",
@@ -624,18 +624,18 @@ export default class {
   renderSentimentAnalysisChart(chart){
     let options = merge(defaultOptions, {});
 
-    options.chart.type='bar'
+    options.chart.type='bar';
 
     if(chart.options.categories){
-      options.xAxis.categories = chart.options.categories
+      options.xAxis.categories = chart.options.categories;
     }
 
-    let series = chart.rawData
-    options.plotOptions.series.stacking = 'normal'
+    let series = chart.rawData;
+    options.plotOptions.series.stacking = 'normal';
     options.tooltip.formatter = function () {
       return '<b> Series:' + this.series.name + ',point: ' + this.point.category + '</b><br/>' +
           'Value: ' + this.point.y ;
-  }
+  };
     this.drawChart(chart, series, options);
 
   }
@@ -648,13 +648,13 @@ export default class {
       marginTop: 40,
       marginBottom: 80,
       plotBorderWidth: 1
-    }
+    };
 
-    options.xAxis.categories = chart.options.X_title
-    options.xAxis.opposite=true
-    options.yAxis.categories = chart.options.Y_title
-    options.plotOptions.rowsize = 55
-    delete options.tooltip 
+    options.xAxis.categories = chart.options.X_title;
+    options.xAxis.opposite=true;
+    options.yAxis.categories = chart.options.Y_title;
+    options.plotOptions.rowsize = 55;
+    delete options.tooltip; 
 
     
     options.yAxis.labels.formatter = function () {
@@ -663,7 +663,7 @@ export default class {
       } else {
           return this.value;
       }
-    }
+    };
 
     
     // let object =  chart.options.highlight
@@ -684,26 +684,26 @@ export default class {
 
   
     
-    let allBlackout = []
+    let allBlackout = [];
     for(let i=0;i<chart.options.black_out.length;i++){
       let blackout =  {
         value: null,
         color: 'black',
         width: chart.options.width || 55,
         zIndex: 10
-      }
+      };
 
-      blackout.value = chart.options.black_out[i]
-      allBlackout.push(blackout)
+      blackout.value = chart.options.black_out[i];
+      allBlackout.push(blackout);
     }
 
-    options.yAxis.plotLines= allBlackout
+    options.yAxis.plotLines= allBlackout;
 
     options.colorAxis = {
       min: 0,
       minColor: '#FFFFFF',
       maxColor: Highcharts.getOptions().colors[0]
-    }
+    };
 
     options.legend = {
       align: 'right',
@@ -712,7 +712,7 @@ export default class {
       verticalAlign: 'top',
       y: 25,
       symbolHeight: 280
-    }
+    };
 
 
 
@@ -724,7 +724,7 @@ export default class {
           enabled: true,
           color: '#000000'
       }
-    }]
+    }];
 
     this.drawChart(chart, series, options);
 
@@ -733,14 +733,14 @@ export default class {
   renderOrganizationChart(chart) {
     let options = merge(organizationOptions, {});
     
-    options.chart.height = chart.options.height || 600
-    options.chart.inverted = chart.options.inverted || true
+    options.chart.height = chart.options.height || 600;
+    options.chart.inverted = chart.options.inverted || true;
 
     if(chart.options.title){
-      options.title.text = chart.options.title
+      options.title.text = chart.options.title;
     }
 
-    let levels =[]
+    let levels =[];
     if(chart.options.levels){
       for(let i = 0; i < chart.options.levels; i++){
         let level = {
@@ -750,22 +750,22 @@ export default class {
               color: ''
           },
           height: 25
-        } 
+        }; 
         if( i != chart.options.levels -1) {
-        level.level = i
+        level.level = i;
         } else {
-          level.level = i +1
+          level.level = i +1;
         }
         if(chart.options.colors){
-        level.color = chart.options.colors[i]
+        level.color = chart.options.colors[i];
         }
         if(chart.options.text_color){
-        level.dataLabels.color = chart.options.text_color || ''
+        level.dataLabels.color = chart.options.text_color || '';
         }
         if(chart.options.height){
-        level.height = chart.options.height[i]
+        level.height = chart.options.height[i];
         }
-        levels.push(level)
+        levels.push(level);
       }
       
     let series = [{
@@ -842,7 +842,7 @@ export default class {
 
     let options = merge(chartOptions, chart.options.library || {});
     setFormatOptions(chart, options, "funnel");
-    var series = [{
+    let series = [{
         type: "funnel",
         name: chart.options.label || "Value",
         data: chart.data
@@ -869,7 +869,7 @@ export default class {
     let options = merge(chartOptions, chart.options.library || {});
     setFormatOptions(chart, options, "WordCloud");
 
-    var series = [{
+    let series = [{
       type: "wordcloud",
       name: chart.options.label || "Occurrences",
       data: chart.data
@@ -898,7 +898,7 @@ export default class {
     let options = merge(chartOptions, chart.options.library || {});
     setFormatOptions(chart, options, "RadarChart");
 
-    var series = [{
+    let series = [{
         type: "column",
         name: chart.data[0].name || 'Column',
         data: chart.data[0].data,
@@ -940,7 +940,7 @@ export default class {
           lineWidth: 0,
           min: 0
       }
-    }
+    };
 
     let options = jsOptions(chart, chart.options, chartOptions), data, i;
     options.xAxis.type = chart.xtype === "string" ? "category" : (chart.xtype === "number" ? "linear" : "datetime");

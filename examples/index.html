@@ -203,7 +203,14 @@
       new Chartkick.SunBurstChart("sunburst", sun_data, {download: true, title : 'World Chart '});
     </script>
 
-    <h1>Line Chart</h1>
+
+    <h1>Line Chart with chartjs format</h1>
+    <div id="line2" style="height: 300px;"></div>
+    <script>
+    new Chartkick.LineChart("line2", [{marker: { fillColor: 'transparent', lineColor: 'red' },data: {"2021-02-10":11,"2021-02-11":6,"2021-02-12":3,"2021-02-13":2,"2021-02-14":5,"2021-02-15":3,"2021-02-16":8,"2021-02-17":6,"2021-02-18":6,"2021-02-19":12,"2021-02-20":5,"2021-02-21":5,"2021-02-22":3,"2021-02-23":1,"2021-02-24":10,"2021-02-25":1,"2021-02-26":3,"2021-02-27":2,"2021-02-28":3,"2021-03-01":2,"2021-03-02":8}}, {marker: { fillColor: 'transparent', lineColor: 'blue'},data: {"2021-02-10":5,"2021-02-11":7,"2021-02-12":9,"2021-02-13":11,"2021-02-14":13,"2021-02-15":12,"2021-02-16":13,"2021-02-17":14,"2021-02-18":15,"2021-02-19":11,"2021-02-20":9,"2021-02-21":8,"2021-02-22":10,"2021-02-23":13,"2021-02-24":5,"2021-02-25":3,"2021-02-26":1,"2021-02-27":12,"2021-02-28":7,"2021-03-01":9,"2021-03-02":8}}], {download: true});
+    </script>
+
+    <h1>Line Chart with highchart format</h1>
     <div id="line" style="height: 300px;"></div>
     <script>
       let line_data2 = [
@@ -216,8 +223,7 @@
         data: [{x: 1, y: 200, color:'green'}, {x: 2, y: 250, color:'green'}, {x: 3, y: 300, color:'green'}, {x: 4, y: 350, color:'green'}, {x: 5, y: 400, color:'red'},{x: 6, y: 250, color:'green'}]
     }
     ]
-    //let data2 = [{marker: { fillColor: 'transparent', lineColor: 'red' },data: {"2021-02-10":11,"2021-02-11":6,"2021-02-12":3,"2021-02-13":2,"2021-02-14":5,"2021-02-15":3,"2021-02-16":8,"2021-02-17":6,"2021-02-18":6,"2021-02-19":12,"2021-02-20":5,"2021-02-21":5,"2021-02-22":3,"2021-02-23":1,"2021-02-24":10,"2021-02-25":1,"2021-02-26":3,"2021-02-27":2,"2021-02-28":3,"2021-03-01":2,"2021-03-02":8}}, {marker: { fillColor: 'transparent', lineColor: 'blue'},data: {"2021-02-10":5,"2021-02-11":7,"2021-02-12":9,"2021-02-13":11,"2021-02-14":13,"2021-02-15":12,"2021-02-16":13,"2021-02-17":14,"2021-02-18":15,"2021-02-19":11,"2021-02-20":9,"2021-02-21":8,"2021-02-22":10,"2021-02-23":13,"2021-02-24":5,"2021-02-25":3,"2021-02-26":1,"2021-02-27":12,"2021-02-28":7,"2021-03-01":9,"2021-03-02":8}}], {download: true}
-    // xtype : "number" optionalxs
+    // xtype : "number" optional it will change the precision of x axis
     new Chartkick.LineChart("line", line_data2, { highchartformat : true } );
     </script>
 
@@ -298,11 +304,11 @@
     <div id="bar" style="height: 300px;"></div>
     <script>
       data = [
-  {name: "Meet", data: {"Asia": 3, "Africa": 4, "Us": 1, "Canada": 5}},
-  {name: "Google", data: {"Asia": 5, "Africa": 3, "Us": 3, "Canada": 8}},
-  {name: "AWS", data: {"Asia": 5, "Africa": 3, "Us": 6, "Canada": 2}},
-  {name: "Toy", data: {"Asia": 5, "Africa": 3, "Us": 10, "Canada": 6}}
-]
+        {name: "Meet", data: {"Asia": 3, "Africa": 4, "Us": 1, "Canada": 5}},
+        {name: "Google", data: {"Asia": 5, "Africa": 3, "Us": 3, "Canada": 8}},
+        {name: "AWS", data: {"Asia": 5, "Africa": 3, "Us": 6, "Canada": 2}},
+        {name: "Toy", data: {"Asia": 5, "Africa": 3, "Us": 10, "Canada": 6}}
+      ]
       new Chartkick.BarChart("bar", data, {adapter: "highcharts"});
     </script>
 

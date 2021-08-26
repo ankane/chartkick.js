@@ -85,10 +85,9 @@ function processSeries(chart, keyType, noDatetime) {
   let series = chart.rawData;
 
   if (opts.highchartformat === true ) {
-      let formatted_series = convertToHighChartFormat(series)
-      chart.xtype = opts.xtype || "string"
-      console.log('before fromatted', formatted_series)
-      return formatted_series
+      let formatted_series = convertToHighChartFormat(series);
+      chart.xtype = opts.xtype || "string";
+      return formatted_series;
   }
 
   // see if one series or multiple
@@ -112,11 +111,10 @@ function processSeries(chart, keyType, noDatetime) {
   }
 
   if( keyType == 'sunburst') {
-    series[0].data.push('Pass check')
-    return series
+    series[0].data.push('Pass check');
+    return series;
   }
 
-  console.log('before return', series)
   return series;
 }
 

@@ -297,25 +297,25 @@ function seriesOption(chart, series, option) {
 }
 
 function convertToHighChartFormat(data) {
-  let result = []
+  let result = [];
   for(let i = 0 ; i < data.length; i++){
-    let object = {}
-    let outerarray = [] 
-    let color =[] 
+    let object = {};
+    let outerarray = []; 
+    let color =[]; 
     for(let j = 0 ; j < data[i]['data'].length; j++){
-    let array = []
-    array.push(toStr(data[i]['data'][j]['x']))
-    array.push(data[i]['data'][j]['y'])
-    color.push(data[i]['data'][j]['color'])
-    outerarray.push(array)
+    let array = [];
+    array.push(toStr(data[i]['data'][j]['x']));
+    array.push(data[i]['data'][j]['y']);
+    color.push(data[i]['data'][j]['color']);
+    outerarray.push(array);
     }
-    object['marker'] = { fillColor : "transparent", lineColor : data[i]['data'][i]['color']}
-    object['data'] = outerarray
-    object['name'] = data[i]['name']
-    object['color'] = color
-    result.push(object)
+    object['marker'] = { fillColor : "transparent", lineColor : data[i]['data'][i]['color']};
+    object['data'] = outerarray;
+    object['name'] = data[i]['name'];
+    object['color'] = color;
+    result.push(object);
   }
-  return result
+  return result;
 }
 
 export { formatValue, jsOptionsFunc, merge, isArray, isFunction, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate, isNumber, seriesOption, convertToHighChartFormat };
