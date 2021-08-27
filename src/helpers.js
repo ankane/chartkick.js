@@ -318,4 +318,26 @@ function convertToHighChartFormat(data) {
   return result;
 }
 
-export { formatValue, jsOptionsFunc, merge, isArray, isFunction, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate, isNumber, seriesOption, convertToHighChartFormat };
+function formatChartjsData(data){
+  let result = {};
+  let object = {};
+  let types =[];
+  let cat = [];
+
+  for( let i = 0; i < data.length; i++){
+    let dataArray = [];
+    cat = [];
+    types.push(data[i]['type']);
+    for(const key in data[i]['data']){
+      dataArray.push(data[i]['data'][key]);
+      cat.push(key);
+    }
+    object[i] = dataArray;
+ }
+ result['catagories'] = cat;
+ result['data'] = object;
+ result['types'] = types;
+ return result;
+}
+
+export { formatValue, jsOptionsFunc, merge, isArray, isFunction, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate, isNumber, seriesOption, convertToHighChartFormat,formatChartjsData };
