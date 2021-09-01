@@ -296,4 +296,48 @@ function seriesOption(chart, series, option) {
   return null;
 }
 
-export { formatValue, jsOptionsFunc, merge, isArray, isFunction, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate, isNumber, seriesOption };
+function convertToHighChartFormat(data) {
+  let result = [];
+  for(let i = 0 ; i < data.length; i++){
+    let object = {};
+    let outerarray = []; 
+    let color =[]; 
+    for(let j = 0 ; j < data[i]['data'].length; j++){
+    let array = [];
+    array.push(toStr(data[i]['data'][j]['x']));
+    array.push(data[i]['data'][j]['y']);
+    color.push(data[i]['data'][j]['color']);
+    outerarray.push(array);
+    }
+    object['marker'] = { fillColor : "transparent", lineColor : data[i]['data'][i]['color']};
+    object['data'] = outerarray;
+    object['name'] = data[i]['name'];
+    object['color'] = color;
+    result.push(object);
+  }
+  return result;
+}
+
+function formatChartjsData(data){
+  let result = {};
+  let object = {};
+  let types =[];
+  let cat = [];
+
+  for( let i = 0; i < data.length; i++){
+    let dataArray = [];
+    cat = [];
+    types.push(data[i]['type']);
+    for(const key in data[i]['data']){
+      dataArray.push(data[i]['data'][key]);
+      cat.push(key);
+    }
+    object[i] = dataArray;
+ }
+ result['catagories'] = cat;
+ result['data'] = object;
+ result['types'] = types;
+ return result;
+}
+
+export { formatValue, jsOptionsFunc, merge, isArray, isFunction, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate, isNumber, seriesOption, convertToHighChartFormat,formatChartjsData };

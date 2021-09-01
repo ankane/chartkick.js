@@ -302,6 +302,16 @@ class Chart {
 }
 
 
+class MultiChart extends Chart {
+  __processData() {
+    return processSeries(this);
+  }
+
+  __chartName() {
+    return "MultiChart";
+  }
+}
+
 
 class SolidGaugeChart extends Chart {
   __processData() {
@@ -552,7 +562,8 @@ const Chartkick = {
   SentimentAnalysisChart,SentimentAnalysisChart,
   HeatChart:HeatChart,
   SolidGaugeChart:SolidGaugeChart,
-  CompareBarChart,CompareBarChart,
+  CompareBarChart:CompareBarChart,
+  MultiChart : MultiChart,
   charts: {},
   configure: function (options) {
     for (let key in options) {
