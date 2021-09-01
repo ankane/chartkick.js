@@ -628,8 +628,8 @@ export default class {
     let data = createDataTable(chart, options, "column");
 
     if(chart.options.format){
-      let newData= convertToHighChartFormat(chart.options.Datas)
-      chart.options.Datas = newData
+      let newData= convertToHighChartFormat(chart.options.Datas);
+      chart.options.Datas = newData;
     }
 
     if(chart.options.combineCharts){
@@ -637,8 +637,8 @@ export default class {
         let datavalues = [];
         let cat = [];
         for(const key in chart.options.Datas[i]['data']){
-          datavalues.push(chart.options.Datas[i]['data'][key])
-          cat.push(key)
+          datavalues.push(chart.options.Datas[i]['data'][key]);
+          cat.push(key);
         }
         let DataObject= {
           type: chart.options.Datas[i]['type'] || 'line',
@@ -646,8 +646,8 @@ export default class {
           borderColor: chart.options.Datas[i].marker.lineColor || 'black',
           data: datavalues,
           pointBackgroundColor: chart.options.Datas[i]['color'] || []
-      }
-        data.datasets.push(DataObject)
+      };
+        data.datasets.push(DataObject);
       }
      }
 
