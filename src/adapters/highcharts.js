@@ -421,9 +421,9 @@ export default class {
     this.drawChart(chart, series, options);
   }
 
-  rendertimeChart(chart) {
+  renderTimeChart(chart) {
     let options = merge(defaultOptions, {});
-    
+
     options.chart.type = 'timeline'
     options.chart.inverted = chart.options.horizontal || true 
     options.xAxis.visible = false

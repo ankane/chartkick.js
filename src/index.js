@@ -302,13 +302,13 @@ class Chart {
 }
 
 
-class timeChart extends Chart {
+class TimeChart extends Chart {
   __processData() {
     return processSeries(this);
   }
 
   __chartName() {
-    return "timeChart";
+    return "TimeChart";
   }
 }
 
@@ -574,7 +574,7 @@ const Chartkick = {
   SolidGaugeChart:SolidGaugeChart,
   CompareBarChart:CompareBarChart,
   MultiChart : MultiChart,
-  timeChart:timeChart,
+  TimeChart:TimeChart,
   charts: {},
   configure: function (options) {
     for (let key in options) {
