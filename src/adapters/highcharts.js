@@ -373,54 +373,6 @@ export default class {
     this.library = library;
   }
 
-  renderMultiChart(chart) {
-    let chartOptions = {};
-    let options = merge(defaultOptions, {});
-
-    options.chart.zoomType = 'xy';
-    let check = chart.options.convertDataToHighchart;
-    if(chart.options.y_title){
-      options.title.text = chart.options.y_title;
-    }
-    
-    let formatted = null;
-    if (chart.options.categories){
-      options.xAxis.categories = chart.options.categories;
-    } else if (check) {
-      formatted = formatChartjsData(chart.rawData);
-      options.xAxis.categories = formatted['catagories'];
-    }
-    
-    options.tooltip.shared = true;
-
-    let series = [];
-
-   for(let i = 0; i < chart.rawData.length; i++){
-    let seriesdata = {
-      name: '',
-      type: '',
-      data: null,
-      tooltip: {
-        pointFormat: '<span>{series.name}: </span>{point.y}<br/>'
-      }
-
-    };
-
-     seriesdata.name = chart.rawData[i]['name'] || `Series${i}`;
-     if(check){
-      seriesdata.type = formatted['types'][i];
-      seriesdata.data = formatted['data'][i];
-      series.push(seriesdata);
-     } else {
-      seriesdata.type = chart.rawData[i].type; 
-      seriesdata.data = chart.rawData[i].data; 
-      series.push(seriesdata);
-     }
-  }    
-
-    this.drawChart(chart, series, options);
-  }
-
   renderTimeChart(chart) {
     let options = merge(defaultOptions, {});
 
