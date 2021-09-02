@@ -302,6 +302,16 @@ class Chart {
 }
 
 
+class TimeChart extends Chart {
+  __processData() {
+    return processSeries(this);
+  }
+
+  __chartName() {
+    return "TimeChart";
+  }
+}
+
 class MultiChart extends Chart {
   __processData() {
     return processSeries(this);
@@ -564,6 +574,7 @@ const Chartkick = {
   SolidGaugeChart:SolidGaugeChart,
   CompareBarChart:CompareBarChart,
   MultiChart : MultiChart,
+  TimeChart:TimeChart,
   charts: {},
   configure: function (options) {
     for (let key in options) {

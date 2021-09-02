@@ -421,6 +421,30 @@ export default class {
     this.drawChart(chart, series, options);
   }
 
+  renderTimeChart(chart) {
+    let options = merge(defaultOptions, {});
+
+    options.chart.type = 'timeline'
+    options.chart.inverted = chart.options.horizontal || true 
+    options.xAxis.visible = false
+    options.yAxis.visible = false
+    let series = [{
+      dataLabels: {
+          allowOverlap: false,
+          distance: chart.options.distance || 150,
+          format: '<span style="color:{point.color}">● </span><span style="font-weight: bold;" > ' +
+              '{point.x:%d %b %Y}</span><br/>{point.label}'
+      },
+      marker: {
+          symbol: 'circle'
+      },
+      data: chart.rawData.data
+    }]
+
+    this.drawChart(chart, series, options);
+  }
+
+
   renderLineChart(chart, chartType) {
     chartType = chartType || "spline";
     let chartOptions = {};

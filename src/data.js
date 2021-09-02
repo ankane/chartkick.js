@@ -114,7 +114,6 @@ function processSeries(chart, keyType, noDatetime) {
     series[0].data.push('Pass check');
     return series;
   }
-
   return series;
 }
 
