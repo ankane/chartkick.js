@@ -422,14 +422,12 @@ export default class {
   }
 
   rendertimeChart(chart) {
-    console.log('chartttttttttttttttttt',chart);
-    let chartOptions = {};
     let options = merge(defaultOptions, {});
-
-    options.chart.type = 'timeline';
-    options.chart.inverted = chart.options.horizontal || true; 
-    options.xAxis.visible = false;
-    options.yAxis.visible = false;
+    
+    options.chart.type = 'timeline'
+    options.chart.inverted = chart.options.horizontal || true 
+    options.xAxis.visible = false
+    options.yAxis.visible = false
     let series = [{
       dataLabels: {
           allowOverlap: false,
@@ -441,7 +439,7 @@ export default class {
           symbol: 'circle'
       },
       data: chart.rawData.data
-    }];
+    }]
 
     this.drawChart(chart, series, options);
   }
