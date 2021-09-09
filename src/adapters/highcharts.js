@@ -550,6 +550,7 @@ export default class {
   options.tooltip.headerFormat='<b>{series.name}</b><br>';
 
   let colors=['green','red','orange','grey'];
+  options.yAxis.gridLineWidth = 0;
   options.xAxis.categories = categories;
   options.chart.type = 'column';
   options.colors= colors;
