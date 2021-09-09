@@ -519,6 +519,43 @@ export default class {
     this.drawChart(chart, series, options);
   }
   
+  renderColumnGroupedCategories(chart) {
+    let options = merge(defaultOptions, {});
+
+  let series = [];
+  for (let i = 0 ; i < chart.rawData.length ; i++){
+    let dataobject = {
+      name: '',
+      type: 'column',
+      data: null,
+     };
+     
+    dataobject.name = chart.rawData[i]['name'];
+    dataobject.data = chart.rawData[i]['data']; 
+    series.push(dataobject);
+  }
+  
+  let categories =[];
+  for (let j = 0 ; j < chart.options.categories[0].category.length ; j++){
+    let categoriesobject = {
+      name:'',
+      categories:[]
+    };
+    categoriesobject.name = chart.options.categories[0].category[j];
+    categoriesobject.categories = chart.options.categories[0].sub_categories;
+    categories.push(categoriesobject);
+  } 
+
+  options.tooltip.pointFormat = '<b>y= {point.y}</b>';
+  options.tooltip.headerFormat='<b>{series.name}</b><br>';
+
+  let colors=['green','red','orange','grey'];
+  options.xAxis.categories = categories;
+  options.chart.type = 'column';
+  options.colors= colors;
+  
+  this.drawChart(chart, series, options);
+  }
 
   renderSolidGaugeChart(chart) {
     let options = merge(gaugeOptions, {});

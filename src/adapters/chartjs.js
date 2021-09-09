@@ -544,7 +544,6 @@ export default class {
   }
 
   renderLineChart(chart, chartType) {
-    console.log('this is form chart line chart jssssssssssss',chart);
     let chartOptions = {};
     if (chartType === "area") {
       // TODO fix area stacked
