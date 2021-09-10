@@ -447,6 +447,10 @@ export default class {
         series[i].marker.enabled = false;
       }
     }
+    if(chart.options.format){
+      series = chart.rawData;
+    }
+
     this.drawChart(chart, series, options);
   }
 
@@ -1058,6 +1062,29 @@ export default class {
       newSeries.push(d2);
     }
 
+    if(chart.options.combineCharts){
+        if(chart.options.format){
+          let formatted = formatChartjsData(chart.options.Datas);
+      
+          for(let i = 0; i < formatted.types.length; i++){
+            let dataobject = {
+              type: formatted['types'][i] || 'spline',
+              name: `Series${i}`,
+              data: formatted['data'][i]
+              };
+            newSeries.push(dataobject);
+          }
+        } else {
+          for(let i = 0; i < chart.options.Datas.length; i++){
+            let dataobject = {
+            type: chart.options.Datas[i]['type'] || 'spline',
+            name: chart.options.Datas[i]['name'] || `Series${i}`,
+            data: chart.options.Datas[i]['data']
+            };
+          newSeries.push(dataobject);
+          }
+         }
+    }
     this.drawChart(chart, newSeries, options);
   }
 

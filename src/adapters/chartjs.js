@@ -1,4 +1,4 @@
-import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, seriesOption, convertToHighChartFormat, formatChartjsData } from "../helpers";
+import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, seriesOption, convertToHighChartFormat } from "../helpers";
 
 function allZeros(data) {
   let i, j, d;
@@ -543,7 +543,7 @@ export default class {
     this.library = library;
   }
 
-  renderLineChart(chart, chartType) {
+  renderLineChart2(chart, chartType) {
     let chartOptions = {};
     if (chartType === "area") {
       // TODO fix area stacked
@@ -608,7 +608,7 @@ export default class {
     this.drawChart(chart, "pie", data, options);
   }
 
-  renderColumnChart(chart, chartType) {
+  renderColumnChart2(chart, chartType) {
     let options;
     if (chartType === "bar") {
       let barOptions = merge(baseOptions, defaultOptions);
@@ -626,30 +626,6 @@ export default class {
 
     setFormatOptions(chart, options, chartType);
     let data = createDataTable(chart, options, "column");
-
-    if(chart.options.format){
-      let newData= convertToHighChartFormat(chart.options.Datas);
-      chart.options.Datas = newData;
-    }
-
-    if(chart.options.combineCharts){
-      for( let i = 0; i < chart.options.Datas.length; i++){
-        let datavalues = [];
-        let cat = [];
-        for(const key in chart.options.Datas[i]['data']){
-          datavalues.push(chart.options.Datas[i]['data'][key]);
-          cat.push(key);
-        }
-        let DataObject= {
-          type: chart.options.Datas[i]['type'] || 'line',
-          label: chart.options.Datas[i]['name'] || `Series ${i}`,
-          borderColor: chart.options.Datas[i].marker.lineColor || 'black',
-          data: datavalues,
-          pointBackgroundColor: chart.options.Datas[i]['color'] || []
-      };
-        data.datasets.push(DataObject);
-      }
-     }
 
     if (chartType !== "bar") {
       setLabelSize(chart, data, options);

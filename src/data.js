@@ -1,4 +1,4 @@
-import { isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate, isNumber , convertToHighChartFormat} from "./helpers";
+import { isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate, isNumber , convertToHighChartFormat,formatChartjsData} from "./helpers";
 
 function formatSeriesData(data, keyType) {
   let r = [], j, keyFunc;
@@ -86,6 +86,7 @@ function processSeries(chart, keyType, noDatetime) {
 
   if (opts.highchartformat === true ) {
       let formatted_series = convertToHighChartFormat(series);
+      //let formatted_series = formatChartjsData(series)
       chart.xtype = opts.xtype || "string";
       return formatted_series;
   }
