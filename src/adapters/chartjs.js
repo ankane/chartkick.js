@@ -608,7 +608,7 @@ export default class {
     this.drawChart(chart, "pie", data, options);
   }
 
-  renderColumnChartFromChartjs(chart, chartType) {
+  renderChartjsColumnChart(chart, chartType) {
     let options;
     if (chartType === "bar") {
       let barOptions = merge(baseOptions, defaultOptions);
@@ -634,11 +634,11 @@ export default class {
   }
 
   renderAreaChart(chart) {
-    this.renderFromChartjs(chart, "area");
+    this.renderChartjsLineChart(chart, "area");
   }
 
   renderBarChart(chart) {
-    this.renderColumnChartFromChartjs(chart, "bar");
+    this.renderChartjsColumnChart(chart, "bar");
   }
 
   renderScatterChart(chart, chartType) {
