@@ -9,6 +9,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
+    "highcharts-grouped-categories": "^1.2.0",
     "serve": "^12.0.0"
   },
   "keywords": [

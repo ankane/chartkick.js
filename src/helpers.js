@@ -304,7 +304,7 @@ function convertToHighChartFormat(data) {
     let color =[]; 
     for(let j = 0 ; j < data[i]['data'].length; j++){
     let array = [];
-    array.push(toStr(data[i]['data'][j]['x']));
+    array.push(data[i]['data'][j]['x']);
     array.push(data[i]['data'][j]['y']);
     color.push(data[i]['data'][j]['color']);
     outerarray.push(array);
@@ -313,6 +313,7 @@ function convertToHighChartFormat(data) {
     object['data'] = outerarray;
     object['name'] = data[i]['name'];
     object['color'] = color;
+    object['type'] = data[i]['type'];
     result.push(object);
   }
   return result;

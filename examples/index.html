@@ -22,6 +22,7 @@
     <script src="https://code.highcharts.com/modules/organization.js"></script>
     <script src="https://code.highcharts.com/modules/sankey.js"></script>
     <script src="https://code.highcharts.com/modules/timeline.js"></script>
+    <script src="http://blacklabel.github.io/grouped_categories/grouped-categories.js"></script>
 
 
     <script>
@@ -71,6 +72,57 @@
   <body>
     <div class="container-fluid">
 
+    <h1>Line in highchart</h1>
+    <div id="linehigh" style="height: auto;"></div>
+    <script>    
+
+      let lineDataType1 = [{marker: { fillColor: 'transparent', lineColor: 'red' },data: {"2021-02-10":2.25,"2021-02-11":2.385,"2021-02-12":2.452,"2021-02-13":2.7,"2021-02-14":2.242,"2021-02-15":2}, type : 'spline'},{marker: { fillColor: 'transparent', lineColor: 'blue' },data: {"2021-02-10":3,"2021-02-11":4,"2021-02-12":2.452,"2021-02-13":1,"2021-02-14":5,"2021-02-15":2.9}, type : 'line'} ];
+      //format true for only lineDataType2
+      let lineDataType2 = [{
+        name: "Analysis",
+        data: [{x: 0, y: 20, color:'blue'}, {x: 1, y: 50, color:'blue'}, {x: 2, y: 60, color:'blue'}, {x: 3, y: 30, color:'orange'}, {x: 4, y: 40, color:'blue'},{x: 5, y: 70, color:'blue'}],
+        type: 'line'
+      },
+      {
+        name: "Additional",
+        data: [{x: 0, y: 50, color:'orange'}, {x: 1, y: 50, color:'brown'}, {x: 2, y: 40, color:'green'}, {x: 3, y: 80, color:'purple'}, {x: 4, y: 70, color:'red'},{x: 5, y: 70, color:'green'}],
+        type: 'line'
+      }] 
+    new Chartkick.LineChart("linehigh", lineDataType2, { format: true});
+    </script>   
+
+    <h1>combined with column chart</h1>
+    <div id="Multi" style="height: auto;"></div>
+    <script>
+      let  multi_categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      //format true for only lineDataType3
+      let lineDataType3 = [{marker: { fillColor: 'transparent', lineColor: 'red' },data: {"2021-02-10":2.25,"2021-02-11":2.385,"2021-02-12":2.452,"2021-02-13":2.7,"2021-02-14":2.242,"2021-02-15":2}, type : 'spline'},{marker: { fillColor: 'transparent', lineColor: 'blue' },data: {"2021-02-10":3,"2021-02-11":4,"2021-02-12":2.452,"2021-02-13":1,"2021-02-14":5,"2021-02-15":2.9}, type : 'line'} ];
+      let lineDataType4 = [{
+        name: "Analysis",
+        data: [{x: 0, y: 2.0, color:'blue'}, {x: 1, y: 5.0, color:'blue'}, {x: 2, y: 6.0, color:'blue'}, {x: 3, y: 3.0, color:'orange'}, {x: 4, y: 4.0, color:'blue'},{x: 5, y: .70, color:'blue'}],
+        type: 'line'
+      },
+      {
+        name: "Additional",
+        data: [{x: 0, y: 5.0, color:'orange'}, {x: 1, y: 5.0, color:'brown'}, {x: 2, y: 4.0, color:'green'}, {x: 3, y: .80, color:'purple'}, {x: 4, y: .70, color:'red'},{x: 5, y: .70, color:'green'}],
+        type: 'line'
+      }]
+      new Chartkick.ColumnChart("Multi", [["Data and Privacy",2.5],["Internal Security",2.385],["Organizational security",1.667],["Product Security",2.7],["Infastructure security",1.379],["Physical Security",3]], { line_data: lineDataType4, combineCharts : true, format: false});
+    </script> 
+
+    <h1>Coulmn Chart with sub catagories in highchart</h1>
+    <div id="ColumnHighchart" style="height: auto;"></div>
+    <script>
+      //the data has to alternate in the same order as subcatagories
+      let barGraphData = [{
+        name: 'Positve',data: [140, 541,500,300,400,500]},{
+        name: 'Negative',data: [216, 100,223,354,211,432]},{
+        name: 'Neutral',data: [126, 100,300,500,233,455]},
+        {name: 'Mixed',data: [400, 310,300,400,300,200]}]
+      let allCatogories= [{category:['Technology', 'Bussiness', 'gadgets' ], sub_categories:['Present','Future']}]
+      new Chartkick.ColumnWithGroupedCategoriesChart("ColumnHighchart", barGraphData , { categories : allCatogories} );
+    </script>   
+
     <h1>Timeline Chart</h1>
     <div id="time" style="height: auto;"></div>
     <script>
@@ -107,57 +159,19 @@
         }]
       new Chartkick.TimeChart("time", { data :timelinedata }, { horizontal: false , distance : 150});
     </script> 
-    
-    <h1>Linechart chartjs with highchart data structure</h1>
-    <div id="line1" style="height: auto;"></div>
-    <script>
-      let linee = [{
-        name: "Analysis",
-        data: [{x: 0, y: 20, color:'blue'}, {x: 1, y: 50, color:'blue'}, {x: 2, y: 60, color:'blue'}, {x: 3, y: 30, color:'orange'}, {x: 4, y: 40, color:'blue'},{x: 5, y: 70, color:'blue'}],
-        type: 'line'
-      },
-      {
-        name: "Additional",
-        data: [{x: 0, y: 50, color:'orange'}, {x: 1, y: 50, color:'brown'}, {x: 2, y: 40, color:'green'}, {x: 3, y: 80, color:'purple'}, {x: 4, y: 70, color:'red'},{x: 5, y: 70, color:'green'}],
-        type: 'line'
-      }]
-      new Chartkick.LineChart("line1", linee, { highchartformat: true});
-    </script> 
-
-
-    <h1>Multi Charts Using Chart JS Exisiting</h1>
-    <div id="MultiCHart" style="height: auto;"></div>
-    <script>
-      let  multi_categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-      // dont need format true for datatype4
-      let data_type4 = [{marker: { fillColor: 'transparent', lineColor: 'red' },data: {"2021-02-10":11,"2021-02-11":6,"2021-02-12":3,"2021-02-13":2,"2021-02-14":5,"2021-02-15":3,"ss":8}, type : 'line'}, {marker: { fillColor: 'transparent', lineColor: 'blue'},data: {"2021-02-10":5,"2021-02-11":7,"2021-02-12":9,"2021-02-13":11,"2021-02-14":13,"2021-02-15":12}, type : 'line'}];
-      //format true for only datatype5
-      let datatype5 = [{
-        name: "Analysis",
-        data: [{x: 0, y: 20, color:'blue'}, {x: 1, y: 50, color:'blue'}, {x: 2, y: 60, color:'blue'}, {x: 3, y: 30, color:'orange'}, {x: 4, y: 40, color:'blue'},{x: 5, y: 70, color:'blue'}],
-        type: 'line'
-      },
-      {
-        name: "Additional",
-        data: [{x: 0, y: 50, color:'orange'}, {x: 1, y: 50, color:'brown'}, {x: 2, y: 40, color:'green'}, {x: 3, y: 80, color:'purple'}, {x: 4, y: 70, color:'red'},{x: 5, y: 70, color:'green'}],
-        type: 'line'
-      }]
-      new Chartkick.ColumnChart("MultiCHart", [["0",32],["1",46],["2",28],["3",21],["4",20],["5",13],["6",27]], {Datas: datatype5, combineCharts : true, format: true});
-    </script> 
 
     <h1>Negativr bar with grouped data</h1>
-    <div id="BarNeg" style="height: 300px;"></div>
+    <div id="BarNeg" style="height: auto;"></div>
     <script>
-      let bar_data = [{name: 'Past Mixed',data: [-400, -31, -635, -203]}, 
-       {name: 'Future Mixed',data: [133, 156, 947, 408]}, {
-        name: 'Past Positve ',data: [-814, -841, -3714, -727]}, {
-        name: 'Future Positive',data: [1216, 1001, 436, 738]},{
-        name: 'Past Negative',data: [-1216, -1001, -436, -738]},{ 
-        name: 'Future Negative',data: [1216, 1001, 436, 738]},{
-        name: 'Past Neutral',data: [-1216, -1001, -436, -738]},{
-        name: 'Future Neutral',data: [1216, 1001, 436, 738]}]
-      let bar_cat= ['Technology','Communication','Bussiness', 'Workforce']  
-
+      let bar_data = [{name: 'Past Mixed',data: [-400, -31]}, 
+       {name: 'Future Mixed',data: [133, 156]}, {
+        name: 'Past Positve ',data: [-814, -841]}, {
+        name: 'Future Positive',data: [1216, 1001]},{
+        name: 'Past Negative',data: [-1216, -1001]},{ 
+        name: 'Future Negative',data: [1216, 1001]},{
+        name: 'Past Neutral',data: [-1216, -1001]},{
+        name: 'Future Neutral',data: [1216, 1001]}]
+      let bar_cat= ['Technology','Communication','Bussiness','dd','sss']  
       new Chartkick.CompareBarChart("BarNeg", data = { series_data: bar_data, categories : bar_cat }, {y_min : -1500, groupPadding: .15, pointPadding : -.3});
     </script> 
 
@@ -277,23 +291,6 @@
     <div id="line2" style="height: 300px;"></div>
     <script>
     new Chartkick.LineChart("line2", [{marker: { fillColor: 'transparent', lineColor: 'red' },data: {"2021-02-10":11,"2021-02-11":6,"2021-02-12":3,"2021-02-13":2,"2021-02-14":5,"2021-02-15":3,"2021-02-16":8,"2021-02-17":6,"2021-02-18":6,"2021-02-19":12,"2021-02-20":5,"2021-02-21":5,"2021-02-22":3,"2021-02-23":1,"2021-02-24":10,"2021-02-25":1,"2021-02-26":3,"2021-02-27":2,"2021-02-28":3,"2021-03-01":2,"2021-03-02":8}}, {marker: { fillColor: 'transparent', lineColor: 'blue'},data: {"2021-02-10":5,"2021-02-11":7,"2021-02-12":9,"2021-02-13":11,"2021-02-14":13,"2021-02-15":12,"2021-02-16":13,"2021-02-17":14,"2021-02-18":15,"2021-02-19":11,"2021-02-20":9,"2021-02-21":8,"2021-02-22":10,"2021-02-23":13,"2021-02-24":5,"2021-02-25":3,"2021-02-26":1,"2021-02-27":12,"2021-02-28":7,"2021-03-01":9,"2021-03-02":8}}], {download: true});
-    </script>
-
-    <h1>Line Chart with highchart format</h1>
-    <div id="line" style="height: 300px;"></div>
-    <script>
-      let line_data2 = [
-    {
-        name: "Analysis",
-        data: [{x: 1, y: 435, color:'blue'}, {x: 2, y: 437, color:'blue'}, {x: 3, y: 455, color:'blue'}, {x: 4, y: 475, color:'orange'}, {x: 5, y: 555, color:'blue'},{x: 6, y: 435, color:'blue'}]
-    },
-    {
-        name: "Additional",
-        data: [{x: 1, y: 200, color:'green'}, {x: 2, y: 250, color:'green'}, {x: 3, y: 300, color:'green'}, {x: 4, y: 350, color:'green'}, {x: 5, y: 400, color:'red'},{x: 6, y: 250, color:'green'}]
-    }
-    ]
-    // xtype : "number" optional it will change the precision of x axis
-    new Chartkick.LineChart("line", line_data2, { highchartformat : true } );
     </script>
 
     <h1>Pie Chart</h1>

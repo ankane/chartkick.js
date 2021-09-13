@@ -376,10 +376,10 @@ export default class {
   renderTimeChart(chart) {
     let options = merge(defaultOptions, {});
 
-    options.chart.type = 'timeline'
-    options.chart.inverted = chart.options.horizontal || true 
-    options.xAxis.visible = false
-    options.yAxis.visible = false
+    options.chart.type = 'timeline';
+    options.chart.inverted = chart.options.horizontal || true; 
+    options.xAxis.visible = false;
+    options.yAxis.visible = false;
     let series = [{
       dataLabels: {
           allowOverlap: false,
@@ -391,7 +391,7 @@ export default class {
           symbol: 'circle'
       },
       data: chart.rawData.data
-    }]
+    }];
 
     this.drawChart(chart, series, options);
   }
@@ -447,6 +447,10 @@ export default class {
         series[i].marker.enabled = false;
       }
     }
+    if(chart.options.format){
+      series = chart.rawData;
+    }
+
     this.drawChart(chart, series, options);
   }
 
@@ -519,6 +523,44 @@ export default class {
     this.drawChart(chart, series, options);
   }
   
+  renderColumnWithGroupedCategoriesChart(chart) {
+    let options = merge(defaultOptions, {});
+
+  let series = [];
+  for (let i = 0 ; i < chart.rawData.length ; i++){
+    let dataobject = {
+      name: '',
+      type: 'column',
+      data: null,
+     };
+     
+    dataobject.name = chart.rawData[i]['name'];
+    dataobject.data = chart.rawData[i]['data']; 
+    series.push(dataobject);
+  }
+  
+  let categories =[];
+  for (let j = 0 ; j < chart.options.categories[0].category.length ; j++){
+    let categoriesobject = {
+      name:'',
+      categories:[]
+    };
+    categoriesobject.name = chart.options.categories[0].category[j];
+    categoriesobject.categories = chart.options.categories[0].sub_categories;
+    categories.push(categoriesobject);
+  } 
+
+  options.tooltip.pointFormat = '<b>y= {point.y}</b>';
+  options.tooltip.headerFormat='<b>{series.name}</b><br>';
+
+  let colors=['green','red','orange','grey'];
+  options.yAxis.gridLineWidth = 0;
+  options.xAxis.categories = categories;
+  options.chart.type = 'column';
+  options.colors= colors;
+  
+  this.drawChart(chart, series, options);
+  }
 
   renderSolidGaugeChart(chart) {
     let options = merge(gaugeOptions, {});
@@ -1020,6 +1062,29 @@ export default class {
       newSeries.push(d2);
     }
 
+    if(chart.options.combineCharts){
+        if(chart.options.format){
+          let formatted = formatChartjsData(chart.options.line_data);
+      
+          for(let i = 0; i < formatted.types.length; i++){
+            let dataobject = {
+              type: formatted['types'][i] || 'spline',
+              name: `Series${i}`,
+              data: formatted['data'][i]
+              };
+            newSeries.push(dataobject);
+          }
+        } else {
+          for(let i = 0; i < chart.options.line_data.length; i++){
+            let dataobject = {
+            type: chart.options.line_data[i]['type'] || 'spline',
+            name: chart.options.line_data[i]['name'] || `Series${i}`,
+            data: chart.options.line_data[i]['data']
+            };
+          newSeries.push(dataobject);
+          }
+         }
+    }
     this.drawChart(chart, newSeries, options);
   }
 
