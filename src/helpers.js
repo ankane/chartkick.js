@@ -297,7 +297,6 @@ function seriesOption(chart, series, option) {
 }
 
 function convertToHighChartFormat(data) {
-  console.log('datainde helper ',data);
   let result = [];
   for(let i = 0 ; i < data.length; i++){
     let object = {};
