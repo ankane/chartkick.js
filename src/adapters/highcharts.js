@@ -1064,7 +1064,7 @@ export default class {
 
     if(chart.options.combineCharts){
         if(chart.options.format){
-          let formatted = formatChartjsData(chart.options.Datas);
+          let formatted = formatChartjsData(chart.options.line_data);
       
           for(let i = 0; i < formatted.types.length; i++){
             let dataobject = {
@@ -1075,11 +1075,11 @@ export default class {
             newSeries.push(dataobject);
           }
         } else {
-          for(let i = 0; i < chart.options.Datas.length; i++){
+          for(let i = 0; i < chart.options.line_data.length; i++){
             let dataobject = {
-            type: chart.options.Datas[i]['type'] || 'spline',
-            name: chart.options.Datas[i]['name'] || `Series${i}`,
-            data: chart.options.Datas[i]['data']
+            type: chart.options.line_data[i]['type'] || 'spline',
+            name: chart.options.line_data[i]['name'] || `Series${i}`,
+            data: chart.options.line_data[i]['data']
             };
           newSeries.push(dataobject);
           }

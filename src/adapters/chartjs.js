@@ -543,7 +543,7 @@ export default class {
     this.library = library;
   }
 
-  renderLineChartFromChartjs(chart, chartType) {
+  renderChartjsLineChart(chart, chartType) {
     let chartOptions = {};
     if (chartType === "area") {
       // TODO fix area stacked
