@@ -543,7 +543,7 @@ export default class {
     this.library = library;
   }
 
-  renderLineChart2(chart, chartType) {
+  renderLineChartFromChartjs(chart, chartType) {
     let chartOptions = {};
     if (chartType === "area") {
       // TODO fix area stacked
@@ -608,7 +608,7 @@ export default class {
     this.drawChart(chart, "pie", data, options);
   }
 
-  renderColumnChart2(chart, chartType) {
+  renderColumnChartFromChartjs(chart, chartType) {
     let options;
     if (chartType === "bar") {
       let barOptions = merge(baseOptions, defaultOptions);
@@ -634,11 +634,11 @@ export default class {
   }
 
   renderAreaChart(chart) {
-    this.renderLineChart(chart, "area");
+    this.renderFromChartjs(chart, "area");
   }
 
   renderBarChart(chart) {
-    this.renderColumnChart(chart, "bar");
+    this.renderColumnChartFromChartjs(chart, "bar");
   }
 
   renderScatterChart(chart, chartType) {
