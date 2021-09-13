@@ -523,7 +523,7 @@ export default class {
     this.drawChart(chart, series, options);
   }
   
-  renderColumnGroupedCategories(chart) {
+  rendercolumnWithGroupedCategoriesChart(chart) {
     let options = merge(defaultOptions, {});
 
   let series = [];

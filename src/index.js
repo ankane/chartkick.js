@@ -302,13 +302,13 @@ class Chart {
 }
 
 
-class ColumnGroupedCategories extends Chart {
+class columnWithGroupedCategoriesChart extends Chart {
   __processData() {
     return processSeries(this);
   }
 
   __chartName() {
-    return "ColumnGroupedCategories";
+    return "columnWithGroupedCategoriesChart";
   }
 }
 
@@ -575,7 +575,7 @@ const Chartkick = {
   SolidGaugeChart:SolidGaugeChart,
   CompareBarChart:CompareBarChart,
   TimeChart:TimeChart,
-  ColumnGroupedCategories:ColumnGroupedCategories,
+  columnWithGroupedCategoriesChart:columnWithGroupedCategoriesChart,
   charts: {},
   configure: function (options) {
     for (let key in options) {
