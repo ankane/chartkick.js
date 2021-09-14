@@ -1,4 +1,4 @@
-import { formatValue, jsOptionsFunc, merge, sortByNumber,formatChartjsData } from "../helpers";
+import { formatValue, jsOptionsFunc, merge, sortByNumber,formatChartjsData,convertToHighChartFormat } from "../helpers";
 
 let defaultOptions = {
   chart: { type: '',
@@ -398,7 +398,6 @@ export default class {
 
 
   renderLineChart(chart, chartType) {
-    console.log('inside line chart function chart value',chart)
     chartType = chartType || "spline";
     let chartOptions = {};
     if (chartType === "areaspline") {
@@ -433,27 +432,40 @@ export default class {
       options.chart.type = chartType;
     }
     setFormatOptions(chart, options, chartType);
+    
 
-    let series = chart.data;
-    for (i = 0; i < series.length; i++) {
-      series[i].name = series[i].name || "Value";
-      data = series[i].data;
-      if (chart.xtype === "datetime") {
-        for (j = 0; j < data.length; j++) {
-          data[j][0] = data[j][0].getTime();
+  let series;  
+    if(chart.options.stringValues){
+      let formatted_series = convertToHighChartFormat(chart.rawData);
+      options.xAxis.categories = formatted_series[0]['xValues'];
+      series = [];
+      for (i = 0; i < formatted_series.length; i++) {
+        let dataObject = {};
+        dataObject['data']=formatted_series[i]['data'];
+        dataObject['name']=formatted_series[i]['name'];
+        dataObject['type']=formatted_series[i]['type'];
+        series.push(dataObject);
+      }
+    } else{
+
+      series = chart.data;
+      for (i = 0; i < series.length; i++) {
+        series[i].name = series[i].name || "Value";
+        data = series[i].data;
+        if (chart.xtype === "datetime") {
+          for (j = 0; j < data.length; j++) {
+            data[j][0] = data[j][0].getTime();
+          }
+        }
+        series[i].marker = {symbol: "circle"};
+        if (chart.options.points === false) {
+          series[i].marker.enabled = false;
         }
       }
-      series[i].marker = {symbol: "circle"};
-      if (chart.options.points === false) {
-        series[i].marker.enabled = false;
+      if(chart.options.format){
+        series = chart.rawData;
       }
     }
-    if(chart.options.format){
-      series = chart.rawData;
-      console.log('inside chart options format true series value',series)
-    }
-    console.log('before draw function options value',options)
-    console.log('before draw function series value',series)
     this.drawChart(chart, series, options);
   }
 
@@ -527,8 +539,8 @@ export default class {
   }
   
   renderColumnWithGroupedCategoriesChart(chart) {
-    let options = merge(defaultOptions, {});
-
+  let options = merge(defaultOptions, {});
+  
   let series = [];
   for (let i = 0 ; i < chart.rawData.length ; i++){
     let dataobject = {
@@ -536,7 +548,6 @@ export default class {
       type: 'column',
       data: null,
      };
-     
     dataobject.name = chart.rawData[i]['name'];
     dataobject.data = chart.rawData[i]['data']; 
     series.push(dataobject);
@@ -1022,7 +1033,6 @@ export default class {
 
 
   renderColumnChart(chart, chartType) {
-    console.log('inside columnchart chart value:',chart)
     chartType = chartType || "column";
     let series = chart.data;
     let options = jsOptions(chart, chart.options), i, j, s, d, rows = [], categories = [];
@@ -1066,6 +1076,11 @@ export default class {
       newSeries.push(d2);
     }
 
+    let formatted_series;  
+    if(chart.options.stringValues){
+      formatted_series = convertToHighChartFormat(chart.options.line_data); 
+    }
+
     if(chart.options.combineCharts){
         if(chart.options.format){
           let formatted = formatChartjsData(chart.options.line_data);
@@ -1077,22 +1092,21 @@ export default class {
               data: formatted['data'][i]
               }; 
             newSeries.push(dataobject);
-            console.log('inside combine true and format true',newSeries)
           }
         } else {
           for(let i = 0; i < chart.options.line_data.length; i++){
+            if(chart.options.stringValues){
+              chart.options.line_data[i]['data'] = formatted_series[i]['data'];
+            }
             let dataobject = {
             type: chart.options.line_data[i]['type'] || 'spline',
             name: chart.options.line_data[i]['name'] || `Series${i}`,
             data: chart.options.line_data[i]['data']
             };
           newSeries.push(dataobject);
-          console.log('inside combine true and format false',newSeries)
           }
          }
     }
-    console.log('before draw function chart value',chart)
-    console.log('before draw function newSeries value',newSeries)
     this.drawChart(chart, newSeries, options);
   }
 

@@ -88,7 +88,18 @@
         data: [{x: 0, y: 50, color:'orange'}, {x: 1, y: 50, color:'brown'}, {x: 2, y: 40, color:'green'}, {x: 3, y: 80, color:'purple'}, {x: 4, y: 70, color:'red'},{x: 5, y: 70, color:'green'}],
         type: 'line'
       }] 
-    new Chartkick.LineChart("linehigh", lineDataType2, { format: true});
+      // if you use lineDatatype5 then format should be false(or do not write format at all) and stringValues should be true
+      let lineDataType5 = [{
+        name: "Analysis",
+        data: [{x: "2021-08-26", y: 3.5, color:'blue'}, {x: "2021-09-02", y: 4.5, color:'blue'}, {x: "2021-09-03", y: 1.5, color:'blue'}],
+        type: 'line'
+      },
+      {
+        name: "Additional",
+        data: [{x: "2021-08-26", y: 1.5, color:'orange'}, {x: "2021-09-02", y: 4.5, color:'brown'}, {x: "2021-09-03", y: 2.5, color:'green'}],
+        type: 'line'
+      }]
+    new Chartkick.LineChart("linehigh", lineDataType1, { format: false , stringValues: false});
     </script>   
 
     <h1>combined with column chart</h1>
@@ -107,7 +118,19 @@
         data: [{x: 0, y: 5.0, color:'orange'}, {x: 1, y: 5.0, color:'brown'}, {x: 2, y: 4.0, color:'green'}, {x: 3, y: .80, color:'purple'}, {x: 4, y: .70, color:'red'},{x: 5, y: .70, color:'green'}],
         type: 'line'
       }]
-      new Chartkick.ColumnChart("Multi", [["Data and Privacy",2.5],["Internal Security",2.385],["Organizational security",1.667],["Product Security",2.7],["Infastructure security",1.379],["Physical Security",3]], { line_data: lineDataType4, combineCharts : true, format: false});
+
+       // if you use lineDatatype6 then format should be false(or do not write format at all) and stringValues should be true
+       let lineDataType6 = [{
+        name: "Analysis",
+        data: [{x: "2021-08-26", y: 3.5, color:'blue'}, {x: "2021-09-02", y: 4.5, color:'blue'}, {x: "2021-09-03", y: 1.5, color:'blue'}],
+        type: 'line'
+      },
+      {
+        name: "Additional",
+        data: [{x: "2021-08-26", y: 1.5, color:'orange'}, {x: "2021-09-02", y: 4.5, color:'brown'}, {x: "2021-09-03", y: 2.5, color:'green'}],
+        type: 'line'
+      }]
+      new Chartkick.ColumnChart("Multi", [["Data and Privacy",2.5],["Internal Security",2.385],["Organizational security",1.667],["Product Security",2.7],["Infastructure security",1.379],["Physical Security",3]], { line_data: lineDataType4, combineCharts : true, format: false, stringValues: false});
     </script> 
 
     <h1>Coulmn Chart with sub catagories in highchart</h1>
