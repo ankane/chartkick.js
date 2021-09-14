@@ -398,6 +398,7 @@ export default class {
 
 
   renderLineChart(chart, chartType) {
+    console.log('inside line chart function chart value',chart)
     chartType = chartType || "spline";
     let chartOptions = {};
     if (chartType === "areaspline") {
@@ -449,8 +450,10 @@ export default class {
     }
     if(chart.options.format){
       series = chart.rawData;
+      console.log('inside chart options format true series value',series)
     }
-
+    console.log('before draw function options value',options)
+    console.log('before draw function series value',series)
     this.drawChart(chart, series, options);
   }
 
@@ -1019,6 +1022,7 @@ export default class {
 
 
   renderColumnChart(chart, chartType) {
+    console.log('inside columnchart chart value:',chart)
     chartType = chartType || "column";
     let series = chart.data;
     let options = jsOptions(chart, chart.options), i, j, s, d, rows = [], categories = [];
@@ -1071,8 +1075,9 @@ export default class {
               type: formatted['types'][i] || 'spline',
               name: `Series${i}`,
               data: formatted['data'][i]
-              };
+              }; 
             newSeries.push(dataobject);
+            console.log('inside combine true and format true',newSeries)
           }
         } else {
           for(let i = 0; i < chart.options.line_data.length; i++){
@@ -1082,9 +1087,12 @@ export default class {
             data: chart.options.line_data[i]['data']
             };
           newSeries.push(dataobject);
+          console.log('inside combine true and format false',newSeries)
           }
          }
     }
+    console.log('before draw function chart value',chart)
+    console.log('before draw function newSeries value',newSeries)
     this.drawChart(chart, newSeries, options);
   }
 
