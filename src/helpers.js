@@ -300,22 +300,24 @@ function convertToHighChartFormat(data) {
   let result = [];
   for(let i = 0 ; i < data.length; i++){
     let object = {};
-    let outerarray = []; 
-    let color =[]; 
-    for(let j = 0 ; j < data[i]['data'].length; j++){
-    let array = [];
-    array.push(data[i]['data'][j]['x']);
-    array.push(data[i]['data'][j]['y']);
-    color.push(data[i]['data'][j]['color']);
-    outerarray.push(array);
+    let xValues = [];
+  
+    let ydata = [];
+
+    for(let j = 0 ; j < data[i]['data'].length; j++){  
+    let yValues = {};
+    xValues.push(data[i]['data'][j]['x']);
+    yValues['y']= (data[i]['data'][j]['y']);
+    yValues['color'] = (data[i]['data'][j]['color']);
+    ydata.push(yValues);
     }
     object['marker'] = { fillColor : "transparent", lineColor : data[i]['data'][i]['color']};
-    object['data'] = outerarray;
+    object['xValues'] = xValues;
+    object['data'] = ydata;
     object['name'] = data[i]['name'];
-    object['color'] = color;
     object['type'] = data[i]['type'];
     result.push(object);
-  }
+  } 
   return result;
 }
 

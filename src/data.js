@@ -76,7 +76,6 @@ function copySeries(series) {
 }
 
 function processSeries(chart, keyType, noDatetime) {
-  console.log('inside process series functions chart value',chart)
   let i;
   if(keyType == 'radar' ) {
     return chart.rawData;
@@ -84,13 +83,6 @@ function processSeries(chart, keyType, noDatetime) {
 
   let opts = chart.options;
   let series = chart.rawData;
-
-  if (opts.highchartformat === true ) {
-      let formatted_series = convertToHighChartFormat(series);
-      //let formatted_series = formatChartjsData(series)
-      chart.xtype = opts.xtype || "string";
-      return formatted_series;
-  }
 
   // see if one series or multiple
   chart.singleSeriesFormat = (!isArray(series) || typeof series[0] !== "object" || isArray(series[0]));
