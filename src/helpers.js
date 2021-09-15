@@ -301,7 +301,6 @@ function convertToHighChartFormat(data) {
   for(let i = 0 ; i < data.length; i++){
     let object = {};
     let xValues = [];
-  
     let ydata = [];
 
     for(let j = 0 ; j < data[i]['data'].length; j++){  
@@ -318,7 +317,6 @@ function convertToHighChartFormat(data) {
     object['type'] = data[i]['type'];
     result.push(object);
   } 
-  console.log('result inside the helper function',result);
   return result;
 }
 

@@ -570,7 +570,7 @@ const Chartkick = {
   BubbleChart2 : BubbleChart2,
   BoxPlot : BoxPlot,
   OrganizationChart:OrganizationChart,
-  SentimentAnalysisChart,SentimentAnalysisChart,
+  SentimentAnalysisChart:SentimentAnalysisChart,
   HeatChart:HeatChart,
   SolidGaugeChart:SolidGaugeChart,
   CompareBarChart:CompareBarChart,

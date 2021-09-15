@@ -1,4 +1,4 @@
-import { isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate, isNumber , convertToHighChartFormat,formatChartjsData} from "./helpers";
+import { isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate, isNumber} from "./helpers";
 
 function formatSeriesData(data, keyType) {
   let r = [], j, keyFunc;
@@ -76,7 +76,6 @@ function copySeries(series) {
 }
 
 function processSeries(chart, keyType, noDatetime) {
-  console.log('inside process seriesssssss',chart);
   let i;
   if(keyType == 'radar' ) {
     return chart.rawData;

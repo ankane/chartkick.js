@@ -398,7 +398,6 @@ export default class {
 
 
   renderLineChart(chart, chartType) {
-    console.log('inside line chart chart valueeeee,',chart);
     chartType = chartType || "spline";
     let chartOptions = {};
     if (chartType === "areaspline") {
@@ -437,9 +436,7 @@ export default class {
 
   let series;  
     if(chart.options.stringValues){
-      console.log('inside string values trueeeeee');
       let formatted_series = convertToHighChartFormat(chart.rawData);
-      console.log('formateddd series',formatted_series);
       options.xAxis.categories = formatted_series[0]['xValues'];
       series = [];
       for (i = 0; i < formatted_series.length; i++) {
@@ -449,7 +446,6 @@ export default class {
         dataObject['type']=formatted_series[i]['type'];
         series.push(dataObject);
       }
-      console.log('seriessssss',series);
     } else{
 
       series = chart.data;
@@ -470,8 +466,6 @@ export default class {
         series = chart.rawData;
       }
     }
-    console.log('before draw optionsssss',options);
-    console.log('before draw series',series);
     this.drawChart(chart, series, options);
   }
 
@@ -545,7 +539,6 @@ export default class {
   }
   
   renderColumnWithGroupedCategoriesChart(chart) {
-    console.log('charrrttttt',chart);
   let options = merge(defaultOptions, {});
   
   let series = [];

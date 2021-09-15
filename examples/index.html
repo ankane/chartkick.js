@@ -99,18 +99,7 @@
         data: [{x: "2021-08-26", y: 1.5, color:'orange'}, {x: "2021-09-02", y: 4.5, color:'brown'}, {x: "2021-09-03", y: 2.5, color:'green'}],
         type: 'line'
       }]
-
-      let options12 = {
-    format: false,
-    label: "Weighted Average",
-    stringValues: true,
-    title: "Trend By Weighted Average",
-    xtitle: "Time",
-    ytitle: "Weighted Average",
-    exporting: {},
-    responsive: {}
-}
-    new Chartkick.LineChart("linehigh", lineDataType5, options12);
+    new Chartkick.LineChart("linehigh", lineDataType1, { format: false , stringValues: false});
     </script>   
 
     <h1>combined with column chart</h1>
