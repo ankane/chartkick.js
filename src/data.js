@@ -76,6 +76,7 @@ function copySeries(series) {
 }
 
 function processSeries(chart, keyType, noDatetime) {
+  console.log('inside process seriesssssss',chart);
   let i;
   if(keyType == 'radar' ) {
     return chart.rawData;

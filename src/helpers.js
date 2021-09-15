@@ -318,6 +318,7 @@ function convertToHighChartFormat(data) {
     object['type'] = data[i]['type'];
     result.push(object);
   } 
+  console.log('result inside the helper function',result);
   return result;
 }
 
