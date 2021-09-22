@@ -627,8 +627,6 @@ export default class {
     this.drawChart(chart, series, options);
   }
 
-
-
   renderBubbleChart2(chart) {
     let chartOptions = {};
     let options = jsOptions(chart, chart.options, chartOptions);
@@ -638,9 +636,36 @@ export default class {
     options.tooltip.pointFormat = '<b> x={point.x}</b>, <b> y={point.y}</b>';
     options.tooltip.headerFormat='<b>{series.name}</b><br>';
     options.tooltip.clusterFormat= 'Clustered points: {point.clusterPointsAmount}';
+    options.plotOptions.series.dataLabels = {enabled:true, color:'black'}
+
+    let plotLines = [{
+      color: 'black',
+      dashStyle: 'dot',
+      width: 2,
+      value: 0,
+      zIndex: 5
+    }]
+
+    if(chart.options.x_plotline){
+      plotLines[0].value = chart.options.x_plotline
+      options.xAxis.plotLines= plotLines
+    }
+
+    if(chart.options.y_plotline){
+      plotLines[0].value = chart.options.y_plotline
+      options.yAxis.plotLines = plotLines
+    }
 
     if(chart.options.X_title){
       options.xAxis.title.text = chart.options.X_title;
+    }
+
+    if(chart.options.X_min){
+      options.xAxis.min = chart.options.X_min;
+    }
+
+    if(chart.options.Y_min){
+      options.yAxis.min = chart.options.Y_min;
     }
 
     if(chart.options.Y_title){
@@ -655,9 +680,15 @@ export default class {
         color: '',
         data : []
       };
-      seriesObject.name = chart.data[i]['name'] || `Series${i}`;
+
+      if(chart.data[i]['name']){
+        seriesObject.name = chart.data[i]['name'];
+      } else {
+        options.legend.enabled = false
+      }
       seriesObject.color = chart.data[i]['color'] || 'grey';
       seriesObject.data = chart.rawData[i]['data'];
+      seriesObject.marker = {fillOpacity:0.3} 
       series = [...series, seriesObject];
     }
 
