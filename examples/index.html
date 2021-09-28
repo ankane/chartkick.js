@@ -107,11 +107,11 @@
     <script>
       let  multi_categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
       //format true for only lineDataType3
-      let ff = [["s",5],["Internal Security",2],["Organizational security",1],["Product Security",4],["Infastructure security",1],["Physical Security",2]]
+      let second_column_data = [["s",5],["Internal Security",2],["Organizational security",1],["Product Security",4],["Infastructure security",1],["Physical Security",2]]
       let lineDataType3 = [{marker: { fillColor: 'transparent', lineColor: 'red' },data: {"2021-02-10":2.25,"2021-02-11":2.385,"2021-02-12":null,"2021-02-13":2.7,"2021-02-14":2.242,"2021-02-15":2}, type : 'spline'},{marker: { fillColor: 'transparent', lineColor: 'blue' },data: {"2021-02-10":3,"2021-02-11":4,"2021-02-12":2.452,"2021-02-13":1,"2021-02-14":5,"2021-02-15":2.9}, type : 'line'} ];
       let lineDataType4 = [
       { name:'newColumn',
-        data:ff,
+        data:second_column_data,
         type:'column'
       },  
         {
@@ -128,7 +128,7 @@
        // if you use lineDatatype6 then format should be false(or do not write format at all) and stringValues should be true
        let lineDataType6 = [
        { name:'newColumn',
-        data:ff,
+        data:second_column_data,
         type:'column'
       },  
        {
