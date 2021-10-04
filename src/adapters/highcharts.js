@@ -627,7 +627,7 @@ export default class {
     this.drawChart(chart, series, options);
   }
 
-  renderBubbleChart2(chart) {
+  renderBubbleChart(chart) {
     let chartOptions = {};
     let options = jsOptions(chart, chart.options, chartOptions);
 
