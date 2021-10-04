@@ -699,12 +699,12 @@ export default class {
     let options = merge(defaultOptions, {});
     options.chart.type = 'boxplot';
 
-    if(chart.options.X_title){
-      options.xAxis.title.text = chart.options.X_title;
+    if(chart.options.xTitle){
+      options.xAxis.title.text = chart.options.xTitle;
     }
 
-    if(chart.options.Y_title){
-      options.yAxis.title.text = chart.options.Y_title;
+    if(chart.options.yTitle){
+      options.yAxis.title.text = chart.options.yTitle;
     }
 
     if(chart.options.categories){
