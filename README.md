@@ -520,11 +520,11 @@ Add your own custom adapter with:
 var CustomAdapter = {
   name: "custom",
   renderLineChart: function (chart) {
-    chart.getElement().innerHTML = "Hi";
+    chart.getElement().innerHTML = "Hi"
   }
-};
+}
 
-Chartkick.adapters.unshift(CustomAdapter);
+Chartkick.adapters.unshift(CustomAdapter)
 ```
 
 ## Examples
