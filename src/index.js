@@ -450,6 +450,9 @@ if (typeof window !== "undefined" && !window.Chartkick) {
   document.addEventListener("turbolinks:before-render", function() {
     Chartkick.destroyAll();
   });
+  document.addEventListener("turbo:before-render", function() {
+    Chartkick.destroyAll();
+  });
 
   // use setTimeout so charting library can come later in same JS file
   setTimeout(function() {
