@@ -1,3 +1,7 @@
+## 4.1.0 (unreleased)
+
+- Added support for Turbo
+
 ## 4.0.5 (2021-07-07)
 
 - Fixed x-axis type and position `library` options
