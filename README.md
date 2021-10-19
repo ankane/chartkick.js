@@ -107,6 +107,27 @@ data = [
 new Chartkick.BarChart("chart-1", data, {stacked: true})
 ```
 
+## Data
+
+Pass data as an array or object
+
+```javascript
+new Chartkick.LineChart("chart-1", [["2021-01-01", 2], ["2021-01-02", 3]])
+// or
+new Chartkick.LineChart("chart-1", {"2021-01-01": 2, "2021-01-02": 3})
+```
+
+Data can also be a callback
+
+```javascript
+function fetchData(success, fail) {
+  success({"2021-01-01": 2, "2021-01-02": 3})
+  // or fail("Data not available")
+}
+
+new Chartkick.LineChart("chart-1", fetchData)
+```
+
 ### Say Goodbye To Timeouts
 
 Make your pages load super fast and stop worrying about timeouts. Give each chart its own endpoint.
@@ -115,7 +136,7 @@ Make your pages load super fast and stop worrying about timeouts. Give each char
 new Chartkick.LineChart("chart-1", "/stocks")
 ```
 
-### Options
+## Options
 
 Min and max for y-axis
 
@@ -283,32 +304,6 @@ To set options for all of your charts, use:
 Chartkick.options = {
   colors: ["#b00", "#666"]
 }
-```
-
-### Data
-
-Pass data as an array or object
-
-```javascript
-new Chartkick.PieChart("chart-1", {"Blueberry": 44, "Strawberry": 23})
-new Chartkick.PieChart("chart-1", [["Blueberry", 44], ["Strawberry", 23]])
-```
-
-Times can be a `Date` or a string (strings are parsed)
-
-```javascript
-new Chartkick.LineChart("chart-1", [[new Date(), 5], ["2021-01-01 00:00:00 UTC", 7]])
-```
-
-Data can also be a callback
-
-```javascript
-function fetchData(success, fail) {
-  success({"Blueberry": 44, "Strawberry": 23})
-  // or fail("Data not available")
-}
-
-new Chartkick.LineChart("chart-1", fetchData)
 ```
 
 ### Multiple Series
