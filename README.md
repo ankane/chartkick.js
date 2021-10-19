@@ -453,7 +453,7 @@ If more than one charting library is loaded, choose between them with:
 new Chartkick.LineChart("chart-1", data, {adapter: "google"}) // or highcharts or chartjs
 ```
 
-### API
+## API
 
 Access a chart with:
 
