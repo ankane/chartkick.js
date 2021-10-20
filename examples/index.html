@@ -112,6 +112,12 @@
       new Chartkick.BubbleChart("bubble-large", [[174.0, 80.0, 100], [176.5, 82.3, 200], [180.3, 73.6, 300], [167.6, 74.1, 600], [188.0, 85.9, 150]]);
     </script>
 
+    <h1>Radar Chart</h1>
+    <div id="radar" style="height: 300px;"></div>
+    <script>
+      new Chartkick.RadarChart("radar", [["Sunday",32],["Monday",46],["Tuesday",28],["Wednesday",21],["Thursday",20],["Friday",13],["Saturday",27]]);
+    </script>
+
     <h1>Timeline</h1>
     <div id="timeline" style="height: 300px;"></div>
     <script>
@@ -234,6 +240,12 @@
           data: [[174.0, 80.0], [176.5, 82.3], [180.3, 73.6], [167.6, 74.1], [188.0, 85.9]]
       }];
       new Chartkick.ScatterChart("multiple-scatter", scatterData);
+    </script>
+
+    <h1>Multiple Series Radar</h1>
+    <div id="multiple-radar" style="height: 300px;"></div>
+    <script>
+      new Chartkick.RadarChart("multiple-radar", [{name: "Series A", data: [["Sunday",32],["Monday",46],["Tuesday",28],["Wednesday",21],["Thursday",20],["Friday",13],["Saturday",27]]}, {name: "Series B", data: [["Sunday",60],["Monday",34],["Tuesday",56],["Wednesday",50],["Thursday",40],["Friday",45],["Saturday",35]]}]);
     </script>
 
     <h1>Remote</h1>

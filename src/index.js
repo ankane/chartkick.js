@@ -381,6 +381,16 @@ class BubbleChart extends Chart {
   }
 }
 
+class RadarChart extends Chart {
+  __processData() {
+    return processSeries(this, null, true);
+  }
+
+  __chartName() {
+    return "RadarChart";
+  }
+}
+
 class Timeline extends Chart {
   __processData() {
     let i, data = this.rawData;
@@ -405,6 +415,7 @@ const Chartkick = {
   GeoChart: GeoChart,
   ScatterChart: ScatterChart,
   BubbleChart: BubbleChart,
+  RadarChart: RadarChart,
   Timeline: Timeline,
   charts: {},
   configure: function (options) {

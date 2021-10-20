@@ -191,9 +191,13 @@ let setFormatOptions = function (chart, options, chartType) {
   }
 
   if (chartType !== "pie") {
-    let axis = options.scales.y;
-    if (chartType === "bar") {
+    let axis;
+    if (chartType === "radar") {
+      axis = options.scales.r;
+    } else if (chartType === "bar") {
       axis = options.scales.x;
+    } else {
+      axis = options.scales.y;
     }
 
     if (formatOptions.byteScale) {
@@ -246,6 +250,14 @@ let setFormatOptions = function (chart, options, chartType) {
         }
 
         return formatValue(dataLabel, context.parsed, formatOptions);
+      };
+    } else if (chartType === "radar") {
+      options.plugins.tooltip.callbacks.label = function (context) {
+        let label = context.dataset.label || '';
+        if (label) {
+          label += ': ';
+        }
+        return formatValue(label, context.parsed["r"], formatOptions);
       };
     } else {
       let valueLabel = chartType === "bar" ? "x" : "y";
@@ -390,13 +402,13 @@ let createDataTable = function (chart, options, chartType) {
     let dataset = {
       label: s.name || "",
       data: rows2[i],
-      fill: chartType === "area",
+      fill: chartType === "area" || chartType === "radar",
       borderColor: color,
       backgroundColor: backgroundColor,
       borderWidth: 2
     };
 
-    let pointChart = chartType === "line" || chartType === "area" || chartType === "scatter" || chartType === "bubble";
+    let pointChart = chartType === "line" || chartType === "area" || chartType === "scatter" || chartType === "bubble" || chartType === "radar";
     if (pointChart) {
       dataset.pointBackgroundColor = color;
       dataset.pointHoverBackgroundColor = color;
@@ -416,7 +428,7 @@ let createDataTable = function (chart, options, chartType) {
     let curve = seriesOption(chart, s, "curve");
     if (curve === false) {
       dataset.tension = 0;
-    } else if (pointChart) {
+    } else if (pointChart && chartType !== "radar") {
       dataset.tension = 0.4;
     }
 
@@ -637,6 +649,44 @@ export default class {
 
   renderBarChart(chart) {
     this.renderColumnChart(chart, "bar");
+  }
+
+  renderRadarChart(chart) {
+    let options = merge({}, baseOptions);
+
+    if (chart.singleSeriesFormat || "legend" in chart.options) {
+      hideLegend(options, chart.options.legend, chart.singleSeriesFormat);
+    }
+
+    if (chart.options.title) {
+      setTitle(options, chart.options.title);
+    }
+
+    options.scales = {
+      r: {
+        pointLabels: {
+          font: {
+            size: 12,
+          }
+        },
+        ticks: {
+          maxTicksLimit: 4
+        }
+      }
+    };
+
+    if (chart.options.min !== undefined && chart.options.min != null) {
+      options.scales.r.min = toFloat(chart.options.min);
+    }
+
+    if (chart.options.max !== undefined) {
+      options.scales.r.max = toFloat(chart.options.max);
+    }
+
+    options = merge(options, chart.options.library || {});
+    setFormatOptions(chart, options, "radar");
+    let data = createDataTable(chart, options, "radar");
+    this.drawChart(chart, "radar", data, options);
   }
 
   renderScatterChart(chart, chartType) {
