@@ -192,7 +192,7 @@ let setFormatOptions = function (chart, options, chartType) {
 
   if (chartType !== "pie") {
     let axis;
-    if (chartType === "radar" || chartType === "polar") {
+    if (chartType === "radar" || chartType === "polararea") {
       axis = options.scales.r;
     } else if (chartType === "bar") {
       axis = options.scales.x;
@@ -251,7 +251,7 @@ let setFormatOptions = function (chart, options, chartType) {
 
         return formatValue(dataLabel, context.parsed, formatOptions);
       };
-    } else if (chartType === "radar" || chartType === "polar") {
+    } else if (chartType === "radar" || chartType === "polararea") {
       options.plugins.tooltip.callbacks.label = function (context) {
         let label = context.dataset.label || '';
         if (label) {
@@ -620,7 +620,7 @@ export default class {
     this.drawChart(chart, "pie", data, options);
   }
 
-  renderPolarChart(chart) {
+  renderPolarAreaChart(chart) {
     let options = merge({}, baseOptions);
 
     if ("legend" in chart.options) {
@@ -653,7 +653,7 @@ export default class {
     }
 
     options = merge(options, chart.options.library || {});
-    setFormatOptions(chart, options, "polar");
+    setFormatOptions(chart, options, "polararea");
 
     let labels = [];
     let values = [];

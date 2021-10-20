@@ -391,13 +391,13 @@ class RadarChart extends Chart {
   }
 }
 
-class PolarChart extends Chart {
+class PolarAreaChart extends Chart {
   __processData() {
     return processSimple(this);
   }
 
   __chartName() {
-    return "PolarChart";
+    return "PolarAreaChart";
   }
 }
 
@@ -426,7 +426,7 @@ const Chartkick = {
   ScatterChart: ScatterChart,
   BubbleChart: BubbleChart,
   RadarChart: RadarChart,
-  PolarChart: PolarChart,
+  PolarAreaChart: PolarAreaChart,
   Timeline: Timeline,
   charts: {},
   configure: function (options) {
