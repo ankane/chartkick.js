@@ -192,7 +192,7 @@ let setFormatOptions = function (chart, options, chartType) {
 
   if (chartType !== "pie") {
     let axis;
-    if (chartType === "radar") {
+    if (chartType === "radar" || chartType === "polar") {
       axis = options.scales.r;
     } else if (chartType === "bar") {
       axis = options.scales.x;
@@ -251,7 +251,7 @@ let setFormatOptions = function (chart, options, chartType) {
 
         return formatValue(dataLabel, context.parsed, formatOptions);
       };
-    } else if (chartType === "radar") {
+    } else if (chartType === "radar" || chartType === "polar") {
       options.plugins.tooltip.callbacks.label = function (context) {
         let label = context.dataset.label || '';
         if (label) {
@@ -618,6 +618,63 @@ export default class {
     };
 
     this.drawChart(chart, "pie", data, options);
+  }
+
+  renderPolarChart(chart) {
+    let options = merge({}, baseOptions);
+
+    if ("legend" in chart.options) {
+      hideLegend(options, chart.options.legend);
+    }
+
+    if (chart.options.title) {
+      setTitle(options, chart.options.title);
+    }
+
+    options.scales = {
+      r: {
+        pointLabels: {
+          font: {
+            size: 12,
+          }
+        },
+        ticks: {
+          maxTicksLimit: 4
+        }
+      }
+    };
+
+    if (chart.options.min !== undefined && chart.options.min != null) {
+      options.scales.r.min = toFloat(chart.options.min);
+    }
+
+    if (chart.options.max !== undefined) {
+      options.scales.r.max = toFloat(chart.options.max);
+    }
+
+    options = merge(options, chart.options.library || {});
+    setFormatOptions(chart, options, "polar");
+
+    let labels = [];
+    let values = [];
+    for (let i = 0; i < chart.data.length; i++) {
+      let point = chart.data[i];
+      labels.push(point[0]);
+      values.push(point[1]);
+    }
+
+    let dataset = {
+      data: values,
+      backgroundColor: chart.options.colors || defaultColors
+    };
+    dataset = merge(dataset, chart.options.dataset || {});
+
+    let data = {
+      labels: labels,
+      datasets: [dataset]
+    };
+
+    this.drawChart(chart, "polarArea", data, options);
   }
 
   renderColumnChart(chart, chartType) {

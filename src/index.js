@@ -391,6 +391,16 @@ class RadarChart extends Chart {
   }
 }
 
+class PolarChart extends Chart {
+  __processData() {
+    return processSimple(this);
+  }
+
+  __chartName() {
+    return "PolarChart";
+  }
+}
+
 class Timeline extends Chart {
   __processData() {
     let i, data = this.rawData;
@@ -416,6 +426,7 @@ const Chartkick = {
   ScatterChart: ScatterChart,
   BubbleChart: BubbleChart,
   RadarChart: RadarChart,
+  PolarChart: PolarChart,
   Timeline: Timeline,
   charts: {},
   configure: function (options) {
