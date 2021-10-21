@@ -627,7 +627,7 @@ export default class {
     this.drawChart(chart, series, options);
   }
 
-  renderBubbleChart2(chart) {
+  renderBubbleChart(chart) {
     let chartOptions = {};
     let options = jsOptions(chart, chart.options, chartOptions);
 
@@ -646,30 +646,30 @@ export default class {
       zIndex: 5
     }]
 
-    if(chart.options.x_plotline){
-      plotLines[0].value = chart.options.x_plotline
+    if(chart.options.xPlotline){
+      plotLines[0].value = chart.options.xPlotline
       options.xAxis.plotLines= plotLines
     }
 
-    if(chart.options.y_plotline){
-      plotLines[0].value = chart.options.y_plotline
+    if(chart.options.yPlotline){
+      plotLines[0].value = chart.options.yPlotline
       options.yAxis.plotLines = plotLines
     }
 
-    if(chart.options.X_title){
-      options.xAxis.title.text = chart.options.X_title;
+    if(chart.options.xTitle){
+      options.xAxis.title.text = chart.options.xTitle;
     }
 
-    if(chart.options.X_min){
-      options.xAxis.min = chart.options.X_min;
+    if(chart.options.xMin){
+      options.xAxis.min = chart.options.xMin;
     }
 
-    if(chart.options.Y_min){
-      options.yAxis.min = chart.options.Y_min;
+    if(chart.options.yMin){
+      options.yAxis.min = chart.options.yMin;
     }
 
-    if(chart.options.Y_title){
-      options.yAxis.title.text = chart.options.Y_title;
+    if(chart.options.yTitle){
+      options.yAxis.title.text = chart.options.yTitle;
     }
 
     let series = [];
@@ -699,12 +699,12 @@ export default class {
     let options = merge(defaultOptions, {});
     options.chart.type = 'boxplot';
 
-    if(chart.options.X_title){
-      options.xAxis.title.text = chart.options.X_title;
+    if(chart.options.xTitle){
+      options.xAxis.title.text = chart.options.xTitle;
     }
 
-    if(chart.options.Y_title){
-      options.yAxis.title.text = chart.options.Y_title;
+    if(chart.options.yTitle){
+      options.yAxis.title.text = chart.options.yTitle;
     }
 
     if(chart.options.categories){

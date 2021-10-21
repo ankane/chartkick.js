@@ -303,7 +303,7 @@
       let box_data = [[760, 801, 848, 895, 965],[733, 853, 939, 980, 1080],[714, 762, 817, 870, 918],[724, 802, 806, 871, 950],[834, 836, 864, 882, 910]]
       //optional catogary name
       let categories = ['CatA','CatB','CatC','CatD','CatE'] 
-      new Chartkick.BoxPlot("BOX", box_data , {download: true, name : 'observations' , title : 'Box Plot ' , X_title : 'X-Axis', Y_title: 'Y-Axis', categories: categories });
+      new Chartkick.BoxPlot("BOX", box_data , {download: true, name : 'observations' , title : 'Box Plot ' , xTitle : 'X-Axis', yTitle: 'Y-Axis', categories: categories });
     </script> 
 
     <h1>Bubble Chart</h1>
@@ -311,7 +311,7 @@
     <script>
       let Bubble_data1 = [[1,2,4],[1.5,1.8,6],[2,2.9,4],[1.2,3,4],[1.2,1.2,9],[1.4,2.8,12],[3,1,18]]
       let Bubble_data2 = [[1.2,2.2,4],[3,2.8,6],[2.2,2.9,4],[1.4,2.2,4],[1.9,2.1,9]]
-      new Chartkick.BubbleChart2("Bubble", [ { color :'rgba(170,70,67,1)', data: Bubble_data1} ,{ color : 'rgba(70,50,67,1)', data : Bubble_data2}], {download: true, title : ' Strategy Vs Risk ' , X_title : 'X-Axis', Y_title: 'Y-Axis',x_plotline :2,y_plotline:2, Y_min :0});
+      new Chartkick.BubbleChart("Bubble", [ { color :'rgba(170,70,67,1)', data: Bubble_data1} ,{ color : 'rgba(70,50,67,1)', data : Bubble_data2}], {download: true, title : ' Strategy Vs Risk ' , xTitle : 'X-Axis', yTitle: 'Y-Axis',xPlotline :2,yPlotline:2, yMin :-2});
     </script>       
 
     <h1>Sun Burst</h1>
