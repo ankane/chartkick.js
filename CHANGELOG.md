@@ -1,6 +1,6 @@
 ## 4.1.1 (unreleased)
 
-- Fixed `xmin` and `xmax` for Chart.js 3
+- Fixed `xmin` and `xmax` for Chart.js
 
 ## 4.1.0 (2021-10-23)
 
