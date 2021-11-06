@@ -438,17 +438,17 @@ let createDataTable = function (chart, options, chartType) {
 
   if (chart.xtype === "datetime") {
     if (notnull(xmin)) {
-      options.scales.x.ticks.min = toDate(xmin).getTime();
+      options.scales.x.min = toDate(xmin).getTime();
     }
     if (notnull(xmax)) {
-      options.scales.x.ticks.max = toDate(xmax).getTime();
+      options.scales.x.max = toDate(xmax).getTime();
     }
   } else if (chart.xtype === "number") {
     if (notnull(xmin)) {
-      options.scales.x.ticks.min = xmin;
+      options.scales.x.min = xmin;
     }
     if (notnull(xmax)) {
-      options.scales.x.ticks.max = xmax;
+      options.scales.x.max = xmax;
     }
   }
 
