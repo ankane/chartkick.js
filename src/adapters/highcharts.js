@@ -377,7 +377,7 @@ export default class {
     let options = merge(defaultOptions, {});
 
     options.chart.type = 'timeline';
-    options.chart.inverted = chart.options.horizontal || true; 
+    options.chart.inverted = chart.options.horizontal || true;
     options.xAxis.visible = false;
     options.yAxis.visible = false;
     let series = [{
@@ -432,9 +432,9 @@ export default class {
       options.chart.type = chartType;
     }
     setFormatOptions(chart, options, chartType);
-    
 
-  let series;  
+
+  let series;
     if(chart.options.stringValues){
       let formatted_series = convertToHighChartFormat(chart.rawData);
       options.xAxis.categories = formatted_series[0]['xValues'];
@@ -537,10 +537,10 @@ export default class {
     }];
     this.drawChart(chart, series, options);
   }
-  
+
   renderColumnWithGroupedCategoriesChart(chart) {
   let options = merge(defaultOptions, {});
-  
+
   let series = [];
   for (let i = 0 ; i < chart.rawData.length ; i++){
     let dataobject = {
@@ -549,10 +549,10 @@ export default class {
       data: null,
      };
     dataobject.name = chart.rawData[i]['name'];
-    dataobject.data = chart.rawData[i]['data']; 
+    dataobject.data = chart.rawData[i]['data'];
     series.push(dataobject);
   }
-  
+
   let categories =[];
   for (let j = 0 ; j < chart.options.categories[0].category.length ; j++){
     let categoriesobject = {
@@ -562,7 +562,7 @@ export default class {
     categoriesobject.name = chart.options.categories[0].category[j];
     categoriesobject.categories = chart.options.categories[0].sub_categories;
     categories.push(categoriesobject);
-  } 
+  }
 
   options.tooltip.pointFormat = '<b>y= {point.y}</b>';
   options.tooltip.headerFormat='<b>{series.name}</b><br>';
@@ -572,7 +572,7 @@ export default class {
   options.xAxis.categories = categories;
   options.chart.type = 'column';
   options.colors= colors;
-  
+
   this.drawChart(chart, series, options);
   }
 
@@ -600,13 +600,13 @@ export default class {
           valueSuffix: chart.options.valueSuffix
       }
   }];
-  
+
     this.drawChart(chart, series, options);
   }
 
   renderCompareBarChart(chart) {
     let options = merge(defaultOptions, {});
-    
+
     options.chart.type = 'bar';
     options.yAxis.min = chart.options.y_min;
     options.xAxis.categories = chart.rawData.categories;
@@ -615,19 +615,20 @@ export default class {
     options.yAxis.labels.overflow = 'justify';
     options.tooltip.useHTML= true,
     options.tooltip.formatter =function () {
-      return 'Series: ' + this.series.name + 
+      return 'Series: ' + this.series.name +
           '</br>Value: '+ Math.abs(this.y);
     };
 
     options.yAxis.labels.formatter = function() {
           return Math.abs(this.value);
       };
-  
+
     let series = chart.rawData.series_data;
     this.drawChart(chart, series, options);
   }
 
   renderBubbleChart(chart) {
+    console.log('inside bubble chart charttt',chart)
     let chartOptions = {};
     let options = jsOptions(chart, chart.options, chartOptions);
 
@@ -647,6 +648,7 @@ export default class {
     }]
 
     if(chart.options.xPlotline){
+      console.log('inside x plot option',chart.options.xPlotline)
       plotLines[0].value = chart.options.xPlotline
       options.xAxis.plotLines= plotLines
     }
@@ -688,10 +690,11 @@ export default class {
       }
       seriesObject.color = chart.data[i]['color'] || 'grey';
       seriesObject.data = chart.rawData[i]['data'];
-      seriesObject.marker = {fillOpacity:0.3} 
+      seriesObject.marker = {fillOpacity:0.3}
       series = [...series, seriesObject];
     }
-
+    console.log('final chart',chart)
+    console.log('final option bubble',options)
     this.drawChart(chart, series, options);
   }
 
@@ -709,6 +712,10 @@ export default class {
 
     if(chart.options.categories){
       options.xAxis.categories = chart.options.categories;
+    }
+
+    if(chart.options.yPlotline){
+      options.yAxis.plotLines = [chart.options.yPlotline];
     }
 
     let pointInfo =  function () {
@@ -765,9 +772,9 @@ export default class {
     options.xAxis.opposite=true;
     options.yAxis.categories = chart.options.Y_title;
     options.plotOptions.rowsize = 55;
-    delete options.tooltip; 
+    delete options.tooltip;
 
-    
+
     options.yAxis.labels.formatter = function () {
       if ('Monday' === this.value) {
          return '<span style="color: orange;">' + this.value + '</span>';
@@ -775,7 +782,7 @@ export default class {
           return this.value;
       }
     };
-    
+
     let allBlackout = [];
     for(let i=0;i<chart.options.black_out.length;i++){
       let blackout =  {
@@ -824,7 +831,7 @@ export default class {
 
   renderOrganizationChart(chart) {
     let options = merge(organizationOptions, {});
-    
+
     options.chart.height = chart.options.height || 600;
     options.chart.inverted = chart.options.inverted || true;
 
@@ -842,7 +849,7 @@ export default class {
               color: ''
           },
           height: 25
-        }; 
+        };
         if( i != chart.options.levels -1) {
         level.level = i;
         } else {
@@ -859,7 +866,7 @@ export default class {
         }
         levels.push(level);
       }
-      
+
     let series = [{
       type: 'organization',
       name: chart.options.name || "Series",
@@ -1064,6 +1071,7 @@ export default class {
 
 
   renderColumnChart(chart, chartType) {
+    console.log('inside render',chart)
     chartType = chartType || "column";
     let series = chart.data;
     let options = jsOptions(chart, chart.options), i, j, s, d, rows = [], categories = [];
@@ -1107,21 +1115,21 @@ export default class {
       newSeries.push(d2);
     }
 
-    let formatted_series;  
+    let formatted_series;
     if(chart.options.stringValues){
-      formatted_series = convertToHighChartFormat(chart.options.line_data); 
+      formatted_series = convertToHighChartFormat(chart.options.line_data);
+      console.log('after convert to string func',formatted_series)
     }
 
     if(chart.options.combineCharts){
         if(chart.options.format){
           let formatted = formatChartjsData(chart.options.line_data);
-      
           for(let i = 0; i < formatted.types.length; i++){
             let dataobject = {
               type: formatted['types'][i] || 'spline',
               name: `Series${i}`,
               data: formatted['data'][i]
-              }; 
+              };
             newSeries.push(dataobject);
           }
         } else {
@@ -1138,6 +1146,16 @@ export default class {
           }
          }
     }
+
+    if(chart.options.columnPointPadding) {
+      options.plotOptions = {column: {
+        pointPadding: chart.options.columnPointPadding,
+        }
+      }
+    }
+
+    console.log('final chart',chart)
+    console.log('option',options)
     this.drawChart(chart, newSeries, options);
   }
 

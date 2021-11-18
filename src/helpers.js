@@ -306,14 +306,14 @@ function convertToHighChartFormat(data) {
         object['data'] = data[i]['data'];
         object['name'] = data[i]['name'];
         object['type'] = data[i]['type'];
-      } else{ 
-        for(let j = 0 ; j < data[i]['data'].length; j++){  
+      } else{
+        for(let j = 0 ; j < data[i]['data'].length; j++){
           let yValues = {};
           xValues.push(data[i]['data'][j]['x']);
           yValues['y']= (data[i]['data'][j]['y']);
           yValues['color'] = (data[i]['data'][j]['color']);
           ydata.push(yValues);
-          object['marker'] = { fillColor : "transparent", lineColor : data[i]['data'][i]['color']};
+          object['marker'] = { fillColor : "transparent", lineColor : data[i]['data'][j]['color']};
           object['xValues'] = xValues;
           object['data'] = ydata;
           object['name'] = data[i]['name'];
@@ -321,7 +321,7 @@ function convertToHighChartFormat(data) {
         }
       }
         result.push(object);
-  } 
+  }
   return result;
 }
 
