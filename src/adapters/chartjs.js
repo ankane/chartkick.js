@@ -664,7 +664,7 @@ export default class {
     this.drawChart(chart, chartType, data, options);
   }
 
-  renderBubbleChart2(chart) {
+  renderBubbleChart(chart) {
     this.renderScatterChart(chart, "bubble");
   }
 

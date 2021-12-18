@@ -1,4 +1,5 @@
 import { formatValue, jsOptionsFunc, merge, sortByNumber,formatChartjsData,convertToHighChartFormat } from "../helpers";
+//import { bubbleOptions } from "./bubble/index";
 
 let defaultOptions = {
   chart: { type: '',
@@ -627,76 +628,105 @@ export default class {
     this.drawChart(chart, series, options);
   }
 
-  renderBubbleChart(chart) {
-    console.log('inside bubble chart charttt',chart)
-    let chartOptions = {};
-    let options = jsOptions(chart, chart.options, chartOptions);
+  // renderBubbleChart(chart) {
+  //   console.log('inside bubble chart charttt',chart)
+  //   let chartOptions = {};
+  //   let options = jsOptions(chart, chart.options, chartOptions);
 
-    options.chart.type= 'bubble';
-    options.chart.zoomType='xy';
-    options.tooltip.pointFormat = '<b> x={point.x}</b>, <b> y={point.y}</b>';
-    options.tooltip.headerFormat='<b>{series.name}</b><br>';
-    options.tooltip.clusterFormat= 'Clustered points: {point.clusterPointsAmount}';
-    options.plotOptions.series.dataLabels = {enabled:true, color:'black'}
+  //   options.chart.type= 'bubble';
+  //   options.chart.zoomType='xy';
+  //   options.tooltip.pointFormat = '<b> x={point.x}</b>, <b> y={point.y}</b>';
+  //   options.tooltip.headerFormat='<b>{series.name}</b><br>';
+  //   options.tooltip.clusterFormat= 'Clustered points: {point.clusterPointsAmount}';
+  //   options.plotOptions.series.dataLabels = {enabled:true, color:'black'}
 
-    let plotLines = [{
-      color: 'black',
-      dashStyle: 'dot',
-      width: 2,
-      value: 0,
-      zIndex: 5
-    }]
+  //   let plotLines = [{
+  //     color: 'black',
+  //     dashStyle: 'dot',
+  //     width: 2,
+  //     value: 0,
+  //     zIndex: 5
+  //   }]
 
-    if(chart.options.xPlotline){
-      console.log('inside x plot option',chart.options.xPlotline)
-      plotLines[0].value = chart.options.xPlotline
-      options.xAxis.plotLines= plotLines
-    }
+  //   if(chart.options.xPlotline){
+  //     console.log('inside x plot option',chart.options.xPlotline)
+  //     plotLines[0].value = chart.options.xPlotline
+  //     options.xAxis.plotLines= plotLines
+  //   }
 
-    if(chart.options.yPlotline){
-      plotLines[0].value = chart.options.yPlotline
-      options.yAxis.plotLines = plotLines
-    }
+  //   if(chart.options.yPlotline){
+  //     plotLines[0].value = chart.options.yPlotline
+  //     options.yAxis.plotLines = plotLines
+  //   }
 
-    if(chart.options.xTitle){
-      options.xAxis.title.text = chart.options.xTitle;
-    }
+  //   if(chart.options.xTitle){
+  //     options.xAxis.title.text = chart.options.xTitle;
+  //   }
 
-    if(chart.options.xMin){
-      options.xAxis.min = chart.options.xMin;
-    }
+  //   if(chart.options.xMin){
+  //     options.xAxis.min = chart.options.xMin;
+  //   }
 
-    if(chart.options.yMin){
-      options.yAxis.min = chart.options.yMin;
-    }
+  //   if(chart.options.yMin){
+  //     options.yAxis.min = chart.options.yMin;
+  //   }
 
-    if(chart.options.yTitle){
-      options.yAxis.title.text = chart.options.yTitle;
-    }
+  //   if(chart.options.yTitle){
+  //     options.yAxis.title.text = chart.options.yTitle;
+  //   }
 
-    let series = [];
-    for(let i = 0 ; i < chart.data.length; i++){
+  //   let series = [];
+  //   for(let i = 0 ; i < chart.data.length; i++){
 
-      let seriesObject = {
-        name:'',
-        color: '',
-        data : []
-      };
+  //     let seriesObject = {
+  //       name:'',
+  //       color: '',
+  //       data : []
+  //     };
 
-      if(chart.data[i]['name']){
-        seriesObject.name = chart.data[i]['name'];
-      } else {
-        options.legend.enabled = false
-      }
-      seriesObject.color = chart.data[i]['color'] || 'grey';
-      seriesObject.data = chart.rawData[i]['data'];
-      seriesObject.marker = {fillOpacity:0.3}
-      series = [...series, seriesObject];
-    }
-    console.log('final chart',chart)
-    console.log('final option bubble',options)
-    this.drawChart(chart, series, options);
-  }
+  //     if(chart.data[i]['name']){
+  //       seriesObject.name = chart.data[i]['name'];
+  //     } else {
+  //       options.legend.enabled = false
+  //     }
+  //     seriesObject.color = chart.data[i]['color'] || 'grey';
+  //     seriesObject.data = chart.rawData[i]['data'];
+  //     seriesObject.marker = {fillOpacity:0.3}
+  //     series = [...series, seriesObject];
+  //   }
+  //   console.log('final chart',chart)
+  //   console.log('final option bubble',options)
+  //   this.drawChart(chart, series, options);
+  // }
+
+
+  // renderBubbleChart(chart) {
+  //   let chartOptions = merge(bubbleOptions, {});
+
+  //   if (chart.options.colors) {
+  //     chartOptions.colors = chart.options.colors;
+  //   }
+  //   if (chart.options.donut) {
+  //     chartOptions.plotOptions = {pie: {innerSize: "50%"}};
+  //   }
+
+  //   if ("legend" in chart.options) {
+  //     hideLegend(chartOptions, chart.options.legend);
+  //   }
+
+  //   if (chart.options.title) {
+  //     setTitle(chartOptions, chart.options.title);
+  //   }
+
+  //   let options = merge(chartOptions, chart.options.library || {});
+  //   setFormatOptions(chart, options, "BubbleChart");
+  //   let series = [{
+  //     name: chart.options.label || "Value",
+  //     data: chart.data
+  //   }];
+  //   this.drawChart(chart, series, options);
+  // }
+
 
   renderBoxPlot(chart) {
     let options = merge(defaultOptions, {});
