@@ -132,4 +132,5 @@ function dataEmpty(data, chartType) {
   }
 }
 
+
 export { dataEmpty, processSeries, processSimple };

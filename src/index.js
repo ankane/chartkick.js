@@ -567,7 +567,7 @@ const Chartkick = {
   BubbleChart: BubbleChart,
   Timeline: Timeline,
   SunBurstChart : SunBurstChart,
-  BubbleChart2 : BubbleChart2,
+  //BubbleChart2 : BubbleChart2,
   BoxPlot : BoxPlot,
   OrganizationChart:OrganizationChart,
   SentimentAnalysisChart:SentimentAnalysisChart,
