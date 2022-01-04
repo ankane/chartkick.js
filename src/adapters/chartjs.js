@@ -520,7 +520,7 @@ let createDataTable = function (chart, options, chartType) {
 
     if (!options.scales.x.time.tooltipFormat) {
       if (day) {
-        options.scales.x.time.tooltipFormat = "PP";
+        options.scales.x.time.tooltipFormat = "ll";
       } else if (hour) {
         options.scales.x.time.tooltipFormat = "MMM d, h a";
       } else if (minute) {
