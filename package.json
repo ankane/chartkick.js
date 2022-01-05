@@ -8,7 +8,6 @@
     "build": "rollup -c",
     "lint": "eslint src"
   },
-  "dependencies": {},
   "keywords": [
     "charts"
   ],
