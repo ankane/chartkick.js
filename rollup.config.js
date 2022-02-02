@@ -2,7 +2,7 @@ import buble from "@rollup/plugin-buble";
 import commonjs from "@rollup/plugin-commonjs";
 import pkg from "./package.json";
 import resolve from "@rollup/plugin-node-resolve";
-import { uglify } from "rollup-plugin-uglify";
+import { terser } from "rollup-plugin-terser";
 
 const input = "src/index.js";
 const outputName = "Chartkick";
@@ -45,11 +45,7 @@ export default [
       resolve(),
       commonjs(),
       buble(),
-      uglify({
-        output: {
-          comments: /^!/
-        }
-      })
+      terser()
     ]
   },
   {
