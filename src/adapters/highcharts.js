@@ -1,4 +1,4 @@
-import { formatValue, jsOptionsFunc, merge, sortByNumber } from "../helpers";
+import { formatValue, isArray, jsOptionsFunc, merge, sortByNumber } from "../helpers";
 
 let defaultOptions = {
   chart: {},
@@ -105,7 +105,8 @@ let setFormatOptions = function(chart, options, chartType) {
     zeros: chart.options.zeros
   };
 
-  if (chartType !== "pie" && !options.yAxis.labels.formatter) {
+  // skip when axis is an array (like with min/max)
+  if (chartType !== "pie" && !isArray(options.yAxis) && !options.yAxis.labels.formatter) {
     options.yAxis.labels.formatter = function () {
       return formatValue("", this.value, formatOptions);
     };
