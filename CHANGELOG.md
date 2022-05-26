@@ -1,4 +1,4 @@
-## 4.1.2 (unreleased)
+## 4.2.0 (2022-05-25)
 
 - Added `autoDestroy` config
 
