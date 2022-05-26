@@ -1,3 +1,7 @@
+## 4.1.2 (unreleased)
+
+- Added `autoDestroy` config
+
 ## 4.1.1 (2021-11-06)
 
 - Fixed `xmin` and `xmax` for Chart.js

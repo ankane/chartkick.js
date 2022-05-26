@@ -448,10 +448,14 @@ if (typeof window !== "undefined" && !window.Chartkick) {
 
   // clean up previous charts before Turbolinks loads new page
   document.addEventListener("turbolinks:before-render", function() {
-    Chartkick.destroyAll();
+    if (config.autoDestroy !== false) {
+      Chartkick.destroyAll();
+    }
   });
   document.addEventListener("turbo:before-render", function() {
-    Chartkick.destroyAll();
+    if (config.autoDestroy !== false) {
+      Chartkick.destroyAll();
+    }
   });
 
   // use setTimeout so charting library can come later in same JS file
