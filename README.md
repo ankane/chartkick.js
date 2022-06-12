@@ -4,8 +4,6 @@ Create beautiful charts with one line of JavaScript
 
 [See it in action](https://ankane.github.io/chartkick.js/examples/)
 
-**Chartkick.js 4.0 was recently released** - see [how to upgrade](#upgrading)
-
 Supports [Chart.js](https://www.chartjs.org/), [Google Charts](https://developers.google.com/chart/), and [Highcharts](https://www.highcharts.com/)
 
 Also available for [React](https://github.com/ankane/react-chartkick), [Vue.js](https://github.com/ankane/vue-chartkick), [Ruby](https://github.com/ankane/chartkick), [Python](https://github.com/mher/chartkick.py), [Elixir](https://github.com/buren/chartkick-ex), and [Clojure](https://github.com/yfractal/chartkick)
