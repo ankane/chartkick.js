@@ -219,7 +219,12 @@ let setFormatOptions = function (chart, options, chartType) {
         if (label) {
           label += ': ';
         }
-        return label + '(' + context.label + ', ' + context.formattedValue + ')';
+
+        if (chart.__adapterObject.chartjs4) {
+          return label + context.formattedValue;
+        } else {
+          return label + '(' + context.label + ', ' + context.formattedValue + ')';
+        }
       };
     } else if (chartType === "bubble") {
       options.plugins.tooltip.callbacks.label = function (context) {
@@ -233,6 +238,10 @@ let setFormatOptions = function (chart, options, chartType) {
     } else if (chartType === "pie") {
       // need to use separate label for pie charts
       options.plugins.tooltip.callbacks.label = function (context) {
+        if (chart.__adapterObject.chartjs4) {
+          return formatValue('', context.parsed, formatOptions);
+        }
+
         let dataLabel = context.label;
         let value = ': ';
 
@@ -513,7 +522,11 @@ let createDataTable = function (chart, options, chartType) {
           if (week && step === 1) {
             unitStepSize = Math.ceil(unitStepSize / 7.0) * 7;
           }
-          options.scales.x.time.stepSize = unitStepSize;
+          if (chart.__adapterObject.chartjs4) {
+            options.scales.x.ticks.stepSize = unitStepSize;
+          } else {
+            options.scales.x.time.stepSize = unitStepSize;
+          }
         }
       }
     }
@@ -541,6 +554,7 @@ export default class {
   constructor(library) {
     this.name = "chartjs";
     this.library = library;
+    this.chartjs4 = parseInt(library.version, 10) >= 4;
   }
 
   renderLineChart(chart, chartType) {
@@ -627,6 +641,9 @@ export default class {
     let data = createDataTable(chart, options, "column");
     if (chartType !== "bar") {
       setLabelSize(chart, data, options);
+    }
+    if (this.chartjs4 && !("mode" in options.interaction)) {
+      options.interaction.mode = "index";
     }
     this.drawChart(chart, "bar", data, options);
   }

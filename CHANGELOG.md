@@ -1,3 +1,7 @@
+## 4.3.0 (unreleased)
+
+- Added support for Chart.js 4
+
 ## 4.2.0 (2022-05-25)
 
 - Added `autoDestroy` config
