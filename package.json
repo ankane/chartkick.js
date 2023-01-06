@@ -5,7 +5,11 @@
   "description": "Create beautiful charts with one line of JavaScript",
   "type": "module",
   "main": "dist/chartkick.js",
-  "module": "dist/chartkick.esm.js",
+  "exports": {
+    ".": "dist/chartkick.esm.js",
+    "./chart.js": "chart.js/chart.esm.js",
+    "./highcharts": "highcharts/highcharts.esm.js"
+  },
   "scripts": {
     "build": "rollup -c",
     "lint": "eslint src"

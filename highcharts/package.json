@@ -1,5 +1,0 @@
-{
-  "name": "chartkick-highcharts",
-  "private": true,
-  "module": "highcharts.esm.js"
-}

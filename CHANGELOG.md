@@ -1,4 +1,4 @@
-## 4.3.0 (unreleased)
+## 5.0.0 (unreleased)
 
 - Added support for Chart.js 4
 
