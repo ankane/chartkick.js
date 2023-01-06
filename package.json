@@ -7,7 +7,10 @@
   "main": "dist/chartkick.js",
   "module": "dist/chartkick.esm.js",
   "exports": {
-    ".": "./dist/chartkick.esm.js",
+    ".": {
+      "require": "./dist/chartkick.js",
+      "import": "./dist/chartkick.esm.js"
+    },
     "./chart.js": "./chart.js/chart.esm.js",
     "./highcharts": "./highcharts/highcharts.esm.js"
   },
