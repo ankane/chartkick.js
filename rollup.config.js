@@ -8,10 +8,9 @@ const input = "src/index.js";
 const outputName = "Chartkick";
 const banner =
 `/*!
- * Chartkick.js
+ * Chartkick.js v${pkg.version}
  * ${pkg.description}
  * ${pkg.repository.url}
- * v${pkg.version}
  * ${pkg.license} License
  */
 `;
