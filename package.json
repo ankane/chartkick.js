@@ -6,9 +6,9 @@
   "type": "module",
   "main": "dist/chartkick.js",
   "exports": {
-    ".": "dist/chartkick.esm.js",
-    "./chart.js": "chart.js/chart.esm.js",
-    "./highcharts": "highcharts/highcharts.esm.js"
+    ".": "./dist/chartkick.esm.js",
+    "./chart.js": "./chart.js/chart.esm.js",
+    "./highcharts": "./highcharts/highcharts.esm.js"
   },
   "scripts": {
     "build": "rollup -c",
