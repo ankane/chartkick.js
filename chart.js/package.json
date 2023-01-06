@@ -1,0 +1,5 @@
+{
+  "name": "chartkick-chart.js",
+  "private": true,
+  "module": "chart.esm.js"
+}
