@@ -13,8 +13,7 @@ function isPlainObject(variable) {
 
 // https://github.com/madrobby/zepto/blob/master/src/zepto.js
 function extend(target, source) {
-  let key;
-  for (key in source) {
+  for (const key in source) {
     // protect against prototype pollution, defense 1
     if (key === "__proto__") continue;
 
@@ -42,10 +41,9 @@ function merge(obj1, obj2) {
 const DATE_PATTERN = /^(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)$/i;
 
 function negativeValues(series) {
-  let i, j, data;
-  for (i = 0; i < series.length; i++) {
-    data = series[i].data;
-    for (j = 0; j < data.length; j++) {
+  for (let i = 0; i < series.length; i++) {
+    const data = series[i].data;
+    for (let j = 0; j < data.length; j++) {
       if (data[j][1] < 0) {
         return true;
       }
@@ -63,16 +61,16 @@ function toFloat(n) {
 }
 
 function toDate(n) {
-  let matches, year, month, day;
+  let matches;
   if (typeof n !== "object") {
     if (typeof n === "number") {
       n = new Date(n * 1000); // ms
     } else {
       n = toStr(n);
       if ((matches = n.match(DATE_PATTERN))) {
-        year = parseInt(matches[1], 10);
-        month = parseInt(matches[3], 10) - 1;
-        day = parseInt(matches[5], 10);
+        const year = parseInt(matches[1], 10);
+        const month = parseInt(matches[3], 10) - 1;
+        const day = parseInt(matches[5], 10);
         return new Date(year, month, day);
       } else {
         // try our best to get the str into iso8601
@@ -89,8 +87,7 @@ function toDate(n) {
 function toArr(n) {
   if (!isArray(n)) {
     const arr = [];
-    let i;
-    for (i in n) {
+    for (const i in n) {
       if (n.hasOwnProperty(i)) {
         arr.push([i, n[i]]);
       }

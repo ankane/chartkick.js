@@ -47,14 +47,13 @@ function loadAdapters() {
 // TODO remove chartType if cross-browser way
 // to get the name of the chart class
 function callAdapter(chartType, chart) {
-  let i, adapter;
   const fnName = "render" + chartType;
   const adapterName = chart.options.adapter;
 
   loadAdapters();
 
-  for (i = 0; i < adapters.length; i++) {
-    adapter = adapters[i];
+  for (let i = 0; i < adapters.length; i++) {
+    const adapter = adapters[i];
     if ((!adapterName || adapterName === adapter.name) && isFunction(adapter[fnName])) {
       chart.adapter = adapter.name;
       chart.__adapterObject = adapter;
