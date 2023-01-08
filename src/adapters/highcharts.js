@@ -155,7 +155,6 @@ export default class {
     }
 
     const options = jsOptions(chart, chart.options, chartOptions);
-    let data, i, j;
     if (chart.xtype === "number") {
       options.xAxis.type = options.xAxis.type || "linear";
     } else {
@@ -167,11 +166,11 @@ export default class {
     setFormatOptions(chart, options, chartType);
 
     const series = chart.data;
-    for (i = 0; i < series.length; i++) {
+    for (let i = 0; i < series.length; i++) {
       series[i].name = series[i].name || "Value";
-      data = series[i].data;
+      const data = series[i].data;
       if (chart.xtype === "datetime") {
-        for (j = 0; j < data.length; j++) {
+        for (let j = 0; j < data.length; j++) {
           data[j][0] = data[j][0].getTime();
         }
       }
@@ -223,16 +222,15 @@ export default class {
     chartType = chartType || "column";
     const series = chart.data;
     const options = jsOptions(chart, chart.options);
-    let i, j, s, d;
     const rows = [], categories = [];
     options.chart.type = chartType;
     setFormatOptions(chart, options, chartType);
 
-    for (i = 0; i < series.length; i++) {
-      s = series[i];
+    for (let i = 0; i < series.length; i++) {
+      const s = series[i];
 
-      for (j = 0; j < s.data.length; j++) {
-        d = s.data[j];
+      for (let j = 0; j < s.data.length; j++) {
+        const d = s.data[j];
         if (!rows[d[0]]) {
           rows[d[0]] = new Array(series.length);
           categories.push(d[0]);
@@ -248,14 +246,13 @@ export default class {
     options.xAxis.categories = categories;
 
     const newSeries = [];
-    let d2;
-    for (i = 0; i < series.length; i++) {
-      d = [];
-      for (j = 0; j < categories.length; j++) {
+    for (let i = 0; i < series.length; i++) {
+      const d = [];
+      for (let j = 0; j < categories.length; j++) {
         d.push(rows[categories[j]][i] || 0);
       }
 
-      d2 = {
+      const d2 = {
         name: series[i].name || "Value",
         data: d
       };
