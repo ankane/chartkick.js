@@ -230,11 +230,10 @@ export default class {
       const options = jsOptions(chart, chart.options, chartOptions);
 
       const series = chart.data, rows2 = [];
-      let i, j, d;
-      for (i = 0; i < series.length; i++) {
+      for (let i = 0; i < series.length; i++) {
         series[i].name = series[i].name || "Value";
-        d = series[i].data;
-        for (j = 0; j < d.length; j++) {
+        const d = series[i].data;
+        for (let j = 0; j < d.length; j++) {
           const row = new Array(series.length + 1);
           row[0] = d[j][0];
           row[i + 1] = d[j][1];
@@ -244,7 +243,7 @@ export default class {
 
       const data = new this.library.visualization.DataTable();
       data.addColumn("number", "");
-      for (i = 0; i < series.length; i++) {
+      for (let i = 0; i < series.length; i++) {
         data.addColumn("number", series[i].name);
       }
       data.addRows(rows2);
@@ -328,10 +327,9 @@ export default class {
   }
 
   runCallbacks() {
-    let cb, call;
     for (let i = 0; i < callbacks.length; i++) {
-      cb = callbacks[i];
-      call = this.library.visualization && ((cb.pack === "corechart" && this.library.visualization.LineChart) || (cb.pack === "timeline" && this.library.visualization.Timeline) || (cb.pack === "geochart" && this.library.visualization.GeoChart));
+      const cb = callbacks[i];
+      const call = this.library.visualization && ((cb.pack === "corechart" && this.library.visualization.LineChart) || (cb.pack === "timeline" && this.library.visualization.Timeline) || (cb.pack === "geochart" && this.library.visualization.GeoChart));
       if (call) {
         cb.callback();
         callbacks.splice(i, 1);
@@ -342,15 +340,14 @@ export default class {
 
   // cant use object as key
   createDataTable(series, columnType) {
-    let i, j, s, d, key;
     const rows = [], sortedLabels = [];
-    for (i = 0; i < series.length; i++) {
-      s = series[i];
+    for (let i = 0; i < series.length; i++) {
+      const s = series[i];
       series[i].name = series[i].name || "Value";
 
-      for (j = 0; j < s.data.length; j++) {
-        d = s.data[j];
-        key = (columnType === "datetime") ? d[0].getTime() : d[0];
+      for (let j = 0; j < s.data.length; j++) {
+        const d = s.data[j];
+        const key = (columnType === "datetime") ? d[0].getTime() : d[0];
         if (!rows[key]) {
           rows[key] = new Array(series.length);
           sortedLabels.push(key);
@@ -361,9 +358,9 @@ export default class {
 
     const rows2 = [];
     let day = true;
-    let value;
-    for (j = 0; j < sortedLabels.length; j++) {
-      i = sortedLabels[j];
+    for (let j = 0; j < sortedLabels.length; j++) {
+      const i = sortedLabels[j];
+      let value;
       if (columnType === "datetime") {
         value = new Date(toFloat(i));
         day = day && isDay(value);
@@ -379,7 +376,7 @@ export default class {
     } else if (columnType === "number") {
       rows2.sort(sortByNumberSeries);
 
-      for (i = 0; i < rows2.length; i++) {
+      for (let i = 0; i < rows2.length; i++) {
         rows2[i][0] = toStr(rows2[i][0]);
       }
 
@@ -390,7 +387,7 @@ export default class {
     const data = new this.library.visualization.DataTable();
     columnType = columnType === "datetime" && day ? "date" : columnType;
     data.addColumn(columnType, "");
-    for (i = 0; i < series.length; i++) {
+    for (let i = 0; i < series.length; i++) {
       data.addColumn("number", series[i].name);
     }
     data.addRows(rows2);
