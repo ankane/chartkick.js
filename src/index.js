@@ -83,11 +83,14 @@ function getAdapterType(library) {
 
 function addAdapter(library) {
   const adapterType = getAdapterType(library);
-  const adapter = new adapterType(library);
 
-  if (adapters.indexOf(adapter) === -1) {
-    adapters.push(adapter);
+  for (let i = 0; i < adapters.length; i++) {
+    if (adapters[i].library === library) {
+      return;
+    }
   }
+
+  adapters.push(new adapterType(library));
 }
 
 function loadAdapters() {
