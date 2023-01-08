@@ -1,10 +1,9 @@
 import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, seriesOption } from "../helpers";
 
 function allZeros(data) {
-  let i, j, d;
-  for (i = 0; i < data.length; i++) {
-    d = data[i].data;
-    for (j = 0; j < d.length; j++) {
+  for (let i = 0; i < data.length; i++) {
+    const d = data[i].data;
+    for (let j = 0; j < d.length; j++) {
       if (d[j][1] != 0) {
         return false;
       }
@@ -304,18 +303,17 @@ const createDataTable = function (chart, options, chartType) {
     }
   }
 
-  let i, j, s, d, key;
   const rows = [], rows2 = [];
 
   if (chartType === "bar" || chartType === "column" || (chart.xtype !== "number" && chart.xtype !== "bubble")) {
     const sortedLabels = [];
 
-    for (i = 0; i < series.length; i++) {
-      s = series[i];
+    for (let i = 0; i < series.length; i++) {
+      const s = series[i];
 
-      for (j = 0; j < s.data.length; j++) {
-        d = s.data[j];
-        key = chart.xtype == "datetime" ? d[0].getTime() : d[0];
+      for (let j = 0; j < s.data.length; j++) {
+        const d = s.data[j];
+        const key = chart.xtype == "datetime" ? d[0].getTime() : d[0];
         if (!rows[key]) {
           rows[key] = new Array(series.length);
         }
@@ -330,14 +328,13 @@ const createDataTable = function (chart, options, chartType) {
       sortedLabels.sort(sortByNumber);
     }
 
-    for (j = 0; j < series.length; j++) {
+    for (let j = 0; j < series.length; j++) {
       rows2.push([]);
     }
 
-    let value;
-    let k;
-    for (k = 0; k < sortedLabels.length; k++) {
-      i = sortedLabels[k];
+    for (let k = 0; k < sortedLabels.length; k++) {
+      let value;
+      const i = sortedLabels[k];
       if (chart.xtype === "datetime") {
         value = new Date(toFloat(i));
         // TODO make this efficient
@@ -354,7 +351,7 @@ const createDataTable = function (chart, options, chartType) {
         value = i;
       }
       labels.push(value);
-      for (j = 0; j < series.length; j++) {
+      for (let j = 0; j < series.length; j++) {
         // Chart.js doesn't like undefined
         rows2[j].push(rows[i][j] === undefined ? null : rows[i][j]);
       }
@@ -379,11 +376,11 @@ const createDataTable = function (chart, options, chartType) {
     }
   }
 
-  let color;
-  let backgroundColor;
+  for (let i = 0; i < series.length; i++) {
+    let color;
+    let backgroundColor;
 
-  for (i = 0; i < series.length; i++) {
-    s = series[i];
+    const s = series[i];
 
     // use colors for each bar for single series format
     if (chart.options.colors && chart.singleSeriesFormat && (chartType === "bar" || chartType === "column") && !s.color && isArray(chart.options.colors) && !isArray(chart.options.colors[0])) {
@@ -482,7 +479,7 @@ const createDataTable = function (chart, options, chartType) {
     let minTime = (notnull(xmin) ? toDate(xmin) : labels[0]).getTime();
     let maxTime = (notnull(xmax) ? toDate(xmax) : labels[0]).getTime();
 
-    for (i = 1; i < labels.length; i++) {
+    for (let i = 1; i < labels.length; i++) {
       const value = labels[i].getTime();
       if (value < minTime) {
         minTime = value;
