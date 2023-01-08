@@ -2,7 +2,7 @@ import { isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries,
 
 function formatSeriesData(data, keyType) {
   const r = [];
-  let j, keyFunc;
+  let keyFunc;
 
   if (keyType === "number") {
     keyFunc = toFloat;
@@ -13,11 +13,11 @@ function formatSeriesData(data, keyType) {
   }
 
   if (keyType === "bubble") {
-    for (j = 0; j < data.length; j++) {
+    for (let j = 0; j < data.length; j++) {
       r.push([toFloat(data[j][0]), toFloat(data[j][1]), toFloat(data[j][2])]);
     }
   } else {
-    for (j = 0; j < data.length; j++) {
+    for (let j = 0; j < data.length; j++) {
       r.push([keyFunc(data[j][0]), toFloat(data[j][1])]);
     }
   }
@@ -48,10 +48,9 @@ function detectXType(series, noDatetime, options) {
 }
 
 function detectXTypeWithFunction(series, func) {
-  let i, j, data;
-  for (i = 0; i < series.length; i++) {
-    data = toArr(series[i].data);
-    for (j = 0; j < data.length; j++) {
+  for (let i = 0; i < series.length; i++) {
+    const data = toArr(series[i].data);
+    for (let j = 0; j < data.length; j++) {
       if (!func(data[j][0])) {
         return false;
       }
@@ -64,10 +63,9 @@ function detectXTypeWithFunction(series, func) {
 // elements are expected to be objects
 function copySeries(series) {
   const newSeries = [];
-  let i, j;
-  for (i = 0; i < series.length; i++) {
+  for (let i = 0; i < series.length; i++) {
     const copy = {};
-    for (j in series[i]) {
+    for (const j in series[i]) {
       if (series[i].hasOwnProperty(j)) {
         copy[j] = series[i][j];
       }
@@ -78,8 +76,6 @@ function copySeries(series) {
 }
 
 function processSeries(chart, keyType, noDatetime) {
-  let i;
-
   const opts = chart.options;
   let series = chart.rawData;
 
@@ -92,14 +88,14 @@ function processSeries(chart, keyType, noDatetime) {
   // convert to array
   // must come before dataEmpty check
   series = copySeries(series);
-  for (i = 0; i < series.length; i++) {
+  for (let i = 0; i < series.length; i++) {
     series[i].data = toArr(series[i].data);
   }
 
   chart.xtype = keyType ? keyType : (opts.discrete ? "string" : detectXType(series, noDatetime, opts));
 
   // right format
-  for (i = 0; i < series.length; i++) {
+  for (let i = 0; i < series.length; i++) {
     series[i].data = formatSeriesData(series[i].data, chart.xtype);
   }
 
@@ -108,8 +104,7 @@ function processSeries(chart, keyType, noDatetime) {
 
 function processSimple(chart) {
   const perfectData = toArr(chart.rawData);
-  let i;
-  for (i = 0; i < perfectData.length; i++) {
+  for (let i = 0; i < perfectData.length; i++) {
     perfectData[i] = [toStr(perfectData[i][0]), toFloat(perfectData[i][1])];
   }
   return perfectData;
