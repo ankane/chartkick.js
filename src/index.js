@@ -386,6 +386,8 @@ if (typeof window !== "undefined" && !window.Chartkick) {
       Chartkick.destroyAll();
     }
   });
+
+  // clean up previous charts before Turbo loads new page
   document.addEventListener("turbo:before-render", function () {
     if (Chartkick.config.autoDestroy !== false) {
       Chartkick.destroyAll();
