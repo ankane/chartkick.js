@@ -1,6 +1,6 @@
 function addDownloadButton(chart) {
-  let element = chart.element;
-  let link = document.createElement("a");
+  const element = chart.element;
+  const link = document.createElement("a");
 
   let download = chart.options.download;
   if (download === true) {
@@ -16,7 +16,7 @@ function addDownloadButton(chart) {
   link.style.zIndex = 1000;
   link.style.lineHeight = "20px";
   link.target = "_blank"; // for safari
-  let image = document.createElement("img");
+  const image = document.createElement("img");
   image.alt = "Download";
   image.style.border = "none";
   // icon from font-awesome
@@ -29,7 +29,7 @@ function addDownloadButton(chart) {
 
   // mouseenter
   chart.__enterEvent = addEvent(element, "mouseover", function(e) {
-    let related = e.relatedTarget;
+    const related = e.relatedTarget;
     // check download option again to ensure it wasn't changed
     if ((!related || (related !== this && !childOf(this, related))) && chart.options.download) {
       link.href = chart.toImage(download);
@@ -39,7 +39,7 @@ function addDownloadButton(chart) {
 
   // mouseleave
   chart.__leaveEvent = addEvent(element, "mouseout", function(e) {
-    let related = e.relatedTarget;
+    const related = e.relatedTarget;
     if (!related || (related !== this && !childOf(this, related))) {
       if (link.parentNode) {
         link.parentNode.removeChild(link);
@@ -54,7 +54,7 @@ function addEvent(elem, event, fn) {
     elem.addEventListener(event, fn, false);
     return fn;
   } else {
-    let fn2 = function() {
+    const fn2 = function() {
       // set the this pointer same as addEventListener when fn is called
       return(fn.call(elem, window.event));
     };

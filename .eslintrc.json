@@ -10,6 +10,8 @@
   "rules": {
     "no-var": "error",
     "semi": ["error", "always"],
-    "no-prototype-builtins": "off"
+    "no-prototype-builtins": "off",
+    "prefer-const": "error",
+    "camelcase": "error"
   }
 }

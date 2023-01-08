@@ -1,10 +1,10 @@
 import { jsOptionsFunc, merge, toStr, toFloat, sortByTime, sortByNumberSeries, isDay } from "../helpers";
 
-let loaded = {};
-let callbacks = [];
+const loaded = {};
+const callbacks = [];
 
 // Set chart options
-let defaultOptions = {
+const defaultOptions = {
   chartArea: {},
   fontName: "'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, Helvetica, sans-serif",
   pointSize: 6,
@@ -46,7 +46,7 @@ let defaultOptions = {
   }
 };
 
-let hideLegend = function (options, legend, hideLegend) {
+const hideLegend = function (options, legend, hideLegend) {
   if (legend !== undefined) {
     let position;
     if (!legend) {
@@ -62,44 +62,44 @@ let hideLegend = function (options, legend, hideLegend) {
   }
 };
 
-let setTitle = function (options, title) {
+const setTitle = function (options, title) {
   options.title = title;
   options.titleTextStyle = {color: "#333", fontSize: "20px"};
 };
 
-let setMin = function (options, min) {
+const setMin = function (options, min) {
   options.vAxis.viewWindow.min = min;
 };
 
-let setMax = function (options, max) {
+const setMax = function (options, max) {
   options.vAxis.viewWindow.max = max;
 };
 
-let setBarMin = function (options, min) {
+const setBarMin = function (options, min) {
   options.hAxis.viewWindow.min = min;
 };
 
-let setBarMax = function (options, max) {
+const setBarMax = function (options, max) {
   options.hAxis.viewWindow.max = max;
 };
 
-let setStacked = function (options, stacked) {
+const setStacked = function (options, stacked) {
   options.isStacked = stacked ? stacked : false;
 };
 
-let setXtitle = function (options, title) {
+const setXtitle = function (options, title) {
   options.hAxis.title = title;
   options.hAxis.titleTextStyle.italic = false;
 };
 
-let setYtitle = function (options, title) {
+const setYtitle = function (options, title) {
   options.vAxis.title = title;
   options.vAxis.titleTextStyle.italic = false;
 };
 
-let jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
+const jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-let resize = function (callback) {
+const resize = function (callback) {
   if (window.attachEvent) {
     window.attachEvent("onresize", callback);
   } else if (window.addEventListener) {
@@ -116,7 +116,7 @@ export default class {
 
   renderLineChart(chart) {
     this.waitForLoaded(chart, () => {
-      let chartOptions = {};
+      const chartOptions = {};
 
       if (chart.options.curve === false) {
         chartOptions.curveType = "none";
@@ -126,8 +126,8 @@ export default class {
         chartOptions.pointSize = 0;
       }
 
-      let options = jsOptions(chart, chart.options, chartOptions);
-      let data = this.createDataTable(chart.data, chart.xtype);
+      const options = jsOptions(chart, chart.options, chartOptions);
+      const data = this.createDataTable(chart.data, chart.xtype);
 
       this.drawChart(chart, "LineChart", data, options);
     });
@@ -135,7 +135,7 @@ export default class {
 
   renderPieChart(chart) {
     this.waitForLoaded(chart, () => {
-      let chartOptions = {
+      const chartOptions = {
         chartArea: {
           top: "10%",
           height: "80%"
@@ -154,9 +154,9 @@ export default class {
       if (chart.options.title) {
         setTitle(chartOptions, chart.options.title);
       }
-      let options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
+      const options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
-      let data = new this.library.visualization.DataTable();
+      const data = new this.library.visualization.DataTable();
       data.addColumn("string", "");
       data.addColumn("number", "Value");
       data.addRows(chart.data);
@@ -167,8 +167,8 @@ export default class {
 
   renderColumnChart(chart) {
     this.waitForLoaded(chart, () => {
-      let options = jsOptions(chart, chart.options);
-      let data = this.createDataTable(chart.data, chart.xtype);
+      const options = jsOptions(chart, chart.options);
+      const data = this.createDataTable(chart.data, chart.xtype);
 
       this.drawChart(chart, "ColumnChart", data, options);
     });
@@ -176,15 +176,15 @@ export default class {
 
   renderBarChart(chart) {
     this.waitForLoaded(chart, () => {
-      let chartOptions = {
+      const chartOptions = {
         hAxis: {
           gridlines: {
             color: "#ccc"
           }
         }
       };
-      let options = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
-      let data = this.createDataTable(chart.data, chart.xtype);
+      const options = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setBarMin, setBarMax, setStacked, setXtitle, setYtitle)(chart, chart.options, chartOptions);
+      const data = this.createDataTable(chart.data, chart.xtype);
 
       this.drawChart(chart, "BarChart", data, options);
     });
@@ -192,14 +192,14 @@ export default class {
 
   renderAreaChart(chart) {
     this.waitForLoaded(chart, () => {
-      let chartOptions = {
+      const chartOptions = {
         isStacked: true,
         pointSize: 0,
         areaOpacity: 0.5
       };
 
-      let options = jsOptions(chart, chart.options, chartOptions);
-      let data = this.createDataTable(chart.data, chart.xtype);
+      const options = jsOptions(chart, chart.options, chartOptions);
+      const data = this.createDataTable(chart.data, chart.xtype);
 
       this.drawChart(chart, "AreaChart", data, options);
     });
@@ -207,15 +207,15 @@ export default class {
 
   renderGeoChart(chart) {
     this.waitForLoaded(chart, "geochart", () => {
-      let chartOptions = {
+      const chartOptions = {
         legend: "none",
         colorAxis: {
           colors: chart.options.colors || ["#f6c7b6", "#ce502d"]
         }
       };
-      let options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
+      const options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
-      let data = new this.library.visualization.DataTable();
+      const data = new this.library.visualization.DataTable();
       data.addColumn("string", "");
       data.addColumn("number", chart.options.label || "Value");
       data.addRows(chart.data);
@@ -226,22 +226,23 @@ export default class {
 
   renderScatterChart(chart) {
     this.waitForLoaded(chart, () => {
-      let chartOptions = {};
-      let options = jsOptions(chart, chart.options, chartOptions);
+      const chartOptions = {};
+      const options = jsOptions(chart, chart.options, chartOptions);
 
-      let series = chart.data, rows2 = [], i, j, data, d;
+      const series = chart.data, rows2 = [];
+      let i, j, d;
       for (i = 0; i < series.length; i++) {
         series[i].name = series[i].name || "Value";
         d = series[i].data;
         for (j = 0; j < d.length; j++) {
-          let row = new Array(series.length + 1);
+          const row = new Array(series.length + 1);
           row[0] = d[j][0];
           row[i + 1] = d[j][1];
           rows2.push(row);
         }
       }
 
-      data = new this.library.visualization.DataTable();
+      const data = new this.library.visualization.DataTable();
       data.addColumn("number", "");
       for (i = 0; i < series.length; i++) {
         data.addColumn("number", series[i].name);
@@ -254,16 +255,16 @@ export default class {
 
   renderTimeline(chart) {
     this.waitForLoaded(chart, "timeline", () => {
-      let chartOptions = {
+      const chartOptions = {
         legend: "none"
       };
 
       if (chart.options.colors) {
         chartOptions.colors = chart.options.colors;
       }
-      let options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
+      const options = merge(merge(defaultOptions, chartOptions), chart.options.library || {});
 
-      let data = new this.library.visualization.DataTable();
+      const data = new this.library.visualization.DataTable();
       data.addColumn({type: "string", id: "Name"});
       data.addColumn({type: "date", id: "Start"});
       data.addColumn({type: "date", id: "End"});
@@ -310,11 +311,11 @@ export default class {
       loaded[pack] = true;
 
       // https://groups.google.com/forum/#!topic/google-visualization-api/fMKJcyA2yyI
-      let loadOptions = {
+      const loadOptions = {
         packages: [pack],
         callback: () => { this.runCallbacks(); }
       };
-      let config = chart.__config();
+      const config = chart.__config();
       if (config.language) {
         loadOptions.language = config.language;
       }
@@ -341,7 +342,8 @@ export default class {
 
   // cant use object as key
   createDataTable(series, columnType) {
-    let i, j, s, d, key, rows = [], sortedLabels = [];
+    let i, j, s, d, key;
+    const rows = [], sortedLabels = [];
     for (i = 0; i < series.length; i++) {
       s = series[i];
       series[i].name = series[i].name || "Value";
@@ -357,7 +359,7 @@ export default class {
       }
     }
 
-    let rows2 = [];
+    const rows2 = [];
     let day = true;
     let value;
     for (j = 0; j < sortedLabels.length; j++) {
@@ -385,7 +387,7 @@ export default class {
     }
 
     // create datatable
-    let data = new this.library.visualization.DataTable();
+    const data = new this.library.visualization.DataTable();
     columnType = columnType === "datetime" && day ? "date" : columnType;
     data.addColumn(columnType, "");
     for (i = 0; i < series.length; i++) {

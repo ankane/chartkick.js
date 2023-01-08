@@ -1,4 +1,6 @@
-let pendingRequests = [], runningRequests = 0, maxRequests = 4;
+const pendingRequests = [];
+let runningRequests = 0;
+const maxRequests = 4;
 
 function pushRequest(url, success, error) {
   pendingRequests.push([url, success, error]);
@@ -7,7 +9,7 @@ function pushRequest(url, success, error) {
 
 function runNext() {
   if (runningRequests < maxRequests) {
-    let request = pendingRequests.shift();
+    const request = pendingRequests.shift();
     if (request) {
       runningRequests++;
       getJSON(request[0], request[1], request[2]);
@@ -23,13 +25,13 @@ function requestComplete() {
 
 function getJSON(url, success, error) {
   ajaxCall(url, success, function (jqXHR, textStatus, errorThrown) {
-    let message = (typeof errorThrown === "string") ? errorThrown : errorThrown.message;
+    const message = (typeof errorThrown === "string") ? errorThrown : errorThrown.message;
     error(message);
   });
 }
 
 function ajaxCall(url, success, error) {
-  let $ = window.jQuery || window.Zepto || window.$;
+  const $ = window.jQuery || window.Zepto || window.$;
 
   if ($ && $.ajax) {
     $.ajax({
@@ -40,7 +42,7 @@ function ajaxCall(url, success, error) {
       complete: requestComplete
     });
   } else {
-    let xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onload = function () {

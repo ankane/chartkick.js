@@ -7,8 +7,8 @@ import { addDownloadButton, removeEvent } from "./download";
 import { merge, isFunction, toDate } from "./helpers";
 import { pushRequest } from "./request-queue";
 
-let config = {};
-let adapters = [];
+const config = {};
+const adapters = [];
 
 // helpers
 
@@ -82,8 +82,8 @@ function getAdapterType(library) {
 }
 
 function addAdapter(library) {
-  let adapterType = getAdapterType(library);
-  let adapter = new adapterType(library);
+  const adapterType = getAdapterType(library);
+  const adapter = new adapterType(library);
 
   if (adapters.indexOf(adapter) === -1) {
     adapters.push(adapter);
@@ -106,7 +106,7 @@ function loadAdapters() {
 
 function renderChart(chartType, chart) {
   if (dataEmpty(chart.data, chartType)) {
-    let message = chart.options.empty || (chart.options.messages && chart.options.messages.empty) || "No data";
+    const message = chart.options.empty || (chart.options.messages && chart.options.messages.empty) || "No data";
     setText(chart.element, message);
   } else {
     callAdapter(chartType, chart);
@@ -119,9 +119,9 @@ function renderChart(chartType, chart) {
 // TODO remove chartType if cross-browser way
 // to get the name of the chart class
 function callAdapter(chartType, chart) {
-  let i, adapter, fnName, adapterName;
-  fnName = "render" + chartType;
-  adapterName = chart.options.adapter;
+  let i, adapter;
+  const fnName = "render" + chartType;
+  const adapterName = chart.options.adapter;
 
   loadAdapters();
 
@@ -210,8 +210,8 @@ class Chart {
   refreshData() {
     if (typeof this.dataSource === "string") {
       // prevent browser from caching
-      let sep = this.dataSource.indexOf("?") === -1 ? "?" : "&";
-      let url = this.dataSource + sep + "_=" + (new Date()).getTime();
+      const sep = this.dataSource.indexOf("?") === -1 ? "?" : "&";
+      const url = this.dataSource + sep + "_=" + (new Date()).getTime();
       fetchDataSource(this, url);
     } else if (typeof this.dataSource === "function") {
       fetchDataSource(this, this.dataSource);
@@ -219,7 +219,7 @@ class Chart {
   }
 
   startRefresh() {
-    let refresh = this.options.refresh;
+    const refresh = this.options.refresh;
 
     if (refresh && typeof this.dataSource !== "string" && typeof this.dataSource !== "function") {
       throw new Error("Data source must be a URL or callback for refresh");
@@ -247,10 +247,10 @@ class Chart {
     if (this.adapter === "chartjs") {
       if (download && download.background && download.background !== "transparent") {
         // https://stackoverflow.com/questions/30464750/chartjs-line-chart-set-background-color
-        let canvas = this.chart.canvas;
-        let ctx = this.chart.ctx;
-        let tmpCanvas = document.createElement("canvas");
-        let tmpCtx = tmpCanvas.getContext("2d");
+        const canvas = this.chart.canvas;
+        const ctx = this.chart.ctx;
+        const tmpCanvas = document.createElement("canvas");
+        const tmpCtx = tmpCanvas.getContext("2d");
         tmpCanvas.width = ctx.canvas.width;
         tmpCanvas.height = ctx.canvas.height;
         tmpCtx.fillStyle = download.background;
@@ -283,7 +283,7 @@ class Chart {
   }
 
   __updateOptions(options) {
-    let updateRefresh = options.refresh && options.refresh !== this.options.refresh;
+    const updateRefresh = options.refresh && options.refresh !== this.options.refresh;
     this.options = merge(Chartkick.options, options);
     if (updateRefresh) {
       this.stopRefresh();
@@ -383,7 +383,8 @@ class BubbleChart extends Chart {
 
 class Timeline extends Chart {
   __processData() {
-    let i, data = this.rawData;
+    let i;
+    const data = this.rawData;
     for (i = 0; i < data.length; i++) {
       data[i][1] = toDate(data[i][1]);
       data[i][2] = toDate(data[i][2]);
@@ -408,7 +409,7 @@ const Chartkick = {
   Timeline: Timeline,
   charts: {},
   configure: function (options) {
-    for (let key in options) {
+    for (const key in options) {
       if (options.hasOwnProperty(key)) {
         config[key] = options[key];
       }
@@ -418,14 +419,14 @@ const Chartkick = {
     Chartkick.options = opts;
   },
   eachChart: function (callback) {
-    for (let chartId in Chartkick.charts) {
+    for (const chartId in Chartkick.charts) {
       if (Chartkick.charts.hasOwnProperty(chartId)) {
         callback(Chartkick.charts[chartId]);
       }
     }
   },
   destroyAll: function() {
-    for (let chartId in Chartkick.charts) {
+    for (const chartId in Chartkick.charts) {
       if (Chartkick.charts.hasOwnProperty(chartId)) {
         Chartkick.charts[chartId].destroy();
         delete Chartkick.charts[chartId];

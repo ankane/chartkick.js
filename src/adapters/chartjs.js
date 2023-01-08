@@ -13,7 +13,7 @@ function allZeros(data) {
   return true;
 }
 
-let baseOptions = {
+const baseOptions = {
   maintainAspectRatio: false,
   animation: false,
   plugins: {
@@ -32,7 +32,7 @@ let baseOptions = {
   interaction: {}
 };
 
-let defaultOptions = {
+const defaultOptions = {
   scales: {
     y: {
       ticks: {
@@ -63,13 +63,13 @@ let defaultOptions = {
 };
 
 // http://there4.io/2012/05/02/google-chart-color-list/
-let defaultColors = [
+const defaultColors = [
   "#3366CC", "#DC3912", "#FF9900", "#109618", "#990099", "#3B3EAC", "#0099C6",
   "#DD4477", "#66AA00", "#B82E2E", "#316395", "#994499", "#22AA99", "#AAAA11",
   "#6633CC", "#E67300", "#8B0707", "#329262", "#5574A6", "#651067"
 ];
 
-let hideLegend = function (options, legend, hideLegend) {
+const hideLegend = function (options, legend, hideLegend) {
   if (legend !== undefined) {
     options.plugins.legend.display = !!legend;
     if (legend && legend !== true) {
@@ -80,59 +80,59 @@ let hideLegend = function (options, legend, hideLegend) {
   }
 };
 
-let setTitle = function (options, title) {
+const setTitle = function (options, title) {
   options.plugins.title.display = true;
   options.plugins.title.text = title;
 };
 
-let setMin = function (options, min) {
+const setMin = function (options, min) {
   if (min !== null) {
     options.scales.y.min = toFloat(min);
   }
 };
 
-let setMax = function (options, max) {
+const setMax = function (options, max) {
   options.scales.y.max = toFloat(max);
 };
 
-let setBarMin = function (options, min) {
+const setBarMin = function (options, min) {
   if (min !== null) {
     options.scales.x.min = toFloat(min);
   }
 };
 
-let setBarMax = function (options, max) {
+const setBarMax = function (options, max) {
   options.scales.x.max = toFloat(max);
 };
 
-let setStacked = function (options, stacked) {
+const setStacked = function (options, stacked) {
   options.scales.x.stacked = !!stacked;
   options.scales.y.stacked = !!stacked;
 };
 
-let setXtitle = function (options, title) {
+const setXtitle = function (options, title) {
   options.scales.x.title.display = true;
   options.scales.x.title.text = title;
 };
 
-let setYtitle = function (options, title) {
+const setYtitle = function (options, title) {
   options.scales.y.title.display = true;
   options.scales.y.title.text = title;
 };
 
 // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
-let addOpacity = function (hex, opacity) {
-  let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+const addOpacity = function (hex, opacity) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? "rgba(" + parseInt(result[1], 16) + ", " + parseInt(result[2], 16) + ", " + parseInt(result[3], 16) + ", " + opacity + ")" : hex;
 };
 
 // check if not null or undefined
 // https://stackoverflow.com/a/27757708/1177228
-let notnull = function (x) {
+const notnull = function (x) {
   return x != null;
 };
 
-let setLabelSize = function (chart, data, options) {
+const setLabelSize = function (chart, data, options) {
   let maxLabelSize = Math.ceil(chart.element.offsetWidth / 4.0 / data.labels.length);
   if (maxLabelSize > 25) {
     maxLabelSize = 25;
@@ -151,8 +151,8 @@ let setLabelSize = function (chart, data, options) {
   }
 };
 
-let setFormatOptions = function (chart, options, chartType) {
-  let formatOptions = {
+const setFormatOptions = function (chart, options, chartType) {
+  const formatOptions = {
     prefix: chart.options.prefix,
     suffix: chart.options.suffix,
     thousands: chart.options.thousands,
@@ -171,7 +171,7 @@ let setFormatOptions = function (chart, options, chartType) {
     // calculate max
     let max = 0;
     for (let i = 0; i < series.length; i++) {
-      let s = series[i];
+      const s = series[i];
       for (let j = 0; j < s.data.length; j++) {
         if (s.data[j][1] > max) {
           max = s.data[j][1];
@@ -232,7 +232,7 @@ let setFormatOptions = function (chart, options, chartType) {
         if (label) {
           label += ': ';
         }
-        let dataPoint = context.raw;
+        const dataPoint = context.raw;
         return label + '(' + dataPoint.x + ', ' + dataPoint.y + ', ' + dataPoint.v + ')';
       };
     } else if (chartType === "pie") {
@@ -243,7 +243,7 @@ let setFormatOptions = function (chart, options, chartType) {
         }
 
         let dataLabel = context.label;
-        let value = ': ';
+        const value = ': ';
 
         if (isArray(dataLabel)) {
           // show value on first line of multiline label
@@ -257,7 +257,7 @@ let setFormatOptions = function (chart, options, chartType) {
         return formatValue(dataLabel, context.parsed, formatOptions);
       };
     } else {
-      let valueLabel = chartType === "bar" ? "x" : "y";
+      const valueLabel = chartType === "bar" ? "x" : "y";
       options.plugins.tooltip.callbacks.label = function (context) {
         // don't show null values for stacked charts
         if (context.parsed[valueLabel] === null) {
@@ -274,13 +274,13 @@ let setFormatOptions = function (chart, options, chartType) {
   }
 };
 
-let jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
+const jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-let createDataTable = function (chart, options, chartType) {
-  let datasets = [];
-  let labels = [];
+const createDataTable = function (chart, options, chartType) {
+  const datasets = [];
+  const labels = [];
 
-  let colors = chart.options.colors || defaultColors;
+  const colors = chart.options.colors || defaultColors;
 
   let day = true;
   let week = true;
@@ -290,12 +290,12 @@ let createDataTable = function (chart, options, chartType) {
   let hour = true;
   let minute = true;
 
-  let series = chart.data;
+  const series = chart.data;
 
   let max = 0;
   if (chartType === "bubble") {
     for (let i = 0; i < series.length; i++) {
-      let s = series[i];
+      const s = series[i];
       for (let j = 0; j < s.data.length; j++) {
         if (s.data[j][2] > max) {
           max = s.data[j][2];
@@ -304,10 +304,11 @@ let createDataTable = function (chart, options, chartType) {
     }
   }
 
-  let i, j, s, d, key, rows = [], rows2 = [];
+  let i, j, s, d, key;
+  const rows = [], rows2 = [];
 
   if (chartType === "bar" || chartType === "column" || (chart.xtype !== "number" && chart.xtype !== "bubble")) {
-    let sortedLabels = [];
+    const sortedLabels = [];
 
     for (i = 0; i < series.length; i++) {
       s = series[i];
@@ -360,10 +361,10 @@ let createDataTable = function (chart, options, chartType) {
     }
   } else {
     for (let i = 0; i < series.length; i++) {
-      let s = series[i];
-      let d = [];
+      const s = series[i];
+      const d = [];
       for (let j = 0; j < s.data.length; j++) {
-        let point = {
+        const point = {
           x: toFloat(s.data[j][0]),
           y: toFloat(s.data[j][1])
         };
@@ -405,7 +406,7 @@ let createDataTable = function (chart, options, chartType) {
       borderWidth: 2
     };
 
-    let pointChart = chartType === "line" || chartType === "area" || chartType === "scatter" || chartType === "bubble";
+    const pointChart = chartType === "line" || chartType === "area" || chartType === "scatter" || chartType === "bubble";
     if (pointChart) {
       dataset.pointBackgroundColor = color;
       dataset.pointHoverBackgroundColor = color;
@@ -422,14 +423,14 @@ let createDataTable = function (chart, options, chartType) {
       dataset.stack = s.stack;
     }
 
-    let curve = seriesOption(chart, s, "curve");
+    const curve = seriesOption(chart, s, "curve");
     if (curve === false) {
       dataset.tension = 0;
     } else if (pointChart) {
       dataset.tension = 0.4;
     }
 
-    let points = seriesOption(chart, s, "points");
+    const points = seriesOption(chart, s, "points");
     if (points === false) {
       dataset.pointRadius = 0;
       dataset.pointHoverRadius = 0;
@@ -442,8 +443,8 @@ let createDataTable = function (chart, options, chartType) {
     datasets.push(dataset);
   }
 
-  let xmin = chart.options.xmin;
-  let xmax = chart.options.xmax;
+  const xmin = chart.options.xmin;
+  const xmax = chart.options.xmax;
 
   if (chart.xtype === "datetime") {
     if (notnull(xmin)) {
@@ -482,7 +483,7 @@ let createDataTable = function (chart, options, chartType) {
     let maxTime = (notnull(xmax) ? toDate(xmax) : labels[0]).getTime();
 
     for (i = 1; i < labels.length; i++) {
-      let value = labels[i].getTime();
+      const value = labels[i].getTime();
       if (value < minTime) {
         minTime = value;
       }
@@ -491,7 +492,7 @@ let createDataTable = function (chart, options, chartType) {
       }
     }
 
-    let timeDiff = (maxTime - minTime) / (86400 * 1000.0);
+    const timeDiff = (maxTime - minTime) / (86400 * 1000.0);
 
     if (!options.scales.x.time.unit) {
       let step;
@@ -516,7 +517,7 @@ let createDataTable = function (chart, options, chartType) {
 
       if (step && timeDiff > 0) {
         // width not available for hidden elements
-        let width = chart.element.offsetWidth;
+        const width = chart.element.offsetWidth;
         if (width > 0) {
           let unitStepSize = Math.ceil(timeDiff / step / (width / 100.0));
           if (week && step === 1) {
@@ -542,7 +543,7 @@ let createDataTable = function (chart, options, chartType) {
     }
   }
 
-  let data = {
+  const data = {
     labels: labels,
     datasets: datasets
   };
@@ -558,7 +559,7 @@ export default class {
   }
 
   renderLineChart(chart, chartType) {
-    let chartOptions = {};
+    const chartOptions = {};
     if (chartType === "area") {
       // TODO fix area stacked
       // chartOptions.stacked = true;
@@ -568,10 +569,10 @@ export default class {
       chartOptions.max = 1;
     }
 
-    let options = jsOptions(chart, merge(chartOptions, chart.options));
+    const options = jsOptions(chart, merge(chartOptions, chart.options));
     setFormatOptions(chart, options, chartType);
 
-    let data = createDataTable(chart, options, chartType || "line");
+    const data = createDataTable(chart, options, chartType || "line");
 
     if (chart.xtype === "number") {
       options.scales.x.type = options.scales.x.type || "linear";
@@ -600,10 +601,10 @@ export default class {
     options = merge(options, chart.options.library || {});
     setFormatOptions(chart, options, "pie");
 
-    let labels = [];
-    let values = [];
+    const labels = [];
+    const values = [];
     for (let i = 0; i < chart.data.length; i++) {
-      let point = chart.data[i];
+      const point = chart.data[i];
       labels.push(point[0]);
       values.push(point[1]);
     }
@@ -614,7 +615,7 @@ export default class {
     };
     dataset = merge(dataset, chart.options.dataset || {});
 
-    let data = {
+    const data = {
       labels: labels,
       datasets: [dataset]
     };
@@ -625,7 +626,7 @@ export default class {
   renderColumnChart(chart, chartType) {
     let options;
     if (chartType === "bar") {
-      let barOptions = merge(baseOptions, defaultOptions);
+      const barOptions = merge(baseOptions, defaultOptions);
       barOptions.indexAxis = "y";
 
       // ensure gridlines have proper orientation
@@ -638,7 +639,7 @@ export default class {
       options = jsOptions(chart, chart.options);
     }
     setFormatOptions(chart, options, chartType);
-    let data = createDataTable(chart, options, "column");
+    const data = createDataTable(chart, options, "column");
     if (chartType !== "bar") {
       setLabelSize(chart, data, options);
     }
@@ -659,14 +660,14 @@ export default class {
   renderScatterChart(chart, chartType) {
     chartType = chartType || "scatter";
 
-    let options = jsOptions(chart, chart.options);
+    const options = jsOptions(chart, chart.options);
     setFormatOptions(chart, options, chartType);
 
     if (!("showLine" in options)) {
       options.showLine = false;
     }
 
-    let data = createDataTable(chart, options, chartType);
+    const data = createDataTable(chart, options, chartType);
 
     options.scales.x.type = options.scales.x.type || "linear";
     options.scales.x.position = options.scales.x.position || "bottom";
@@ -693,7 +694,7 @@ export default class {
     this.destroy(chart);
     if (chart.destroyed) return;
 
-    let chartOptions = {
+    const chartOptions = {
       type: type,
       data: data,
       options: options
@@ -704,7 +705,7 @@ export default class {
     }
 
     chart.element.innerHTML = "<canvas></canvas>";
-    let ctx = chart.element.getElementsByTagName("CANVAS")[0];
+    const ctx = chart.element.getElementsByTagName("CANVAS")[0];
     chart.chart = new this.library(ctx, chartOptions);
   }
 }

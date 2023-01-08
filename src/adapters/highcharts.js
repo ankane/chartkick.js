@@ -1,6 +1,6 @@
 import { formatValue, isArray, jsOptionsFunc, merge, sortByNumber } from "../helpers";
 
-let defaultOptions = {
+const defaultOptions = {
   chart: {},
   xAxis: {
     title: {
@@ -48,7 +48,7 @@ let defaultOptions = {
   }
 };
 
-let hideLegend = function (options, legend, hideLegend) {
+const hideLegend = function (options, legend, hideLegend) {
   if (legend !== undefined) {
     options.legend.enabled = !!legend;
     if (legend && legend !== true) {
@@ -65,37 +65,37 @@ let hideLegend = function (options, legend, hideLegend) {
   }
 };
 
-let setTitle = function (options, title) {
+const setTitle = function (options, title) {
   options.title.text = title;
 };
 
-let setMin = function (options, min) {
+const setMin = function (options, min) {
   options.yAxis.min = min;
 };
 
-let setMax = function (options, max) {
+const setMax = function (options, max) {
   options.yAxis.max = max;
 };
 
-let setStacked = function (options, stacked) {
-  let stackedValue = stacked ? (stacked === true ? "normal" : stacked) : null;
+const setStacked = function (options, stacked) {
+  const stackedValue = stacked ? (stacked === true ? "normal" : stacked) : null;
   options.plotOptions.series.stacking = stackedValue;
   options.plotOptions.area.stacking = stackedValue;
   options.plotOptions.areaspline.stacking = stackedValue;
 };
 
-let setXtitle = function (options, title) {
+const setXtitle = function (options, title) {
   options.xAxis.title.text = title;
 };
 
-let setYtitle = function (options, title) {
+const setYtitle = function (options, title) {
   options.yAxis.title.text = title;
 };
 
-let jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
+const jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-let setFormatOptions = function(chart, options, chartType) {
-  let formatOptions = {
+const setFormatOptions = function(chart, options, chartType) {
+  const formatOptions = {
     prefix: chart.options.prefix,
     suffix: chart.options.suffix,
     thousands: chart.options.thousands,
@@ -154,7 +154,8 @@ export default class {
       }
     }
 
-    let options = jsOptions(chart, chart.options, chartOptions), data, i, j;
+    const options = jsOptions(chart, chart.options, chartOptions);
+    let data, i, j;
     if (chart.xtype === "number") {
       options.xAxis.type = options.xAxis.type || "linear";
     } else {
@@ -165,7 +166,7 @@ export default class {
     }
     setFormatOptions(chart, options, chartType);
 
-    let series = chart.data;
+    const series = chart.data;
     for (i = 0; i < series.length; i++) {
       series[i].name = series[i].name || "Value";
       data = series[i].data;
@@ -184,13 +185,13 @@ export default class {
   }
 
   renderScatterChart(chart) {
-    let options = jsOptions(chart, chart.options, {});
+    const options = jsOptions(chart, chart.options, {});
     options.chart.type = "scatter";
     this.drawChart(chart, chart.data, options);
   }
 
   renderPieChart(chart) {
-    let chartOptions = merge(defaultOptions, {});
+    const chartOptions = merge(defaultOptions, {});
 
     if (chart.options.colors) {
       chartOptions.colors = chart.options.colors;
@@ -207,9 +208,9 @@ export default class {
       setTitle(chartOptions, chart.options.title);
     }
 
-    let options = merge(chartOptions, chart.options.library || {});
+    const options = merge(chartOptions, chart.options.library || {});
     setFormatOptions(chart, options, "pie");
-    let series = [{
+    const series = [{
       type: "pie",
       name: chart.options.label || "Value",
       data: chart.data
@@ -220,8 +221,10 @@ export default class {
 
   renderColumnChart(chart, chartType) {
     chartType = chartType || "column";
-    let series = chart.data;
-    let options = jsOptions(chart, chart.options), i, j, s, d, rows = [], categories = [];
+    const series = chart.data;
+    const options = jsOptions(chart, chart.options);
+    let i, j, s, d;
+    const rows = [], categories = [];
     options.chart.type = chartType;
     setFormatOptions(chart, options, chartType);
 
@@ -244,7 +247,8 @@ export default class {
 
     options.xAxis.categories = categories;
 
-    let newSeries = [], d2;
+    const newSeries = [];
+    let d2;
     for (i = 0; i < series.length; i++) {
       d = [];
       for (j = 0; j < categories.length; j++) {

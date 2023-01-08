@@ -1,7 +1,8 @@
 import { isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate, isNumber } from "./helpers";
 
 function formatSeriesData(data, keyType) {
-  let r = [], j, keyFunc;
+  const r = [];
+  let j, keyFunc;
 
   if (keyType === "number") {
     keyFunc = toFloat;
@@ -62,9 +63,10 @@ function detectXTypeWithFunction(series, func) {
 // creates a shallow copy of each element of the array
 // elements are expected to be objects
 function copySeries(series) {
-  let newSeries = [], i, j;
+  const newSeries = [];
+  let i, j;
   for (i = 0; i < series.length; i++) {
-    let copy = {};
+    const copy = {};
     for (j in series[i]) {
       if (series[i].hasOwnProperty(j)) {
         copy[j] = series[i][j];
@@ -78,7 +80,7 @@ function copySeries(series) {
 function processSeries(chart, keyType, noDatetime) {
   let i;
 
-  let opts = chart.options;
+  const opts = chart.options;
   let series = chart.rawData;
 
   // see if one series or multiple
@@ -105,7 +107,8 @@ function processSeries(chart, keyType, noDatetime) {
 }
 
 function processSimple(chart) {
-  let perfectData = toArr(chart.rawData), i;
+  const perfectData = toArr(chart.rawData);
+  let i;
   for (i = 0; i < perfectData.length; i++) {
     perfectData[i] = [toStr(perfectData[i][0]), toFloat(perfectData[i][1])];
   }

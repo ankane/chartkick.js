@@ -33,13 +33,13 @@ function extend(target, source) {
 }
 
 function merge(obj1, obj2) {
-  let target = {};
+  const target = {};
   extend(target, obj1);
   extend(target, obj2);
   return target;
 }
 
-let DATE_PATTERN = /^(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)$/i;
+const DATE_PATTERN = /^(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)$/i;
 
 function negativeValues(series) {
   let i, j, data;
@@ -77,7 +77,7 @@ function toDate(n) {
       } else {
         // try our best to get the str into iso8601
         // TODO be smarter about this
-        let str = n.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
+        const str = n.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
         // Date.parse returns milliseconds if valid and NaN if invalid
         n = new Date(Date.parse(str) || n);
       }
@@ -88,7 +88,8 @@ function toDate(n) {
 
 function toArr(n) {
   if (!isArray(n)) {
-    let arr = [], i;
+    const arr = [];
+    let i;
     for (i in n) {
       if (n.hasOwnProperty(i)) {
         arr.push([i, n[i]]);
@@ -101,7 +102,7 @@ function toArr(n) {
 
 function jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle) {
   return function (chart, opts, chartOptions) {
-    let series = chart.data;
+    const series = chart.data;
     let options = merge({}, defaultOptions);
     options = merge(options, chartOptions || {});
 
@@ -192,7 +193,7 @@ function isNumber(obj) {
   return typeof obj === "number";
 }
 
-let byteSuffixes = ["bytes", "KB", "MB", "GB", "TB", "PB", "EB"];
+const byteSuffixes = ["bytes", "KB", "MB", "GB", "TB", "PB", "EB"];
 
 function formatValue(pre, value, options, axis) {
   pre = pre || "";
@@ -206,11 +207,11 @@ function formatValue(pre, value, options, axis) {
 
   let suffix = options.suffix || "";
   let precision = options.precision;
-  let round = options.round;
+  const round = options.round;
 
   if (options.byteScale) {
     let suffixIdx;
-    let baseValue = axis ? options.byteScale : value;
+    const baseValue = axis ? options.byteScale : value;
 
     if (baseValue >= 1152921504606846976) {
       value /= 1152921504606846976;
@@ -261,7 +262,7 @@ function formatValue(pre, value, options, axis) {
 
     if (round !== undefined) {
       if (round < 0) {
-        let num = Math.pow(10, -1 * round);
+        const num = Math.pow(10, -1 * round);
         value = parseInt((1.0 * value / num).toFixed(0)) * num;
       } else {
         value = value.toFixed(round);
@@ -274,7 +275,7 @@ function formatValue(pre, value, options, axis) {
 
   if (options.thousands || options.decimal) {
     value = toStr(value);
-    let parts = value.split(".");
+    const parts = value.split(".");
     value = parts[0];
     if (options.thousands) {
       value = value.replace(/\B(?=(\d{3})+(?!\d))/g, options.thousands);
