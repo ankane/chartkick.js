@@ -79,9 +79,8 @@ function renderChart(chartType, chart) {
 
 class Chart {
   constructor(element, dataSource, options) {
-    let elementId;
     if (typeof element === "string") {
-      elementId = element;
+      const elementId = element;
       element = document.getElementById(element);
       if (!element) {
         throw new Error("No element with id " + elementId);

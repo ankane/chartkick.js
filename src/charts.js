@@ -84,9 +84,8 @@ class BubbleChart extends Chart {
 
 class Timeline extends Chart {
   __processData() {
-    let i;
     const data = this.rawData;
-    for (i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       data[i][1] = toDate(data[i][1]);
       data[i][2] = toDate(data[i][2]);
     }
