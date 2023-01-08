@@ -2,8 +2,8 @@ import { isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries,
 
 function formatSeriesBubble(data) {
   const r = [];
-  for (let j = 0; j < data.length; j++) {
-    r.push([toFloat(data[j][0]), toFloat(data[j][1]), toFloat(data[j][2])]);
+  for (let i = 0; i < data.length; i++) {
+    r.push([toFloat(data[i][0]), toFloat(data[i][1]), toFloat(data[i][2])]);
   }
   return r;
 }
@@ -23,8 +23,8 @@ function formatSeriesData(data, keyType) {
   }
 
   const r = [];
-  for (let j = 0; j < data.length; j++) {
-    r.push([keyFunc(data[j][0]), toFloat(data[j][1])]);
+  for (let i = 0; i < data.length; i++) {
+    r.push([keyFunc(data[i][0]), toFloat(data[i][1])]);
   }
 
   if (keyType === "datetime") {
