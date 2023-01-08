@@ -4,8 +4,6 @@ import { addDownloadButton, removeEvent } from "./download";
 import { merge, toDate } from "./helpers";
 import { pushRequest } from "./request-queue";
 
-const config = {};
-
 // helpers
 
 function setText(element, text) {
@@ -232,7 +230,7 @@ class Chart {
   }
 
   __config() {
-    return config;
+    return Chartkick.config;
   }
 }
 
@@ -346,7 +344,7 @@ const Chartkick = {
   configure: function (options) {
     for (const key in options) {
       if (options.hasOwnProperty(key)) {
-        config[key] = options[key];
+        Chartkick.config[key] = options[key];
       }
     }
   },
@@ -368,7 +366,7 @@ const Chartkick = {
       }
     }
   },
-  config: config,
+  config: {},
   options: {},
   adapters: adapters,
   addAdapter: addAdapter,
@@ -384,12 +382,12 @@ if (typeof window !== "undefined" && !window.Chartkick) {
 
   // clean up previous charts before Turbolinks loads new page
   document.addEventListener("turbolinks:before-render", function () {
-    if (config.autoDestroy !== false) {
+    if (Chartkick.config.autoDestroy !== false) {
       Chartkick.destroyAll();
     }
   });
   document.addEventListener("turbo:before-render", function () {
-    if (config.autoDestroy !== false) {
+    if (Chartkick.config.autoDestroy !== false) {
       Chartkick.destroyAll();
     }
   });
