@@ -12,6 +12,11 @@
     "semi": ["error", "always"],
     "no-prototype-builtins": "off",
     "prefer-const": "error",
-    "camelcase": "error"
+    "camelcase": "error",
+    "space-before-function-paren": ["error", {
+      "anonymous": "always",
+      "named": "never",
+      "asyncArrow": "always"
+    }]
   }
 }

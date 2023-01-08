@@ -425,7 +425,7 @@ const Chartkick = {
       }
     }
   },
-  destroyAll: function() {
+  destroyAll: function () {
     for (const chartId in Chartkick.charts) {
       if (Chartkick.charts.hasOwnProperty(chartId)) {
         Chartkick.charts[chartId].destroy();
@@ -437,7 +437,7 @@ const Chartkick = {
   options: {},
   adapters: adapters,
   addAdapter: addAdapter,
-  use: function(adapter) {
+  use: function (adapter) {
     addAdapter(adapter);
     return Chartkick;
   }
@@ -448,19 +448,19 @@ if (typeof window !== "undefined" && !window.Chartkick) {
   window.Chartkick = Chartkick;
 
   // clean up previous charts before Turbolinks loads new page
-  document.addEventListener("turbolinks:before-render", function() {
+  document.addEventListener("turbolinks:before-render", function () {
     if (config.autoDestroy !== false) {
       Chartkick.destroyAll();
     }
   });
-  document.addEventListener("turbo:before-render", function() {
+  document.addEventListener("turbo:before-render", function () {
     if (config.autoDestroy !== false) {
       Chartkick.destroyAll();
     }
   });
 
   // use setTimeout so charting library can come later in same JS file
-  setTimeout(function() {
+  setTimeout(function () {
     window.dispatchEvent(new Event("chartkick:load"));
   }, 0);
 }

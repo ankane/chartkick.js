@@ -28,7 +28,7 @@ function addDownloadButton(chart) {
   chart.__downloadAttached = true;
 
   // mouseenter
-  chart.__enterEvent = addEvent(element, "mouseover", function(e) {
+  chart.__enterEvent = addEvent(element, "mouseover", function (e) {
     const related = e.relatedTarget;
     // check download option again to ensure it wasn't changed
     if ((!related || (related !== this && !childOf(this, related))) && chart.options.download) {
@@ -38,7 +38,7 @@ function addDownloadButton(chart) {
   });
 
   // mouseleave
-  chart.__leaveEvent = addEvent(element, "mouseout", function(e) {
+  chart.__leaveEvent = addEvent(element, "mouseout", function (e) {
     const related = e.relatedTarget;
     if (!related || (related !== this && !childOf(this, related))) {
       if (link.parentNode) {
@@ -54,7 +54,7 @@ function addEvent(elem, event, fn) {
     elem.addEventListener(event, fn, false);
     return fn;
   } else {
-    const fn2 = function() {
+    const fn2 = function () {
       // set the this pointer same as addEventListener when fn is called
       return(fn.call(elem, window.event));
     };

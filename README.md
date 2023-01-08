@@ -503,7 +503,7 @@ chart.redraw()
 Loop over charts with:
 
 ```javascript
-Chartkick.eachChart( function(chart) {
+Chartkick.eachChart(function (chart) {
   // do something
 })
 ```

@@ -134,7 +134,7 @@
     <h1>Callback Success</h1>
     <div id="callback-success" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("callback-success", function(success, error) {
+      new Chartkick.LineChart("callback-success", function (success, error) {
         success({"2021-02-10":11,"2021-02-11":6,"2021-02-12":3,"2021-02-13":2,"2021-02-14":5,"2021-02-15":3,"2021-02-16":8,"2021-02-17":6,"2021-02-18":6,"2021-02-19":12,"2021-02-20":5,"2021-02-21":5,"2021-02-22":3,"2021-02-23":1,"2021-02-24":10,"2021-02-25":1,"2021-02-26":3,"2021-02-27":2,"2021-02-28":3,"2021-03-01":2,"2021-03-02":8});
       });
     </script>
@@ -143,7 +143,7 @@
     <div id="callback-fetch" style="height: 300px;"></div>
     <script>
       function fetchChart(success, fail) {
-        fetch("remote.json").then(function(response) {
+        fetch("remote.json").then(function (response) {
           if (!response.ok) {
             throw Error(response.statusText);
           }
@@ -157,7 +157,7 @@
     <h1>Callback Error</h1>
     <div id="callback-error" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("callback-error", function(success, error) {
+      new Chartkick.LineChart("callback-error", function (success, error) {
         error("Test error");
       });
     </script>
@@ -165,7 +165,7 @@
     <h1>Callback Error 2</h1>
     <div id="callback-error2" style="height: 300px;"></div>
     <script>
-      new Chartkick.LineChart("callback-error2", function(success, error) {
+      new Chartkick.LineChart("callback-error2", function (success, error) {
         throw "Test error";
       });
     </script>
@@ -771,12 +771,12 @@
     <script>
       var updateChart = new Chartkick.LineChart("update-data", {"2021-02-10":11,"2021-02-11":6,"2021-02-12":3,"2021-02-13":2,"2021-02-14":5,"2021-02-15":3,"2021-02-16":8,"2021-02-17":6,"2021-02-18":6,"2021-02-19":12,"2021-02-20":5,"2021-02-21":5,"2021-02-22":3,"2021-02-23":1,"2021-02-24":10,"2021-02-25":1,"2021-02-26":3,"2021-02-27":2,"2021-02-28":3,"2021-03-01":2,"2021-03-02":8});
 
-      setTimeout( function () {
+      setTimeout(function () {
         updateChart.updateData([{"name":"Workout","data":{"2021-02-10":3,"2021-02-17":3,"2021-02-24":3,"2021-03-03":1,"2021-03-10":4,"2021-03-17":3,"2021-03-24":2,"2021-03-31":3}},{"name":"Go to concert","data":{"2021-02-10":0,"2021-02-17":0,"2021-02-24":0,"2021-03-03":0,"2021-03-10":2,"2021-03-17":1,"2021-03-24":0,"2021-03-31":0}},{"name":"Wash face","data":{"2021-02-10":0,"2021-02-17":1,"2021-02-24":0,"2021-03-03":0,"2021-03-10":0,"2021-03-17":1,"2021-03-24":0,"2021-03-31":1}},{"name":"Call parents","data":{"2021-02-10":5,"2021-02-17":3,"2021-02-24":2,"2021-03-03":0,"2021-03-10":0,"2021-03-17":1,"2021-03-24":1,"2021-03-31":0}},{"name":"Eat breakfast","data":{"2021-02-10":3,"2021-02-17":2,"2021-02-24":1,"2021-03-03":0,"2021-03-10":2,"2021-03-17":2,"2021-03-24":3,"2021-03-31":0}}], {max: 30});
 
         // console.log(chart1.getData());
 
-        setTimeout( function () {
+        setTimeout(function () {
           // chart1.updateData("remote.json");
           updateChart.setOptions({colors: ["#b00", "#666"]});
         }, 3000);
@@ -788,7 +788,7 @@
     <script>
       var refreshChart = new Chartkick.LineChart("refresh-data-url", "remote.json", {refresh: 3});
 
-      setTimeout( function () {
+      setTimeout(function () {
         refreshChart.stopRefresh();
       }, 10000);
     </script>
@@ -797,13 +797,13 @@
     <div id="refresh-data-callback" style="height: 300px;"></div>
     <script>
       var data = [];
-      var cb = function(success, error) {
+      var cb = function (success, error) {
         data.push([data.length + 1, Math.random()]);
         success(data);
       };
       var refreshChart2 = new Chartkick.LineChart("refresh-data-callback", cb, {refresh: 3});
 
-      setTimeout( function () {
+      setTimeout(function () {
         refreshChart2.stopRefresh();
       }, 30000);
     </script>
@@ -822,7 +822,7 @@
       // console.log(chart.getData());
       // console.log(chart.getOptions());
       // console.log(chart.getChartObject());
-      Chartkick.eachChart( function (chart) {
+      Chartkick.eachChart(function (chart) {
         // console.log(chart.getElement());
       });
     </script>

@@ -94,7 +94,7 @@ const setYtitle = function (options, title) {
 
 const jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-const setFormatOptions = function(chart, options, chartType) {
+const setFormatOptions = function (chart, options, chartType) {
   const formatOptions = {
     prefix: chart.options.prefix,
     suffix: chart.options.suffix,
