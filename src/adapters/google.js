@@ -1,4 +1,4 @@
-import { jsOptionsFunc, merge, toStr, toFloat, sortByTime, sortByNumberSeries, isDay } from "../helpers";
+import { jsOptionsFunc, merge, toStr, sortByTime, sortByNumberSeries, isDay } from "../helpers";
 
 const loaded = {};
 const callbacks = [];
@@ -349,12 +349,12 @@ export default class {
 
       for (let j = 0; j < s.data.length; j++) {
         const d = s.data[j];
-        const key = (columnType === "datetime") ? d[0].getTime() : d[0];
+        const key = columnType === "datetime" ? d[0].getTime() : d[0];
         if (!rows[key]) {
           rows[key] = new Array(series.length);
           sortedLabels.push(key);
         }
-        rows[key][i] = toFloat(d[1]);
+        rows[key][i] = d[1];
       }
     }
 
@@ -364,15 +364,14 @@ export default class {
       const i = sortedLabels[j];
       let value;
       if (columnType === "datetime") {
-        value = new Date(toFloat(i));
+        value = new Date(i);
         day = day && isDay(value);
-      } else if (columnType === "number") {
-        value = toFloat(i);
       } else {
         value = i;
       }
       rows2.push([value].concat(rows[i]));
     }
+
     if (columnType === "datetime") {
       rows2.sort(sortByTime);
     } else if (columnType === "number") {
