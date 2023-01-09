@@ -325,9 +325,6 @@ function calculateTimeUnit(values) {
 
 const jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-// Chart.js supports passing values without labels
-// but causes gaps to be spanned
-// https://www.chartjs.org/docs/latest/general/data-structures.html
 function prepareDefaultData(chart) {
   const series = chart.data;
   const rows = {};
