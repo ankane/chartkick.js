@@ -61,27 +61,26 @@ function toFloat(n) {
 }
 
 function toDate(n) {
-  let matches;
-  if (typeof n !== "object") {
-    if (typeof n === "number") {
-      n = new Date(n * 1000); // ms
+  if (typeof n === "object") {
+    return n;
+  } else if (typeof n === "number") {
+    return new Date(n * 1000); // ms
+  } else {
+    n = toStr(n);
+    let matches;
+    if ((matches = n.match(DATE_PATTERN))) {
+      const year = parseInt(matches[1], 10);
+      const month = parseInt(matches[3], 10) - 1;
+      const day = parseInt(matches[5], 10);
+      return new Date(year, month, day);
     } else {
-      n = toStr(n);
-      if ((matches = n.match(DATE_PATTERN))) {
-        const year = parseInt(matches[1], 10);
-        const month = parseInt(matches[3], 10) - 1;
-        const day = parseInt(matches[5], 10);
-        return new Date(year, month, day);
-      } else {
-        // try our best to get the str into iso8601
-        // TODO be smarter about this
-        const str = n.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
-        // Date.parse returns milliseconds if valid and NaN if invalid
-        n = new Date(Date.parse(str) || n);
-      }
+      // try our best to get the str into iso8601
+      // TODO be smarter about this
+      const str = n.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
+      // Date.parse returns milliseconds if valid and NaN if invalid
+      return new Date(Date.parse(str) || n);
     }
   }
-  return n;
 }
 
 function toArr(n) {
