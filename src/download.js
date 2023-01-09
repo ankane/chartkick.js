@@ -31,7 +31,7 @@ function addDownloadButton(chart) {
   chart.__enterEvent = element.addEventListener("mouseover", function (e) {
     const related = e.relatedTarget;
     // check download option again to ensure it wasn't changed
-    if ((!related || (related !== this && !childOf(this, related))) && chart.options.download) {
+    if ((!related || (related !== this && !this.contains(related))) && chart.options.download) {
       link.href = chart.toImage(download);
       element.appendChild(link);
     }
@@ -40,19 +40,12 @@ function addDownloadButton(chart) {
   // mouseleave
   chart.__leaveEvent = element.addEventListener("mouseout", function (e) {
     const related = e.relatedTarget;
-    if (!related || (related !== this && !childOf(this, related))) {
+    if (!related || (related !== this && !this.contains(related))) {
       if (link.parentNode) {
         link.parentNode.removeChild(link);
       }
     }
   });
-}
-
-// https://gist.github.com/shawnbot/4166283
-function childOf(p, c) {
-  if (p === c) return false;
-  while (c && c !== p) c = c.parentNode;
-  return c === p;
 }
 
 export { addDownloadButton };
