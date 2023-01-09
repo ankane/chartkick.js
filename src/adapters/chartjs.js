@@ -356,13 +356,8 @@ function prepareDefaultData(chart) {
 
   for (let i = 0; i < sortedLabels.length; i++) {
     const v = sortedLabels[i];
-    let value;
-    if (chart.xtype === "datetime") {
-      value = new Date(v);
-    } else {
-      value = v;
-    }
-    labels.push(value);
+    const label = chart.xtype === "datetime" ? new Date(v) : v;
+    labels.push(label);
     for (let j = 0; j < series.length; j++) {
       // Chart.js doesn't like undefined
       rows2[j].push(rows[v][j] === undefined ? null : rows[v][j]);
