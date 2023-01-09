@@ -28,7 +28,7 @@ function addDownloadButton(chart) {
   chart.__downloadAttached = true;
 
   // mouseenter
-  chart.__enterEvent = addEvent(element, "mouseover", function (e) {
+  chart.__enterEvent = element.addEventListener("mouseover", function (e) {
     const related = e.relatedTarget;
     // check download option again to ensure it wasn't changed
     if ((!related || (related !== this && !childOf(this, related))) && chart.options.download) {
@@ -38,7 +38,7 @@ function addDownloadButton(chart) {
   });
 
   // mouseleave
-  chart.__leaveEvent = addEvent(element, "mouseout", function (e) {
+  chart.__leaveEvent = element.addEventListener("mouseout", function (e) {
     const related = e.relatedTarget;
     if (!related || (related !== this && !childOf(this, related))) {
       if (link.parentNode) {
@@ -48,29 +48,6 @@ function addDownloadButton(chart) {
   });
 }
 
-// https://stackoverflow.com/questions/10149963/adding-event-listener-cross-browser
-function addEvent(elem, event, fn) {
-  if (elem.addEventListener) {
-    elem.addEventListener(event, fn, false);
-    return fn;
-  } else {
-    const fn2 = function () {
-      // set the this pointer same as addEventListener when fn is called
-      return fn.call(elem, window.event);
-    };
-    elem.attachEvent("on" + event, fn2);
-    return fn2;
-  }
-}
-
-function removeEvent(elem, event, fn) {
-  if (elem.removeEventListener) {
-    elem.removeEventListener(event, fn, false);
-  } else {
-    elem.detachEvent("on" + event, fn);
-  }
-}
-
 // https://gist.github.com/shawnbot/4166283
 function childOf(p, c) {
   if (p === c) return false;
@@ -78,4 +55,4 @@ function childOf(p, c) {
   return c === p;
 }
 
-export { addDownloadButton, removeEvent };
+export { addDownloadButton };

@@ -1,7 +1,7 @@
 import { callAdapter } from "./adapter";
 import Chartkick from "./chartkick";
 import { dataEmpty } from "./data";
-import { addDownloadButton, removeEvent } from "./download";
+import { addDownloadButton } from "./download";
 import { merge } from "./helpers";
 import { pushRequest } from "./request-queue";
 
@@ -207,11 +207,11 @@ class Chart {
     }
 
     if (this.__enterEvent) {
-      removeEvent(this.element, "mouseover", this.__enterEvent);
+      this.element.removeEventListener("mouseover", this.__enterEvent);
     }
 
     if (this.__leaveEvent) {
-      removeEvent(this.element, "mouseout", this.__leaveEvent);
+      this.element.removeEventListener("mouseout", this.__leaveEvent);
     }
   }
 
