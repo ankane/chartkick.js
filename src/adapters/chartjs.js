@@ -273,6 +273,20 @@ const setFormatOptions = function (chart, options, chartType) {
   }
 };
 
+const maxR = function (series) {
+  let max = 0;
+  for (let i = 0; i < series.length; i++) {
+    const data = series[i].data;
+    for (let j = 0; j < data.length; j++) {
+      const r = data[j][2];
+      if (r > max) {
+        max = r;
+      }
+    }
+  }
+  return max;
+};
+
 const jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
 const createDataTable = function (chart, options, chartType) {
@@ -345,16 +359,7 @@ const createDataTable = function (chart, options, chartType) {
       }
     }
   } else if (chartType === "bubble") {
-    let max = 0;
-    for (let i = 0; i < series.length; i++) {
-      const data = series[i].data;
-      for (let j = 0; j < data.length; j++) {
-        const r = data[j][2];
-        if (r > max) {
-          max = r;
-        }
-      }
-    }
+    const max = maxR(series);
 
     for (let i = 0; i < series.length; i++) {
       const data = series[i].data;
