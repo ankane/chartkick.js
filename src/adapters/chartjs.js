@@ -291,19 +291,6 @@ const createDataTable = function (chart, options, chartType) {
 
   const series = chart.data;
 
-  let max = 0;
-  if (chartType === "bubble") {
-    for (let i = 0; i < series.length; i++) {
-      const data = series[i].data;
-      for (let j = 0; j < data.length; j++) {
-        const r = data[j][2];
-        if (r > max) {
-          max = r;
-        }
-      }
-    }
-  }
-
   const rows = [], rows2 = [];
 
   if (chartType === "bar" || chartType === "column" || (chart.xtype !== "number" && chart.xtype !== "bubble")) {
@@ -357,22 +344,44 @@ const createDataTable = function (chart, options, chartType) {
         rows2[j].push(rows[v][j] === undefined ? null : rows[v][j]);
       }
     }
-  } else {
+  } else if (chartType === "bubble") {
+    let max = 0;
+    for (let i = 0; i < series.length; i++) {
+      const data = series[i].data;
+      for (let j = 0; j < data.length; j++) {
+        const r = data[j][2];
+        if (r > max) {
+          max = r;
+        }
+      }
+    }
+
     for (let i = 0; i < series.length; i++) {
       const data = series[i].data;
       const points = [];
       for (let j = 0; j < data.length; j++) {
         const v = data[j];
-        const point = {
+        points.push({
+          x: v[0],
+          y: v[1],
+          r: v[2] * 20 / max,
+          // custom attribute, for tooltip
+          v: v[2]
+        });
+      }
+      rows2.push(points);
+    }
+  } else {
+    // scatter
+    for (let i = 0; i < series.length; i++) {
+      const data = series[i].data;
+      const points = [];
+      for (let j = 0; j < data.length; j++) {
+        const v = data[j];
+        points.push({
           x: v[0],
           y: v[1]
-        };
-        if (chartType === "bubble") {
-          point.r = v[2] * 20 / max;
-          // custom attribute, for tooltip
-          point.v = v[2];
-        }
-        points.push(point);
+        });
       }
       rows2.push(points);
     }
