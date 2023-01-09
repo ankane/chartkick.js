@@ -38,7 +38,7 @@ function merge(obj1, obj2) {
   return target;
 }
 
-const DATE_PATTERN = /^(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)$/i;
+const DATE_PATTERN = /^(\d\d\d\d)(?:-)?(\d\d)(?:-)?(\d\d)$/i;
 
 function negativeValues(series) {
   for (let i = 0; i < series.length; i++) {
@@ -70,8 +70,8 @@ function toDate(obj) {
     const matches = s.match(DATE_PATTERN);
     if (matches) {
       const year = parseInt(matches[1], 10);
-      const month = parseInt(matches[3], 10) - 1;
-      const day = parseInt(matches[5], 10);
+      const month = parseInt(matches[2], 10) - 1;
+      const day = parseInt(matches[3], 10);
       return new Date(year, month, day);
     } else {
       // try our best to get the str into iso8601
