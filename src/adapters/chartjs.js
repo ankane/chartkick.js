@@ -325,87 +325,47 @@ function calculateTimeUnit(values) {
 
 const jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-function prepareData(chart, chartType) {
+function prepareDefaultData(chart) {
+  const series = chart.data;
+  const rows = [];
+  const sortedLabels = [];
   const labels = [];
   const rows2 = [];
 
-  const series = chart.data;
-  if (chartType === "bar" || chartType === "column" || (chart.xtype !== "number" && chart.xtype !== "bubble")) {
-    const rows = [];
-    const sortedLabels = [];
+  for (let i = 0; i < series.length; i++) {
+    const data = series[i].data;
 
-    for (let i = 0; i < series.length; i++) {
-      const data = series[i].data;
-
-      for (let j = 0; j < data.length; j++) {
-        const d = data[j];
-        const key = chart.xtype === "datetime" ? d[0].getTime() : d[0];
-        if (!rows[key]) {
-          rows[key] = new Array(series.length);
-          sortedLabels.push(key);
-        }
-        rows[key][i] = d[1];
+    for (let j = 0; j < data.length; j++) {
+      const d = data[j];
+      const key = chart.xtype === "datetime" ? d[0].getTime() : d[0];
+      if (!rows[key]) {
+        rows[key] = new Array(series.length);
+        sortedLabels.push(key);
       }
+      rows[key][i] = d[1];
     }
+  }
 
-    if (chart.xtype === "datetime" || chart.xtype === "number") {
-      sortedLabels.sort(sortByNumber);
+  if (chart.xtype === "datetime" || chart.xtype === "number") {
+    sortedLabels.sort(sortByNumber);
+  }
+
+  for (let i = 0; i < series.length; i++) {
+    rows2.push([]);
+  }
+
+  for (let i = 0; i < sortedLabels.length; i++) {
+    const v = sortedLabels[i];
+    let value;
+    if (chart.xtype === "datetime") {
+      value = new Date(v);
+    } else {
+      value = v;
     }
-
-    for (let i = 0; i < series.length; i++) {
-      rows2.push([]);
-    }
-
-    for (let i = 0; i < sortedLabels.length; i++) {
-      const v = sortedLabels[i];
-      let value;
-      if (chart.xtype === "datetime") {
-        value = new Date(v);
-      } else {
-        value = v;
-      }
-      labels.push(value);
-      for (let j = 0; j < series.length; j++) {
-        // Chart.js doesn't like undefined
-        rows2[j].push(rows[v][j] === undefined ? null : rows[v][j]);
-      }
-    }
-  } else if (chartType === "bubble") {
-    const max = maxR(series);
-
-    for (let i = 0; i < series.length; i++) {
-      const data = series[i].data;
-      const points = [];
-      for (let j = 0; j < data.length; j++) {
-        const v = data[j];
-        points.push({
-          x: v[0],
-          y: v[1],
-          r: v[2] * 20 / max,
-          // custom attribute, for tooltip
-          v: v[2]
-        });
-      }
-      rows2.push(points);
-    }
-  } else {
-    // scatter or numeric line/area
-    for (let i = 0; i < series.length; i++) {
-      const data = series[i].data;
-
-      if (chartType !== "scatter") {
-        data.sort(sortByNumberSeries);
-      }
-
-      const points = [];
-      for (let j = 0; j < data.length; j++) {
-        const v = data[j];
-        points.push({
-          x: v[0],
-          y: v[1]
-        });
-      }
-      rows2.push(points);
+    labels.push(value);
+    for (let j = 0; j < series.length; j++) {
+      // Chart.js doesn't like undefined
+      rows2[j].push(rows[v][j] === undefined ? null : rows[v][j]);
     }
   }
 
@@ -413,6 +373,72 @@ function prepareData(chart, chartType) {
     labels: labels,
     rows: rows2
   };
+}
+
+function prepareBubbleData(chart) {
+  const series = chart.data;
+  const rows = [];
+  const max = maxR(series);
+
+  for (let i = 0; i < series.length; i++) {
+    const data = series[i].data;
+    const points = [];
+    for (let j = 0; j < data.length; j++) {
+      const v = data[j];
+      points.push({
+        x: v[0],
+        y: v[1],
+        r: v[2] * 20 / max,
+        // custom attribute, for tooltip
+        v: v[2]
+      });
+    }
+    rows.push(points);
+  }
+
+  return {
+    labels: [],
+    rows: rows
+  };
+}
+
+// scatter or numeric line/area
+function prepareNumberData(chart, chartType) {
+  const series = chart.data;
+  const rows = [];
+
+  for (let i = 0; i < series.length; i++) {
+    const data = series[i].data;
+
+    if (chartType !== "scatter") {
+      data.sort(sortByNumberSeries);
+    }
+
+    const points = [];
+    for (let j = 0; j < data.length; j++) {
+      const v = data[j];
+      points.push({
+        x: v[0],
+        y: v[1]
+      });
+    }
+    rows.push(points);
+  }
+
+  return {
+    labels: [],
+    rows: rows
+  };
+}
+
+function prepareData(chart, chartType) {
+  if (chartType === "bar" || chartType === "column" || (chart.xtype !== "number" && chart.xtype !== "bubble")) {
+    return prepareDefaultData(chart);
+  } else if (chartType === "bubble") {
+    return prepareBubbleData(chart);
+  } else {
+    return prepareNumberData(chart, chartType);
+  }
 }
 
 function createDataTable(chart, options, chartType) {
