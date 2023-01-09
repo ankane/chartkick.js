@@ -327,7 +327,7 @@ const jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, 
 
 function prepareDefaultData(chart) {
   const series = chart.data;
-  const rows = [];
+  const rows = {};
   const keys = [];
   const labels = [];
   const values = [];
