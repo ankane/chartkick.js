@@ -171,7 +171,7 @@ function isDay(timeUnit) {
   return timeUnit === "day" || timeUnit === "week" || timeUnit === "month" || timeUnit === "year";
 }
 
-function calculateTimeUnit(values) {
+function calculateTimeUnit(values, maxDay = false) {
   if (values.length === 0) {
     return null;
   }
@@ -189,6 +189,10 @@ function calculateTimeUnit(values) {
   const day = every(values, (d) => d.getHours() === 0);
   if (!day) {
     return "hour";
+  }
+
+  if (maxDay) {
+    return "day";
   }
 
   const dayOfWeek = values[0].getDay();
