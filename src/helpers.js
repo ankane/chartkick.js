@@ -83,14 +83,14 @@ function toDate(obj) {
   }
 }
 
-function toArr(n) {
-  if (isArray(n)) {
-    return n;
+function toArr(obj) {
+  if (isArray(obj)) {
+    return obj;
   } else {
     const arr = [];
-    for (const i in n) {
-      if (n.hasOwnProperty(i)) {
-        arr.push([i, n[i]]);
+    for (const i in obj) {
+      if (obj.hasOwnProperty(i)) {
+        arr.push([i, obj[i]]);
       }
     }
     return arr;
