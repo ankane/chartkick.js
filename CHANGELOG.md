@@ -2,6 +2,7 @@
 
 - Added support for Chart.js 4
 - Fixed tooltip for negative values with `bytes`
+- Dropped support for AJAX through jQuery and Zepto
 
 ## 4.2.0 (2022-05-25)
 
