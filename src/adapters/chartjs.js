@@ -113,10 +113,8 @@ function addOpacity(hex, opacity) {
   return result ? "rgba(" + parseInt(result[1], 16) + ", " + parseInt(result[2], 16) + ", " + parseInt(result[3], 16) + ", " + opacity + ")" : hex;
 }
 
-// check if not null or undefined
-// https://stackoverflow.com/a/27757708/1177228
 function notnull(x) {
-  return x != null;
+  return x !== null && x !== undefined;
 }
 
 function setLabelSize(chart, data, options) {
