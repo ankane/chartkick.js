@@ -80,7 +80,7 @@ function processSeries(chart, keyType, noDatetime) {
   let series = chart.rawData;
 
   // see if one series or multiple
-  chart.singleSeriesFormat = !(isArray(series) && isPlainObject(series[0]));
+  chart.singleSeriesFormat = !isArray(series) || !isPlainObject(series[0]);
   if (chart.singleSeriesFormat) {
     series = [{name: opts.label, data: series}];
   }
