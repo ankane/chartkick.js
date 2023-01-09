@@ -568,18 +568,6 @@ function createDataTable(chart, options, chartType) {
   };
 }
 
-function allZeros(series) {
-  for (let i = 0; i < series.length; i++) {
-    const data = series[i].data;
-    for (let j = 0; j < data.length; j++) {
-      if (data[j][1] !== 0) {
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
 export default class {
   constructor(library) {
     this.name = "chartjs";
@@ -592,10 +580,6 @@ export default class {
     if (chartType === "area") {
       // TODO fix area stacked
       // chartOptions.stacked = true;
-    }
-    // fix for https://github.com/chartjs/Chart.js/issues/2441
-    if (!chart.options.max && allZeros(chart.data)) {
-      chartOptions.max = 1;
     }
 
     const options = jsOptions(chart, merge(chartOptions, chart.options));
