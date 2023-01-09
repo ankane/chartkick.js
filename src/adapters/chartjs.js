@@ -328,7 +328,7 @@ const jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, 
 function prepareDefaultData(chart) {
   const series = chart.data;
   const rows = [];
-  const sortedLabels = [];
+  const keys = [];
   const labels = [];
   const values = [];
 
@@ -340,28 +340,31 @@ function prepareDefaultData(chart) {
       const key = chart.xtype === "datetime" ? d[0].getTime() : d[0];
       if (!rows[key]) {
         rows[key] = new Array(series.length);
-        sortedLabels.push(key);
+        keys.push(key);
       }
       rows[key][i] = d[1];
     }
   }
 
   if (chart.xtype === "datetime" || chart.xtype === "number") {
-    sortedLabels.sort(sortByNumber);
+    keys.sort(sortByNumber);
   }
 
   for (let i = 0; i < series.length; i++) {
     values.push([]);
   }
 
-  for (let i = 0; i < sortedLabels.length; i++) {
-    const v = sortedLabels[i];
-    const label = chart.xtype === "datetime" ? new Date(v) : v;
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+
+    const label = chart.xtype === "datetime" ? new Date(key) : key;
     labels.push(label);
+
+    const row = rows[key];
     for (let j = 0; j < series.length; j++) {
-      const val = rows[v][j];
+      const v = row[j];
       // Chart.js doesn't like undefined
-      values[j].push(val === undefined ? null : val);
+      values[j].push(v === undefined ? null : v);
     }
   }
 
