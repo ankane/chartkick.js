@@ -139,24 +139,12 @@ function setLabelSize(chart, data, options) {
 }
 
 function calculateScale(series) {
-  // calculate max
-  let max = 0;
-  for (let i = 0; i < series.length; i++) {
-    const s = series[i];
-    for (let j = 0; j < s.data.length; j++) {
-      if (s.data[j][1] > max) {
-        max = s.data[j][1];
-      }
-    }
-  }
-
-  // calculate scale
   let scale = 1;
+  let max = maxY(series);
   while (max >= 1024) {
     scale *= 1024;
     max /= 1024;
   }
-
   return scale;
 }
 
@@ -265,14 +253,28 @@ function setFormatOptions(chart, options, chartType) {
   }
 }
 
+function maxY(series) {
+  let max = 0;
+  for (let i = 0; i < series.length; i++) {
+    const data = series[i].data;
+    for (let j = 0; j < data.length; j++) {
+      const v = data[j][1];
+      if (v > max) {
+        max = v;
+      }
+    }
+  }
+  return max;
+}
+
 function maxR(series) {
   let max = 0;
   for (let i = 0; i < series.length; i++) {
     const data = series[i].data;
     for (let j = 0; j < data.length; j++) {
-      const r = data[j][2];
-      if (r > max) {
-        max = r;
+      const v = data[j][2];
+      if (v > max) {
+        max = v;
       }
     }
   }
