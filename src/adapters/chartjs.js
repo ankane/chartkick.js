@@ -285,25 +285,12 @@ function maxR(series) {
 const jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
 function createDataTable(chart, options, chartType) {
-  const datasets = [];
-  const labels = [];
-
-  const colors = chart.options.colors || defaultColors;
-
-  let day = true;
-  let week = true;
-  let dayOfWeek;
-  let month = true;
-  let year = true;
-  let hour = true;
-  let minute = true;
-
   const series = chart.data;
 
-  const rows = [];
+  const labels = [];
   const rows2 = [];
-
   if (chartType === "bar" || chartType === "column" || (chart.xtype !== "number" && chart.xtype !== "bubble")) {
+    const rows = [];
     const sortedLabels = [];
 
     for (let i = 0; i < series.length; i++) {
@@ -333,16 +320,6 @@ function createDataTable(chart, options, chartType) {
       let value;
       if (chart.xtype === "datetime") {
         value = new Date(v);
-        // TODO make this efficient
-        day = day && isDay(value);
-        if (!dayOfWeek) {
-          dayOfWeek = value.getDay();
-        }
-        week = week && isWeek(value, dayOfWeek);
-        month = month && isMonth(value);
-        year = year && isYear(value);
-        hour = hour && isHour(value);
-        minute = minute && isMinute(value);
       } else {
         value = v;
       }
@@ -391,6 +368,32 @@ function createDataTable(chart, options, chartType) {
     }
   }
 
+  let day = true;
+  let week = true;
+  let dayOfWeek;
+  let month = true;
+  let year = true;
+  let hour = true;
+  let minute = true;
+  if (chart.xtype === "datetime") {
+    for (let i = 0; i < labels.length; i++) {
+      const value = labels[i];
+
+      // TODO make this efficient
+      day = day && isDay(value);
+      if (!dayOfWeek) {
+        dayOfWeek = value.getDay();
+      }
+      week = week && isWeek(value, dayOfWeek);
+      month = month && isMonth(value);
+      year = year && isYear(value);
+      hour = hour && isHour(value);
+      minute = minute && isMinute(value);
+    }
+  }
+
+  const datasets = [];
+  const colors = chart.options.colors || defaultColors;
   for (let i = 0; i < series.length; i++) {
     const s = series[i];
 
