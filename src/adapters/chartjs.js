@@ -1,17 +1,5 @@
 import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, seriesOption } from "../helpers";
 
-function allZeros(data) {
-  for (let i = 0; i < data.length; i++) {
-    const d = data[i].data;
-    for (let j = 0; j < d.length; j++) {
-      if (d[j][1] !== 0) {
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
 const baseOptions = {
   maintainAspectRatio: false,
   animation: false,
@@ -562,6 +550,18 @@ function createDataTable(chart, options, chartType) {
   };
 
   return data;
+}
+
+function allZeros(data) {
+  for (let i = 0; i < data.length; i++) {
+    const d = data[i].data;
+    for (let j = 0; j < d.length; j++) {
+      if (d[j][1] !== 0) {
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 export default class {
