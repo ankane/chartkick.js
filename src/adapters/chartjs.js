@@ -316,6 +316,8 @@ function createDataTable(chart, options, chartType) {
           rows[key] = new Array(series.length);
         }
         rows[key][i] = d[1];
+
+        // TODO improve performance
         if (sortedLabels.indexOf(key) === -1) {
           sortedLabels.push(key);
         }
