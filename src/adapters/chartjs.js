@@ -1,4 +1,4 @@
-import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, sortByNumber, sortByNumberSeries, isMinute, isHour, isDay, isWeek, isMonth, isYear, seriesOption } from "../helpers";
+import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, sortByNumber, sortByNumberSeries, isDay, calculateTimeUnit, seriesOption } from "../helpers";
 
 const baseOptions = {
   maintainAspectRatio: false,
@@ -282,47 +282,6 @@ function maxR(series) {
   return max;
 }
 
-function calculateTimeUnit(values) {
-  let minute = true;
-  let hour = true;
-  let day = true;
-  let week = true;
-  let dayOfWeek;
-  let month = true;
-  let year = true;
-
-  for (let i = 0; i < values.length; i++) {
-    const value = values[i];
-
-    // TODO make this efficient
-    minute = minute && isMinute(value);
-    hour = hour && isHour(value);
-    day = day && isDay(value);
-    if (!dayOfWeek) {
-      dayOfWeek = value.getDay();
-    }
-    week = week && isWeek(value, dayOfWeek);
-    month = month && isMonth(value);
-    year = year && isYear(value);
-  }
-
-  if (year) {
-    return "year";
-  } else if (month) {
-    return "month";
-  } else if (week) {
-    return "week";
-  } else if (day) {
-    return "day";
-  } else if (hour) {
-    return "hour";
-  } else if (minute) {
-    return "minute";
-  } else {
-    return null;
-  }
-}
-
 const jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
 function prepareDefaultData(chart) {
@@ -594,7 +553,7 @@ function createDataTable(chart, options, chartType) {
       }
 
       if (!options.scales.x.time.tooltipFormat) {
-        if (timeUnit === "year" || timeUnit === "month" || timeUnit === "week" || timeUnit === "day") {
+        if (isDay(timeUnit)) {
           options.scales.x.time.tooltipFormat = "PP";
         } else if (timeUnit === "hour") {
           options.scales.x.time.tooltipFormat = "MMM d, h a";

@@ -158,28 +158,56 @@ function sortByNumber(a, b) {
   return a - b;
 }
 
-function isMinute(d) {
-  return d.getMilliseconds() === 0 && d.getSeconds() === 0;
+function every(values, fn) {
+  for (let i = 0; i < values.length; i++) {
+    if (!fn(values[i])) {
+      return false;
+    }
+  }
+  return true;
 }
 
-function isHour(d) {
-  return isMinute(d) && d.getMinutes() === 0;
+function isDay(timeUnit) {
+  return timeUnit === "day" || timeUnit === "week" || timeUnit === "month" || timeUnit === "year";
 }
 
-function isDay(d) {
-  return isHour(d) && d.getHours() === 0;
-}
+function calculateTimeUnit(values) {
+  if (values.length === 0) {
+    return null;
+  }
 
-function isWeek(d, dayOfWeek) {
-  return isDay(d) && d.getDay() === dayOfWeek;
-}
+  const minute = every(values, (d) => d.getMilliseconds() === 0 && d.getSeconds() === 0);
+  if (!minute) {
+    return null;
+  }
 
-function isMonth(d) {
-  return isDay(d) && d.getDate() === 1;
-}
+  const hour = every(values, (d) => d.getMinutes() === 0);
+  if (!hour) {
+    return "minute";
+  }
 
-function isYear(d) {
-  return isMonth(d) && d.getMonth() === 0;
+  const day = every(values, (d) => d.getHours() === 0);
+  if (!day) {
+    return "hour";
+  }
+
+  const dayOfWeek = values[0].getDay();
+  const week = every(values, (d) => d.getDay() === dayOfWeek);
+  if (!week) {
+    return "day";
+  }
+
+  const month = every(values, (d) => d.getDate() === 1);
+  if (!month) {
+    return "week";
+  }
+
+  const year = every(values, (d) => d.getMonth() === 0);
+  if (!year) {
+    return "month";
+  }
+
+  return "year";
 }
 
 function isDate(obj) {
@@ -304,4 +332,4 @@ function seriesOption(chart, series, option) {
   return null;
 }
 
-export { formatValue, jsOptionsFunc, merge, isArray, isFunction, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, isDate, isNumber, seriesOption };
+export { formatValue, jsOptionsFunc, merge, isArray, isFunction, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isDay, calculateTimeUnit, isDate, isNumber, seriesOption };

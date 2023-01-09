@@ -1,4 +1,4 @@
-import { jsOptionsFunc, merge, toStr, sortByTime, sortByNumberSeries, isDay } from "../helpers";
+import { jsOptionsFunc, merge, toStr, sortByTime, sortByNumberSeries, isDay, calculateTimeUnit } from "../helpers";
 
 const loaded = {};
 const callbacks = [];
@@ -359,21 +359,25 @@ export default class {
     }
 
     const rows2 = [];
-    let day = true;
+    const values = [];
     for (let j = 0; j < sortedLabels.length; j++) {
       const i = sortedLabels[j];
       let value;
       if (columnType === "datetime") {
         value = new Date(i);
-        day = day && isDay(value);
+        values.push(value);
       } else {
         value = i;
       }
       rows2.push([value].concat(rows[i]));
     }
 
+    let day = true;
     if (columnType === "datetime") {
       rows2.sort(sortByTime);
+
+      const timeUnit = calculateTimeUnit(values, true);
+      day = isDay(timeUnit);
     } else if (columnType === "number") {
       rows2.sort(sortByNumberSeries);
 
