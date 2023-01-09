@@ -154,6 +154,7 @@ function sortByNumberSeries(a, b) {
   return a[0] - b[0];
 }
 
+// needed since sort() without arguments does string comparison
 function sortByNumber(a, b) {
   return a - b;
 }
