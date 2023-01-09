@@ -325,11 +325,11 @@ function calculateTimeUnit(values) {
 
 const jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-function createDataTable(chart, options, chartType) {
-  const series = chart.data;
-
+function prepareData(chart, chartType) {
   const labels = [];
   const rows2 = [];
+
+  const series = chart.data;
   if (chartType === "bar" || chartType === "column" || (chart.xtype !== "number" && chart.xtype !== "bubble")) {
     const rows = [];
     const sortedLabels = [];
@@ -409,6 +409,16 @@ function createDataTable(chart, options, chartType) {
     }
   }
 
+  return {
+    labels: labels,
+    rows: rows2
+  };
+}
+
+function createDataTable(chart, options, chartType) {
+  const { labels, rows } = prepareData(chart, chartType);
+
+  const series = chart.data;
   const datasets = [];
   const colors = chart.options.colors || defaultColors;
   for (let i = 0; i < series.length; i++) {
@@ -430,7 +440,7 @@ function createDataTable(chart, options, chartType) {
 
     let dataset = {
       label: s.name || "",
-      data: rows2[i],
+      data: rows[i],
       fill: chartType === "area",
       borderColor: color,
       backgroundColor: backgroundColor,
