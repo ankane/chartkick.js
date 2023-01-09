@@ -8,11 +8,7 @@ import { pushRequest } from "./request-queue";
 // helpers
 
 function setText(element, text) {
-  if (document.body.innerText) {
-    element.innerText = text;
-  } else {
-    element.textContent = text;
-  }
+  element.textContent = text;
 }
 
 // TODO remove prefix for all messages
