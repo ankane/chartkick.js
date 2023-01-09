@@ -282,6 +282,47 @@ function maxR(series) {
   return max;
 }
 
+function calculateTimeUnit(values) {
+  let minute = true;
+  let hour = true;
+  let day = true;
+  let week = true;
+  let dayOfWeek;
+  let month = true;
+  let year = true;
+
+  for (let i = 0; i < values.length; i++) {
+    const value = values[i];
+
+    // TODO make this efficient
+    minute = minute && isMinute(value);
+    hour = hour && isHour(value);
+    day = day && isDay(value);
+    if (!dayOfWeek) {
+      dayOfWeek = value.getDay();
+    }
+    week = week && isWeek(value, dayOfWeek);
+    month = month && isMonth(value);
+    year = year && isYear(value);
+  }
+
+  if (year) {
+    return "year";
+  } else if (month) {
+    return "month";
+  } else if (week) {
+    return "week";
+  } else if (day) {
+    return "day";
+  } else if (hour) {
+    return "hour";
+  } else if (minute) {
+    return "minute";
+  } else {
+    return null;
+  }
+}
+
 const jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
 function createDataTable(chart, options, chartType) {
@@ -365,30 +406,6 @@ function createDataTable(chart, options, chartType) {
         });
       }
       rows2.push(points);
-    }
-  }
-
-  let day = true;
-  let week = true;
-  let dayOfWeek;
-  let month = true;
-  let year = true;
-  let hour = true;
-  let minute = true;
-  if (chart.xtype === "datetime") {
-    for (let i = 0; i < labels.length; i++) {
-      const value = labels[i];
-
-      // TODO make this efficient
-      day = day && isDay(value);
-      if (!dayOfWeek) {
-        dayOfWeek = value.getDay();
-      }
-      week = week && isWeek(value, dayOfWeek);
-      month = month && isMonth(value);
-      year = year && isYear(value);
-      hour = hour && isHour(value);
-      minute = minute && isMinute(value);
     }
   }
 
@@ -476,83 +493,81 @@ function createDataTable(chart, options, chartType) {
     }
   }
 
-  // for empty datetime chart
-  if (chart.xtype === "datetime" && labels.length === 0) {
-    if (notnull(xmin)) {
-      labels.push(toDate(xmin));
-    }
-    if (notnull(xmax)) {
-      labels.push(toDate(xmax));
-    }
-    day = false;
-    week = false;
-    month = false;
-    year = false;
-    hour = false;
-    minute = false;
-  }
+  if (chart.xtype === "datetime") {
+    const timeUnit = calculateTimeUnit(labels);
 
-  if (chart.xtype === "datetime" && labels.length > 0) {
-    let minTime = (notnull(xmin) ? toDate(xmin) : labels[0]).getTime();
-    let maxTime = (notnull(xmax) ? toDate(xmax) : labels[0]).getTime();
-
-    for (let i = 1; i < labels.length; i++) {
-      const value = labels[i].getTime();
-      if (value < minTime) {
-        minTime = value;
+    // for empty datetime chart
+    if (labels.length === 0) {
+      if (notnull(xmin)) {
+        labels.push(toDate(xmin));
       }
-      if (value > maxTime) {
-        maxTime = value;
+      if (notnull(xmax)) {
+        labels.push(toDate(xmax));
       }
     }
 
-    const timeDiff = (maxTime - minTime) / (86400 * 1000.0);
+    if (labels.length > 0) {
+      let minTime = (notnull(xmin) ? toDate(xmin) : labels[0]).getTime();
+      let maxTime = (notnull(xmax) ? toDate(xmax) : labels[0]).getTime();
 
-    if (!options.scales.x.time.unit) {
-      let step;
-      if (year || timeDiff > 365 * 10) {
-        options.scales.x.time.unit = "year";
-        step = 365;
-      } else if (month || timeDiff > 30 * 10) {
-        options.scales.x.time.unit = "month";
-        step = 30;
-      } else if (day || timeDiff > 10) {
-        options.scales.x.time.unit = "day";
-        step = 1;
-      } else if (hour || timeDiff > 0.5) {
-        options.scales.x.time.displayFormats = {hour: "MMM d, h a"};
-        options.scales.x.time.unit = "hour";
-        step = 1 / 24.0;
-      } else if (minute) {
-        options.scales.x.time.displayFormats = {minute: "h:mm a"};
-        options.scales.x.time.unit = "minute";
-        step = 1 / 24.0 / 60.0;
+      for (let i = 1; i < labels.length; i++) {
+        const value = labels[i].getTime();
+        if (value < minTime) {
+          minTime = value;
+        }
+        if (value > maxTime) {
+          maxTime = value;
+        }
       }
 
-      if (step && timeDiff > 0) {
-        // width not available for hidden elements
-        const width = chart.element.offsetWidth;
-        if (width > 0) {
-          let unitStepSize = Math.ceil(timeDiff / step / (width / 100.0));
-          if (week && step === 1) {
-            unitStepSize = Math.ceil(unitStepSize / 7.0) * 7;
-          }
-          if (chart.__adapterObject.chartjs4) {
-            options.scales.x.ticks.stepSize = unitStepSize;
-          } else {
-            options.scales.x.time.stepSize = unitStepSize;
+      const timeDiff = (maxTime - minTime) / (86400 * 1000.0);
+
+      if (!options.scales.x.time.unit) {
+        let step;
+        if (timeUnit === "year" || timeDiff > 365 * 10) {
+          options.scales.x.time.unit = "year";
+          step = 365;
+        } else if (timeUnit === "month" || timeDiff > 30 * 10) {
+          options.scales.x.time.unit = "month";
+          step = 30;
+        } else if (timeUnit === "week" || timeUnit === "day" || timeDiff > 10) {
+          options.scales.x.time.unit = "day";
+          step = 1;
+        } else if (timeUnit === "hour" || timeDiff > 0.5) {
+          options.scales.x.time.displayFormats = {hour: "MMM d, h a"};
+          options.scales.x.time.unit = "hour";
+          step = 1 / 24.0;
+        } else if (timeUnit === "minute") {
+          options.scales.x.time.displayFormats = {minute: "h:mm a"};
+          options.scales.x.time.unit = "minute";
+          step = 1 / 24.0 / 60.0;
+        }
+
+        if (step && timeDiff > 0) {
+          // width not available for hidden elements
+          const width = chart.element.offsetWidth;
+          if (width > 0) {
+            let unitStepSize = Math.ceil(timeDiff / step / (width / 100.0));
+            if (timeUnit === "week" && step === 1) {
+              unitStepSize = Math.ceil(unitStepSize / 7.0) * 7;
+            }
+            if (chart.__adapterObject.chartjs4) {
+              options.scales.x.ticks.stepSize = unitStepSize;
+            } else {
+              options.scales.x.time.stepSize = unitStepSize;
+            }
           }
         }
       }
-    }
 
-    if (!options.scales.x.time.tooltipFormat) {
-      if (day) {
-        options.scales.x.time.tooltipFormat = "PP";
-      } else if (hour) {
-        options.scales.x.time.tooltipFormat = "MMM d, h a";
-      } else if (minute) {
-        options.scales.x.time.tooltipFormat = "h:mm a";
+      if (!options.scales.x.time.tooltipFormat) {
+        if (timeUnit === "year" || timeUnit === "month" || timeUnit === "week" || timeUnit === "day") {
+          options.scales.x.time.tooltipFormat = "PP";
+        } else if (timeUnit === "hour") {
+          options.scales.x.time.tooltipFormat = "MMM d, h a";
+        } else if (timeUnit === "minute") {
+          options.scales.x.time.tooltipFormat = "h:mm a";
+        }
       }
     }
   }
