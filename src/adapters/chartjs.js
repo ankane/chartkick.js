@@ -138,6 +138,28 @@ function setLabelSize(chart, data, options) {
   }
 }
 
+function calculateScale(series) {
+  // calculate max
+  let max = 0;
+  for (let i = 0; i < series.length; i++) {
+    const s = series[i];
+    for (let j = 0; j < s.data.length; j++) {
+      if (s.data[j][1] > max) {
+        max = s.data[j][1];
+      }
+    }
+  }
+
+  // calculate scale
+  let scale = 1;
+  while (max >= 1024) {
+    scale *= 1024;
+    max /= 1024;
+  }
+
+  return scale;
+}
+
 function setFormatOptions(chart, options, chartType) {
   const formatOptions = {
     prefix: chart.options.prefix,
@@ -155,26 +177,8 @@ function setFormatOptions(chart, options, chartType) {
       series = [{data: series}];
     }
 
-    // calculate max
-    let max = 0;
-    for (let i = 0; i < series.length; i++) {
-      const s = series[i];
-      for (let j = 0; j < s.data.length; j++) {
-        if (s.data[j][1] > max) {
-          max = s.data[j][1];
-        }
-      }
-    }
-
-    // calculate scale
-    let scale = 1;
-    while (max >= 1024) {
-      scale *= 1024;
-      max /= 1024;
-    }
-
     // set step size
-    formatOptions.byteScale = scale;
+    formatOptions.byteScale = calculateScale(series);
   }
 
   if (chartType !== "pie") {
