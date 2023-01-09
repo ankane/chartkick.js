@@ -61,7 +61,7 @@ function toFloat(n) {
 }
 
 function toDate(n) {
-  if (typeof n === "object") {
+  if (n instanceof Date) {
     return n;
   } else if (typeof n === "number") {
     return new Date(n * 1000); // ms

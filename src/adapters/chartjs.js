@@ -310,15 +310,15 @@ const createDataTable = function (chart, options, chartType) {
     const sortedLabels = [];
 
     for (let i = 0; i < series.length; i++) {
-      const s = series[i];
+      const data = series[i].data;
 
-      for (let j = 0; j < s.data.length; j++) {
-        const d = s.data[j];
+      for (let j = 0; j < data.length; j++) {
+        const d = data[j];
         const key = chart.xtype == "datetime" ? d[0].getTime() : d[0];
         if (!rows[key]) {
           rows[key] = new Array(series.length);
         }
-        rows[key][i] = toFloat(d[1]);
+        rows[key][i] = d[1];
         if (sortedLabels.indexOf(key) === -1) {
           sortedLabels.push(key);
         }
