@@ -97,7 +97,7 @@ function processSeries(chart, keyType, noDatetime) {
     series[i].data = toArr(series[i].data);
   }
 
-  chart.xtype = keyType ? keyType : (opts.discrete ? "string" : detectXType(series, noDatetime, opts));
+  chart.xtype = keyType || (opts.discrete ? "string" : detectXType(series, noDatetime, opts));
 
   // right format
   for (let i = 0; i < series.length; i++) {

@@ -84,7 +84,7 @@ function setBarMax(options, max) {
 }
 
 function setStacked(options, stacked) {
-  options.isStacked = stacked ? stacked : false;
+  options.isStacked = stacked || false;
 }
 
 function setXtitle(options, title) {
