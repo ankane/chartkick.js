@@ -68,7 +68,7 @@ const defaultColors = [
   "#6633CC", "#E67300", "#8B0707", "#329262", "#5574A6", "#651067"
 ];
 
-const hideLegend = function (options, legend, hideLegend) {
+function hideLegend(options, legend, hideLegend) {
   if (legend !== undefined) {
     options.plugins.legend.display = !!legend;
     if (legend && legend !== true) {
@@ -77,61 +77,61 @@ const hideLegend = function (options, legend, hideLegend) {
   } else if (hideLegend) {
     options.plugins.legend.display = false;
   }
-};
+}
 
-const setTitle = function (options, title) {
+function setTitle(options, title) {
   options.plugins.title.display = true;
   options.plugins.title.text = title;
-};
+}
 
-const setMin = function (options, min) {
+function setMin(options, min) {
   if (min !== null) {
     options.scales.y.min = toFloat(min);
   }
-};
+}
 
-const setMax = function (options, max) {
+function setMax(options, max) {
   options.scales.y.max = toFloat(max);
-};
+}
 
-const setBarMin = function (options, min) {
+function setBarMin(options, min) {
   if (min !== null) {
     options.scales.x.min = toFloat(min);
   }
-};
+}
 
-const setBarMax = function (options, max) {
+function setBarMax(options, max) {
   options.scales.x.max = toFloat(max);
-};
+}
 
-const setStacked = function (options, stacked) {
+function setStacked(options, stacked) {
   options.scales.x.stacked = !!stacked;
   options.scales.y.stacked = !!stacked;
-};
+}
 
-const setXtitle = function (options, title) {
+function setXtitle(options, title) {
   options.scales.x.title.display = true;
   options.scales.x.title.text = title;
-};
+}
 
-const setYtitle = function (options, title) {
+function setYtitle(options, title) {
   options.scales.y.title.display = true;
   options.scales.y.title.text = title;
-};
+}
 
 // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
-const addOpacity = function (hex, opacity) {
+function addOpacity(hex, opacity) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? "rgba(" + parseInt(result[1], 16) + ", " + parseInt(result[2], 16) + ", " + parseInt(result[3], 16) + ", " + opacity + ")" : hex;
-};
+}
 
 // check if not null or undefined
 // https://stackoverflow.com/a/27757708/1177228
-const notnull = function (x) {
+function notnull(x) {
   return x != null;
-};
+}
 
-const setLabelSize = function (chart, data, options) {
+function setLabelSize(chart, data, options) {
   let maxLabelSize = Math.ceil(chart.element.offsetWidth / 4.0 / data.labels.length);
   if (maxLabelSize > 25) {
     maxLabelSize = 25;
@@ -148,9 +148,9 @@ const setLabelSize = function (chart, data, options) {
       }
     };
   }
-};
+}
 
-const setFormatOptions = function (chart, options, chartType) {
+function setFormatOptions(chart, options, chartType) {
   const formatOptions = {
     prefix: chart.options.prefix,
     suffix: chart.options.suffix,
@@ -271,9 +271,9 @@ const setFormatOptions = function (chart, options, chartType) {
       };
     }
   }
-};
+}
 
-const maxR = function (series) {
+function maxR(series) {
   let max = 0;
   for (let i = 0; i < series.length; i++) {
     const data = series[i].data;
@@ -285,11 +285,11 @@ const maxR = function (series) {
     }
   }
   return max;
-};
+}
 
 const jsOptions = jsOptionsFunc(merge(baseOptions, defaultOptions), hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-const createDataTable = function (chart, options, chartType) {
+function createDataTable(chart, options, chartType) {
   const datasets = [];
   const labels = [];
 
@@ -561,7 +561,7 @@ const createDataTable = function (chart, options, chartType) {
   };
 
   return data;
-};
+}
 
 export default class {
   constructor(library) {

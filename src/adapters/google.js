@@ -46,7 +46,7 @@ const defaultOptions = {
   }
 };
 
-const hideLegend = function (options, legend, hideLegend) {
+function hideLegend(options, legend, hideLegend) {
   if (legend !== undefined) {
     let position;
     if (!legend) {
@@ -60,53 +60,53 @@ const hideLegend = function (options, legend, hideLegend) {
   } else if (hideLegend) {
     options.legend.position = "none";
   }
-};
+}
 
-const setTitle = function (options, title) {
+function setTitle(options, title) {
   options.title = title;
   options.titleTextStyle = {color: "#333", fontSize: "20px"};
-};
+}
 
-const setMin = function (options, min) {
+function setMin(options, min) {
   options.vAxis.viewWindow.min = min;
-};
+}
 
-const setMax = function (options, max) {
+function setMax(options, max) {
   options.vAxis.viewWindow.max = max;
-};
+}
 
-const setBarMin = function (options, min) {
+function setBarMin(options, min) {
   options.hAxis.viewWindow.min = min;
-};
+}
 
-const setBarMax = function (options, max) {
+function setBarMax(options, max) {
   options.hAxis.viewWindow.max = max;
-};
+}
 
-const setStacked = function (options, stacked) {
+function setStacked(options, stacked) {
   options.isStacked = stacked ? stacked : false;
-};
+}
 
-const setXtitle = function (options, title) {
+function setXtitle(options, title) {
   options.hAxis.title = title;
   options.hAxis.titleTextStyle.italic = false;
-};
+}
 
-const setYtitle = function (options, title) {
+function setYtitle(options, title) {
   options.vAxis.title = title;
   options.vAxis.titleTextStyle.italic = false;
-};
+}
 
 const jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-const resize = function (callback) {
+function resize(callback) {
   if (window.attachEvent) {
     window.attachEvent("onresize", callback);
   } else if (window.addEventListener) {
     window.addEventListener("resize", callback, true);
   }
   callback();
-};
+}
 
 export default class {
   constructor(library) {

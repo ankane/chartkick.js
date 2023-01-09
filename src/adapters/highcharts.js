@@ -48,7 +48,7 @@ const defaultOptions = {
   }
 };
 
-const hideLegend = function (options, legend, hideLegend) {
+function hideLegend(options, legend, hideLegend) {
   if (legend !== undefined) {
     options.legend.enabled = !!legend;
     if (legend && legend !== true) {
@@ -63,38 +63,38 @@ const hideLegend = function (options, legend, hideLegend) {
   } else if (hideLegend) {
     options.legend.enabled = false;
   }
-};
+}
 
-const setTitle = function (options, title) {
+function setTitle(options, title) {
   options.title.text = title;
-};
+}
 
-const setMin = function (options, min) {
+function setMin(options, min) {
   options.yAxis.min = min;
-};
+}
 
-const setMax = function (options, max) {
+function setMax(options, max) {
   options.yAxis.max = max;
-};
+}
 
-const setStacked = function (options, stacked) {
+function setStacked(options, stacked) {
   const stackedValue = stacked ? (stacked === true ? "normal" : stacked) : null;
   options.plotOptions.series.stacking = stackedValue;
   options.plotOptions.area.stacking = stackedValue;
   options.plotOptions.areaspline.stacking = stackedValue;
-};
+}
 
-const setXtitle = function (options, title) {
+function setXtitle(options, title) {
   options.xAxis.title.text = title;
-};
+}
 
-const setYtitle = function (options, title) {
+function setYtitle(options, title) {
   options.yAxis.title.text = title;
-};
+}
 
 const jsOptions = jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle);
 
-const setFormatOptions = function (chart, options, chartType) {
+function setFormatOptions(chart, options, chartType) {
   const formatOptions = {
     prefix: chart.options.prefix,
     suffix: chart.options.suffix,
@@ -117,7 +117,7 @@ const setFormatOptions = function (chart, options, chartType) {
       return '<span style="color:' + this.color + '">\u25CF</span> ' + formatValue(this.series.name + ': <b>', this.y, formatOptions) + '</b><br/>';
     };
   }
-};
+}
 
 export default class {
   constructor(library) {
