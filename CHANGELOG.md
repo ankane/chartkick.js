@@ -1,6 +1,7 @@
 ## 5.0.0 (unreleased)
 
 - Added support for Chart.js 4
+- Fixed tooltip for negative values with `bytes`
 
 ## 4.2.0 (2022-05-25)
 

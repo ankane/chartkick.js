@@ -207,9 +207,14 @@ function formatValue(pre, value, options, axis) {
   const round = options.round;
 
   if (options.byteScale) {
-    let suffixIdx;
+    const positive = value >= 0;
+    if (!positive) {
+      value *= -1;
+    }
+
     const baseValue = axis ? options.byteScale : value;
 
+    let suffixIdx;
     if (baseValue >= 1152921504606846976) {
       value /= 1152921504606846976;
       suffixIdx = 6;
@@ -243,6 +248,11 @@ function formatValue(pre, value, options, axis) {
       precision = value >= 1000 ? 4 : 3;
     }
     suffix = " " + byteSuffixes[suffixIdx];
+
+    // flip value back
+    if (!positive) {
+      value *= -1;
+    }
   }
 
   if (precision !== undefined && round !== undefined) {

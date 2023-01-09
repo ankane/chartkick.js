@@ -140,7 +140,7 @@ function setLabelSize(chart, data, options) {
 
 function calculateScale(series) {
   let scale = 1;
-  let max = maxY(series);
+  let max = maxAbsY(series);
   while (max >= 1024) {
     scale *= 1024;
     max /= 1024;
@@ -253,12 +253,12 @@ function setFormatOptions(chart, options, chartType) {
   }
 }
 
-function maxY(series) {
+function maxAbsY(series) {
   let max = 0;
   for (let i = 0; i < series.length; i++) {
     const data = series[i].data;
     for (let j = 0; j < data.length; j++) {
-      const v = data[j][1];
+      const v = Math.abs(data[j][1]);
       if (v > max) {
         max = v;
       }
@@ -268,6 +268,7 @@ function maxY(series) {
 }
 
 function maxR(series) {
+  // start at zero since radius must be positive
   let max = 0;
   for (let i = 0; i < series.length; i++) {
     const data = series[i].data;
