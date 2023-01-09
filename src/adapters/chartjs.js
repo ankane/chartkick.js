@@ -330,7 +330,7 @@ function prepareDefaultData(chart) {
   const rows = [];
   const sortedLabels = [];
   const labels = [];
-  const rows2 = [];
+  const sdata = [];
 
   for (let i = 0; i < series.length; i++) {
     const data = series[i].data;
@@ -351,7 +351,7 @@ function prepareDefaultData(chart) {
   }
 
   for (let i = 0; i < series.length; i++) {
-    rows2.push([]);
+    sdata.push([]);
   }
 
   for (let i = 0; i < sortedLabels.length; i++) {
@@ -359,20 +359,21 @@ function prepareDefaultData(chart) {
     const label = chart.xtype === "datetime" ? new Date(v) : v;
     labels.push(label);
     for (let j = 0; j < series.length; j++) {
+      const val = rows[v][j];
       // Chart.js doesn't like undefined
-      rows2[j].push(rows[v][j] === undefined ? null : rows[v][j]);
+      sdata[j].push(val === undefined ? null : val);
     }
   }
 
   return {
     labels: labels,
-    rows: rows2
+    sdata: sdata
   };
 }
 
 function prepareBubbleData(chart) {
   const series = chart.data;
-  const rows = [];
+  const sdata = [];
   const max = maxR(series);
 
   for (let i = 0; i < series.length; i++) {
@@ -388,19 +389,19 @@ function prepareBubbleData(chart) {
         v: v[2]
       });
     }
-    rows.push(points);
+    sdata.push(points);
   }
 
   return {
     labels: [],
-    rows: rows
+    sdata: sdata
   };
 }
 
 // scatter or numeric line/area
 function prepareNumberData(chart, chartType) {
   const series = chart.data;
-  const rows = [];
+  const sdata = [];
 
   for (let i = 0; i < series.length; i++) {
     const data = series[i].data;
@@ -417,12 +418,12 @@ function prepareNumberData(chart, chartType) {
         y: v[1]
       });
     }
-    rows.push(points);
+    sdata.push(points);
   }
 
   return {
     labels: [],
-    rows: rows
+    sdata: sdata
   };
 }
 
@@ -437,7 +438,7 @@ function prepareData(chart, chartType) {
 }
 
 function createDataTable(chart, options, chartType) {
-  const { labels, rows } = prepareData(chart, chartType);
+  const { labels, sdata } = prepareData(chart, chartType);
 
   const series = chart.data;
   const datasets = [];
@@ -461,7 +462,7 @@ function createDataTable(chart, options, chartType) {
 
     let dataset = {
       label: s.name || "",
-      data: rows[i],
+      data: sdata[i],
       fill: chartType === "area",
       borderColor: color,
       backgroundColor: backgroundColor,
