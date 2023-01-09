@@ -402,16 +402,14 @@ function prepareBubbleData(chart) {
 }
 
 // scatter or numeric line/area
-function prepareNumberData(chart, chartType) {
+function prepareNumberData(chart) {
   const series = chart.data;
   const values = [];
 
   for (let i = 0; i < series.length; i++) {
     const data = series[i].data;
 
-    if (chartType !== "scatter") {
-      data.sort(sortByNumberSeries);
-    }
+    data.sort(sortByNumberSeries);
 
     const points = [];
     for (let j = 0; j < data.length; j++) {
@@ -434,7 +432,7 @@ function prepareData(chart, chartType) {
   if (chartType === "bubble") {
     return prepareBubbleData(chart);
   } else if (chart.xtype === "number" && chartType !== "bar" && chartType !== "column") {
-    return prepareNumberData(chart, chartType);
+    return prepareNumberData(chart);
   } else {
     return prepareDefaultData(chart);
   }
