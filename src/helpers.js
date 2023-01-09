@@ -84,16 +84,17 @@ function toDate(n) {
 }
 
 function toArr(n) {
-  if (!isArray(n)) {
+  if (isArray(n)) {
+    return n;
+  } else {
     const arr = [];
     for (const i in n) {
       if (n.hasOwnProperty(i)) {
         arr.push([i, n[i]]);
       }
     }
-    n = arr;
+    return arr;
   }
-  return n;
 }
 
 function jsOptionsFunc(defaultOptions, hideLegend, setTitle, setMin, setMax, setStacked, setXtitle, setYtitle) {
