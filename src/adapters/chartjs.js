@@ -572,19 +572,17 @@ function createDataTable(chart, options, chartType) {
     }
   }
 
-  const data = {
+  return {
     labels: labels,
     datasets: datasets
   };
-
-  return data;
 }
 
-function allZeros(data) {
-  for (let i = 0; i < data.length; i++) {
-    const d = data[i].data;
-    for (let j = 0; j < d.length; j++) {
-      if (d[j][1] !== 0) {
+function allZeros(series) {
+  for (let i = 0; i < series.length; i++) {
+    const data = series[i].data;
+    for (let j = 0; j < data.length; j++) {
+      if (data[j][1] !== 0) {
         return false;
       }
     }
