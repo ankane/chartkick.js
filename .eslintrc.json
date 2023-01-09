@@ -10,7 +10,6 @@
   "rules": {
     "no-var": "error",
     "semi": ["error", "always"],
-    "no-prototype-builtins": "off",
     "prefer-const": "error",
     "camelcase": "error",
     "space-before-function-paren": ["error", {

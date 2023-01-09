@@ -4,7 +4,7 @@ const Chartkick = {
   charts: {},
   configure: function (options) {
     for (const key in options) {
-      if (options.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(options, key)) {
         Chartkick.config[key] = options[key];
       }
     }
@@ -14,14 +14,14 @@ const Chartkick = {
   },
   eachChart: function (callback) {
     for (const chartId in Chartkick.charts) {
-      if (Chartkick.charts.hasOwnProperty(chartId)) {
+      if (Object.prototype.hasOwnProperty.call(Chartkick.charts, chartId)) {
         callback(Chartkick.charts[chartId]);
       }
     }
   },
   destroyAll: function () {
     for (const chartId in Chartkick.charts) {
-      if (Chartkick.charts.hasOwnProperty(chartId)) {
+      if (Object.prototype.hasOwnProperty.call(Chartkick.charts, chartId)) {
         Chartkick.charts[chartId].destroy();
         delete Chartkick.charts[chartId];
       }

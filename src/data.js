@@ -64,7 +64,7 @@ function copySeries(series) {
   for (let i = 0; i < series.length; i++) {
     const copy = {};
     for (const j in series[i]) {
-      if (series[i].hasOwnProperty(j)) {
+      if (Object.prototype.hasOwnProperty.call(series[i], j)) {
         copy[j] = series[i][j];
       }
     }

@@ -89,7 +89,7 @@ function toArr(obj) {
   } else {
     const arr = [];
     for (const i in obj) {
-      if (obj.hasOwnProperty(i)) {
+      if (Object.prototype.hasOwnProperty.call(obj, i)) {
         arr.push([i, obj[i]]);
       }
     }
