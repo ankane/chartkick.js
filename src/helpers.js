@@ -337,4 +337,4 @@ function seriesOption(chart, series, option) {
   return null;
 }
 
-export { formatValue, jsOptionsFunc, merge, isArray, isFunction, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isDay, calculateTimeUnit, isDate, isNumber, seriesOption };
+export { formatValue, jsOptionsFunc, merge, isArray, isFunction, isPlainObject, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, sortByNumber, isDay, calculateTimeUnit, isDate, isNumber, seriesOption };
