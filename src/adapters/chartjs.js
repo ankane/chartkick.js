@@ -1,4 +1,4 @@
-import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, sortByNumber, isMinute, isHour, isDay, isWeek, isMonth, isYear, seriesOption } from "../helpers";
+import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, sortByNumber, sortByNumberSeries, isMinute, isHour, isDay, isWeek, isMonth, isYear, seriesOption } from "../helpers";
 
 const baseOptions = {
   maintainAspectRatio: false,
@@ -366,9 +366,14 @@ function createDataTable(chart, options, chartType) {
       rows2.push(points);
     }
   } else {
-    // scatter
+    // scatter or numeric line/area
     for (let i = 0; i < series.length; i++) {
       const data = series[i].data;
+
+      if (chartType !== "scatter") {
+        data.sort(sortByNumberSeries);
+      }
+
       const points = [];
       for (let j = 0; j < data.length; j++) {
         const v = data[j];

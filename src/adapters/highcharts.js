@@ -1,4 +1,4 @@
-import { formatValue, isArray, jsOptionsFunc, merge, sortByNumber } from "../helpers";
+import { formatValue, isArray, jsOptionsFunc, merge, sortByNumber, sortByNumberSeries } from "../helpers";
 
 const defaultOptions = {
   chart: {},
@@ -173,6 +173,8 @@ export default class {
         for (let j = 0; j < data.length; j++) {
           data[j][0] = data[j][0].getTime();
         }
+      } else if (chart.xtype === "number") {
+        data.sort(sortByNumberSeries);
       }
       series[i].marker = {symbol: "circle"};
       if (chart.options.points === false) {

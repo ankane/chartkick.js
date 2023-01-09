@@ -1,4 +1,4 @@
-import { isArray, toStr, toFloat, toDate, toArr, sortByTime, sortByNumberSeries, isDate, isNumber } from "./helpers";
+import { isArray, toStr, toFloat, toDate, toArr, isDate, isNumber } from "./helpers";
 
 function formatSeriesBubble(data) {
   const r = [];
@@ -26,13 +26,6 @@ function formatSeriesData(data, keyType) {
   for (let i = 0; i < data.length; i++) {
     r.push([keyFunc(data[i][0]), toFloat(data[i][1])]);
   }
-
-  if (keyType === "datetime") {
-    r.sort(sortByTime);
-  } else if (keyType === "number") {
-    r.sort(sortByNumberSeries);
-  }
-
   return r;
 }
 
