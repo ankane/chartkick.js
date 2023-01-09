@@ -358,21 +358,22 @@ const createDataTable = function (chart, options, chartType) {
     }
   } else {
     for (let i = 0; i < series.length; i++) {
-      const s = series[i];
-      const d = [];
-      for (let j = 0; j < s.data.length; j++) {
+      const data = series[i].data;
+      const points = [];
+      for (let j = 0; j < data.length; j++) {
+        const v = data[j];
         const point = {
-          x: toFloat(s.data[j][0]),
-          y: toFloat(s.data[j][1])
+          x: v[0],
+          y: v[1]
         };
         if (chartType === "bubble") {
-          point.r = toFloat(s.data[j][2]) * 20 / max;
+          point.r = v[2] * 20 / max;
           // custom attribute, for tooltip
-          point.v = s.data[j][2];
+          point.v = v[2];
         }
-        d.push(point);
+        points.push(point);
       }
-      rows2.push(d);
+      rows2.push(points);
     }
   }
 
