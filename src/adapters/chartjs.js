@@ -294,10 +294,11 @@ const createDataTable = function (chart, options, chartType) {
   let max = 0;
   if (chartType === "bubble") {
     for (let i = 0; i < series.length; i++) {
-      const s = series[i];
-      for (let j = 0; j < s.data.length; j++) {
-        if (s.data[j][2] > max) {
-          max = s.data[j][2];
+      const data = series[i].data;
+      for (let j = 0; j < data.length; j++) {
+        const r = data[j][2];
+        if (r > max) {
+          max = r;
         }
       }
     }
@@ -378,12 +379,11 @@ const createDataTable = function (chart, options, chartType) {
   }
 
   for (let i = 0; i < series.length; i++) {
-    let color;
-    let backgroundColor;
-
     const s = series[i];
 
     // use colors for each bar for single series format
+    let color;
+    let backgroundColor;
     if (chart.options.colors && chart.singleSeriesFormat && (chartType === "bar" || chartType === "column") && !s.color && isArray(chart.options.colors) && !isArray(chart.options.colors[0])) {
       color = colors;
       backgroundColor = [];
