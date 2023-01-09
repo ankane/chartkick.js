@@ -314,13 +314,9 @@ function createDataTable(chart, options, chartType) {
         const key = chart.xtype === "datetime" ? d[0].getTime() : d[0];
         if (!rows[key]) {
           rows[key] = new Array(series.length);
-        }
-        rows[key][i] = d[1];
-
-        // TODO improve performance
-        if (sortedLabels.indexOf(key) === -1) {
           sortedLabels.push(key);
         }
+        rows[key][i] = d[1];
       }
     }
 
