@@ -60,15 +60,15 @@ function toFloat(n) {
   return parseFloat(n);
 }
 
-function toDate(n) {
-  if (n instanceof Date) {
-    return n;
-  } else if (typeof n === "number") {
-    return new Date(n * 1000); // ms
+function toDate(obj) {
+  if (obj instanceof Date) {
+    return obj;
+  } else if (typeof obj === "number") {
+    return new Date(obj * 1000); // ms
   } else {
-    n = toStr(n);
-    let matches;
-    if ((matches = n.match(DATE_PATTERN))) {
+    const s = toStr(obj);
+    const matches = s.match(DATE_PATTERN);
+    if (matches) {
       const year = parseInt(matches[1], 10);
       const month = parseInt(matches[3], 10) - 1;
       const day = parseInt(matches[5], 10);
@@ -76,9 +76,9 @@ function toDate(n) {
     } else {
       // try our best to get the str into iso8601
       // TODO be smarter about this
-      const str = n.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
+      const str = s.replace(/ /, "T").replace(" ", "").replace("UTC", "Z");
       // Date.parse returns milliseconds if valid and NaN if invalid
-      return new Date(Date.parse(str) || n);
+      return new Date(Date.parse(str) || s);
     }
   }
 }
