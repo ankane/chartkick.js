@@ -52,12 +52,12 @@ function negativeValues(series) {
   return false;
 }
 
-function toStr(n) {
-  return "" + n;
+function toStr(obj) {
+  return "" + obj;
 }
 
-function toFloat(n) {
-  return parseFloat(n);
+function toFloat(obj) {
+  return parseFloat(obj);
 }
 
 function toDate(obj) {
