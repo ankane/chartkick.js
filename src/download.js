@@ -56,7 +56,7 @@ function addEvent(elem, event, fn) {
   } else {
     const fn2 = function () {
       // set the this pointer same as addEventListener when fn is called
-      return(fn.call(elem, window.event));
+      return fn.call(elem, window.event);
     };
     elem.attachEvent("on" + event, fn2);
     return fn2;

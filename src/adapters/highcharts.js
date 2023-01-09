@@ -222,7 +222,8 @@ export default class {
     chartType = chartType || "column";
     const series = chart.data;
     const options = jsOptions(chart, chart.options);
-    const rows = [], categories = [];
+    const rows = [];
+    const categories = [];
     options.chart.type = chartType;
     setFormatOptions(chart, options, chartType);
 

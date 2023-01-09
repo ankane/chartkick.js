@@ -229,7 +229,8 @@ export default class {
       const chartOptions = {};
       const options = jsOptions(chart, chart.options, chartOptions);
 
-      const series = chart.data, rows2 = [];
+      const series = chart.data;
+      const rows2 = [];
       for (let i = 0; i < series.length; i++) {
         series[i].name = series[i].name || "Value";
         const d = series[i].data;
@@ -340,7 +341,8 @@ export default class {
 
   // cant use object as key
   createDataTable(series, columnType) {
-    const rows = [], sortedLabels = [];
+    const rows = [];
+    const sortedLabels = [];
     for (let i = 0; i < series.length; i++) {
       const s = series[i];
       series[i].name = series[i].name || "Value";

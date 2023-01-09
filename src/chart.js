@@ -160,7 +160,7 @@ class Chart {
 
     if (!this.intervalId) {
       if (refresh) {
-        this.intervalId = setInterval( () => {
+        this.intervalId = setInterval(() => {
           this.refreshData();
         }, refresh * 1000);
       } else {

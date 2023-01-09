@@ -4,7 +4,7 @@ function allZeros(data) {
   for (let i = 0; i < data.length; i++) {
     const d = data[i].data;
     for (let j = 0; j < d.length; j++) {
-      if (d[j][1] != 0) {
+      if (d[j][1] !== 0) {
         return false;
       }
     }
@@ -305,7 +305,8 @@ function createDataTable(chart, options, chartType) {
 
   const series = chart.data;
 
-  const rows = [], rows2 = [];
+  const rows = [];
+  const rows2 = [];
 
   if (chartType === "bar" || chartType === "column" || (chart.xtype !== "number" && chart.xtype !== "bubble")) {
     const sortedLabels = [];
@@ -315,7 +316,7 @@ function createDataTable(chart, options, chartType) {
 
       for (let j = 0; j < data.length; j++) {
         const d = data[j];
-        const key = chart.xtype == "datetime" ? d[0].getTime() : d[0];
+        const key = chart.xtype === "datetime" ? d[0].getTime() : d[0];
         if (!rows[key]) {
           rows[key] = new Array(series.length);
         }
@@ -588,7 +589,7 @@ export default class {
 
     if (chart.xtype === "number") {
       options.scales.x.type = options.scales.x.type || "linear";
-      options.scales.x.position = options.scales.x.position ||"bottom";
+      options.scales.x.position = options.scales.x.position || "bottom";
     } else {
       options.scales.x.type = chart.xtype === "string" ? "category" : "time";
     }
