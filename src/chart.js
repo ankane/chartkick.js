@@ -65,6 +65,7 @@ function renderChart(chartType, chart) {
     setText(chart.element, message);
   } else {
     callAdapter(chartType, chart);
+    // TODO add downloadSupported method to adapter
     if (chart.options.download && !chart.__downloadAttached && chart.adapter === "chartjs") {
       addDownloadButton(chart);
     }
@@ -173,6 +174,7 @@ class Chart {
   }
 
   toImage(download) {
+    // TODO move logic to adapter
     if (this.adapter === "chartjs") {
       if (download && download.background && download.background !== "transparent") {
         // https://stackoverflow.com/questions/30464750/chartjs-line-chart-set-background-color
