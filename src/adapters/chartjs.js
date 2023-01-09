@@ -431,12 +431,12 @@ function prepareNumberData(chart, chartType) {
 }
 
 function prepareData(chart, chartType) {
-  if (chartType === "bar" || chartType === "column" || (chart.xtype !== "number" && chart.xtype !== "bubble")) {
-    return prepareDefaultData(chart);
-  } else if (chartType === "bubble") {
+  if (chartType === "bubble") {
     return prepareBubbleData(chart);
-  } else {
+  } else if (chart.xtype === "number" && chartType !== "bar" && chartType !== "column") {
     return prepareNumberData(chart, chartType);
+  } else {
+    return prepareDefaultData(chart);
   }
 }
 
