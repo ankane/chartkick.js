@@ -329,15 +329,15 @@ const createDataTable = function (chart, options, chartType) {
       sortedLabels.sort(sortByNumber);
     }
 
-    for (let j = 0; j < series.length; j++) {
+    for (let i = 0; i < series.length; i++) {
       rows2.push([]);
     }
 
-    for (let k = 0; k < sortedLabels.length; k++) {
-      const i = sortedLabels[k];
+    for (let i = 0; i < sortedLabels.length; i++) {
+      const v = sortedLabels[i];
       let value;
       if (chart.xtype === "datetime") {
-        value = new Date(i);
+        value = new Date(v);
         // TODO make this efficient
         day = day && isDay(value);
         if (!dayOfWeek) {
@@ -349,12 +349,12 @@ const createDataTable = function (chart, options, chartType) {
         hour = hour && isHour(value);
         minute = minute && isMinute(value);
       } else {
-        value = i;
+        value = v;
       }
       labels.push(value);
       for (let j = 0; j < series.length; j++) {
         // Chart.js doesn't like undefined
-        rows2[j].push(rows[i][j] === undefined ? null : rows[i][j]);
+        rows2[j].push(rows[v][j] === undefined ? null : rows[v][j]);
       }
     }
   } else {
