@@ -8,6 +8,8 @@ function formatSeriesBubble(data) {
   return r;
 }
 
+// casts data to proper type
+// sorting is left to adapters
 function formatSeriesData(data, keyType) {
   if (keyType === "bubble") {
     return formatSeriesBubble(data);
