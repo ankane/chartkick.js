@@ -334,10 +334,10 @@ const createDataTable = function (chart, options, chartType) {
     }
 
     for (let k = 0; k < sortedLabels.length; k++) {
-      let value;
       const i = sortedLabels[k];
+      let value;
       if (chart.xtype === "datetime") {
-        value = new Date(toFloat(i));
+        value = new Date(i);
         // TODO make this efficient
         day = day && isDay(value);
         if (!dayOfWeek) {
