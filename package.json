@@ -43,8 +43,8 @@
     "rollup": "^3.9.1"
   },
   "optionalDependencies": {
-    "chart.js": ">=3.0.2",
-    "chartjs-adapter-date-fns": ">=2.0.0",
-    "date-fns": ">=2.0.0"
+    "chart.js": "4",
+    "chartjs-adapter-date-fns": ">=3",
+    "date-fns": ">=2"
   }
 }

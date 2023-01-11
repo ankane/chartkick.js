@@ -197,11 +197,7 @@ function setFormatOptions(chart, options, chartType) {
           label += ': ';
         }
 
-        if (chart.__adapterObject.chartjs4) {
-          return label + context.formattedValue;
-        } else {
-          return label + '(' + context.label + ', ' + context.formattedValue + ')';
-        }
+        return label + context.formattedValue;
       };
     } else if (chartType === "bubble") {
       options.plugins.tooltip.callbacks.label = function (context) {
@@ -215,23 +211,7 @@ function setFormatOptions(chart, options, chartType) {
     } else if (chartType === "pie") {
       // need to use separate label for pie charts
       options.plugins.tooltip.callbacks.label = function (context) {
-        if (chart.__adapterObject.chartjs4) {
-          return formatValue('', context.parsed, formatOptions);
-        }
-
-        let dataLabel = context.label;
-        const value = ': ';
-
-        if (isArray(dataLabel)) {
-          // show value on first line of multiline label
-          // need to clone because we are changing the value
-          dataLabel = dataLabel.slice();
-          dataLabel[0] += value;
-        } else {
-          dataLabel += value;
-        }
-
-        return formatValue(dataLabel, context.parsed, formatOptions);
+        return formatValue('', context.parsed, formatOptions);
       };
     } else {
       const valueLabel = chartType === "bar" ? "x" : "y";
@@ -541,11 +521,7 @@ function createDataTable(chart, options, chartType) {
             if (timeUnit === "week" && step === 1) {
               unitStepSize = Math.ceil(unitStepSize / 7.0) * 7;
             }
-            if (chart.__adapterObject.chartjs4) {
-              options.scales.x.ticks.stepSize = unitStepSize;
-            } else {
-              options.scales.x.time.stepSize = unitStepSize;
-            }
+            options.scales.x.ticks.stepSize = unitStepSize;
           }
         }
       }
@@ -572,7 +548,6 @@ export default class {
   constructor(library) {
     this.name = "chartjs";
     this.library = library;
-    this.chartjs4 = parseInt(library.version, 10) >= 4;
   }
 
   renderLineChart(chart, chartType) {
@@ -656,7 +631,7 @@ export default class {
     if (chartType !== "bar") {
       setLabelSize(chart, data, options);
     }
-    if (this.chartjs4 && !("mode" in options.interaction)) {
+    if (!("mode" in options.interaction)) {
       options.interaction.mode = "index";
     }
     this.drawChart(chart, "bar", data, options);
