@@ -91,7 +91,7 @@ class Chart {
     this.options = merge(Chartkick.options, options || {});
     this.dataSource = dataSource;
 
-    Chartkick.charts[element.id] = this;
+    Chartkick.charts[this.element.id] = this;
 
     fetchDataSource(this, dataSource, true);
 
