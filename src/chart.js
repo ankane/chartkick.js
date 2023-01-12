@@ -72,18 +72,22 @@ function renderChart(chartType, chart) {
   }
 }
 
+function getElement(element) {
+  if (typeof element === "string") {
+    const elementId = element;
+    element = document.getElementById(element);
+    if (!element) {
+      throw new Error("No element with id " + elementId);
+    }
+  }
+  return element;
+}
+
 // define classes
 
 class Chart {
   constructor(element, dataSource, options) {
-    if (typeof element === "string") {
-      const elementId = element;
-      element = document.getElementById(element);
-      if (!element) {
-        throw new Error("No element with id " + elementId);
-      }
-    }
-    this.element = element;
+    this.element = getElement(element);
     this.options = merge(Chartkick.options, options || {});
     this.dataSource = dataSource;
 
