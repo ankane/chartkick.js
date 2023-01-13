@@ -91,7 +91,10 @@ class Chart {
     this.options = merge(Chartkick.options, options || {});
     this.dataSource = dataSource;
 
-    Chartkick.charts[this.element.id] = this;
+    // TODO handle charts without an id for eachChart and destroyAll
+    if (this.element.id) {
+      Chartkick.charts[this.element.id] = this;
+    }
 
     fetchDataSource(this, dataSource, true);
 
