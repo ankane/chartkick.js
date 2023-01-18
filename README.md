@@ -421,7 +421,7 @@ import "chartkick/highcharts"
 
 Download [chartkick.js](https://unpkg.com/chartkick) directly.
 
-For Chart.js (works with 3+), [download it](https://unpkg.com/chart.js@3/dist/chart.js) and the [date-fns adapter bundle](https://unpkg.com/chartjs-adapter-date-fns@2/dist/chartjs-adapter-date-fns.bundle.js) and use:
+For Chart.js (works with 4+), [download it](https://unpkg.com/chart.js@4.2.0/dist/chart.umd.js) and the [date-fns adapter bundle](https://unpkg.com/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.js) and use:
 
 ```html
 <script src="/path/to/chart.js"></script>
