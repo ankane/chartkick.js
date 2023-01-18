@@ -1,4 +1,4 @@
-## 5.0.0 (unreleased)
+## 5.0.0 (2023-01-18)
 
 - Added support for Chart.js 4
 - Fixed tooltip for negative values with `bytes`
