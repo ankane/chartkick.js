@@ -6,9 +6,9 @@
 
     <script src="../chartkick.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.js"></script>
-    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.1.2/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.js"></script>
+    <!-- <script src="https://www.gstatic.com/charts/loader.js"></script> -->
     <!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
 
     <script>
@@ -88,12 +88,6 @@
     <div id="bubble-large" style="height: 300px;"></div>
     <script>
       new Chartkick.BubbleChart("bubble-large", [[174.0, 80.0, 100], [176.5, 82.3, 200], [180.3, 73.6, 300], [167.6, 74.1, 600], [188.0, 85.9, 150]]);
-    </script>
-
-    <h1>Timeline</h1>
-    <div id="timeline" style="height: 300px;"></div>
-    <script>
-      new Chartkick.Timeline("timeline", [["Washington", "1789-04-29", "1797-03-03"],["Adams", "1797-03-03", "1801-03-03"],["Jefferson", "1801-03-03", "1809-03-03"]]);
     </script>
 
     <h1>URL</h1>
@@ -254,18 +248,6 @@
     <div id="multiple-line-dataset" style="height: 300px;"></div>
     <script>
       new Chartkick.LineChart("multiple-line-dataset", [{"name":"Workout","data":{"2021-02-10":3,"2021-02-17":3,"2021-02-24":3,"2021-03-03":1,"2021-03-10":4,"2021-03-17":3,"2021-03-24":2,"2021-03-31":3}},{"name":"Go to concert","data":{"2021-02-10":0,"2021-02-17":0,"2021-02-24":0,"2021-03-03":0,"2021-03-10":2,"2021-03-17":1,"2021-03-24":0,"2021-03-31":0}},{"name":"Wash face","data":{"2021-02-10":0,"2021-02-17":1,"2021-02-24":0,"2021-03-03":0,"2021-03-10":0,"2021-03-17":1,"2021-03-24":0,"2021-03-31":1}},{"name":"Call parents","data":{"2021-02-10":5,"2021-02-17":3,"2021-02-24":2,"2021-03-03":0,"2021-03-10":0,"2021-03-17":1,"2021-03-24":1,"2021-03-31":0}},{"name":"Eat breakfast","data":{"2021-02-10":3,"2021-02-17":2,"2021-02-24":1,"2021-03-03":0,"2021-03-10":2,"2021-03-17":2,"2021-03-24":3,"2021-03-31":0}, dataset: {borderDash: [10]}}]);
-    </script>
-
-    <h1>Geo Chart</h1>
-    <div id="geo" style="height: 300px;"></div>
-    <script>
-      new Chartkick.GeoChart("geo", [["United States",44],["Germany",23],["Brazil",22],["Canada",21],["France",13]]);
-    </script>
-
-    <h1>Markers</h1>
-    <div id="markers" style="height: 300px;"></div>
-    <script>
-      new Chartkick.GeoChart("markers", [["Rome",44],["Milan",23],["Naples",22],["Turin",21]], {library: {region: "IT", displayMode: "markers", colorAxis: {colors: ["#e37b33", "#e37b33"]}}});
     </script>
 
     <h1>Discrete Line Chart</h1>
