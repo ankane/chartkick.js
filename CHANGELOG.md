@@ -1,4 +1,4 @@
-## 5.0.1 (unreleased)
+## 5.0.1 (2023-01-19)
 
 - Fixed issue with monthly and yearly data with Chart.js
 - Fixed tooltip and formatting for numeric x-axis with Chart.js
