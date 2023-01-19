@@ -1,4 +1,4 @@
-import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, sortByNumber, sortByNumberSeries, isDay, calculateTimeUnit, seriesOption } from "../helpers";
+import { formatValue, jsOptionsFunc, merge, isArray, toStr, toFloat, toDate, sortByNumber, sortByNumberSeries, calculateTimeUnit, seriesOption } from "../helpers";
 
 const baseOptions = {
   maintainAspectRatio: false,
@@ -537,7 +537,11 @@ function createDataTable(chart, options, chartType) {
       }
 
       if (!options.scales.x.time.tooltipFormat) {
-        if (isDay(timeUnit)) {
+        if (timeUnit === "year") {
+          options.scales.x.time.tooltipFormat = "yyyy";
+        } else if (timeUnit === "month") {
+          options.scales.x.time.tooltipFormat = "MMM yyyy";
+        } else if (timeUnit === "week" || timeUnit === "day") {
           options.scales.x.time.tooltipFormat = "PP";
         } else if (timeUnit === "hour") {
           options.scales.x.time.tooltipFormat = "MMM d, h a";

@@ -196,15 +196,11 @@ function calculateTimeUnit(values, maxDay = false) {
     return "day";
   }
 
-  const dayOfWeek = values[0].getDay();
-  const week = every(values, (d) => d.getDay() === dayOfWeek);
-  if (!week) {
-    return "day";
-  }
-
   const month = every(values, (d) => d.getDate() === 1);
   if (!month) {
-    return "week";
+    const dayOfWeek = values[0].getDay();
+    const week = every(values, (d) => d.getDay() === dayOfWeek);
+    return (week ? "week" : "day");
   }
 
   const year = every(values, (d) => d.getMonth() === 0);
