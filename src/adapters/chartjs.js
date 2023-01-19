@@ -147,15 +147,17 @@ function calculateScale(series) {
 }
 
 function setFormatOptions(chart, options, chartType) {
-  const formatOptions = {
+  const numericOptions = {
+    thousands: chart.options.thousands,
+    decimal: chart.options.decimal
+  };
+  const formatOptions = merge({
     prefix: chart.options.prefix,
     suffix: chart.options.suffix,
-    thousands: chart.options.thousands,
-    decimal: chart.options.decimal,
     precision: chart.options.precision,
     round: chart.options.round,
     zeros: chart.options.zeros
-  };
+  }, numericOptions);
 
   if (chart.options.bytes) {
     let series = chart.data;
@@ -187,6 +189,12 @@ function setFormatOptions(chart, options, chartType) {
         return formatValue("", value, formatOptions, true);
       };
     }
+
+    if (chart.xtype === "number" && !options.scales.x.ticks.callback) {
+      options.scales.x.ticks.callback = function (value) {
+        return formatValue("", value, numericOptions, true);
+      };
+    }
   }
 
   if (!options.plugins.tooltip.callbacks.label) {
@@ -197,7 +205,8 @@ function setFormatOptions(chart, options, chartType) {
           label += ': ';
         }
 
-        return label + context.formattedValue;
+        const dataPoint = context.parsed;
+        return label + '(' + formatValue('', dataPoint.x, numericOptions) + ', ' + formatValue('', dataPoint.y, formatOptions) + ')';
       };
     } else if (chartType === "bubble") {
       options.plugins.tooltip.callbacks.label = function (context) {
@@ -206,6 +215,7 @@ function setFormatOptions(chart, options, chartType) {
           label += ': ';
         }
         const dataPoint = context.raw;
+        // TODO apply formatting
         return label + '(' + dataPoint.x + ', ' + dataPoint.y + ', ' + dataPoint.v + ')';
       };
     } else if (chartType === "pie") {

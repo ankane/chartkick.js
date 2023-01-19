@@ -627,6 +627,18 @@
         new Chartkick.LineChart("thousands-negative-prefix", {"2021-02-10":-11000,"2021-02-11":-60000,"2021-02-12":-30000,"2021-02-13":-20000,"2021-02-14":-50000,"2021-02-15":-30000,"2021-02-16":-80000,"2021-02-17":-60000,"2021-02-18":-60000,"2021-02-19":-120000,"2021-02-20":-50000,"2021-02-21":-50000,"2021-02-22":-30000,"2021-02-23":-10000,"2021-02-24":-100000,"2021-02-25":-10000,"2021-02-26":-30000,"2021-02-27":-20000,"2021-02-28":-30000,"2021-03-01":-20000,"2021-03-02":-80000}, {thousands: ",", prefix: "$"});
       </script>
 
+      <h1>Scatter - Thousands</h1>
+      <div id="scatter-thousands" class="chart"></div>
+      <script>
+        new Chartkick.ScatterChart("scatter-thousands", [[1174.0, 1080.0], [1176.5, 1082.3], [1180.3, 1073.6], [1167.6, 1074.1], [1188.0, 1085.9]], {thousands: ","});
+      </script>
+
+      <h1>Scatter - No Thousands</h1>
+      <div id="scatter-no-thousands" class="chart"></div>
+      <script>
+        new Chartkick.ScatterChart("scatter-no-thousands", [[1174.0, 1080.0], [1176.5, 1082.3], [1180.3, 1073.6], [1167.6, 1074.1], [1188.0, 1085.9]]);
+      </script>
+
       <h1>Decimal</h1>
       <div id="decimal" class="chart"></div>
       <script>

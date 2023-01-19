@@ -1,3 +1,7 @@
+## 5.0.1 (unreleased)
+
+- Fixed tooltip and formatting for numeric x-axis with Chart.js
+
 ## 5.0.0 (2023-01-18)
 
 - Added support for Chart.js 4
