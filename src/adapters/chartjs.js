@@ -147,10 +147,13 @@ function calculateScale(series) {
 }
 
 function setFormatOptions(chart, options, chartType) {
+  // options to apply to x and r values for scatter and bubble
   const numericOptions = {
     thousands: chart.options.thousands,
     decimal: chart.options.decimal
   };
+
+  // options to apply to y value
   const formatOptions = merge({
     prefix: chart.options.prefix,
     suffix: chart.options.suffix,
