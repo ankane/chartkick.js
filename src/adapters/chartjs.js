@@ -190,7 +190,7 @@ function setFormatOptions(chart, options, chartType) {
       };
     }
 
-    if (chart.xtype === "number" && !options.scales.x.ticks.callback) {
+    if ((chartType === "scatter" || chartType === "bubble") && !options.scales.x.ticks.callback) {
       options.scales.x.ticks.callback = function (value) {
         return formatValue("", value, numericOptions, true);
       };
@@ -236,6 +236,22 @@ function setFormatOptions(chart, options, chartType) {
           label += ': ';
         }
         return formatValue(label, context.parsed[valueLabel], formatOptions);
+      };
+    }
+  }
+
+  // avoid formatting x-axis labels
+  // by default, Chart.js applies locale
+  if ((chartType === "line" || chartType === "area") && chart.xtype === "number") {
+    if (!options.scales.x.ticks.callback) {
+      options.scales.x.ticks.callback = function (value) {
+        return toStr(value);
+      };
+    }
+
+    if (!options.plugins.tooltip.callbacks.title) {
+      options.plugins.tooltip.callbacks.title = function (context) {
+        return toStr(context[0].parsed.x);
       };
     }
   }
@@ -565,6 +581,10 @@ export default class {
   }
 
   renderLineChart(chart, chartType) {
+    if (!chartType) {
+      chartType = "line";
+    }
+
     const chartOptions = {};
     if (chartType === "area") {
       // TODO fix area stacked
@@ -574,7 +594,7 @@ export default class {
     const options = jsOptions(chart, merge(chartOptions, chart.options));
     setFormatOptions(chart, options, chartType);
 
-    const data = createDataTable(chart, options, chartType || "line");
+    const data = createDataTable(chart, options, chartType);
 
     if (chart.xtype === "number") {
       options.scales.x.type = options.scales.x.type || "linear";
