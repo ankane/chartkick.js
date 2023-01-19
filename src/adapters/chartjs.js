@@ -215,8 +215,7 @@ function setFormatOptions(chart, options, chartType) {
           label += ': ';
         }
         const dataPoint = context.raw;
-        // TODO apply formatting
-        return label + '(' + dataPoint.x + ', ' + dataPoint.y + ', ' + dataPoint.v + ')';
+        return label + '(' + formatValue('', dataPoint.x, numericOptions) + ', ' + formatValue('', dataPoint.y, formatOptions) + ', ' + formatValue('', dataPoint.v, numericOptions) + ')';
       };
     } else if (chartType === "pie") {
       // need to use separate label for pie charts
