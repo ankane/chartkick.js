@@ -1,6 +1,6 @@
 ## 5.0.1 (unreleased)
 
-- Fixed issue with monthly and yearly data
+- Fixed issue with monthly and yearly data with Chart.js
 - Fixed tooltip and formatting for numeric x-axis with Chart.js
 
 ## 5.0.0 (2023-01-18)
