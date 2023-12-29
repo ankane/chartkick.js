@@ -10,7 +10,7 @@ Also available for [React](https://github.com/ankane/react-chartkick), [Vue.js](
 
 For maps, check out [Mapkick.js](https://github.com/ankane/mapkick.js)
 
-[![Build Status](https://github.com/ankane/chartkick.js/workflows/build/badge.svg?branch=master)](https://github.com/ankane/chartkick.js/actions)
+[![Build Status](https://github.com/ankane/chartkick.js/actions/workflows/build.yml/badge.svg)](https://github.com/ankane/chartkick.js/actions)
 
 ## Quick Start
 
