@@ -538,36 +538,6 @@ serve
 
 and visit [http://localhost:5000/examples/](http://localhost:5000/examples/)
 
-## Upgrading
-
-### 4.0
-
-Run:
-
-```sh
-npm install chartkick@latest
-```
-
-For Chart.js, also run:
-
-```sh
-npm install chart.js@latest
-```
-
-And change:
-
-```javascript
-import Chart from "chart.js"
-
-Chartkick.use(Chart)
-```
-
-to:
-
-```javascript
-import "chartkick/chart.js"
-```
-
 ## History
 
 View the [changelog](https://github.com/ankane/chartkick.js/blob/master/CHANGELOG.md)
