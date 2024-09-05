@@ -432,7 +432,8 @@ function createDataTable(chart, options, chartType) {
       fill: chartType === "area",
       borderColor: color,
       backgroundColor: backgroundColor,
-      borderWidth: 2
+      borderWidth: 2,
+      yAxisID: s.yAxisID || "y"
     };
 
     const pointChart = chartType === "line" || chartType === "area" || chartType === "scatter" || chartType === "bubble";
