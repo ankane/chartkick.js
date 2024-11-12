@@ -36,7 +36,7 @@
   ],
   "devDependencies": {
     "@rollup/plugin-buble": "^1.0.1",
-    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-terser": "^0.4.4",
     "eslint": "^9.14.0",
