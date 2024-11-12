@@ -40,7 +40,7 @@ Create a div for the chart
 Line chart
 
 ```javascript
-new Chartkick.LineChart("chart", {"2021-01-01": 11, "2021-01-02": 6})
+new Chartkick.LineChart("chart", {"2025-01-01": 11, "2025-01-02": 6})
 ```
 
 Pie chart
@@ -64,7 +64,7 @@ new Chartkick.BarChart("chart", [["Work", 32], ["Play", 1492]])
 Area chart
 
 ```javascript
-new Chartkick.AreaChart("chart", {"2021-01-01": 11, "2021-01-02": 6})
+new Chartkick.AreaChart("chart", {"2025-01-01": 11, "2025-01-02": 6})
 ```
 
 Scatter chart
@@ -89,8 +89,8 @@ Multiple series
 
 ```javascript
 data = [
-  {name: "Workout", data: {"2021-01-01": 3, "2021-01-02": 4}},
-  {name: "Call parents", data: {"2021-01-01": 5, "2021-01-02": 3}}
+  {name: "Workout", data: {"2025-01-01": 3, "2025-01-02": 4}},
+  {name: "Call parents", data: {"2025-01-01": 5, "2025-01-02": 3}}
 ]
 new Chartkick.LineChart("chart", data)
 ```
@@ -114,20 +114,20 @@ Data can be an array, object, callback, or URL.
 #### Array
 
 ```javascript
-new Chartkick.LineChart("chart", [["2021-01-01", 2], ["2021-01-02", 3]])
+new Chartkick.LineChart("chart", [["2025-01-01", 2], ["2025-01-02", 3]])
 ```
 
 #### Object
 
 ```javascript
-new Chartkick.LineChart("chart", {"2021-01-01": 2, "2021-01-02": 3})
+new Chartkick.LineChart("chart", {"2025-01-01": 2, "2025-01-02": 3})
 ```
 
 #### Callback
 
 ```javascript
 function fetchData(success, fail) {
-  success({"2021-01-01": 2, "2021-01-02": 3})
+  success({"2025-01-01": 2, "2025-01-02": 3})
   // or fail("Data not available")
 }
 
@@ -155,7 +155,7 @@ new Chartkick.LineChart("chart", data, {min: 1000, max: 5000})
 Min and max for x-axis - *Chart.js*
 
 ```javascript
-new Chartkick.LineChart("chart", data, {xmin: "2021-01-01", xmax: "2022-01-01"})
+new Chartkick.LineChart("chart", data, {xmin: "2025-01-01", xmax: "2025-02-01"})
 ```
 
 Colors
