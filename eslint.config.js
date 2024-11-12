@@ -4,6 +4,8 @@ export default [
   js.configs.recommended,
   {
     languageOptions: {
+      ecmaVersion: 6,
+      sourceType: "module",
       globals: {
         "Event": false,
         "clearInterval": false,
