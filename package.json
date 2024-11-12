@@ -40,7 +40,7 @@
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-terser": "^0.4.4",
     "eslint": "^9.14.0",
-    "rollup": "^3.9.1"
+    "rollup": "^4.25.0"
   },
   "optionalDependencies": {
     "chart.js": "4",
