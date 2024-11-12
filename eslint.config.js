@@ -1,4 +1,5 @@
 import js from "@eslint/js";
+import globals from "globals";
 
 export default [
   js.configs.recommended,
@@ -7,13 +8,7 @@ export default [
       ecmaVersion: 6,
       sourceType: "module",
       globals: {
-        "Event": false,
-        "clearInterval": false,
-        "document": false,
-        "setInterval": false,
-        "setTimeout": false,
-        "XMLHttpRequest": false,
-        "window": false
+        ...globals.browser
       }
     },
     rules: {
