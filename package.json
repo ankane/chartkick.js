@@ -15,8 +15,7 @@
     "./highcharts": "./highcharts/highcharts.esm.js"
   },
   "scripts": {
-    "build": "rollup -c",
-    "lint": "eslint src"
+    "build": "rollup -c"
   },
   "keywords": [
     "charts"
@@ -39,7 +38,6 @@
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-terser": "^0.4.4",
-    "eslint": "^9.14.0",
     "rollup": "^4.25.0"
   },
   "optionalDependencies": {

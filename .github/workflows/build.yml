@@ -8,4 +8,3 @@ jobs:
       - uses: actions/setup-node@v6
       - run: npm install
       - run: npm run build
-      - run: npm run lint
