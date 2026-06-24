@@ -1,6 +1,7 @@
+.pnpm-store/
 node_modules/
 dist/
-yarn.lock
 examples/Chart.bundle.js
-*.log
 package-lock.json
+pnpm-lock.yaml
+yarn.lock
