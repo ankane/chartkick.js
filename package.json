@@ -1,9 +1,12 @@
 {
   "name": "chartkick",
   "version": "5.0.1",
-  "homepage": "https://github.com/ankane/chartkick.js",
   "description": "Create beautiful charts with one line of JavaScript",
+  "homepage": "https://github.com/ankane/chartkick.js",
+  "license": "MIT",
+  "author": "Andrew Kane",
   "type": "module",
+  "files": ["dist", "chart.js", "highcharts"],
   "main": "./dist/chartkick.js",
   "module": "./dist/chartkick.esm.js",
   "exports": {
@@ -14,25 +17,6 @@
     "./chart.js": "./chart.js/chart.esm.js",
     "./highcharts": "./highcharts/highcharts.esm.js"
   },
-  "scripts": {
-    "build": "rollup -c"
-  },
-  "keywords": [
-    "charts"
-  ],
-  "authors": [
-    "ankane"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ankane/chartkick.js"
-  },
-  "files": [
-    "dist",
-    "chart.js",
-    "highcharts"
-  ],
   "devDependencies": {
     "@rollup/plugin-buble": "^1.0.1",
     "@rollup/plugin-commonjs": "^28.0.1",
@@ -44,5 +28,8 @@
     "chart.js": "4",
     "chartjs-adapter-date-fns": ">=3",
     "date-fns": ">=2"
+  },
+  "scripts": {
+    "build": "rollup -c"
   }
 }

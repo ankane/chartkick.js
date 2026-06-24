@@ -10,7 +10,7 @@ const banner =
 `/*!
  * Chartkick.js v${pkg.version}
  * ${pkg.description}
- * ${pkg.repository.url}
+ * ${pkg.homepage}
  * ${pkg.license} License
  */
 `;
