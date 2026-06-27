@@ -6,7 +6,11 @@
   "license": "MIT",
   "author": "Andrew Kane",
   "type": "module",
-  "files": ["dist", "chart.js", "highcharts"],
+  "files": [
+    "dist",
+    "chart.js",
+    "highcharts"
+  ],
   "main": "./dist/chartkick.js",
   "module": "./dist/chartkick.esm.js",
   "exports": {
